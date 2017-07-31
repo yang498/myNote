@@ -1,0 +1,140 @@
+body,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+input,
+select,
+textarea,
+button,
+th,
+td,
+menu {
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	font-family: "Microsoft YaHei", "微软雅黑";
+	box-sizing: border-box;
+}
+
+html,
+body {
+	/*禁止用户选择元素*/
+	/*-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-khtml-user-select: none;*/
+	/*禁止元素点击出现半透明黑色背景*/
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html {
+	height: 100%;
+	width: 100%;
+	outline: 0;
+	-webkit-text-size-adjust: none;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 16px;
+	font-weight: normal;
+}
+
+
+ul,
+dl,
+ol {
+	list-style: none;
+}
+
+img,
+input[type="submit"] {
+	border: 0 none;
+}
+
+i,
+em {
+	font-style: normal;
+}
+
+b,
+strong {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+button,
+input[type="button"] {
+	cursor: pointer;
+}
+
+a,
+button,
+input,
+img {
+	-webkit-touch-callout: none;
+}
+
+img {
+	/*pointer-events:none;*/
+	/*禁止图片的点击事件，例如长按保存图片*/
+}
+
+input,
+select,
+textarea {
+	-moz-outline: none;
+	outline: none;
+}
+
+a,
+a:hover {
+	text-decoration: none;
+}
+
+.fl {
+	float: left
+}
+
+.fr {
+	float: right
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+.clearfix::after {
+	content: "";
+	display: block;
+	clear: both;
+}

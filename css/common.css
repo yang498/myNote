@@ -1,0 +1,37 @@
+.web {
+  padding: 20px; }
+  .web img {
+    width: 100%; }
+  .web .header .logo {
+    float: left;
+    width: 200px; }
+  .web .header .search {
+    float: right; }
+  .web .nav {
+    background-color: #ccc;
+    font-size: 24px;
+    text-align: center;
+    margin: 20px 0; }
+    .web .nav ul {
+      display: flex;
+      justify-content: space-around; }
+      .web .nav ul li {
+        line-height: 50px; }
+        .web .nav ul li a {
+          display: block;
+          color: #000;
+          position: relative;
+          z-index: 1;
+          transition: 0.3s; }
+        .web .nav ul li.active a {
+          color: #fff; }
+        .web .nav ul li .nav-active {
+          display: block;
+          height: 100%;
+          color: #fff;
+          background-color: #f08;
+          position: relative;
+          top: -100%;
+          transition: 0.3s; }
+
+/*# sourceMappingURL=common.css.map */
