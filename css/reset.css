@@ -111,6 +111,7 @@ img {
 
 input,
 select,
+button,
 textarea {
 	-moz-outline: none;
 	outline: none;
@@ -137,4 +138,20 @@ a:hover {
 	content: "";
 	display: block;
 	clear: both;
+}
+
+.show{
+	display: block;
+}
+
+.show-i{
+	display: block!important;
+}
+
+.hide{
+	display: none;
+}
+
+.hide-i{
+	display: none!important;
 }

@@ -1,50 +1,168 @@
 @charset "utf-8";
 @import "config";
-
-.web{
+.web {
     padding: 20px;
-    img{
-        width: 100%;
-    }
-    .header{
-        .logo{
-            float: left;
+    overflow: hidden;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .logo {
+            width: 100px;
+        }
+        .search {
             width: 200px;
-        }
-        .search{
-            float: right;
+            height: 40px;
+            font-size: 20px;
+            border: 2px solid $color;
+            padding: 5px;
+            transition: $tri-2;
+            &:focus {
+                width: 400px;
+                border-radius: 5px;
+                box-shadow: 0 0 5px rgba($color, 0.6);
+            }
         }
     }
-    .nav{
+    .nav {
         background-color: #ccc;
         font-size: 24px;
         text-align: center;
         margin: 20px 0;
-        ul{
+        ul {
             display: flex;
             justify-content: space-around;
-            li{
+            li {
                 line-height: 50px;
-                a{
+                position: relative;
+                a {
                     display: block;
                     color: #000;
                     position: relative;
                     z-index: 1;
                     transition: $tri-nav;
                 }
-                &.active a{
-                    color: #fff;
-                }
-                .nav-active{
-                    display: block;
-                    height: 100%;
-                    color: #fff;
-                    background-color: #f08;
-                    position: relative;
-                    top: -100%;
-                    transition: $tri-nav;
-                }
             }
         }
+    }
+    .aside {
+        width: 200px;
+        border: 1px solid #ccc;
+        text-align: center;
+        font-size: 20px;
+        .menu {
+            width: 100%;
+            line-height: 40px;
+            position: relative;
+            cursor: pointer;
+            .nav-active {
+                z-index: -1;
+            }
+        }
+    }
+    .article {
+        width: 80%;
+        min-width: 1000px;
+        padding: 0 20px;
+    }
+    .change-section{
+        position: fixed;
+        bottom: 20px;
+        text-align: center;
+        width: 75px;
+        line-height: 30px;
+        color: $color;
+        border: 1px solid $color;
+        background-color: #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: $tri-2;
+        &.section-pre{
+            right: 51%;
+        }
+        &.section-next{
+            left: 51%;
+        }
+        &:hover{
+            color: #fff;
+            background-color: $color;
+        }
+    }
+}
+
+img {
+    width: 100%;
+}
+.w1000{
+    width: 1000px;
+}
+.w900{
+    width: 900px;
+}
+.w800{
+    width: 800px;
+}
+.w700{
+    width: 700px;
+}
+.w600{
+    width: 600px;
+}
+.w500{
+    width: 500px;
+}
+.w400{
+    width: 400px;
+}
+.w300{
+    width: 300px;
+}
+.w200{
+    width: 200px;
+}
+.w100{
+    width: 100px;
+}
+
+.active,
+.active a {
+    color: #fff!important;
+    transition: $tri-nav;
+}
+
+.nav-active {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: $color;
+    position: absolute;
+    top: 0;
+    transition: $tri-nav;
+}
+
+h1{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    cursor: pointer;
+    &:not(:first-child){
+        margin-top: 30px;
+    }
+}
+h2{
+    font-size: 18px;
+    color: $color;
+    margin-top: 10px;
+}
+p{
+    text-indent: 2em;
+    line-height: 30px;
+}
+.edit-time{
+    text-align: right;
+    margin: 40px 0 20px;
+    time{
+        color: $color;
+        font-style: italic;
     }
 }

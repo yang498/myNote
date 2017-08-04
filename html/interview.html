@@ -7,28 +7,31 @@
 		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 	</head>
 	<body>
-		<div class="web">
-			<header class="header clearfix">
-				<a href="html.html" class="logo"><img src="../imgs/logo.jpg"/></a>
-				<input type="search" placeholder="搜点什么" class="search" />
-			</header>
-			<nav class="nav">
-				<ul>
-					<li><a href="html.html">HTML</a></li>
-					<li><a href="css.html">CSS</a></li>
-					<li><a href="javascript.html">JavaScript</a></li>
-					<li><a href="vue.html">Vue</a></li>
-					<li><a href="cssLibrary.html">css库</a></li>
-					<li><a href="jsLibrary.html">js库</a></li>
-					<li class="active"><a href="interview.html">面试</a><i class="nav-active"></i></li>
-				</ul>
-			</nav>
-			<aside>
-				
-			</aside>
-			<article></article>
+		<div class="web" data-page="interview">
+			<!---------- 头部 start ---------->
+			<header class="header"></header>
+			<!---------- 头部 end ---------->
+			
+			<!---------- 导航栏 start ---------->
+			<nav class="nav"></nav>
+			<!---------- 导航栏 end ---------->
+			
+			<!---------- 左侧菜单栏 start ---------->
+			<aside class="aside fl"></aside>
+			<!---------- 左侧菜单栏 end ---------->
+			
+			<!---------- 正文 start ---------->
+			<article class="article fl"></article>
+			<!---------- 正文 end ---------->
+			
+			<!---------- 切换章节 start ---------->
+			<button class="change-section section-pre">上一章</button>
+			<button class="change-section section-next">下一章</button>
+			<!---------- 切换章节 end ---------->
 		</div>
 		
+		<script src="../data/common-data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../data/interview-data.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
 	</body>
