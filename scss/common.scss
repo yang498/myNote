@@ -1,14 +1,68 @@
 @charset "utf-8";
-@import "config";
+
+$color:#f08;
+$tri-nav:0.3s;
+$tri-2:0.2s;
+$skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
+
 .web {
+    min-height: 100%;
     padding: 20px;
     overflow: hidden;
+    background: no-repeat center/cover fixed;
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         .logo {
             width: 100px;
+        }
+        .web-skin{
+            position: relative;
+            .skin-icon{
+                display: block;
+                font-size: 50px;
+                color: #eee;
+                cursor: pointer;
+                transition: 0.2s;
+                &:hover{
+                    color: $color;
+                }
+            }
+            ul{
+                display: flex;
+                background: #fff;
+                text-align: center;
+                transform: translateX(-50%);
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                z-index: 2;
+                li{
+                    margin: 10px;
+                    width: 60px;
+                    @for $i from 1 through length($skin){
+                        &:nth-child(#{$i}){
+                            i{
+                                background-color: nth($skin,$i);
+                            }
+                            span{
+                                color: nth($skin,$i);
+                            }
+                        }
+                    }
+                    i{
+                        display: inline-block;
+                        width: 40px;
+                        height: 40px;
+                        transition: 0.2s;
+                        &:hover{
+                            border-radius: 50%;
+                        }
+                    }
+                    
+                }
+            }
         }
         .search {
             width: 200px;
@@ -25,7 +79,7 @@
         }
     }
     .nav {
-        background-color: #ccc;
+        background-color: #eee;
         font-size: 24px;
         text-align: center;
         margin: 20px 0;
@@ -45,32 +99,59 @@
             }
         }
     }
-    .aside {
-        width: 200px;
-        border: 1px solid #ccc;
-        text-align: center;
-        font-size: 20px;
-        .menu {
-            width: 100%;
-            line-height: 40px;
-            position: relative;
-            cursor: pointer;
-            .nav-active {
-                z-index: -1;
+    .content{
+        display: flex;
+        .aside {
+            width: 200px;
+            font-size: 20px;
+            background-color: #fff;
+            .menu {
+                &:hover,&.active{
+                    border: 1px solid $color;
+                    a{
+                        color: #fff;
+                        background-color: $color;
+                    }
+                }
+                &.active ul{
+                    display: block;
+                }
+                a{
+                    display: block;
+                    line-height: 40px;
+                    padding-left: 10px;
+                }
+                ul{
+                    display: none;
+                    font-size: 16px;
+                    li{
+                        position: relative;
+                        line-height: 30px;
+                        padding-left: 20px;
+                        cursor: pointer;
+                        transition: $tri-2;
+                        &:hover,&.active{
+                            color: $color;
+                        }
+                    }
+                }
             }
         }
+        .article {
+            width: 100%;
+            min-width: 1000px;
+            margin-left: 20px;
+            padding: 20px;
+            background-color: #fff;
+        }
     }
-    .article {
-        width: 80%;
-        min-width: 1000px;
-        padding: 0 20px;
-    }
+    
     .change-section{
         position: fixed;
         bottom: 20px;
         text-align: center;
-        width: 75px;
         line-height: 30px;
+        padding: 0 10px;
         color: $color;
         border: 1px solid $color;
         background-color: #fff;
@@ -87,9 +168,19 @@
             color: #fff;
             background-color: $color;
         }
+        i{
+            display: none;
+        }
+        &.active i{
+            display: initial;
+        }
     }
 }
 
+
+.wallpaper{
+    background-image: url(../imgs/wallpaper/cartoon03.jpg);
+}
 img {
     width: 100%;
 }
@@ -124,23 +215,23 @@ img {
     width: 100px;
 }
 
-.active,
-.active a {
+.li-active a {
     color: #fff!important;
     transition: $tri-nav;
 }
 
-.nav-active {
+.i-active {
     display: block;
     width: 100%;
     height: 100%;
     background-color: $color;
     position: absolute;
     top: 0;
+    left: 0;
     transition: $tri-nav;
 }
 
-h1{
+.title{
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;

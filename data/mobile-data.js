@@ -1,8 +1,8 @@
-var interview_data=(()=>{
-	var browser=`
-			<h1 class='title'>浏览器内核引擎</h1>
-			<p>IE：Trident</p>
-			<p>Firefox：Gecko</p>
+var mobile_data=(()=>{
+	var introduce=`
+			<h1 class='title'>介绍</h1>
+			<p>相比较于React Native的“Learn once, write anywhere”，Weex的口号是“Write once, run everywhere”。使用Weex可以构建一个真正的原生应用，跨平台：一份代码支持H5、IOS和Android，接口可扩展，已和vue合作，也可称之为vue-native。</p>
+			<p>它不是一个 HTML5 库或开发框架，不是一套全新的技术，不是为了解决纯 native 开发的体验问题，不是一个以自身为中心的移动应用开发框架，而是一款轻量级的移动端跨平台动态性技术解决方案。</p>
 			<p>Safari&Chrome：WebKit</p>
 			<p>Opera：Blink</p>
 			
@@ -11,7 +11,7 @@ var interview_data=(()=>{
 			
 			<div class=edit-time>编辑于：<time>2017.8.1</time></div>
 		`,
-		http=`
+		install=`
 			<h1 class='title'>http请求</h1>
 			<p>计算机通过网络进行通信的规则，也就是客户端向服务端请求数据和服务，一种无状态的协议：不建立持久的连接，客户
 			端发送一次请求然后服务端返回信息，接着连接就关闭了，这个过程没有记忆，所以每次都要重新传递。</p>
