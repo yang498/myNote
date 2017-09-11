@@ -1,16 +1,51 @@
 var common_data = (()=>{
 	let web = `
 			<header class="header"></header>
-			<nav class="nav"></nav>
-			<div class="content">
-				<aside class="aside"></aside>
-				<article class="article"></article>
-			</div>
+			<aside class="aside"></aside>
+			<article class="article"></article>
+			<i class="iconfont icon-arrowhead-top back-top"></i>
 			<button class="change-section section-pre"><span></span><i>：</i>上一章</button>
 			<button class="change-section section-next">下一章<i>：</i><span></span></button>
 		`,
 		header = `
 			<a href="html.html" class="logo"><img src="../imgs/logo.jpg"/></a>
+			<ul class="menu">
+				<li data-href="html">
+					<span>HTML</span>
+					<ul class="menu-link">
+						<li data-href="html"><a href="html.html">HTML</a></li>
+						<li data-href="mobile"><a href="mobile.html">移动端</a></li>
+					</ul>
+				</li>
+				<li data-href="css">
+					<span>CSS</span>
+					<ul class="menu-link">
+						<li data-href="css"><a href="css.html">CSS</a></li>
+						<li data-href="cssLibrary"><a href="cssLibrary.html">CSS库</a></li>
+					</ul>
+				</li>
+				<li data-href="js">
+					<span>JavaScript</span>
+					<ul class="menu-link">
+						<li data-href="javascript"><a href="javascript.html">javascript</a></li>
+						<li data-href="jsLibrary"><a href="jsLibrary.html">javascript库</a></li>
+						<li data-href="vue"><a href="vue.html">vue</a></li>
+					</ul>
+				</li>
+				<li data-href="tool">
+					<span>工具</span>
+					<ul class="menu-link">
+						<li data-href="tool"><a href="tool.html">工具</a></li>
+					</ul>
+				</li>
+				<li data-href="other">
+					<span>其他</span>
+					<ul class="menu-link">
+						<li data-href="interview"><a href="interview.html">面试</a></li>
+					</ul>
+				</li>
+			</ul>
+			<input type="search" placeholder="搜点什么" class="search" />
 			<div class="web-skin">
 				<i class="iconfont icon-skin-fill skin-icon"></i>
 				<ul class="hide-i">
@@ -24,18 +59,7 @@ var common_data = (()=>{
 					<li><i></i><span>粉#f08</span></li>
 				</ul>
 			</div>
-			<input type="search" placeholder="搜点什么" class="search" />`,
-		nav = `
-			<ul>
-				<li data-href="html"><a href="html.html">HTML</a></li>
-				<li data-href="css"><a href="css.html">CSS</a></li>
-				<li data-href="js"><a href="javascript.html">JS</a></li>
-				<li data-href="vue"><a href="vue.html">Vue</a></li>
-				<li data-href="cssLibrary"><a href="cssLibrary.html">css库</a></li>
-				<li data-href="jsLibrary"><a href="jsLibrary.html">js库</a></li>
-				<li data-href="mobile"><a href="mobile.html">移动端</a></li>
-				<li data-href="interview"><a href="interview.html">面试</a></li>
-			</ul>`,
+		`,
 		aside = {
 			cssLibrary: ['bootstrap', 'mui'],
 			mobile: ['weex'],
@@ -45,5 +69,5 @@ var common_data = (()=>{
 			interview: interview_data
 		};
 
-	return { header, nav, aside, article, web};
+	return { header, aside, article, web};
 })();

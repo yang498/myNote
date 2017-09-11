@@ -1,24 +1,76 @@
 .web {
+  min-width: 1200px;
   min-height: 100%;
-  padding: 20px;
   overflow: hidden;
   background: no-repeat center/cover fixed; }
   .web .header {
+    height: 80px;
+    background-color: #25A5F7;
+    padding: 0 50px;
     display: flex;
     justify-content: space-between;
-    align-items: center; }
+    align-items: center;
+    margin-bottom: 20px; }
     .web .header .logo {
-      width: 100px; }
+      height: 70%; }
+      .web .header .logo img {
+        height: 100%; }
+    .web .header .menu {
+      width: 800px;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      color: #fff;
+      font-size: 20px;
+      text-align: center; }
+      .web .header .menu > li {
+        width: 25%;
+        line-height: 80px;
+        position: relative; }
+        .web .header .menu > li span {
+          display: block;
+          cursor: pointer;
+          position: relative;
+          z-index: 1; }
+        .web .header .menu > li i {
+          position: absolute;
+          left: 0;
+          bottom: 1px;
+          width: 100%;
+          height: 3px;
+          background-color: #fff;
+          transition: 0.3s ease-out; }
+        .web .header .menu > li:hover .menu-link {
+          height: 150px; }
+        .web .header .menu > li .menu-link {
+          height: 0;
+          overflow: hidden;
+          position: absolute;
+          left: 0;
+          top: 100%;
+          z-index: 1;
+          width: 100%;
+          background-color: #25A5F7;
+          transition: 0.3s ease-out;
+          font-size: 16px; }
+          .web .header .menu > li .menu-link li {
+            line-height: 50px;
+            background-color: #25A5F7;
+            transition: 0.3s; }
+            .web .header .menu > li .menu-link li:hover, .web .header .menu > li .menu-link li.active {
+              filter: brightness(0.9); }
+            .web .header .menu > li .menu-link li a {
+              display: block; }
     .web .header .web-skin {
       position: relative; }
       .web .header .web-skin .skin-icon {
         display: block;
-        font-size: 50px;
+        font-size: 40px;
         color: #eee;
         cursor: pointer;
         transition: 0.2s; }
         .web .header .web-skin .skin-icon:hover {
-          color: #f08; }
+          color: #25A5F7; }
       .web .header .web-skin ul {
         display: flex;
         background: #fff;
@@ -71,75 +123,102 @@
             .web .header .web-skin ul li i:hover {
               border-radius: 50%; }
     .web .header .search {
-      width: 200px;
+      width: 100px;
       height: 40px;
       font-size: 20px;
-      border: 2px solid #f08;
+      border: 2px solid #25A5F7;
       padding: 5px;
-      transition: 0.2s; }
+      border-radius: 20px;
+      transition: 0.3s; }
       .web .header .search:focus {
-        width: 400px;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(255, 0, 136, 0.6); }
-  .web .nav {
-    background-color: #eee;
-    font-size: 24px;
-    text-align: center;
-    margin: 20px 0; }
-    .web .nav ul {
-      display: flex;
-      justify-content: space-around; }
-      .web .nav ul li {
-        line-height: 50px;
-        position: relative; }
-        .web .nav ul li a {
-          display: block;
-          color: #000;
-          position: relative;
-          z-index: 1;
-          transition: 0.3s; }
-  .web .content {
-    display: flex; }
-    .web .content .aside {
-      width: 200px;
-      font-size: 20px;
-      background-color: #fff; }
-      .web .content .aside .menu:hover, .web .content .aside .menu.active {
-        border: 1px solid #f08; }
-        .web .content .aside .menu:hover a, .web .content .aside .menu.active a {
-          color: #fff;
-          background-color: #f08; }
-      .web .content .aside .menu.active ul {
-        display: block; }
-      .web .content .aside .menu a {
+        width: 400px; }
+  .web .aside {
+    width: 180px;
+    font-size: 18px;
+    position: absolute;
+    top: 110px;
+    left: 50px; }
+    .web .aside.fixed {
+      position: fixed;
+      top: 10px; }
+    .web .aside .menu {
+      margin-top: 2px; }
+      .web .aside .menu span {
         display: block;
         line-height: 40px;
-        padding-left: 10px; }
-      .web .content .aside .menu ul {
+        padding: 0 10px;
+        border-radius: 3px;
+        background-color: #eef3f6;
+        transition: 0.2s;
+        cursor: pointer; }
+        .web .aside .menu span:hover, .web .aside .menu span.active {
+          color: #fff;
+          background-color: #25A5F7; }
+        .web .aside .menu span i {
+          float: right; }
+      .web .aside .menu ul {
         display: none;
-        font-size: 16px; }
-        .web .content .aside .menu ul li {
+        font-size: 16px;
+        border-radius: 3px;
+        background-color: #eee;
+        overflow: hidden; }
+        .web .aside .menu ul.active {
+          display: block; }
+        .web .aside .menu ul li {
           position: relative;
-          line-height: 30px;
+          line-height: 35px;
           padding-left: 20px;
           cursor: pointer;
           transition: 0.2s; }
-          .web .content .aside .menu ul li:hover, .web .content .aside .menu ul li.active {
-            color: #f08; }
-    .web .content .article {
-      width: 100%;
-      min-width: 1000px;
-      margin-left: 20px;
-      padding: 20px;
-      background-color: #fff; }
+          .web .aside .menu ul li:hover, .web .aside .menu ul li.active {
+            color: #25A5F7; }
+  .web .article {
+    padding: 0 50px 0 260px;
+    background-color: #fff; }
+    .web .article .title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      padding-top: 10px;
+      cursor: pointer; }
+      .web .article .title:not(:first-child) {
+        margin-top: 20px; }
+    .web .article h2 {
+      font-size: 18px;
+      color: #25A5F7;
+      margin-top: 10px; }
+    .web .article p {
+      text-indent: 2em;
+      line-height: 30px; }
+    .web .article .edit-time {
+      text-align: right;
+      margin: 40px 0 20px; }
+      .web .article .edit-time time {
+        color: #25A5F7;
+        font-style: italic; }
+  .web .back-top {
+    display: none;
+    position: fixed;
+    right: 50px;
+    bottom: 66px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    transition: 0.2s;
+    cursor: pointer; }
+    .web .back-top:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
   .web .change-section {
     position: fixed;
     bottom: 20px;
     text-align: center;
     line-height: 30px;
     padding: 0 10px;
-    color: #f08;
-    border: 1px solid #f08;
+    color: #25A5F7;
+    border: 1px solid #25A5F7;
     background-color: #fff;
     border-radius: 3px;
     cursor: pointer;
@@ -150,17 +229,11 @@
       left: 51%; }
     .web .change-section:hover {
       color: #fff;
-      background-color: #f08; }
+      background-color: #25A5F7; }
     .web .change-section i {
       display: none; }
     .web .change-section.active i {
       display: initial; }
-
-.wallpaper {
-  background-image: url(../imgs/wallpaper/cartoon03.jpg); }
-
-img {
-  width: 100%; }
 
 .w1000 {
   width: 1000px; }
@@ -191,43 +264,5 @@ img {
 
 .w100 {
   width: 100px; }
-
-.li-active a {
-  color: #fff !important;
-  transition: 0.3s; }
-
-.i-active {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: #f08;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: 0.3s; }
-
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  cursor: pointer; }
-  .title:not(:first-child) {
-    margin-top: 30px; }
-
-h2 {
-  font-size: 18px;
-  color: #f08;
-  margin-top: 10px; }
-
-p {
-  text-indent: 2em;
-  line-height: 30px; }
-
-.edit-time {
-  text-align: right;
-  margin: 40px 0 20px; }
-  .edit-time time {
-    color: #f08;
-    font-style: italic; }
 
 /*# sourceMappingURL=common.css.map */

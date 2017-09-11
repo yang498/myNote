@@ -9,7 +9,17 @@ var interview_data=(()=>{
 			<h1 class='title'>w3c规范</h1>
 			<p>所有的标签都使用小写字母，成对出现，单标签要自闭合</p>
 			
-			<div class=edit-time>编辑于：<time>2017.8.1</time></div>
+			<h1 class='title'>性能优化</h1>
+			<p>1、将脚本放在底部，让网页先显示出来</p>
+			<p>2、http请求流程简述：在浏览器中输入网址并搜索，浏览器就与这个URL指向的服务器建立连接，然后向服务器发送请求信息，服务器在接受到请求的信息后再返回相应的信息，浏览器接收到来自服务器的应答信息后，对这些数据解释执行。而当我们请求的网页文件中有很多图片、CSS、JS等信息时，将会频繁的与服务器建立连接，与释放连接，这必定会造成资源的浪费，且每个http请求都会对服务器和浏览器产生性能负担。所以要减少http请求次数，比如图片做成雪碧图，代码、图片压缩。</p>
+			<p>3、网站的静态资源比如css、js和图片使用CND分发</p>
+			<p>4、减少对dom的直接操作，获取dom时把它存在变量里面</p>
+			<p>5、改变class类名而不直接操作style</p>
+			<p>6、代码精简，避免无意义的代码占资源，不要留空属性的src和href，不然会把当前页面的url作为它们的属性值加载一遍</p>
+			<p>7、使用get完成ajax请求，缓存请求的数据在本地</p>
+			<p>8、可以用transform: translateZ(0)来开启硬件加速</p>
+			
+			<div class=edit-time>更新于：<time>2017.9.11</time></div>
 		`,
 		http=`
 			<h1 class='title'>http请求</h1>
@@ -41,11 +51,8 @@ var interview_data=(()=>{
 			<p>4XX：客户端请求错误，比如403资源不可用，服务器拒绝了，404 Not Found</p>
 			<p>5XX：服务器错误，不能完成对请求的处理</p>
 			
-			<div class=edit-time>编辑于：<time>2017.8.1</time></div>
+			<div class=edit-time>更新于：<time>2017.8.1</time></div>
 		`;
 		
-	return {
-		browser:browser,
-		http:http
-	}
+	return { browser, http };
 })();
