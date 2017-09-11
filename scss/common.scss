@@ -13,18 +13,21 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
         height: 80px;
         background-color: $color;
         padding: 0 50px;
+        margin-bottom: 20px;
+        position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
         .logo {
-            height: 70%;
+            width: 130px;
+            height: 100%;
+            padding: 10px 0;
             img {
                 height: 100%;
             }
         }
         .menu {
-            width: 800px;
+            width: 650px;
             height: 100%;
             display: flex;
             justify-content: space-between;
@@ -126,15 +129,20 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
             }
         }
         .search {
-            width: 100px;
-            height: 40px;
-            font-size: 20px;
-            border: 2px solid $color;
-            padding: 5px;
-            border-radius: 20px;
-            transition: $ti-head;
-            &:focus {
-                width: 400px;
+            i{
+                font-size: 20px;
+                color: #ccc;
+                margin-right: -30px;
+                position: relative;
+                z-index: 1;
+                vertical-align: middle;
+            }
+            input[type="search"]{
+                width: 200px;
+                height: 40px;
+                border: 2px solid $color;
+                padding: 0 10px 0 35px;
+                border-radius: 20px;
             }
         }
     }
@@ -199,8 +207,12 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
             margin-bottom: 10px;
             padding-top: 10px;
             cursor: pointer;
+            transition: $ti-2;
             &:not(:first-child) {
                 margin-top: 20px;
+            }
+            &:hover{
+                color: $color;
             }
         }
         h2 {
@@ -260,6 +272,9 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
         &:hover {
             color: #fff;
             background-color: $color;
+        }
+        &.disable{
+            cursor: not-allowed;
         }
         i {
             display: none;

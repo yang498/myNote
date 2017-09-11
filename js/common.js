@@ -1,3 +1,4 @@
+// 上下一章的连续点击，common-data的aside自适应内容
 (() => {
 	//初始化载入数据
 	$(".web").html(common_data.web);
@@ -9,6 +10,8 @@
 		articleData = common_data.article[thisPage], //内容
 		$window = $(window),
 		$body = $('body'),
+		$headerMenu = $('.header .menu>li'), // 头部主菜单
+		$headerMenuActive = $(`.header .menu>li[data-href=${thisClassify}]`), // 当前子菜单
 		$backTop = $('.back-top'), // 回到顶部
 		$skin = $('.skin-icon'), //皮肤icon
 		$skinList = $('.web-skin ul'), //皮肤列表
@@ -17,11 +20,10 @@
 		$secPre = $('.section-pre'), //上一章
 		$secNext = $('.section-next'), //下一章
 		secPreText, //上一章的标题
-		secNextText; //下一章的标题
+		secNextText, //下一章的标题
+		secCut; // 要切换的章节序号
 
 	// header初始化：下边框白块，皮肤
-	let $headerMenu = $('.header .menu>li');
-	let $headerMenuActive = $(`.header .menu>li[data-href=${thisClassify}]`);
 	$headerMenuActive.append('<i></i>').find(`li[data-href=${thisPage}]`).addClass('active');
 	$headerMenu.on({
 		'mouseenter': function() {
@@ -44,7 +46,7 @@
 	$('.aside span:first,.aside ul:first,.aside li:first').addClass('active');
 	$('.aside i:first').removeClass('icon-arrow-bottom').addClass('icon-arrow-top');
 	$aside.on('click', 'span', function() {
-		if($(this).hasClass('active')){
+		if($(this).hasClass('active')) {
 			$(this).removeClass('active').find('i').removeClass('icon-arrow-top').addClass('icon-arrow-bottom');
 			$(this).next().removeClass('active');
 			return;
@@ -53,11 +55,10 @@
 		$aside.find('i').removeClass('icon-arrow-top').addClass('icon-arrow-bottom');
 		$(this).addClass('active').find('i').removeClass('icon-arrow-bottom').addClass('icon-arrow-top');
 		$aside.find('ul').removeClass('active').html('');
-		$(this).next().addClass('active');
 		$article.html(Object.values(articleData)[$(this).index('.aside span')]).find('.title').each(function() {
 			$aside.find('ul').append(`<li>${$(this).html()}</li>`);
 		});
-		$aside.find('li').eq(0).addClass('active');
+		$(this).next().addClass('active').find('li').eq(0).addClass('active');
 	});
 	$aside.on('click', 'li', function() {
 		$aside.find('li').removeClass('active');
@@ -73,52 +74,53 @@
 			scrollTop: top
 		});
 	});
-	
+
 	// 固定aside，返回顶部
 	$window.on('scroll', function() {
 		$(this).scrollTop() >= 80 ? $aside.addClass('fixed') : $aside.removeClass('fixed');
 		$(this).scrollTop() > 600 ? $backTop.addClass('show-i') : $backTop.removeClass('show-i');
 	});
-	$backTop.on('click',function(){
+	$backTop.on('click', function() {
 		$body.animate({
 			scrollTop: 0
 		});
 	});
 
 	//上一章和下一章，显示对应的标题，点击切换
-	let secChangeEnter = (self, sec) => {
-			if(!sec) return;
-			self.addClass('active').find('span').html(sec);
-		},
-		secChangeClick = (self, sec) => {
-			if(!sec) return;
-		},
-		secChangeLeave = (self, sec) => {
-			if(!sec) return;
-			self.removeClass('active').find('span').html('');
-		};
 	$secPre.on({
 		'mouseenter': function() {
-			secPreText = $('aside .menu.active').prev().html();
-			secChangeEnter($(this), secPreText);
+			secCut = $('.aside span.active').index('.aside span') - 1;
+			if(secCut < 0 || secCut > $aside.find('span').length - 1) {
+				$(this).addClass('disable');
+				return;
+			}
+			secPreText = $aside.find('span').eq(secCut).text();
+			$(this).removeClass('disable').addClass('active').find('span').html(secPreText);
 		},
 		'click': function() {
-			secChangeClick($(this), secPreText);
+			if(secCut < 0 || secCut > $aside.find('span').length - 1) return;
+			$aside.find('span').eq(secCut).click();
 		},
 		'mouseleave': function() {
-			secChangeLeave($(this), secPreText);
+			$(this).removeClass('active').find('span').html('');
 		}
 	});
 	$secNext.on({
 		'mouseenter': function() {
-			secNextText = $('aside .menu.active').next().html();
-			secChangeEnter($(this), secNextText);
+			secCut = $('.aside span.active').index('.aside span') + 1;
+			if(secCut < 0 || secCut > $aside.find('span').length - 1) {
+				$(this).addClass('disable');
+				return;
+			}
+			secNextText = $aside.find('span').eq(secCut).text();
+			$(this).removeClass('disable').addClass('active').find('span').html(secNextText);
 		},
 		'click': function() {
-			secChangeClick($(this), secNextText);
+			if(secCut < 0 || secCut > $aside.find('span').length - 1) return;
+			$aside.find('span').eq(secCut).click();
 		},
 		'mouseleave': function() {
-			secChangeLeave($(this), secNextText);
+			$(this).removeClass('active').find('span').html('');
 		}
 	});
 })();

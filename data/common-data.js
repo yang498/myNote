@@ -45,7 +45,7 @@ var common_data = (()=>{
 					</ul>
 				</li>
 			</ul>
-			<input type="search" placeholder="搜点什么" class="search" />
+			<div class="search"><i class="iconfont icon-search"></i><input type="search"/></div>
 			<div class="web-skin">
 				<i class="iconfont icon-skin-fill skin-icon"></i>
 				<ul class="hide-i">

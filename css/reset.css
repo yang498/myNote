@@ -136,11 +136,11 @@ a:hover {
 	float: right
 }
 
-.clearfix {
+.fix {
 	zoom: 1;
 }
 
-.clearfix::after {
+.fix::after {
 	content: "";
 	display: block;
 	clear: both;
