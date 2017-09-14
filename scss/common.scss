@@ -3,7 +3,8 @@ $color: #25A5F7;
 $bgColor: #eef3f6;
 $ti-head: 0.3s;
 $ti-2: 0.2s;
-$skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
+$ti-skin: 0.5s;
+$skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
 .web {
     min-width: 1200px;
     min-height: 100%;
@@ -77,52 +78,6 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
                         }
                         a {
                             display: block;
-                        }
-                    }
-                }
-            }
-        }
-        .web-skin {
-            position: relative;
-            .skin-icon {
-                display: block;
-                font-size: 40px;
-                color: #eee;
-                cursor: pointer;
-                transition: 0.2s;
-                &:hover {
-                    color: $color;
-                }
-            }
-            ul {
-                display: flex;
-                background: #fff;
-                text-align: center;
-                transform: translateX(-50%);
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                z-index: 2;
-                li {
-                    margin: 10px;
-                    width: 60px;
-                    @for $i from 1 through length($skin) {
-                        &:nth-child(#{$i}) {
-                            i {
-                                background-color: nth($skin, $i);
-                            }
-                            span {
-                                color: nth($skin, $i);
-                            }
-                        }
-                    }
-                    i {
-                        display: inline-block;
-                        width: 40px;
-                        height: 40px;
-                        transition: 0.2s;
-                        &:hover {
-                            border-radius: 50%;
                         }
                     }
                 }
@@ -282,23 +237,79 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
             }
         }
     }
-    .back-top {
-        display: none;
+    .web-icon{
         position: fixed;
-        right: 50px;
-        bottom: 66px;
+        right: 10px;
         width: 50px;
+        height: 50px;
         line-height: 50px;
         text-align: center;
-        font-size: 30px;
         background-color: #fff;
-        border-radius: 50%;
+        border-radius: 25px;
         border: 1px solid #ccc;
+        overflow: hidden;
         transition: $ti-2;
-        cursor: pointer;
         &:hover {
+            color: $color;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+        .iconfont{
+            color: #999;
+        }
+    }
+    .web-skin {
+        bottom: 120px;
+        transition: $ti-skin ease-out;
+        &:hover{
+            height: 375px;
+            .skin-icon{
+                color: $color;
+            }
+            li{
+                transform: scale(1);
+            }
+        }
+        .skin-icon {
+            width: 100%;
+            font-size: 32px;
+            transition: $ti-2;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+        ul {
+            text-align: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: -1;
+            li {
+                margin: 10px;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                cursor: pointer;
+                transform: scale(1.3);
+                @for $i from 1 through length($skin) {
+                    &:nth-child(#{$i}) {
+                        background-color: nth($skin, $i);
+                        transition: $ti-skin $i * 0.1 + s;
+                        &:hover{
+                            transition: 0.2s;
+                            box-shadow: 0 0 10px nth($skin, $i);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .back-top {
+        display: none;
+        bottom: 60px;
+        font-size: 30px;
+        cursor: pointer;
     }
 }
 

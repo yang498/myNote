@@ -3,7 +3,7 @@
 //缺点：asideData填充不灵活，小标题只能展示当前章节的
 //优点：做好了数据归类只要写文档就好了
 //注意：数据的全局变量为thisPage_data形式，将文档转成html可能会和内容有冲突
-//待做：table设置每一栏的宽不灵活，皮肤和反馈和提醒上次放到右下角，记录最后一次停留的地方，每次打开页面右上角询问，也可以选择关闭提示
+//待做：table设置每一栏的宽不灵活，皮肤，反馈和提醒上次放到右下角，记录最后一次停留的地方，每次打开页面右上角询问，也可以选择关闭提示
 (() => {
 	//初始化载入数据
 	let $web = $(".web");
@@ -19,7 +19,6 @@
 		$headerMenu = $('.header .menu>li'), // 头部主菜单
 		$headerMenuActive = $(`.header .menu>li[data-href=${thisClassify}]`), // 当前子菜单
 		$backTop = $('.back-top'), // 回到顶部
-		$skin = $('.skin-icon'), //皮肤icon
 		$skinList = $('.web-skin ul'), //皮肤列表
 		$aside = $('.aside'), //左边菜单栏
 		$article = $('.article'), //内容
@@ -37,9 +36,6 @@
 		'mouseleave': function() {
 			$headerMenuActive.find('i').removeAttr('style');
 		}
-	});
-	$skin.on('click', function() {
-		$skinList.toggleClass('hide-i');
 	});
 
 	// aside和article初始化：数据，article的h1对应aside，默认显示第一个，点击切换数据
@@ -72,7 +68,7 @@
 	});
 	$article.on('click', 'h1', function() {
 		var top = $(this).offset().top;
-		$html.animate({
+		$html.stop(true).animate({
 			scrollTop: top
 		});
 	});
@@ -83,9 +79,12 @@
 		$(this).scrollTop() > 600 ? $backTop.addClass('show-i') : $backTop.removeClass('show-i');
 	});
 	$backTop.on('click', function() {
-		$html.animate({
+		$html.stop(true).animate({
 			scrollTop: 0
 		});
+	});
+	$skinList.on('click','li',function(){
+		console.log($(this).attr('data-color'))
 	});
 
 	// 切换上一章和下一章初始化：显示对应的标题，点击切换

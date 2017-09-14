@@ -21,7 +21,20 @@ var common_data = (() => {
 					<i class="iconfont icon-arrowhead-right right"></i>
 				</button>
 			</footer>
-			<i class="iconfont icon-arrowhead-top back-top"></i>
+			<i class="web-icon iconfont icon-arrowhead-top back-top"></i>
+			<div class="web-icon web-skin">
+				<i class="iconfont icon-skin-fill skin-icon"></i>
+				<ul>
+					<li data-color="#f00"></li>
+					<li data-color="#f80"></li>
+					<li data-color="#fe0"></li>
+					<li data-color="#0e0"></li>
+					<li data-color="#0cc"></li>
+					<li data-color="#08f"></li>
+					<li data-color="#80f"></li>
+					<li data-color="#f08"></li>
+				</ul>
+			</div>
 		`,
 		header = `
 			<a href="html.html" class="logo"><img src="../imgs/logo.jpg"/></a>
@@ -62,19 +75,6 @@ var common_data = (() => {
 				</li>
 			</ul>
 			<div class="search"><i class="iconfont icon-search"></i><input type="search"/></div>
-			<div class="web-skin">
-				<i class="iconfont icon-skin-fill skin-icon"></i>
-				<ul class="hide-i">
-					<li><i></i><span>红#f00</span></li>
-					<li><i></i><span>橙#fc0</span></li>
-					<li><i></i><span>黄#fe0</span></li>
-					<li><i></i><span>绿#0e0</span></li>
-					<li><i></i><span>青#0cc</span></li>
-					<li><i></i><span>蓝#08f</span></li>
-					<li><i></i><span>紫#80f</span></li>
-					<li><i></i><span>粉#f08</span></li>
-				</ul>
-			</div>
 		`;
 
 	return {
