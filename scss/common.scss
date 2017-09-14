@@ -75,7 +75,7 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
                         &.active {
                             filter: brightness(0.9);
                         }
-                        a{
+                        a {
                             display: block;
                         }
                     }
@@ -129,7 +129,7 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
             }
         }
         .search {
-            i{
+            i {
                 font-size: 20px;
                 color: #ccc;
                 margin-right: -30px;
@@ -137,7 +137,7 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
                 z-index: 1;
                 vertical-align: middle;
             }
-            input[type="search"]{
+            input[type="search"] {
                 width: 200px;
                 height: 40px;
                 border: 2px solid $color;
@@ -152,7 +152,7 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
         position: absolute;
         top: 110px;
         left: 50px;
-        &.fixed{
+        &.fixed {
             position: fixed;
             top: 10px;
         }
@@ -171,9 +171,8 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
                     color: #fff;
                     background-color: $color;
                 }
-                i{
+                i {
                     float: right;
-                    
                 }
             }
             ul {
@@ -202,7 +201,7 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
     .article {
         padding: 0 50px 0 260px;
         background-color: #fff;
-        .title {
+        h1 {
             font-size: 24px;
             margin-bottom: 10px;
             padding-top: 10px;
@@ -211,7 +210,7 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
             &:not(:first-child) {
                 margin-top: 20px;
             }
-            &:hover{
+            &:hover {
                 color: $color;
             }
         }
@@ -224,16 +223,66 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
             text-indent: 2em;
             line-height: 30px;
         }
-        .edit-time {
+        table {
+            width: 800px;
+            border-radius: 5px;
+            margin: 20px;
+            border: 1px solid #ccc;
+            thead {
+                background-color: #eee;
+            }
+            tr {
+                height: 40px;
+                &:nth-child(2n) {
+                    background-color: #eee;
+                }
+                th:not(:last-child),
+                td:not(:last-child) {
+                    border-right: 1px solid #ccc;
+                }
+            }
+            td {
+                border-top: 1px solid #ccc;
+                padding-left: 20px;
+            }
+        }
+        time {
+            display: block;
             text-align: right;
-            margin: 40px 0 20px;
-            time {
-                color: $color;
-                font-style: italic;
+            color: #666;
+            margin: 50px 0 25px;
+        }
+    }
+    .footer {
+        text-align: center;
+        height: 55px;
+        margin-top: -55px;
+        button {
+            height: 32px;
+            padding: 0 10px;
+            color: $color;
+            border: 1px solid $color;
+            background-color: #fff;
+            border-radius: 3px;
+            font-weight: bold;
+            margin: 0 20px;
+            transition: $ti-2;
+            &:hover {
+                color: #fff;
+                background-color: $color;
+            }
+            i {
+                vertical-align: -1px;
+                &.left {
+                    margin-right: 5px;
+                }
+                &.right {
+                    margin-left: 5px;
+                }
             }
         }
     }
-    .back-top{
+    .back-top {
         display: none;
         position: fixed;
         right: 50px;
@@ -247,40 +296,8 @@ $skin: #f00 #fc0 #fe0 #0e0 #0cc #08f #80f #f08;
         border: 1px solid #ccc;
         transition: $ti-2;
         cursor: pointer;
-        &:hover{
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-    }
-    .change-section {
-        position: fixed;
-        bottom: 20px;
-        text-align: center;
-        line-height: 30px;
-        padding: 0 10px;
-        color: $color;
-        border: 1px solid $color;
-        background-color: #fff;
-        border-radius: 3px;
-        cursor: pointer;
-        transition: $ti-2;
-        &.section-pre {
-            right: 51%;
-        }
-        &.section-next {
-            left: 51%;
-        }
         &:hover {
-            color: #fff;
-            background-color: $color;
-        }
-        &.disable{
-            cursor: not-allowed;
-        }
-        i {
-            display: none;
-        }
-        &.active i {
-            display: initial;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
     }
 }

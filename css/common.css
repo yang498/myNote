@@ -181,15 +181,15 @@
   .web .article {
     padding: 0 50px 0 260px;
     background-color: #fff; }
-    .web .article .title {
+    .web .article h1 {
       font-size: 24px;
       margin-bottom: 10px;
       padding-top: 10px;
       cursor: pointer;
       transition: 0.2s; }
-      .web .article .title:not(:first-child) {
+      .web .article h1:not(:first-child) {
         margin-top: 20px; }
-      .web .article .title:hover {
+      .web .article h1:hover {
         color: #25A5F7; }
     .web .article h2 {
       font-size: 18px;
@@ -198,12 +198,51 @@
     .web .article p {
       text-indent: 2em;
       line-height: 30px; }
-    .web .article .edit-time {
+    .web .article table {
+      width: 800px;
+      border-radius: 5px;
+      margin: 20px;
+      border: 1px solid #ccc; }
+      .web .article table thead {
+        background-color: #eee; }
+      .web .article table tr {
+        height: 40px; }
+        .web .article table tr:nth-child(2n) {
+          background-color: #eee; }
+        .web .article table tr th:not(:last-child),
+        .web .article table tr td:not(:last-child) {
+          border-right: 1px solid #ccc; }
+      .web .article table td {
+        border-top: 1px solid #ccc;
+        padding-left: 20px; }
+    .web .article time {
+      display: block;
       text-align: right;
-      margin: 40px 0 20px; }
-      .web .article .edit-time time {
-        color: #25A5F7;
-        font-style: italic; }
+      color: #666;
+      margin: 50px 0 25px; }
+  .web .footer {
+    text-align: center;
+    height: 55px;
+    margin-top: -55px; }
+    .web .footer button {
+      height: 32px;
+      padding: 0 10px;
+      color: #25A5F7;
+      border: 1px solid #25A5F7;
+      background-color: #fff;
+      border-radius: 3px;
+      font-weight: bold;
+      margin: 0 20px;
+      transition: 0.2s; }
+      .web .footer button:hover {
+        color: #fff;
+        background-color: #25A5F7; }
+      .web .footer button i {
+        vertical-align: -1px; }
+        .web .footer button i.left {
+          margin-right: 5px; }
+        .web .footer button i.right {
+          margin-left: 5px; }
   .web .back-top {
     display: none;
     position: fixed;
@@ -220,31 +259,6 @@
     cursor: pointer; }
     .web .back-top:hover {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
-  .web .change-section {
-    position: fixed;
-    bottom: 20px;
-    text-align: center;
-    line-height: 30px;
-    padding: 0 10px;
-    color: #25A5F7;
-    border: 1px solid #25A5F7;
-    background-color: #fff;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: 0.2s; }
-    .web .change-section.section-pre {
-      right: 51%; }
-    .web .change-section.section-next {
-      left: 51%; }
-    .web .change-section:hover {
-      color: #fff;
-      background-color: #25A5F7; }
-    .web .change-section.disable {
-      cursor: not-allowed; }
-    .web .change-section i {
-      display: none; }
-    .web .change-section.active i {
-      display: initial; }
 
 .w1000 {
   width: 1000px; }

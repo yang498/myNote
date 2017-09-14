@@ -2,9 +2,7 @@ body,
 p,
 ul,
 ol,
-li,
 dl,
-dt,
 dd,
 h1,
 h2,
@@ -13,16 +11,13 @@ h4,
 h5,
 h6,
 form,
-fieldset,
 figure,
-legend,
 input,
 select,
 textarea,
 button,
 th,
-td,
-menu {
+td {
 	margin: 0;
 	padding: 0;
 }
@@ -32,29 +27,22 @@ menu {
 	box-sizing: border-box;
 }
 
-html,
-body {
+html,body {
+	width: 100%;
+	height: 100%;
+	/*文字适应大小*/
+	-webkit-text-size-adjust: 100%;
 	/*禁止用户选择元素*/
 	/*-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	-khtml-user-select: none;*/
+	
+	/*滚动更顺滑*/
+	/*-webkit-overflow-scrolling: touch;*/
+	
 	/*禁止元素点击出现半透明黑色背景*/
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-html {
-	height: 100%;
-	width: 100%;
-	outline: 0;
-	-webkit-text-size-adjust: 100%;
-	/*文字适应大小*/
-}
-
-body {
-	height: 100%;
-	margin: 0;
-	position: relative;
 }
 
 h1,
@@ -63,7 +51,8 @@ h3,
 h4,
 h5,
 h6 {
-	font-size: 16px;
+	/*font-size: 16px;*/
+	font-size: 0.16rem;
 	font-weight: normal;
 }
 
@@ -76,7 +65,7 @@ ol {
 
 img,
 input[type="submit"] {
-	border: 0 none;
+	border: none;
 }
 
 i,
@@ -90,7 +79,7 @@ strong {
 }
 
 table {
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
 	border-spacing: 0;
 }
 
@@ -129,11 +118,11 @@ a:hover {
 }
 
 .fl {
-	float: left
+	float: left;
 }
 
 .fr {
-	float: right
+	float: right;
 }
 
 .fix {
@@ -160,4 +149,9 @@ a:hover {
 
 .hide-i{
 	display: none!important;
+}
+
+.over-hide{
+	height: 100%;
+	overflow: hidden;
 }

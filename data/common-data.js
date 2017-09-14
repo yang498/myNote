@@ -1,11 +1,27 @@
-var common_data = (()=>{
-	let web = `
+var common_data = (() => {
+	let aside = {
+			cssLibrary: ['bootstrap', 'mui'],
+			mobile: ['weex'],
+			interview: ['浏览器', 'http']
+		},
+		article = {
+			interview: interview_data
+		},
+		web = `
 			<header class="header"></header>
 			<aside class="aside"></aside>
 			<article class="article"></article>
+			<footer class="footer">
+				<button class="prev">
+					<i class="iconfont icon-arrowhead-left left"></i>
+					<span></span>
+				</button>
+				<button class="next">
+					<span></span>
+					<i class="iconfont icon-arrowhead-right right"></i>
+				</button>
+			</footer>
 			<i class="iconfont icon-arrowhead-top back-top"></i>
-			<button class="change-section section-pre"><span></span><i>：</i>上一章</button>
-			<button class="change-section section-next">下一章<i>：</i><span></span></button>
 		`,
 		header = `
 			<a href="html.html" class="logo"><img src="../imgs/logo.jpg"/></a>
@@ -59,15 +75,12 @@ var common_data = (()=>{
 					<li><i></i><span>粉#f08</span></li>
 				</ul>
 			</div>
-		`,
-		aside = {
-			cssLibrary: ['bootstrap', 'mui'],
-			mobile: ['weex'],
-			interview: ['浏览器', 'http', 'TCP/IP', '设计模式', '兼容性问题']
-		},
-		article = {
-			interview: interview_data
-		};
+		`;
 
-	return { header, aside, article, web};
+	return {
+		web,
+		header,
+		aside,
+		article
+	};
 })();
