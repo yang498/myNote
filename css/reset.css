@@ -67,6 +67,9 @@ img,
 input[type="submit"] {
 	border: none;
 }
+input {
+	font-size: 16px;
+}
 
 i,
 em {
@@ -123,6 +126,10 @@ a:hover {
 
 .fr {
 	float: right;
+}
+
+.fx {
+	display: flex;
 }
 
 .fix {
