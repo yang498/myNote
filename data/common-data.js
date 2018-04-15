@@ -9,3 +9,4 @@ let commonData = {
 }
 let menuParent = location.hash.replace(/^#|\/[^]*/g, '')
 let menuChild = location.hash.replace(/[^]*\//, '')
+let copyCode = []

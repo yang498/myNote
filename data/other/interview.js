@@ -25,9 +25,29 @@ commonData.other.interview = {
 	6、代码精简，避免无意义的代码占资源，不要留空属性的src和href，不然会把当前页面的url作为它们的属性值加载一遍
 	7、使用get完成ajax请求，缓存请求的数据在本地
 	8、可以用transform: translateZ(0)来开启硬件加速
-	ˊ
+	··
 	// header初始化：下边框白块，皮肤
 	$headerMenuActive.append('<i></i>').find(li[data-href=]).addClass('active');
+	var a = ¦/ab\\/c/g¦
+	$headerMenu.on({
+		'mouseenter': function() {
+			if(¦/[^]*/g¦.test(a)) {
+				let move = $(this).index() - $headerMenuActive.index();
+				$headerMenuActive.find('i').css('transform', translateX(00%));
+			} else {
+				return false
+			}
+		},
+		'mouseleave': function() {
+			$headerMenuActive.find('i').removeAttr('style');
+		}
+	});
+	··
+	··
+	// header初始化：下边框白块，皮肤
+	$headerMenuActive.append('<i></i>').find(li[data-href=]).addClass('active');
+	··
+	··
 	$headerMenu.on({
 		'mouseenter': function() {
 			let move = $(this).index() - $headerMenuActive.index();
@@ -37,7 +57,7 @@ commonData.other.interview = {
 			$headerMenuActive.find('i').removeAttr('style');
 		}
 	});
-	ˊ
+	··
 	
 	#http
 	

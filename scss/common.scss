@@ -148,7 +148,7 @@ aside {
 }
 
 article {
-    padding: 10px 40px 40px 240px;
+    padding: 10px 40px 0 240px;
     text-align: justify;
     a, a:hover {
         color: #08f;
@@ -183,16 +183,32 @@ article {
         text-indent: 2em;
         line-height: 30px;
     }
+    b {
+        font-weight: bold;
+    }
     img {
         width: 90%;
         margin: 5px 0 5px 2em;
     }
-    li {
-        line-height: 30px;
+    ul {
+        width: 800px;
+        margin: 5px 0 10px 2em;
+        padding: 10px 20px;
+        border-left: 10px solid #f80;
+        border-radius: 10px;
+        background-color: rgba(#f80, 0.1);
+        li {
+            line-height: 30px;
+            &::before {
+                content: '●';
+                color: #f80;
+                margin-right: 10px;
+            }
+        }
     }
     table {
         border-radius: 5px;
-        margin: 20px;
+        margin: 20px 0 20px 2em;
         border: 1px solid #ccc;
         overflow: hidden;
         text-align: center;
@@ -210,6 +226,9 @@ article {
                 border-right: 1px solid #ccc;
             }
         }
+        th {
+            padding: 0 20px;
+        }
         td {
             border-top: 1px solid #ccc;
             &.td-left {
@@ -222,7 +241,7 @@ article {
         display: block;
         text-align: right;
         color: #666;
-        margin: 50px 0 25px;
+        margin: 40px 0;
     }
     code {
         color: #f80;
@@ -241,12 +260,14 @@ article {
         line-height: 24px;
         border-radius: 8px;
         border: 1px solid #ccc;
-        background-color: #f5f5f5;
+        background-color: #fafafa;
         position: relative;
         overflow: hidden;
         margin-left: 2em;
         code {
             color: #333;
+            border: none;
+            background-color: inherit;
         }
         .copy {
             padding: 3px 10px;
@@ -267,7 +288,7 @@ article {
     .copy-success {
         position: absolute;
         top: 5px;
-        right: -80px;
+        right: -120px;
         color: #0c0;
         opacity: 0;
     }
