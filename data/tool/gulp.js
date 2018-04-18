@@ -375,7 +375,7 @@ commonData.tool.gulp = {
 	#实践
 	
 	
-	相关参考链接：α(https://www.gulpjs.com.cn/docs/getting-started/|gulp中文网-文档)，α(http://www.cnblogs.com/2050/p/4198792.html|博客园-无双)，α(https://www.npmjs.com/search?q=keywords:gulpplugin|npm-所有插件)
+	相关参考链接：α(https://www.gulpjs.com.cn/docs/getting-started/|gulp中文网-文档)，α(http://www.cnblogs.com/2050/p/4198792.html|博客园-无双)，α(https://www.npmjs.com/search?q=keywords:gulpplugin|npm-所有gulp插件)
 	
 	&2018.4.12
 	`
