@@ -14,17 +14,17 @@ commonData.tool.gulp = {
 	package.json是项目必不可少的配置文件，它是存放在项目根目录的普通json文件
 	创建该文件在根目录下打开cmd执行命令：·npm init·
 	然后按提示依次输入命令回车
-	··
-	name：(demo) 项目名称
-	version：(1.0.0) 版本号
+	‖
+	name{String}[demo]：项目名称
+	version[1.0.0]：版本号
 	description：项目描述
-	entry point：(index.js) 入口文件，简而言之，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出
+	entry point：入口文件，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出
 	test command：测试命令
 	git repository：git地址
 	keywords：关键描述
 	author：作者
-	license：(ISC) 许可协议
-	··
+	license[ISC]：许可协议
+	‖
 	就会有package.json文件的预览，·Is this ok? (yes)·输入y回车即可
 	如果嫌麻烦的话直接不输入全都回车也行，反正在package.json里面可以再改嘛
 	当然如果之前其他项目有package.json文件的话可以直接复制过来再改也可以
@@ -48,16 +48,17 @@ commonData.tool.gulp = {
 	
 	#API介绍
 	
-	##gulp.src(globs[, options])：匹配文件
+	##src()
+	gulp.src(globs[, options])：匹配文件
 	globs：文件匹配模式（类似正则表达式），用来匹配文件路径包括文件名，也可以直接指定某个具体的文件路径。当有多个匹配模式时，该参数可以为一个数组
 	options：可选参数，通常情况下不需要用到
-	··
-	options: {
-		base{String}: 默认值为基础路径，gulp.dest()会介绍
-		buffer{Boolean}[true]: 设置为 false 将会以 stream 方式返回 file.contents 而不是文件 buffer 的形式，这在处理一些大文件的时候将会很有用
-		read{Boolean}[true]: 设置为 false 那么 file.contents 会返回空值（null），也就是并不会去读取文件
+	‖
+	options：{
+		base{String}：默认值为基础路径，gulp.dest()会介绍
+		buffer{Boolean}[true]：设置为 false 将会以 stream 方式返回 file.contents 而不是文件 buffer 的形式，这在处理一些大文件的时候将会很有用
+		read{Boolean}[true]：设置为 false 那么 file.contents 会返回空值（null），也就是并不会去读取文件
 	}
-	··
+	‖
 	gulp内部使用了node-glob模块来实现其文件匹配功能，可以使用下面这些特殊的字符来匹配我们想要的文件：
 	·*·：匹配文件路径中的0个或多个字符，但不会匹配路径分隔符，除非路径分隔符出现在末尾
 	·**·：匹配路径中的0个或多个目录及其子目录，需要单独出现，即它左右不能有其他东西了。如果出现在末尾，也能匹配文件。
@@ -93,7 +94,8 @@ commonData.tool.gulp = {
 	·a{b,c{d,e}f}g· 会展开为 abg，acdfg，acefg
 	·a{b,c}d{e,f}g· 会展开为 abdeg，acdeg，abdeg，abdfg
 	
-	##gulp.dest(path[, options])：写入文件
+	##dest()
+	gulp.dest(path[, options])：写入文件
 	path：写入文件的路径String or Function（待加样式）可以在函数中返回相应路径
 	options：可选参数，通常情况下不需要用到
 	··
@@ -140,7 +142,8 @@ commonData.tool.gulp = {
 	··
 	用·gulp.dest()·把文件流写入文件后，文件流仍然可以继续使用，也就是后续可以继续pipe回调
 	
-	##gulp.task(name[, deps], fn)：定义任务
+	##task()
+	gulp.task(name[, deps], fn)：定义任务
 	name：自定义任务名
 	deps：是当前任务需要依赖的其他任务名，为一个数组。当前定义的任务会在所有依赖的任务执行完毕后才开始执行。如果没有依赖可省略
 	fn：为任务函数，要执行的代码都写在里面。该参数也是可选的
@@ -210,7 +213,8 @@ commonData.tool.gulp = {
 	})
 	··
 	
-	##gulp.watch(glob[, opts], tasks)：监听文件变化
+	##watch()
+	gulp.watch(glob[, opts], tasks)：监听文件变化
 	glob：要监听的文件匹配模式，规则和用法与·gulp.src()·方法中的glob相同
 	opts：可选参数，通常情况下不需要用到
 	tasks：为文件变化后要执行的任务，为一个数组

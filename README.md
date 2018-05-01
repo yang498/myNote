@@ -1,4 +1,16 @@
 #目录
+	html
+		weex
+	css
+	css-library
+	js
+		类型方法
+	js-library
+	tool
+	other
+		interview
+
+
 	common-data.js：所有文档用一个commonData对象变量作为容器，一级菜单作为子属性预先定义好，二级菜单在各自的文件内定义作为二级子属性，可以定义name属性作为展示的名称
 	data*.js：一个文档为js文件作为二级菜单，新添加js注意在index.html引入js
 	format-html.js：文档按照规则填写，然后对文档解析，将h1作为左边导航菜单，并给h1添加点击事件，将自己距离文档顶部的距离作为参数而滚动到相应位置的方法

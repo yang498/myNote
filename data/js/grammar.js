@@ -8,7 +8,8 @@ commonData.js.grammar = {
 	
 	##document
 	document对象是文档的根节点，也就是整个网页，window.document属性就指向这个对象
-	document.documentElement：html
+	有document.head和document.body，document.documentElement代表html根节点
+	
 	3种节点
 	元素：nodeType = 1
 	属性：nodeType = 2
@@ -19,7 +20,7 @@ commonData.js.grammar = {
 	nodeType
 	%%
 	序号,类型,描述
-	,,1,800
+	,,1
 	1,Element,元素
 	2,Attr,属性
 	3,Text,文本

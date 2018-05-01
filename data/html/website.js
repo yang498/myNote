@@ -39,6 +39,11 @@ commonData.html.website = {
 	文件夹后面是斜杠代表是一个文件夹，没有是文件
 	bin -> usr/bin/：代表子目录是usr，但可直接访问孙目录bin
 	
+	#远程连接工具
+	##SecureCRT
+	百度SecureCRT下载，完成后安装x64位的，一直点下一步
+	再百度SecureCRT keygen下载注册机，在α(https://www.baidu.com/link?url=DziWjZR39cXFht1SnuhS1RygelmH0W0cW4LbohLmLub2Oiqi2pEfsjsnfPI-3MBgD6csTQe5_-WNrfvHaRGZPq&wd=&eqid=e6a36eba0002a1b0000000035adc5254|多多软件站)下载了一个，在安装的时候注意把附带其他的软件的勾给去掉，不然你懂得，超烦的，运行SecureCRT keygen.exe，点击左下的patch，选择安装路径的SecureCRT.exe，第二次选择LicenseHelper.exe，成功后点击Generate生成许可证，再打开SecureCRT，第一个大的输入框不填点下一步，对应的框复制粘贴对应的名称、序列号、日期即可，最后的大输入框也不填就可以了
+	
 	相关参考链接：α(https://help.aliyun.com/?spm=a2c4g.11186623.201511181.1.EnHOJL|阿里云-文档)
 	
 	&2018/4/12

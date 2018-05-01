@@ -129,8 +129,13 @@ commonData.js.string = {
 	·String.prototype.substring(begin, end)·：基本同·slice()·，区别在于：不支持负数，如果任一参数小于0就会当作0。如果begin大于end则参数位置互换
 	##substr()
 	·String.prototype.substr(begin, length)·：基本同·slice()·，区别在于：第二个参数是长度，若小于0就会当作0，也就是返回空字符串
+	··
+	'JavaScript'.substr(4, 6)	// "Script"，从第4个位置开始，取6个
+	'JavaScript'.substr(-6)	// "Script"，从第-6也就是第4个位置开始，直到最后
+	'JavaScript'.substr(4, -1)	// ""，长度小于0不存在，返回空字符串
+	··
 	##split()
-	·String.prototype.split(str/reg, length)·：按照给定参数的规则分割字符串，返回一个由分割出来的子字符串组成的数组，不改变原值。
+	·String.prototype.split(str|reg, length)·：按照给定参数的规则分割字符串，返回一个由分割出来的子字符串组成的数组，不改变原值。
 	如果参数为空就返回数组的唯一成员就是原字符串。
 	如果参数为''则返回数组的成员是原字符串的每一个字符。
 	如果满足分割规则的两个部分中间没有其他字符或处于开头结尾，则返回空字符串。

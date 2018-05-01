@@ -1,16 +1,9 @@
-/* 整体来说js文件引入的比较多，可能初次加载得会慢一点，要改动整体方式的话会改动得比较大
- * 待做：
- * 先把已有的笔记转移
- * 二级目录放在左边下面显示，随一级切换而切换，active只改color
- * 字符串在注释内不解析成绿色，单引号双引号都可以
- * codes内数字的解析，横向超出显示滚动条
- * codes和table的默认宽为1000
- * 新开说明属性
- * 代码块的宽度再宽，多出横向滚动
- * weex中的flex布局加个链接跳转到css中的flex，包括文档的位置
- * 完善整理format-html（正则变量，再重新过一遍，去分号），li和整体样式再调一下
- * 文内链接：点击进入对应文档
- * 搜索：Algolia
+/* 待做：
+ * 先把已有的笔记转移，还要重装系统呢，下面这些以后再说
+ * 可能对代码块的html部分稍微再调整
+ * 整体流程做一遍详细说明
+ * 文档内跳转精确到h1、h2
+ * 搜索，可参考Algolia，实在不行就拉倒
  * 设置：
  * 		回到上次：页面在关闭前用localstorage记录当前位置，下次再打开提示是否回到上次的位置，可以关闭和5秒后以3秒淡出，也可以勾选不再提醒，设置也可以更改打开或关闭
  * 		换肤：把相关颜色抽离出来，用一个web同级的class控制用sass循环，把选择的颜色保存在localstorage，所涉及的颜色：header和aside的背景色，h1的颜色
@@ -19,9 +12,12 @@
  * 		github链接
  */
 
-const scrollToTop = pos => $('html').stop(true).animate({ scrollTop: pos })
-const asideActive = () => { for(let i = $('h1').length - 1; i >= 0; i--) if ($('h1').eq(i).offset().top < $(window).scrollTop() + 200) return i }
-let asideClick = true	// 点击左边菜单不触发asideActive
+const h2Height = () => $('aside .h2').height($('aside').height() - $('aside .h1').height() - 60)	// h2的高度调整
+const scrollToTop = pos => $('html').stop(true).animate({ scrollTop: pos }) // 滚动到指定位置
+const asideActive = () => { for(let i = $('h1').length - 1; i >= 0; i--) if ($('h1').eq(i).offset().top < $(window).scrollTop() + 200) return i } // 获取h1的active
+let $asideH2 = null
+const asideActive2 = () => { for(let i = $asideH2.length - 1; i >= 0; i--) if ($asideH2.eq(i).offset().top < $(window).scrollTop() + 150) return i }
+let asideClick = true	// 点击左边菜单不触发asideActive的滚动事件，400ms结束也就是滚动完再恢复
 let asideTimer = null
 let scrollTimer = null // 降低滚动频率，每秒只触发10次
 let isPageHash = false	// 避免重复触发hashchange事件
@@ -45,10 +41,18 @@ const copyCodeFn = function(item) {		// 复制代码
 	$('.copy-success').eq($(item).index('.copy')).addClass('copy-success-active')
 }
 $(window).on('scroll', function(){
-	if(!scrollTimer) {
+	if(!scrollTimer) { // 降低滚动频率，每秒只触发10次
 		scrollTimer = setTimeout(() => {
 			scrollTimer = null
-			asideClick && (vue.asideActive = asideActive())
+			if(asideClick) {
+				let active = asideActive()
+				if(vue.asideActive !== active) {	// 当h1改变后再改变
+					vue.asideActive = active
+					h2Height()
+				}
+				$asideH2 = $('h1').eq(active).nextUntil('h1').filter('h2')	// 新的h1下的h2
+				vue.asideActive2 = asideActive2()
+			}
 		}, 66)
 	}
 }).on('hashchange', function(e){
@@ -68,8 +72,10 @@ let vue = new Vue({
 		menuParent,
 		menuChild,
 		commonData,
-		aside: [],
+		asideH1: [],
+		asideH2: [],
 		asideActive: 0,
+		asideActive2: 0,
 		article: ''
 	},
 	created() {
@@ -77,15 +83,29 @@ let vue = new Vue({
 	},
 	methods: {
 		init() {
-			this.article = formatHtml(commonData[menuParent][menuChild].content)	// 运行之后才有aside.title
-			this.aside = commonData[menuParent][menuChild].title
+			this.article = formatHtml(commonData[menuParent][menuChild].content)	// 运行之后才有asideH1和asideH2
+			this.asideH1 = commonData[menuParent][menuChild].h1
+			this.asideH2 = commonData[menuParent][menuChild].h2
 		},
-		asideTitle(index) {
+		onAsideH1(index) {
 			this.asideActive = index
+			this.asideActive2 = 0
 			asideClick = false
 			clearTimeout(asideTimer)
 			asideTimer = setTimeout(()=>{ asideClick = true }, 400)
 			$('article').find('h1').eq(index).click()
+		},
+		onAsideH2(index) {
+			this.asideActive2 = index
+			asideClick = false
+			clearTimeout(asideTimer)
+			asideTimer = setTimeout(()=>{ asideClick = true }, 400)
+			$asideH2.eq(index).click()
+		},
+		directory() {
+			this.index = true
+			location.hash = ''
+			$('html').scrollTop(0)
 		},
 		changePage(parent, child) {
 			isPageHash = true
