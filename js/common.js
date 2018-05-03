@@ -1,4 +1,5 @@
 /* 待做：
+ * 检查顺一遍笔记
  * 先把已有的笔记转移，还要重装系统呢，下面这些以后再说
  * 文档内跳转精确到h1、h2
  * 可能对代码块的html和css部分稍微再调整
@@ -26,24 +27,22 @@ const asideTime = () => {
 }
 let scrollTimer = null // 降低滚动频率
 let isPageHash = false	// 避免重复触发hashchange事件，当手动点击菜单切换的时候就不必触发hashchange了，只在点击刷新、前进后退和手动输入地址栏触发
-const initHash = obj => {
-	if(location.hash) {	// 如果有路径，说明是刷新、前进后退或手动输入的路径
-		try {
-			commonData[obj.menuParent][obj.menuChild]	// 尝试该路径能否读取，若能读取就继续往下执行，若不存在则报错进入catch
-			obj.index = false	// 显示文章
-			obj.init()	// 初始化内容
-		} catch {
-			obj.index = true	// 显示目录
-			console.warn('hash值：' + location.hash + '不存在！')
-		}
-	}
-}
 const copyCode = function(item) {	// 复制代码，在匹配代码块的时候写在行内
 	$('.web').after('<textarea id="copy-textarea">' + pageCode[$(item).index('.copy')] + '</textarea>')	// 创建一个看不见的文本域，要复制的代码作为value
 	$('#copy-textarea').select()	// 全选value
 	document.execCommand('copy')	// 执行复制
 	$('#copy-textarea').remove()	// 删除这个文本域
 	$('.copy-success').eq($(item).index('.copy')).addClass('copy-success-active')	// 复制右边的勾加个动画表示复制成功
+}
+const initHash = obj => {
+	try {
+		commonData[obj.menuParent][obj.menuChild]	// 尝试该路径能否读取，若能读取就继续往下执行，若不存在则报错进入catch返回首页显示目录
+		obj.index = false	// 显示文章
+		obj.init()	// 初始化内容
+	} catch {
+		obj.index = true	// 显示目录
+		location.hash && console.warn('hash值：' + location.hash + '不存在！')
+	}
 }
 $(window).on('scroll', function(){	// 监听页面滚动改变当前h1和h2的active，如果刷新后有滚动距离也会触发一次
 	if(!scrollTimer) {	// 降低滚动触发频率提升性能，至少间隔0.1s再触发
