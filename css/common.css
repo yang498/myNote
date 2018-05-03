@@ -62,7 +62,8 @@ article table tr th:not(:last-child), article table tr td:not(:last-child) { bor
 article table th { padding: 0 20px; }
 article table td { border-top: 1px solid #ccc; }
 article table td.td-left { text-align: left; padding-left: 20px; }
-article time { display: block; text-align: right; color: #666; margin: 40px 0; }
+article .link { font-size: 18px; margin-top: 50px; padding-top: 20px; text-indent: 2em; border-top: 1px dashed #999; }
+article time { display: block; text-align: right; color: #666; margin: 20px 0; }
 article code { color: #f80; margin: 0 3px; padding: 3px 5px; border-radius: 3px; background-color: #f5f5f5; border: 1px solid #eee; font-family: consolas; }
 article span { font-family: inherit; }
 article pre { width: 1000px; line-height: 24px; border-radius: 8px; font-family: consolas; border: 1px solid #ccc; background-color: #fafafa; margin-left: 2em; overflow-y: hidden; padding: 20px 30px; }
@@ -72,7 +73,7 @@ article .copy-success { position: absolute; top: 5px; right: -66px; color: #0c0;
 article .copy-success-active { animation: copy 1s; }
 @keyframes copy { 80% { opacity: 1; transform: translateY(-30px); }
   100% { opacity: 0; transform: translateY(-30px); } }
-article #copy-textarea { position: fixed; right: 200%; opacity: 0; }
+article #copy-textarea { position: fixed; left: -9999px; opacity: 0; }
 article pre .copy:hover { background-color: #f5f5f5; }
 article pre .copy:active { color: #25A5F7; }
 article .code-keyword-out { color: #f08; }

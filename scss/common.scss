@@ -276,11 +276,18 @@ article {
             }
         }
     }
+    .link {
+        font-size: 18px;
+        margin-top: 50px;
+        padding-top: 20px;
+        text-indent: 2em;
+        border-top: 1px dashed #999;
+    }
     time {
         display: block;
         text-align: right;
         color: #666;
-        margin: 40px 0;
+        margin: 20px 0;
     }
     code {
         color: #f80;
@@ -344,7 +351,7 @@ article {
     }
     #copy-textarea {
         position: fixed;
-        right: 200%;
+        left: -9999px;
         opacity: 0;
     }
     pre .copy:hover {
