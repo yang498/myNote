@@ -5,8 +5,8 @@ const formatHtml = text => {
 	pageH2 = []
 	let h1Index = -1
 	let tagStartEnd = true
-	const codeKeywordOut = /var|let(?=\s)|const|this|function|=>|new|class(?=\s)|for(?=\s)|\sin(?=\s)|of|true(?!¿)|false|null|undefined|console|window|document|typeof|delete/g
-	const codeKeywordIn = /if|else|switch|case|break|continue|return|while|do(?!\w)|Math(?=\.)|Date(?=\.|\()/g
+	const codeKeywordOut = /var|let(?=\s)|const|this|function|=>|new|class(?=\s)|\sin(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null|undefined|console|window(?!'|"|`)|document|typeof|delete/g	// 一类关键字，粉色
+	const codeKeywordIn = /if(?=\s)|else|switch|case|break|continue|return|for(?=\s)|\sin(?=\s)|of|while|do(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
 	const codeComment = /\/\/[^]*?\n|\/\*[^]*?\*\//g
 	const codeString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g	//不想被转字符串变绿就在后面加¿，注释内不用，已判断添加
 	const codeInline = /·/g
@@ -26,6 +26,7 @@ const formatHtml = text => {
 	const table = /^%%|%%$/g
 	const inlineSplit = 'ˊ'	// 用于拼接的特殊字符
 	const inlineSplitReg = /ˊ/g	// 用于拼接的特殊字符正则
+	const unit = u => (isNaN(u) ? u : u + 'px') + ';'	// 单位转换一下
 	// [^]*：代表匹配所有字符无限次，但会直到最后一次，中间有x符号也会忽略，所以需要非贪婪[^]*?让它碰到x就停下来，但一次又不行，所以需要g全局匹配
 	
 	// 主要的作用是将多行标识符按inlineSplit特殊字符合并成单行，整理行内标识符，代码块加颜色
@@ -34,7 +35,7 @@ const formatHtml = text => {
 		str = str.replace(code, item => { // 多行代码块加颜色
 			item = item.replace(/^\t|/gm, '').replace(/\t/g, '    ') // 去掉开头书写tab，再把其他的tab替换成空格，不然会比较大
 			pageCode.push(item.slice(3, -3).replace(codeReg, '')) // 去首尾换行再保存代码
-			item = item.replace(codeComment, item => item.replace(/'|"|`/g, '$&¿'))	// 注释中的字符串加标记避免被绿
+			item = item.replace(codeComment, item => item.replace(/'|"|`/g, '$&¿'))	// 注释中的字符串和关键字加标记避免被绿
 			item = item.replace(codeString, item => `<span class="code-string">${item.replace(/¿/g, '')}</span>`) // 字符串
 			item = item.replace(codeComment, item => `<span class="code-comment">${item.replace(/¿/g, '')}</span>`) // 注释
 			item = item.replace(codeKeywordOut, '<span class="code-keyword-out">$&</span>') // 一类关键字
@@ -52,7 +53,7 @@ const formatHtml = text => {
 			tagStartEnd = !tagStartEnd
 			return item
 		})
-		str = str.replace(a, item => '<a href="' + item.replace(/^α\(|\|[^]*/g, '') + '" target="_blank">' + item.replace(/[^]*\||\)$/g, '') + '</a>') // a链接
+		str = str.replace(a, item => '<a href="' + item.replace(/[^]*\||\)$/g, '') + '" target="_blank">' + item.replace(/^α\(|\|[^]*/g, '') + '</a>') // a链接
 		str = str.replace(/αα(?=\n)[^]*?αα(?=\n)/g, item => {	// 相关参考链接
 			let res = ''
 			item.slice(3, -4).split('\n').forEach(obj => res += `<a href="${obj.replace(/[^]*α/, '')}" target="_blank">${obj.replace(/α[^]*|\s/g, '') + ''}</a>，`)
@@ -65,13 +66,13 @@ const formatHtml = text => {
 		})
 		str = str.replace(imgInline, item => { // 行内图片
 			item = item.slice(2, -1).split(',')
-			return '<img src="' + item[0] + '" style="width:' + item[1] + 'px;"/>'
+			return `<img src="${item[0]}" style="${item[1] ? 'width:' + unit(item[1]) : ''}${item[2] ? 'height:' + unit(item[2]) : ''}"/>`
 		})
 		str = str.replace(/‖(?=\n)[^]*?‖(?=\n)/g, item => { // 列表，获得每个列表
-			item = item.replace(/\n[^]*?(?=\n)/g, obj => obj.replace(/[^]*(?=：)/, o => { // 获得每一行，再获得每个开头
-				o = o.replace('\t\t', ' <i class="attr"></i>') // 保持缩进
+			item = item.replace(/\n[^]*?(?=\n)/g, obj => obj.replace('\t', '').replace(/\t/g, ' <i class="attr"></i>').replace(/[^]*(?=：)/, o => { // 获得每一行，保持缩进，再获得每个开头
 				o = o.replace('{', ' <i class="type">{').replace('}', '}</i>') // 类型变橙色
-				o = o.replace('[', ' <i class="default">[').replace(']', ']</i>') // 默认值变粉色
+				o = o.replace('[', ' <i class="default">[').replace(/]+/, '$&</i>') // 默认值变粉色
+				o = o.replace('!', ' <b>!</b>')	// 必填加粗
 				return '\n<i class="head">' + o.slice(1) + '</i>'
 			}))
 			return item.replace(/\s*\n\s*/g, inlineSplit)	// 转换成少数符号的标识符
@@ -99,8 +100,8 @@ const formatHtml = text => {
 			}  else if(time.test(item)) {	// --------------------------------------------time
 				return `<time>${item.replace(time, '')}</time>`
 			} else if(img.test(item)) {	// --------------------------------------------img
-				item = item.replace(img, '').split(',') // 用逗号加宽度
-				return `<img src="${item[0]}" ${item[1] ? 'style="width:'+item[1]+'px"' : ''}/>`
+				item = item.replace(img, '').split(',') // 用逗号加宽高
+				return `<img src="${item[0]}" style="${item[1] ? 'width:' + unit(item[1]) : ''}${item[2] ? 'height:' + unit(item[2]) : ''}"/>`
 			} else if(li.test(item)) {	// --------------------------------------------li
 				return `<ul><li>${item.slice(2,-2).replace(inlineSplitReg, '</li><li>')}</li></ul>`
 			} else if(table.test(item)) {	// --------------------------------------------table

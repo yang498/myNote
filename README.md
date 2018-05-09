@@ -22,8 +22,8 @@
 
 #匹配规则：format-html.js
 	标题：以#开头，h1：#，h2：##，h3：###
-	图片：以!开头，!src,width
-	行内图片：¡(src,width)
+	图片：以!开头，!src,width,height
+	行内图片：¡(src,width,height)
 	链接：α(text|href)
 	底部相关参考链接：
 		αα
