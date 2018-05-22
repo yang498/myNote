@@ -15,7 +15,7 @@ commonData.tool.gulp = {
 	创建该文件在根目录下打开cmd执行命令：·npm init·
 	然后按提示依次输入命令回车
 	‖
-	name{String}[demo]：项目名称
+	name[demo]：项目名称
 	version[1.0.0]：版本号
 	description：项目描述
 	entry point：入口文件，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出

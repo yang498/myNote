@@ -32,6 +32,7 @@ const formatHtml = text => {
 	// 主要的作用是将多行标识符按inlineSplit特殊字符合并成单行，整理行内标识符，代码块加颜色
 	String.prototype.formatString = function() {
 		let str = this
+		str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;')	// 大于小于换成标识符避免和html标签冲突
 		str = str.replace(code, item => { // 多行代码块加颜色
 			item = item.replace(/^\t|/gm, '').replace(/\t/g, '    ') // 去掉开头书写tab，再把其他的tab替换成空格，不然会比较大
 			pageCode.push(item.slice(3, -3).replace(codeReg, '')) // 去首尾换行再保存代码
@@ -66,7 +67,7 @@ const formatHtml = text => {
 		})
 		str = str.replace(imgInline, item => { // 行内图片
 			item = item.slice(2, -1).split(',')
-			return `<img src="${item[0]}" style="${item[1] ? 'width:' + unit(item[1]) : ''}${item[2] ? 'height:' + unit(item[2]) : ''}"/>`
+			return `<img src="${item[0]}" class="img-inline" style="${item[1] ? 'width:' + unit(item[1]) : ''}${item[2] ? 'height:' + unit(item[2]) : ''}"/>`
 		})
 		str = str.replace(/‖(?=\n)[^]*?‖(?=\n)/g, item => { // 列表，获得每个列表
 			item = item.replace(/\n[^]*?(?=\n)/g, obj => obj.replace('\t', '').replace(/\t/g, ' <i class="attr"></i>').replace(/[^]*(?=：)/, o => { // 获得每一行，保持缩进，再获得每个开头
@@ -101,7 +102,7 @@ const formatHtml = text => {
 				return `<time>${item.replace(time, '')}</time>`
 			} else if(img.test(item)) {	// --------------------------------------------img
 				item = item.replace(img, '').split(',') // 用逗号加宽高
-				return `<img src="${item[0]}" style="${item[1] ? 'width:' + unit(item[1]) : ''}${item[2] ? 'height:' + unit(item[2]) : ''}"/>`
+				return `<img src="${item[0]}" class="img" style="${item[1] ? 'width:' + unit(item[1]) : ''}${item[2] ? 'height:' + unit(item[2]) : ''}"/>`
 			} else if(li.test(item)) {	// --------------------------------------------li
 				return `<ul><li>${item.slice(2,-2).replace(inlineSplitReg, '</li><li>')}</li></ul>`
 			} else if(table.test(item)) {	// --------------------------------------------table

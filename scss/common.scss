@@ -200,7 +200,7 @@ article {
         }
     }
     h3 {
-        font-size: 20px;
+        font-size: 18px;
         margin: 20px 0 10px;
         font-weight: bold;
         text-indent: 2em;
@@ -212,8 +212,11 @@ article {
     b {
         font-weight: bold;
     }
-    img {
+    .img {
         margin: 5px 0 5px 2em;
+    }
+    .img-inline {
+        margin: 0 5px;
     }
     ul {
         width: 1000px;
