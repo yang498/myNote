@@ -1,5 +1,5 @@
 const formatHtml = text => {
-	// 清空重新赋值，不要直接写成pageCode = pageH1 = pageH2 = []，不然就变成3个变量公用一个值，一改全改
+	// 每次切换页面都清空重新赋值，注意不要直接写成pageCode = pageH1 = pageH2 = []，不然就变成3个变量公用一个值，一改全改
 	pageCode = []
 	pageH1 = []
 	pageH2 = []
@@ -7,12 +7,12 @@ const formatHtml = text => {
 	let tagStartEnd = true
 	const codeKeywordOut = /var|let(?=\s)|const|this|function|=>|new|class(?=\s)|\sin(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null|undefined|console|window(?!'|"|`)|document|typeof|delete/g	// 一类关键字，粉色
 	const codeKeywordIn = /if(?=\s)|else|switch|case|break|continue|return|for(?=\s)|\sin(?=\s)|of|while|do(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
-	const codeComment = /\/\/[^]*?\n|\/\*[^]*?\*\//g
-	const codeString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g	//不想被转字符串变绿就在后面加¿，注释内不用，已判断添加
+	const codeComment = /\/\/(?!×)[^]*?\n|\/\*[^]*?\*\//g	// 有可能是个ajax的请求http://，在后面加上条件(?=×)表示不转，最后去除×标识
+	const codeString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g	// 不想被转字符串变绿就在后面加¿，注释内不用，已判断添加
 	const codeInline = /·/g
 	const code = /··[^]*?··/g	// 用于书写
 	const codeNew = /‥/g	// 用于匹配
-	const codeReg = /¦/g	// 直接匹配字符串会转义太复杂，改用特殊符号标记
+	const codeReg = /¦/g	// 直接匹配字符串会转义，太复杂，改用特殊符号标记
 	const h1 = /^#/
 	const h2 = /^##/
 	const h3 = /^###/
@@ -37,12 +37,12 @@ const formatHtml = text => {
 			item = item.replace(/^\t|/gm, '').replace(/\t/g, '    ') // 去掉开头书写tab，再把其他的tab替换成空格，不然会比较大
 			pageCode.push(item.slice(3, -3).replace(codeReg, '')) // 去首尾换行再保存代码
 			item = item.replace(codeComment, item => item.replace(/'|"|`/g, '$&¿'))	// 注释中的字符串和关键字加标记避免被绿
-			item = item.replace(codeString, item => `<span class="code-string">${item.replace(/¿/g, '')}</span>`) // 字符串
+			item = item.replace(codeString, item => `<span class="code-string">${item.replace(/¿/g, '')}</span>`) // 字符串，注意此时已经把¿替换掉了，如果注释还是靠¿的话会有冲突
 			item = item.replace(codeComment, item => `<span class="code-comment">${item.replace(/¿/g, '')}</span>`) // 注释
 			item = item.replace(codeKeywordOut, '<span class="code-keyword-out">$&</span>') // 一类关键字
 			item = item.replace(codeKeywordIn, '<span class="code-keyword-in">$&</span>') // 二类关键字
 			item = '‥' + item.slice(2, -2) + '‥' // 转换成少数符号的标识符
-			return item.replace(/\n/g, inlineSplit) // 转换成少数符号合并成一行
+			return item.replace(/×/g, '').replace(/\n/g, inlineSplit) // 去除不转注释的×标识，转换成少数符号合并成一行
 		})
 		str = str.replace(codeReg, item => { // 代码块内正则
 			item = tagStartEnd ? '<span class="code-reg">' : '</span>'

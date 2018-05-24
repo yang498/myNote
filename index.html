@@ -17,9 +17,11 @@
 					<li @click="directory" :class="index?'active':''">
 						<img src="imgs/logo.jpg"/>
 					</li>
+					<!-- 每个一级目录都有一个name属性用来显示说明 -->
 					<li v-for="(value, key) in commonData" :class="menuParent===key&&!index?'active':''">
 						<span v-cloak>{{value.name}}</span>
 						<ul>
+							<!-- 所以如果该属性名为name就不显示，如果二级目录没有name属性说明就直接用二级目录名 -->
 							<li v-for="(content, name) in value" :class="menuChild===name&&!index?'active':''" @click="changePage(key, name)" v-if="name!=='name'">{{content.name||name}}</li>
 						</ul>
 					</li>
@@ -52,7 +54,7 @@
 					</li>
 				</ul>
 			</section>
-			<!--aside的右边框初始化的时候不加载好看一点-->
+			<!-- aside的右边框初始化的时候不加载好看一点 -->
 			<aside v-if="!index" :class="index?'':'active'">
 				<ul class="h1">
 					<li v-for="(item, index) of asideH1" :class="index===asideActive?'active':''" v-cloak @click="onAsideH1(index)">{{item}}</li>
@@ -67,7 +69,7 @@
 		<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue-2.5.16.js" type="text/javascript" charset="utf-8"></script>
 		
-		<!--data start-->
+		<!-- data start -->
 		<script src="data/common-data.js" type="text/javascript" charset="utf-8"></script>
 		
 		<script src="data/html/html.js" type="text/javascript" charset="utf-8"></script>
@@ -95,7 +97,8 @@
 		
 		<script src="data/other/interview.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/other/office.js" type="text/javascript" charset="utf-8"></script>
-		<!--data end-->
+		<script src="data/other/article.js" type="text/javascript" charset="utf-8"></script>
+		<!-- data end -->
 		
 		<script src="js/format-html.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>

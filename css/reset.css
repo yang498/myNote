@@ -114,6 +114,10 @@ textarea {
 	border: none;
 }
 
+pre {
+	margin: 10px 0;
+}
+
 a,
 a:hover {
 	color: inherit;

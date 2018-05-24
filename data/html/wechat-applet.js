@@ -1,4 +1,4 @@
-commonData.html.weex = {
+commonData.html.wechatApplet = {
 	name: '微信小程序',
 	content: `
 	#介绍
@@ -397,6 +397,8 @@ commonData.html.weex = {
 	bindconfirm{EventHandle}：点击完成按钮时触发，event.detail = {value: value}
 	‖
 	
+	##button
+	
 	##swiper
 	‖
 	indicator-dots{Boolean}[false]：是否显示指示点
@@ -562,7 +564,7 @@ commonData.html.weex = {
 		wx.getSavedFileList：获取本地已保存的文件列表
 		wx.getSavedFileInfo：获取已保存到本地文件的文件信息
 		wx.removeSavedFile：删除本地存储的文件
-		wx.openDocument：新开页面打开文档，支持格式：doc, xls, ppt, pdf, docx, xlsx, pptx
+		wx.openDocument：新开页面打开文档，支持格式有 doc, xls, ppt, pdf, docx, xlsx, pptx
 	♭数据缓存♭
 		wx.setStorage：异步存储本地存储在指定的 key 中，若原来 key 有内容会覆盖
 		wx.setStorageSync：上面的同步接口
@@ -596,7 +598,6 @@ commonData.html.weex = {
 			wx.onUserCaptureScreen：监听用户主动截屏事件，用户使用系统截屏按键截屏时触发此事件
 			wx.vibrateLong：使手机发生较长时间的振动（400ms）
 			wx.vibrateShort：使手机发生较短时间的振动（15ms）
-		屏幕亮度
 			wx.setScreenBrightness：设置屏幕亮度
 			wx.getScreenBrightness：获取屏幕亮度
 			wx.setKeepScreenOn：设置是否保持常亮状态，仅在当前小程序生效，离开小程序后失效
@@ -659,7 +660,7 @@ commonData.html.weex = {
 			getPhoneNumber：获取微信用户绑定的手机号，需先调用login接口并只能用 <button> 组件的点击来触发
 			wx.requestPayment：发起微信支付
 		转发
-		onShareAppMessage：在 Page 中定义该函数，设置该页面的转发信息，右上角菜单才会显示 “转发” 按钮
+			onShareAppMessage：在 Page 中定义该函数，设置该页面的转发信息，右上角菜单才会显示 “转发” 按钮
 			wx.showShareMenu：显示当前页面的转发按钮
 			wx.hideShareMenu：隐藏转发按钮
 			wx.updateShareMenu：更新转发属性
@@ -695,7 +696,10 @@ commonData.html.weex = {
 	})
 	‖
 	
-	##消息提示框
+	##提示框
+	
+	###消息提示框
+	在指定时间 duration 后自动消失
 	‖
 	wx.showToast({
 		title{String}!：提示的内容
@@ -710,7 +714,8 @@ commonData.html.weex = {
 	wx.hideToast()：主动隐藏消息提示框
 	‖
 	
-	##loading提示框
+	###loading提示框
+	需调用 wx.hideLoading() 后才会消失
 	‖
 	wx.showLoading({
 		title{String}!：提示的内容
@@ -719,10 +724,10 @@ commonData.html.weex = {
 		fail{Function}：失败的回调函数
 		complete{Function}：完成的回调函数
 	})
-	wx.hideToast()：隐藏loading提示框
+	wx.hideLoading()：隐藏loading提示框
 	‖
 	
-	##模态弹窗
+	###模态弹窗
 	‖
 	wx.showModal({
 		title{String}!：提示的标题
@@ -742,7 +747,7 @@ commonData.html.weex = {
 	})
 	‖
 	
-	##操作菜单
+	###操作菜单
 	‖
 	wx.showActionSheet({
 		itemList{String Array}!：按钮的文字数组，数组长度最大为6个
@@ -756,7 +761,246 @@ commonData.html.weex = {
 	})
 	‖
 	
-	##打电话
+	##网络请求
+	
+	###说明
+	注意在小程序后台配置域名白名单，只支持·https·（request、uploadFile、downloadFile）和·wss·（connectSocket）协议。
+	域名不能使用·IP地址·或·localhost·，不能带端口号，且必须经过·ICP备案·。
+	出于安全考虑·api.weixin.qq.com·不能被配置为服务器域名，相关API也不能在小程序内调用。开发者应将 appsecret 保存到后台服务器中，通过服务器使用 appsecret 获取 accesstoken，并调用相关 API。
+	对于每个接口，分别可以配置最多 20 个域名。
+	在微信开发者工具中可开启不校验请求域名跳过服务器域名的校验，手机也开启调试模式不会进行服务器域名的校验。当然上线还是会开启校验。
+	默认请求超时时间和最大超时时间都是 60s，request、uploadFile、downloadFile 的最大并发限制是 10 个。
+	网络请求的 referer header 不可设置。其格式固定为·https://servicewechat.com/{appid}/{version}/page-frame.html·，其中·{appid}·为小程序的 appid，·{version}·为小程序的版本号，版本号为 0 表示为开发版、体验版以及审核版本，版本号为 devtools 表示为开发者工具，其余为正式版本。
+	小程序进入后台运行后（非置顶聊天），如果 5s 内网络请求没有结束，会回调错误信息·fail interrupted·；在回到前台之前，网络请求接口调用都会无法调用。
+	只要服务器有返回东西都会进入 success 回调，最好根据 statusCode 再判断。
+	小程序会自动对 BOM 头进行过滤。
+	
+	###发起网络请求
+	‖
+	wx.request({
+		url{String}!：服务器接口地址
+		data{Object/String/ArrayBuffer}：请求的参数，如果是非 String 类型会转换成 String 类型，转换规则如下 :
+			GET请求： query string（encodeURIComponent(k)=encodeURIComponent(v)&...）
+			POST请求且且 header['content-type'] 为 application/json 的数据：对数据进行 JSON 序列化
+			POST请求且且 header['content-type'] 为 application/x-www-form-urlencoded 的数据：同 GET 的 query string
+		header{Object}[{'content-type':'application/json'}]：请求头，不能设置 Referer
+		method{String}[GET]：请求方式（需大写），有效值 OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+		dataType{String}[json]：设置返回的数据格式，设为 json 会尝试对返回的数据做一次 JSON.parse
+		responseType{String}[text]：设置响应的数据类型，可选 text、arraybuffer
+		success{Function(res)}：成功的回调函数
+			res：{
+				data{Object/String/ArrayBuffer}：返回的数据
+				statusCode{Number}：返回的 HTTP 状态码
+				header{Object}：返回的 HTTP Response Header
+			}
+		fail{Function}：失败的回调函数
+		complete{Function}：完成的回调函数
+	})
+	‖
+	返回一个 requestTask 对象，可调用·abort()·用于中断请求任务，比如：
+	··
+	const requestTask = wx.request({
+		url: 'test.php',
+		success: function(res) {
+			console.log(res.data)
+		}
+	})
+	
+	requestTask.abort()	// 取消请求任务
+	··
+	
+	###上传文件
+	将本地资源上传到开发者服务器，客户端发起一个·HTTPS POST·请求，其中·content-type·为·multipart/form-data·
+	比如通过·wx.chooseImage·等接口获取到一个本地资源的临时文件路径后上传到服务器
+	‖
+	wx.uploadFile({
+		url{String}!：服务器接口地址
+		filePath{String}!：要上传文件资源的路径
+		name{String}!：文件对应的 key ，在服务器端通过这个 key 可以获取到文件二进制内容
+		header{Object}[{'content-type':'application/json'}]：请求头，不能设置 Referer
+		formData{Object}[json]：	其他额外的 form data
+		success{Function(res)}：成功的回调函数
+			res：{
+				data{Object/String/ArrayBuffer}：返回的数据
+				statusCode{Number}：返回的 HTTP 状态码
+			}
+		fail{Function}：失败的回调函数
+		complete{Function}：完成的回调函数
+	})
+	‖
+	返回一个 uploadTask 对象，可通过·onProgressUpdate()·监听上传进度变化事件，调用·abort()·可取消上传任务
+	·onProgressUpdate·返回参数说明：
+	‖
+	progress{Number}：下载进度百分比
+	totalBytesWritten{Number}：已经下载的数据长度，单位 Bytes
+	totalBytesExpectedToWrite{Number}：预期需要下载的数据总长度，单位 Bytes
+	‖
+	示例代码：
+	··
+	const uploadTask = wx.uploadFile({
+    url: 'http://×example.weixin.qq.com/upload',
+    filePath: tempFilePaths[0],
+    name: 'file',
+    success: function(res){
+			console.log(res.data)
+		}
+	})
+
+	uploadTask.onProgressUpdate(res => {
+		console.log('上传进度', res.progress)
+		console.log('已经上传的数据长度', res.totalBytesSent)
+		console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+	})
+
+	uploadTask.abort() // 取消上传任务
+	··
+	
+	###下载文件
+	下载文件资源到本地，客户端直接发起一个·HTTP GET·请求，返回文件的本地临时路径
+	文件的临时路径，在小程序本次启动期间可以正常使用，如需持久保存，需在主动调用·wx.saveFile·，才能在小程序下次启动时访问得到。
+	注意在·header·中指定合理的·Content-Type·字段，以保证客户端正确处理文件类型
+	‖
+	wx.downloadFile({
+		url{String}!：服务器接口地址
+		header{Object}[{'content-type':'application/json'}]：请求头，不能设置 Referer
+		success{Function(res)}：成功的回调函数
+			res：{
+				tempFilePath{String}：临时文件路径，下载后的文件会存储到一个临时文件
+				statusCode{Number}：返回的 HTTP 状态码
+			}
+		fail{Function}：失败的回调函数
+		complete{Function}：完成的回调函数
+	})
+	‖
+	返回一个 downloadTask 对象，可通过·onProgressUpdate()·监听下载进度变化事件，参数同 uploadTask，调用·abort()·可取消下载任务
+	
+	##图片
+	‖
+	♭从本地相册选择图片或使用相机拍照♭
+	文件的临时路径在小程序本次启动期间可以正常使用，如需持久保存需在主动调用 wx.saveFile，在小程序下次启动时才能访问得到
+		wx.chooseImage({
+			count{Number}[9]：最多可以选择的图片张数
+			sizeType{String Array}[['original','compressed']]：original-原图，compressed-压缩图，默认都有
+			sourceType{String Array}[['album','camera']]：album-从相册选图，camera-使用相机，默认都有
+			success{Function(res)}!：成功的回调函数
+				res：{
+					tempFilePaths{StringArray}：图片的本地文件路径列表
+					tempFiles{ObjectArray}：{	图片的本地文件列表，每一项是一个 File 对象
+						File：{
+							path{String}：本地文件路径
+							size{Number}：本地文件大小，单位B
+						}
+					}
+				}
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭预览图片，左右滑动可切换图片，长按可选择保存或转发、收藏♭
+		wx.previewImage({
+			urls{StringArray}!：图片路径列表
+			current{String}[urls[0]]：当前显示图片路径
+			success{Function}：成功的回调函数
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭获取图片信息♭
+		wx.getImageInfo({
+			src{String}!：图片的路径，可以是相对、临时文件、存储文件、网络路径
+			success{Function(res)}：成功的回调函数
+				res：{
+					width{Number}：图片宽度，单位px
+					height{Number}：图片高度，单位px
+					path{String}：图片的路径
+					orientation：图片的方向，有效值有
+						up（默认）、down（180度旋转）、left（左旋90度）、right（右旋90度）、
+						up-mirrored（水平翻转）、down-mirrored（down的水平翻转）
+						left（left的水平翻转）、right（right的水平翻转）
+				}
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭保存图片到系统相册♭
+		wx.saveImageToPhotosAlbum({
+			filePath{String}!：图片文件路径，可以是临时文件路径也可以是永久文件路径，不支持网络图片路径
+			success{Function}：成功的回调函数
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	‖
+	
+	##文件
+	‖
+	♭保存文件到本地♭
+	注意这会把临时文件移动，因此调用成功后传入的 tempFilePath 将不可用，本地文件存储的大小限制为 10M
+		wx.saveFile({
+			tempFilePath{String}!：需要保存的文件的临时路径
+			success{Function(res)}：成功的回调函数
+				res：{
+					savedFilePath：文件的保存路径
+				}
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭获取文件信息♭
+		wx.getFileInfo({
+			filePath{String}!：本地文件路径
+			digestAlgorithm{String}：计算文件摘要的算法，默认值 md5，有效值 md5、sha1
+			success{Function(res)}：成功的回调函数
+				res：{
+					errMsg{String}：调用结果
+					size{Number}：文件大小，单位B
+					digest{String}：按照传入的 digestAlgorithm 计算得出的的文件摘要
+				}
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭获取本地已保存的文件列表♭
+		wx.getSavedFileList({
+			success{Function(res)}：成功的回调函数
+				res：{
+					errMsg{String}：接口调用结果
+					fileList{Object Array}：文件列表，每一项如下
+						filePath{String}：文件的本地路径
+						createTime{Number}：文件的保存时的时间戳
+						size{Number}：文件大小，单位B
+				}
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭获取本地文件的文件信息♭
+	此接口只能用于获取已保存到本地的文件，若需要获取临时文件信息，需使用 wx.getFileInfo
+		wx.getSavedFileInfo({
+			filePath{String}!：文件路径
+			success{Function(res)}：成功的回调函数
+				res：{
+					errMsg{String}：调用结果
+					size{Number}：文件大小，单位B
+					createTime{Number}：文件保存时的时间戳
+				}
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭删除本地存储的文件♭
+		wx.removeSavedFile({
+			filePath{String}!：需要删除的文件路径
+			success{Function}：成功的回调函数
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	♭新开页面打开文档♭
+	支持格式：doc, xls, ppt, pdf, docx, xlsx, pptx
+		wx.openDocument({
+			filePath{String}!：文件路径，可通过 downFile 获得
+			fileType{String}!：指定文件类型打开文件，有效值 doc, xls, ppt, pdf, docx, xlsx, pptx
+			success{Function}：成功的回调函数
+			fail{Function}：失败的回调函数
+			complete{Function}：完成的回调函数
+		})
+	‖
+	
+	##常用
+	
+	###打电话
 	‖
 	wx.makePhoneCall({
 		phoneNumber{String}!：需要拨打的电话号码
@@ -766,7 +1010,7 @@ commonData.html.weex = {
 	})
 	‖
 	
-	##设置页面标题
+	###设置页面标题
 	‖
 	wx.setNavigationBarTitle({
 		title{String}!：页面标题
@@ -776,12 +1020,103 @@ commonData.html.weex = {
 	})
 	‖
 	
-	##滚动页面
+	###滚动页面
 	‖
 	wx.pageScrollTo({
 		scrollTop{Number}!：滚动到页面的目标位置（单位px）
 		duration{Number}：滚动动画的时长，默认300ms，单位 ms
 	})
+	‖
+	
+	###下拉刷新
+	在当前页面的 json 文件中的 window 属性设置·enablePullDownRefresh·为 true
+	在 Page 中定义·onPullDownRefresh·函数，当用户手动下拉的时候就会触发该事件
+	当处理完数据刷新后调用·wx.stopPullDownRefresh()·可以停止下拉刷新
+	也可以使用·wx.startPullDownRefresh()·主动调用下拉刷新
+	‖
+	wx.startPullDownRefresh({
+		success{Function(res)}：成功的回调
+			res：{
+				errMsg{String}：接口调用的结果
+			}
+		fail{Function}：失败的回调
+		complete{Function}：完成的回调
+	})
+	‖
+	
+	###获取位置
+	获取当前位置的经纬度、速度、高度。当用户离开小程序后，此接口无法调用；当用户点击“显示在聊天顶部”时，此接口可继续调用
+	‖
+	wx.getLocation({
+		type{String}[wgs84]：返回 gps 坐标，选择 gcj02 返回可用于 wx.openLocation 的坐标
+		altitude{Boolean}：传入 true 会返回高度信息，由于获取高度需要较高精确度，会减慢接口返回速度
+		success{Function(res)}!：成功的回调
+			res：{
+				latitude：	纬度，浮点数，范围为-90~90，负数表示南纬
+				longitude：	经度，浮点数，范围为-180~180，负数表示西经
+				speed：速度，浮点数，单位m/s
+				accuracy：	位置的精确度
+				altitude：高度，单位 m
+				verticalAccuracy：垂直精度，单位 m（Android 无法获取，返回 0）
+				horizontalAccuracy：水平精度，单位 m
+			}
+		fail{Function}：失败的回调
+		complete{Function}：完成的回调
+	})
+	‖
+	
+	##转发
+	在 Page 中定义 onShareAppMessage 函数，右上角菜单才会显示“转发”按钮， return 一个 Object 用于自定义转发内容
+	‖
+	onShareAppMessage(res) {
+		res：{
+			from{String}：转发事件来源。button：页面内转发按钮；menu：右上角转发菜单
+			target{Object}：如果 from 值是 button，则 target 是触发这次转发事件的 button，否则为 undefined
+		}
+		return {
+			title：转发的标题，默认为当前小程序名称
+			path：转发的路径，	当前页面路径 ，必须是以 / 开头的完整路径
+			imageUrl：图片路径，支持PNG及JPG，默认为当前页面的截图，长宽比是 5:4
+		}
+	}
+	‖
+	通常开发者希望转发出去的小程序被二次打开的时候能够获取到一些信息，例如群的标识。
+	调用·wx.showShareMenu·并且设置 withShareTicket 为·true·，当用户将小程序转发到任一群聊之后，此转发卡片在群聊中被其他用户打开时，可以在·App.onLaunch()·或·App.onShow·获取到一个 shareTicket。通过调用·wx.getShareInfo()·接口传入此 shareTicket 可以获取到转发信息。
+	注意只有转发到群聊中打开才可以获取到 shareTickets 返回值，单聊没有 shareTickets，shareTicket 仅在当前小程序生命周期内有效。
+	‖
+	♭显示当前页面的转发按钮♭
+		wx.showShareMenu({
+			withShareTicket{Boolean}：是否使用带 shareTicket 的转发
+			success{Function}：成功的回调
+			fail{Function}：失败的回调
+			complete{Function}：完成的回调
+		})
+	♭隐藏转发按钮♭
+		wx.hideShareMenu({
+			success{Function}：成功的回调
+			fail{Function}：失败的回调
+			complete{Function}：完成的回调
+		})
+	♭更新转发属性♭
+		wx.updateShareMenu({
+			withShareTicket{Boolean}：是否使用带 shareTicket 的转发
+			success{Function}：成功的回调
+			fail{Function}：失败的回调
+			complete{Function}：完成的回调
+		})
+	♭获取转发详细信息♭
+		wx.getShareInfo({
+			shareTicket{String}!：shareTicket
+			timeout{Number}：超时时间，单位 ms
+			success{Function(res)}：成功的回调
+				res：{
+					errMsg{String}：错误信息
+					encryptedData{String}：转发信息的加密数据，解密后可得 { openGId: 群对当前小程序的唯一 ID }
+					iv{String}：加密算法的初始向量
+				}
+			fail{Function}：失败的回调
+			complete{Function}：完成的回调
+		})
 	‖
 	
 	##数据缓存
@@ -828,6 +1163,62 @@ commonData.html.weex = {
 		wx.clearStorage()
 		wx.clearStorageSync()
 	‖
+	
+	##WXML节点信息
+	·wx.createSelectorQuery()·：返回一个·SelectorQuery·对象实例，调用相关方法以获取相关节点：
+	‖
+	in(component)：选择自定义组件 component 内的节点
+	select(selector)：在当前页面下选择第一个匹配的节点，返回一个NodesRef对象实例，用于获取节点信息，selector支持 :
+		#id、.class、#id, .class、.parent>.child、.parent .children、.parent >>> .children（跨自定义组件的后代选择器）
+	selectAll(selector)：在当前页面下选择所有匹配的节点，返回一个数组形式的NodesRef对象实例
+	selectViewport()：选择显示区域（当前页面），可用于获取显示区域的尺寸、滚动位置等信息，返回一个NodesRef对象实例
+	exec([callback])：执行所有的请求，请求结果按请求次序构成数组，在callback的第一个参数中返回
+	‖
+	返回的 NodesRef 对象实例可调用的方法有：
+	‖
+	boundingClientRect([callback])：返回节点信息，包括 id、dataset、left、right、top、bottom、width、height，单位为px
+	scrollOffset([callback])：返回节点滚动位置信息，节点必须是 scroll-view 或 viewport，包括 id、dataset、scrollTop、scrollLeft，单位为px
+	fields(fields,[callback])：自定义指定获取节点的相关信息，返回值是nodesRef对应的selectorQuery。可指定获取的字段包括
+		id{Boolean}[false]：是否返回节点id
+		dataset{Boolean}[false]：是否返回节点dataset
+		rect{Boolean}[false]：是否返回节点布局位置（left、right、top、bottom）
+		size{Boolean}[false]：是否返回节点尺寸（width、height）
+		scrollOffset{Boolean}[false]：是否返回节点的 scrollLeft scrollTop ，节点必须是scroll-view或viewport
+		properties{StringArray}[[]]：指定节点属性名列表，以返回对应属性值（ id、class、style 和事件绑定的属性值不可获取）
+	‖
+	
+	示例代码：
+	··
+	// 获取某个节点的相关信息
+	const query = wx.createSelectorQuery()
+	const ref = query.select('.class')
+	ref.boundingClientRect(res => {
+		console.log(res)
+	}).exec()
+	
+	// 获取多个节点的相关信息
+	 wx.createSelectorQuery().selectAll('.a-class').boundingClientRect().exec(function(res){
+		res.forEach(item => {
+			console.log(item)
+		})
+	})
+	
+	// 获取 fields
+	 wx.createSelectorQuery().select('#id').fields({
+		dataset: true,
+		size: true,
+		scrollOffset: true,
+		properties: ['scrollX', 'scrollY']
+	}, res => {
+		res.dataset    // 节点的dataset
+		res.width      // 节点的宽度
+		res.height     // 节点的高度
+		res.scrollLeft // 节点的水平滚动位置
+		res.scrollTop  // 节点的竖直滚动位置
+		res.scrollX    // 节点 scroll-x 属性的当前值
+		res.scrollY    // 节点 scroll-y 属性的当前值
+	}).exec()
+	··
 	
 	##登录
 	调用接口·wx.login()·获取临时登录凭证
@@ -884,6 +1275,8 @@ commonData.html.weex = {
 	###package
 	统一下单接口返回的 prepay_id 参数值，格式如：·prepay_id=wx2017033010242291fcfe0db70013231072·
 	
+	###加密解密
+	
 	###示例代码：
 	··
 	wx.requestPayment({
@@ -908,6 +1301,6 @@ commonData.html.weex = {
 	小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413)
 	αα
 	
-	&2018.5.9
+	&2018.6.3
 	`
 }
