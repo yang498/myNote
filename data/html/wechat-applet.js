@@ -4,7 +4,10 @@ commonData.html.wechatApplet = {
 	#介绍
 	组件完成
 	##注册
-	##其他
+	
+	##关联公众号
+	在要关联的公众号的左边菜单栏选择小程序管理，点击关联小程序
+	公众号可关联同主体的10个小程序及不同主体的3个小程序，同一个小程序可关联最多500个公众号
 	
 	#框架
 	
@@ -141,8 +144,8 @@ commonData.html.wechatApplet = {
 	··
 	
 	###示例图片
-	!./imgs/html/wechat-applet03.jpg,450
-	!./imgs/html/wechat-applet04.png,550
+	!./img/html/wechat-applet03.jpg,450
+	!./img/html/wechat-applet04.png,550
 	
 	##wxml
 	
@@ -295,7 +298,7 @@ commonData.html.wechatApplet = {
 		movable-view：可移动的视图容器，在页面中可以拖拽滑动
 		cover-view：覆盖在原生组件（map/video/canvas/camera）之上的文本视图，支持嵌套（cover-view/cover-image）
 	基础内容
-		icon：图标，目前有¡(./imgs/html/wechat-applet05.jpg,auto,30)，注意wxss无法改变color、size、line-height
+		icon：图标，目前有¡(./img/html/wechat-applet05.jpg,auto,30)，注意wxss无法改变color、size、line-height
 		text：文字容器，内联元素
 		rich-text：富文字容器
 		progress：进度条
@@ -1221,7 +1224,20 @@ commonData.html.wechatApplet = {
 	··
 	
 	##登录
-	调用接口·wx.login()·获取临时登录凭证
+	
+	###进入小程序登录流程时序说明
+	‖
+	小程序内调用·wx.login()·获取code并传给服务器
+	服务器请求指定接口得到openid、session_key、unionid
+	服务器以安全起见自定义和openid、session_key、unionid关联的登录态并返回小程序
+		比如生成加密随机数称之为3rd_session，以3rd_session为key，openid、session_key、unionid为value进行存储，然后把3rd_session传回小程序
+	小程序把3rd_session存入本地作为用户登录态
+	之后比如请求数据·wx.request()·就携带自定义登录态3rd_session，服务器查询到对应的openid、session_key以返回相关数据
+	‖
+	!./img/html/wechat-applet06.jpg,700
+	
+	###wx.login
+	调用接口·wx.login()·获取临时登录凭证，以换取用户的 openid、session_key、unionid
 	‖
 	wx.login({
 		timeout{Number}：超时时间，单位 ms
@@ -1234,15 +1250,108 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调
 	})
 	‖
-	开发者需要在开发者服务器后台调用 api，使用 code 换取 openid 和 session_key 等信息
+	然后在服务器后台调用指定接口，使用 code 换取 openid、session_key、unionid，地址：
+	·https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code·
+	参数说明：
+	‖
+	appid!：小程序唯一标识，在小程序后台或微信开发者工具可查看
+	secret!：小程序的 app secret，在小程序后台查看
+	js_code!：wx.login 得到的 code
+	grant_type!：填写为 authorization_code 即可
+	‖
+	返回的结果：
+	‖
+	openid：用户唯一标识
+	session_key：会话密钥
+	unionid：用户在开放平台的唯一标识符（满足UnionID下发条件才会出现）
+	‖
+	·openid·说明：用户在小程序、订阅号、服务号的唯一标识
+	·session_key·说明：用于解密wx.getUserInfo()返回的敏感数据
+	·unionid·说明：如果开发者拥有多个移动应用（比如在App内开发了微信分享、微信支付）、网站应用（比如在某网站开放了微信快捷登录）、和公众帐号，微信针对用户在不同的应用下都有唯一的一个·openId·，所以在不同的公众账号下·openid·是不一样的，但·unionid·却是一样的。
+	对于拥有多个账号的企业来说，·unionid·可以帮助识别不同公众账号下的用户是否是同一个人。这样在不同账号下对该用户提供的服务可以连续起来了，可以实现多个小程序、公众号、APP之间数据互通。还可以去除重复关注的用户数，便于统计真实的关注用户总数
+	
+	###wx.getUserInfo
+	获取用户信息，当用户授权才可以使用该接口，否则会报错，只能使用·<button open-type="getUserInfo"></button>·引导用户授权
+	‖
+	wx.getUserInfo({
+		withCredentials{Boolean}：是否带上登录态信息，为 true 时，要求此前有调用过 wx.login 且登录态尚未过期，此时返回的数据会包含 encryptedData, iv 等敏感信息，为 false 时，不要求有登录态，返回的数据不包含敏感信息
+		lang{String}[en]：指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文
+		timeout{Number}：超时时间，单位 ms
+		success{Function(res)}：成功的回调函数
+			res：{
+				userInfo{OBJECT}：用户基本信息 : {
+					nickName{String}：昵称，
+					avatarUrl{String}：头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效
+					gender{String}：性别，1代表男，2代表女，0代表未知
+					city{String}：所在城市
+					province{String}：所在省份
+					country{String}：所在国家
+					language{String}：语言，简体中文为zh_CN
+				}
+				rawData{String}：不包括敏感信息的原始数据字符串，用于计算签名
+				signature{String}：使用 sha1( rawData + session_key ) 得到字符串，用于校验用户信息
+				encryptedData{String}：包括敏感数据在内的完整用户信息的加密数据
+				iv{String}：加密算法的初始向量
+			}
+		fail{Function}：失败的回调函数
+		complete{Function}：结束的回调函数
+	})
+	‖
+	建议使用场景：
+	‖
+	调用·wx.login·获得·code·，服务器请求指定接口获得·session_key·，用·session_key·解密·wx.getUserInfo()·返回的敏感数据
+	定期使用·wx.getSetting·获取用户的授权情况，若已授权就使用·wx.getUserInfo()·获取用户的最新信息，若未授权就显示授权按钮提示登录并更新信息
+	‖
+	
+	###背景
+	以前调用·wx.getUserInfo·接口会进行一次弹窗授权（拒绝之后再次调用不会弹窗），并且·wx.getUserInfo·依赖·wx.login·（这会有点麻烦），·wx.login·返回的code不能换取unionid，根据解密·wx.getUserInfo·加密的数据才会出现
+	当开发者在小程序首页就调用·wx.getUserInfo·，造成一进入小程序就出现授权弹窗，然后用户脑海闪过一些哲学问题：
+	你是谁？
+	我在哪里？
+	我为什么要同意？
+	......
+	这就导致了部分用户点击拒绝授权，如果开发者没有对拒绝的情况做处理，可能会因为不良体验而流失用户。
+	所以微信端做出了调整，·wx.getUserInfo·不依赖·wx.login·就能得到数据，改用·button·组件来获取用户信息（点击弹窗无限制以解决用户再次授权），·wx.login·返回的code能换取unionid，注意调用·wx.getUserInfo·将参数·withCredentials·设为·false·不会出现弹窗授权即可获取昵称头像等信息
+	一个好的互联网产品，首页应该传递给用户产品理念，在需要展示用户信息的地方才去提示授权，比如未登录的淘宝在浏览完商品后点击购买才要求登录，如果在小程序使用前一定要用户登录或进行到需要用户登录的操作时，可以将·wx.getUserInfo·的·button·组件放置到页面中，并说明：
+	为什么需要授权？
+	需要用户的什么信息？
+	授权有什么好处？
+	接下来在页面上放置一个明显的登录按钮，建议不要有其他的点击区域，让用户专注登录。
+	用户可能会更改昵称和头像，建议定期使用·wx.getUserInfo·更新信息，如果用户授权后又在设置中关掉了授权或本地删除了小程序，需用·button·组件重新授权
+	
+	###getPhoneNumber
+	获取微信用户绑定的手机号，需先调用login接口，目前该接口针对非个人开发者，且完成了认证的小程序开放
+	将·<button>·组件 open-type 的值设置为 getPhoneNumber，把事件返回的加密数据发送到服务器进行解密再返回来
+	··
+	<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
+	Page({
+    getPhoneNumber: function(res) { 
+        console.log(res.detail.errMsg)	// 调用结果说明
+        console.log(res.detail.iv)	// 加密算法的初始向量
+        console.log(res.detail.encryptedData)	// 包括敏感数据在内的完整用户信息的加密数据
+    }
+})
+	··
+	服务器解密后可得
+	··
+	{
+    "phoneNumber": "13580006666", 	// 用户绑定的手机号（国外手机号会有区号）
+    "purePhoneNumber": "13580006666",	// 没有区号的手机号
+    "countryCode": "86",	// 区号
+    "watermark": {	// 水印
+			"appid": "APPID",	// 小程序的appid
+			"timestamp": TIMESTAMP	// 时间戳
+		}
+	}
+	··
 	
 	##微信支付
 	
 	###在小程序后台开通微信支付
-	!./imgs/html/wechat-applet01.png,1000
+	!./img/html/wechat-applet01.png,1000
 	
 	###交互过程示意图
-	!./imgs/html/wechat-applet02.jpg,1000
+	!./img/html/wechat-applet02.jpg,1000
 	
 	###调用的API
 	‖
@@ -1252,9 +1361,9 @@ commonData.html.wechatApplet = {
 		package{String}!：统一下单接口返回的 prepay_id 参数值，提交格式如·prepay_id=*·
 		signType{String}!：签名算法，暂支持 MD5
 		paySign{String}!：签名
-		success{Function}：接口调用成功的回调函数
-		fail{Function}：接口调用失败的回调函数
-		complete{Function}：接口调用结束的回调函数
+		success{Function}：成功的回调函数
+		fail{Function}：失败的回调函数
+		complete{Function}：结束的回调函数
 	})
 	‖
 	了解更多信息查看：α(小程序支付接口文档|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)

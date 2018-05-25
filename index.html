@@ -15,7 +15,7 @@
 			<header>
 				<ul class="menu">
 					<li @click="directory" :class="index?'active':''">
-						<img src="imgs/logo.jpg"/>
+						<img src="img/logo.jpg"/>
 					</li>
 					<!-- 每个一级目录都有一个name属性用来显示说明 -->
 					<li v-for="(value, key) in commonData" :class="menuParent===key&&!index?'active':''">
@@ -35,7 +35,7 @@
 								<i class="iconfont icon-skin"></i>
 							</li>
 							<li class="skin">
-								<i class="iconfont icon-skin"></i>
+								<i class="iconfont icon-skin-fill"></i>
 							</li>
 						</ul>
 					</div>
