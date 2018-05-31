@@ -1250,8 +1250,7 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调
 	})
 	‖
-	然后在服务器后台调用指定接口，使用 code 换取 openid、session_key、unionid，地址：
-	·https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code·
+	然后在服务器后台调用指定接口，使用 code 换取 openid、session_key、unionid，地址：·https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code·
 	参数说明：
 	‖
 	appid!：小程序唯一标识，在小程序后台或微信开发者工具可查看
@@ -1267,14 +1266,15 @@ commonData.html.wechatApplet = {
 	‖
 	·openid·说明：用户在小程序、订阅号、服务号的唯一标识
 	·session_key·说明：用于解密wx.getUserInfo()返回的敏感数据
-	·unionid·说明：如果开发者拥有多个移动应用（比如在App内开发了微信分享、微信支付）、网站应用（比如在某网站开放了微信快捷登录）、和公众帐号，微信针对用户在不同的应用下都有唯一的一个·openId·，所以在不同的公众账号下·openid·是不一样的，但·unionid·却是一样的。
+	·unionid·说明：如果开发者拥有多个移动应用（比如在APP内开发了微信分享、微信支付）、网站应用（比如在某网站开放了微信快捷登录）、和公众帐号，微信针对用户在不同的应用下都有唯一的一个·openId·，所以在不同的公众账号下·openid·是不一样的，但·unionid·却是一样的。
 	对于拥有多个账号的企业来说，·unionid·可以帮助识别不同公众账号下的用户是否是同一个人。这样在不同账号下对该用户提供的服务可以连续起来了，可以实现多个小程序、公众号、APP之间数据互通。还可以去除重复关注的用户数，便于统计真实的关注用户总数
+	·unionid·作为互通的用户标识，不建议作为用户ID，应该用·openid·。否则一旦发生小程序、公众号或者APP迁移到其他的开放平台下，就无法识别出来原来的用户了（迁移指微信开放平台的a帐号迁移到了b帐号）。而迁移小程序只要·appid·不变，·openid·就是不会变的。当然如果能保证账号之间不会迁移用·unionid·作为用户标识也是可以的。
 	
 	###wx.getUserInfo
-	获取用户信息，当用户授权才可以使用该接口，否则会报错，只能使用·<button open-type="getUserInfo"></button>·引导用户授权
+	获取用户信息，当用户授权才可以使用该接口，否则会报错，只能使用α(<button>|javascript:;" onclick="$('h1:eq(2)×~h2:eq(4)×')×.click()×)将·open-type·设为·getUserInfo·引导用户授权
 	‖
 	wx.getUserInfo({
-		withCredentials{Boolean}：是否带上登录态信息，为 true 时，要求此前有调用过 wx.login 且登录态尚未过期，此时返回的数据会包含 encryptedData, iv 等敏感信息，为 false 时，不要求有登录态，返回的数据不包含敏感信息
+		withCredentials{Boolean}：是否带上登录态信息，也就是是否返回敏感信息
 		lang{String}[en]：指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文
 		timeout{Number}：超时时间，单位 ms
 		success{Function(res)}：成功的回调函数
@@ -1297,6 +1297,25 @@ commonData.html.wechatApplet = {
 		complete{Function}：结束的回调函数
 	})
 	‖
+	encryptedData 解密后为以下 json 结构
+	··
+	{
+			"openId": "OPENID",
+			"nickName": "NICKNAME",
+			"gender": GENDER,
+			"city": "CITY",
+			"province": "PROVINCE",
+			"country": "COUNTRY",
+			"avatarUrl": "AVATARURL",
+			"unionId": "UNIONID",
+			"watermark":
+			{
+					"appid":"APPID",
+			"timestamp":TIMESTAMP
+			}
+	}
+	··
+
 	建议使用场景：
 	‖
 	调用·wx.login·获得·code·，服务器请求指定接口获得·session_key·，用·session_key·解密·wx.getUserInfo()·返回的敏感数据
@@ -1309,15 +1328,55 @@ commonData.html.wechatApplet = {
 	你是谁？
 	我在哪里？
 	我为什么要同意？
-	......
+	……
 	这就导致了部分用户点击拒绝授权，如果开发者没有对拒绝的情况做处理，可能会因为不良体验而流失用户。
-	所以微信端做出了调整，·wx.getUserInfo·不依赖·wx.login·就能得到数据，改用·button·组件来获取用户信息（点击弹窗无限制以解决用户再次授权），·wx.login·返回的code能换取unionid，注意调用·wx.getUserInfo·将参数·withCredentials·设为·false·不会出现弹窗授权即可获取昵称头像等信息
+	所以微信端做出了调整，·wx.getUserInfo·不依赖·wx.login·就能得到数据，改用·button·组件来获取用户信息（点击弹窗无限制以解决用户再次授权），·wx.login·返回的code能换取unionid
+	这段垮掉：注意调用·wx.getUserInfo·将参数·withCredentials·设为·false·不会出现弹窗授权即可获取昵称头像等信息
+	改成不依赖login
 	一个好的互联网产品，首页应该传递给用户产品理念，在需要展示用户信息的地方才去提示授权，比如未登录的淘宝在浏览完商品后点击购买才要求登录，如果在小程序使用前一定要用户登录或进行到需要用户登录的操作时，可以将·wx.getUserInfo·的·button·组件放置到页面中，并说明：
 	为什么需要授权？
 	需要用户的什么信息？
 	授权有什么好处？
 	接下来在页面上放置一个明显的登录按钮，建议不要有其他的点击区域，让用户专注登录。
 	用户可能会更改昵称和头像，建议定期使用·wx.getUserInfo·更新信息，如果用户授权后又在设置中关掉了授权或本地删除了小程序，需用·button·组件重新授权
+	
+	###wx.getSetting
+	获取用户的当前设置，返回值中只会出现小程序已经向用户请求过的权限
+	‖
+	wx.getSetting({
+		success{Function(res)}：成功的回调函数
+			res：authSetting用户授权结果，其中 key 为 scope 值，value 为 Bool 值，表示用户是否允许授权
+		fail{Function}：失败的回调函数
+		complete{Function}：结束的回调函数
+	})
+	‖
+	实践
+	··
+	// 若之前已获取过用户信息
+	if (wx.getStorageSync('userInfo')) {
+		// 用户可能会更改昵称和头像，假设每周更新一次，如果时间戳到期就重新获取以更新
+		if (wx.getStorageSync('userInfoDeadline') < Date.now()) {
+			
+		} else {
+			// 
+		}
+	} else {
+		
+	}
+	wx.getSetting({
+		success: res => {
+			// 若已授权直接获取用户信息
+			// 若未授权在需要展示或用到的时候再用button授权
+			if (res.authSetting['scope.userInfo']) {
+				wx.getUserInfo({
+					success: res => {
+						// 使用用户信息
+					}
+				})
+			}
+		}
+	})
+	··
 	
 	###getPhoneNumber
 	获取微信用户绑定的手机号，需先调用login接口，目前该接口针对非个人开发者，且完成了认证的小程序开放

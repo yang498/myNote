@@ -1,294 +1,86 @@
 @charset "UTF-8";
-[v-cloak] {
-  display: none; }
+[v-cloak] { display: none; }
 
-.web {
-  min-height: 100%;
-  padding-top: 40px;
-  overflow: hidden;
-  background: no-repeat center/cover fixed; }
+.web { min-height: 100%; padding-top: 40px; overflow: hidden; background: no-repeat center/cover fixed; }
 
-header {
-  width: 100%;
-  text-align: center;
-  color: #fff;
-  background-color: #00B4FA;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1; }
-  header i.iconfont {
-    font-size: 20px; }
-  header .menu li:hover, header .menu li.active, header .set:hover, header .set li:hover, header .back-top:hover {
-    background-color: #08f; }
-  header .menu > li, header .set {
-    cursor: pointer;
-    position: relative; }
-    header .menu > li:hover ul, header .set:hover ul {
-      height: auto;
-      opacity: 1; }
-    header .menu > li ul, header .set ul {
-      width: 100%;
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-      background-color: #00B4FA;
-      border-radius: 0 0 5px 5px;
-      transition: 0.2s ease-out;
-      position: absolute;
-      top: 100%;
-      left: 0; }
-      header .menu > li ul li, header .set ul li {
-        line-height: 40px;
-        transition: 0.2s ease-out; }
-  header .menu {
-    display: flex; }
-    header .menu img {
-      height: 40px;
-      vertical-align: top; }
-    header .menu > li {
-      width: 100px;
-      line-height: 40px;
-      transition: 0.2s ease-out; }
-  header .option {
-    display: flex; }
-    header .option .search {
-      display: flex;
-      align-items: center; }
-      header .option .search i {
-        color: #ccc;
-        transform: translateX(-195px); }
-      header .option .search input {
-        width: 200px;
-        height: 28px;
-        padding: 0 10px 0 30px;
-        border-radius: 15px; }
-    header .option .set, header .option .back-top {
-      width: 60px;
-      line-height: 40px; }
-    header .option .back-top {
-      display: block;
-      transition: 0.2s ease-out;
-      cursor: pointer; }
+header { width: 100%; text-align: center; color: #fff; background-color: #00B4FA; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 1; }
+header i.iconfont { font-size: 20px; }
+header .menu li:hover, header .menu li.active, header .set:hover, header .set li:hover, header .back-top:hover { background-color: #08f; }
+header .menu > li, header .set { cursor: pointer; position: relative; }
+header .menu > li:hover ul, header .set:hover ul { height: auto; opacity: 1; }
+header .menu > li ul, header .set ul { width: 100%; height: 0; opacity: 0; overflow: hidden; background-color: #00B4FA; border-radius: 0 0 5px 5px; transition: 0.2s ease-out; position: absolute; top: 100%; left: 0; }
+header .menu > li ul li, header .set ul li { line-height: 40px; transition: 0.2s ease-out; }
+header .menu { display: flex; }
+header .menu img { height: 40px; vertical-align: top; }
+header .menu > li { width: 100px; line-height: 40px; transition: 0.2s ease-out; }
+header .option { display: flex; }
+header .option .search { display: flex; align-items: center; }
+header .option .search i { color: #ccc; transform: translateX(-195px); }
+header .option .search input { width: 200px; height: 28px; padding: 0 10px 0 30px; border-radius: 15px; }
+header .option .set, header .option .back-top { width: 60px; line-height: 40px; }
+header .option .back-top { display: block; transition: 0.2s ease-out; cursor: pointer; }
 
-section {
-  width: 600px;
-  margin: 0 auto;
-  padding: 20px 0 40px; }
-  section h1 {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center; }
-  section h2 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 20px 0 5px; }
-  section li li {
-    line-height: 30px;
-    color: #00B4FA;
-    cursor: pointer; }
-    section li li:hover {
-      color: #08f; }
+section { width: 600px; margin: 0 auto; padding: 20px 0 40px; }
+section h1 { font-size: 24px; font-weight: bold; text-align: center; }
+section h2 { font-size: 20px; font-weight: bold; margin: 20px 0 5px; }
+section li li { line-height: 30px; color: #00B4FA; cursor: pointer; }
+section li li:hover { color: #08f; }
 
-aside {
-  width: 200px;
-  height: 100%;
-  padding: 20px;
-  position: fixed;
-  top: 40px;
-  left: 0; }
-  aside.active {
-    border-right: 1px solid #ccc; }
-    aside.active .h1 {
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ccc; }
-  aside .h2 {
-    height: 100%;
-    font-size: 14px;
-    overflow-y: auto; }
-  aside li {
-    line-height: 30px;
-    padding: 0 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.2s ease-out; }
-  aside .h1 li:hover, aside .h1 li.active {
-    color: #fff;
-    background-color: #00B4FA; }
-  aside .h2 li:hover, aside .h2 li.active {
-    color: #00B4FA; }
+aside { width: 200px; height: 100%; padding: 20px; position: fixed; top: 40px; left: 0; }
+aside.active { border-right: 1px solid #ccc; }
+aside.active .h1 { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
+aside .h2 { height: 100%; font-size: 14px; overflow-y: auto; }
+aside li { line-height: 30px; padding: 0 20px; cursor: pointer; border-radius: 5px; transition: 0.2s ease-out; }
+aside .h1 li:hover, aside .h1 li.active { color: #fff; background-color: #00B4FA; }
+aside .h2 li:hover, aside .h2 li.active { color: #00B4FA; }
 
-article {
-  padding: 10px 40px 0 240px;
-  text-align: justify; }
-  article a, article a:hover {
-    color: #08f; }
-  article a:hover {
-    text-decoration: underline; }
-  article h1 {
-    font-size: 24px;
-    font-weight: bold;
-    padding: 15px 0;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 15px;
-    cursor: pointer;
-    transition: 0.2s; }
-    article h1:not(:first-child) {
-      margin-top: 20px; }
-    article h1:hover {
-      color: #00B4FA; }
-  article h2 {
-    font-size: 20px;
-    margin: 10px 0;
-    font-weight: bold;
-    transition: 0.2s;
-    cursor: pointer; }
-  article h1:not(:first-child), article h2:not(:first-child) {
-    margin-top: 20px; }
-  article h1:hover, article h2:hover {
-    color: #00B4FA; }
-  article h3 {
-    font-size: 18px;
-    margin: 20px 0 10px;
-    font-weight: bold;
-    text-indent: 2em; }
-  article p {
-    text-indent: 2em;
-    line-height: 30px; }
-  article b {
-    font-weight: bold; }
-  article .img {
-    margin: 5px 0 5px 2em; }
-  article .img-inline {
-    margin: 0 5px; }
-  article ul {
-    width: 1000px;
-    margin: 5px 0 10px 2em;
-    padding: 10px 20px;
-    border-left: 10px solid #f80;
-    border-radius: 10px;
-    background-color: #f9f9f9; }
-    article ul li {
-      line-height: 30px; }
-      article ul li::before {
-        content: '●';
-        color: #f80;
-        margin-right: 10px; }
-    article ul .attr {
-      padding-left: 2em; }
-    article ul .head {
-      color: #f00; }
-    article ul .type {
-      color: #08f; }
-    article ul .default {
-      color: #0c0; }
-  article table {
-    width: 1000px;
-    border-radius: 5px;
-    margin: 20px 0 20px 2em;
-    border: 1px solid #ccc;
-    overflow: hidden;
-    text-align: center; }
-    article table thead {
-      color: #fff;
-      background-color: #25A5F7; }
-    article table tr {
-      height: 40px; }
-      article table tr:nth-child(2n) {
-        background-color: #eee; }
-      article table tr th:not(:last-child),
-      article table tr td:not(:last-child) {
-        border-right: 1px solid #ccc; }
-    article table th {
-      padding: 0 20px; }
-    article table td {
-      border-top: 1px solid #ccc; }
-      article table td.td-left {
-        text-align: left;
-        padding-left: 20px; }
-  article .link {
-    font-size: 18px;
-    margin-top: 50px;
-    padding-top: 20px;
-    text-indent: 2em;
-    border-top: 1px dashed #999; }
-  article time {
-    display: block;
-    text-align: right;
-    color: #666;
-    margin: 20px 0; }
-  article code {
-    color: #f80;
-    margin: 0 3px;
-    padding: 3px 5px;
-    border-radius: 3px;
-    background-color: #f5f5f5;
-    border: 1px solid #eee;
-    font-family: consolas; }
-  article span {
-    font-family: inherit; }
-  article pre {
-    width: 1000px;
-    line-height: 24px;
-    border-radius: 8px;
-    font-family: consolas;
-    border: 1px solid #ccc;
-    background-color: #fafafa;
-    margin-left: 2em;
-    overflow-y: hidden;
-    padding: 20px 30px; }
-  article .code {
-    width: 1000px;
-    position: relative; }
-    article .code .copy {
-      font-size: 14px;
-      padding: 1px 8px;
-      background-color: #fff;
-      box-shadow: 0 0 0 1px #ccc;
-      border-top-right-radius: 8px;
-      border-bottom-left-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s;
-      position: absolute;
-      top: 1px;
-      right: -31px; }
-  article .copy-success {
-    position: absolute;
-    top: 5px;
-    right: -55px;
-    color: #0c0;
-    opacity: 0;
-    font-size: 18px; }
-  article .copy-success-active {
-    animation: copy 1s; }
-@keyframes copy {
-  80% {
-    opacity: 1;
-    transform: translateY(-30px); }
-  100% {
-    opacity: 0;
-    transform: translateY(-30px); } }
-  article #copy-textarea {
-    position: fixed;
-    left: -9999px;
-    opacity: 0; }
-  article pre .copy:hover {
-    background-color: #f5f5f5; }
-  article pre .copy:active {
-    color: #25A5F7; }
-  article .code-keyword-out {
-    color: #f08; }
-  article .code-keyword-in {
-    color: #08f; }
-  article .code-string {
-    color: #0c0; }
-  article .code-comment {
-    color: #aaa; }
-  article .code-reg {
-    color: #f80; }
+article { padding: 10px 60px 0 240px; }
+article a, article a:hover { color: #08f; }
+article a:hover { text-decoration: underline; }
+article h1 { font-size: 24px; font-weight: bold; padding: 15px 0; border-bottom: 1px solid #ccc; margin-bottom: 15px; cursor: pointer; transition: 0.2s; }
+article h1:not(:first-child) { margin-top: 20px; }
+article h1:hover { color: #00B4FA; }
+article h2 { font-size: 20px; margin: 10px 0; font-weight: bold; transition: 0.2s; cursor: pointer; }
+article h1:not(:first-child), article h2:not(:first-child) { margin-top: 20px; }
+article h1:hover, article h2:hover { color: #00B4FA; }
+article h3 { font-size: 18px; margin: 20px 0 10px; font-weight: bold; text-indent: 2em; }
+article p { text-indent: 2em; line-height: 30px; }
+article b { font-weight: bold; }
+article .img { margin: 5px 0 5px 2em; }
+article .img-inline { margin: 0 5px; }
+article ul { width: 1000px; margin: 5px 0 10px 2em; padding: 10px 20px; border-left: 10px solid #f80; border-radius: 10px; background-color: #f9f9f9; }
+article ul li { line-height: 30px; }
+article ul li::before { content: '●'; color: #f80; margin-right: 10px; }
+article ul .attr { padding-left: 2em; }
+article ul .head { color: #f00; }
+article ul .type { color: #08f; }
+article ul .default { color: #0c0; }
+article table { width: 1000px; border-radius: 5px; margin: 20px 0 20px 2em; border: 1px solid #ccc; overflow: hidden; text-align: center; }
+article table thead { color: #fff; background-color: #25A5F7; }
+article table tr { height: 40px; }
+article table tr:nth-child(2n) { background-color: #eee; }
+article table tr th:not(:last-child), article table tr td:not(:last-child) { border-right: 1px solid #ccc; }
+article table th { padding: 0 20px; }
+article table td { border-top: 1px solid #ccc; }
+article table td.td-left { text-align: left; padding-left: 20px; }
+article .link { font-size: 18px; margin-top: 50px; padding-top: 20px; text-indent: 2em; border-top: 1px dashed #999; }
+article time { display: block; text-align: right; color: #666; margin: 20px 0; }
+article code { color: #f80; margin: 0 3px; padding: 3px 5px; border-radius: 3px; background-color: #f5f5f5; border: 1px solid #eee; font-family: consolas; }
+article span { font-family: inherit; }
+article pre { width: 1000px; line-height: 24px; border-radius: 8px; font-family: consolas; border: 1px solid #ccc; background-color: #fafafa; margin-left: 2em; overflow-y: hidden; padding: 20px 30px; }
+article .code { width: 1000px; position: relative; }
+article .code .copy { font-size: 14px; padding: 1px 8px; background-color: #fff; box-shadow: 0 0 0 1px #ccc; border-top-right-radius: 8px; border-bottom-left-radius: 8px; cursor: pointer; transition: 0.2s; position: absolute; top: 1px; right: -31px; }
+article .copy-success { position: absolute; top: 5px; right: -55px; color: #0c0; opacity: 0; font-size: 18px; }
+article .copy-success-active { animation: copy 1s; }
+@keyframes copy { 80% { opacity: 1; transform: translateY(-30px); }
+  100% { opacity: 0; transform: translateY(-30px); } }
+article #copy-textarea { position: fixed; left: -9999px; opacity: 0; }
+article pre .copy:hover { background-color: #f5f5f5; }
+article pre .copy:active { color: #25A5F7; }
+article .code-keyword-out { color: #f08; }
+article .code-keyword-in { color: #08f; }
+article .code-string { color: #0c0; }
+article .code-comment { color: #aaa; }
+article .code-reg { color: #f80; }
 
 /*# sourceMappingURL=common.css.map */

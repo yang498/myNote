@@ -17,7 +17,7 @@ const formatHtml = text => {
 	const h2 = /^##/
 	const h3 = /^###/
 	const time = /^&(?=20)/
-	const a = /α\([^]*?\)/g
+	const a = /α\([^]*?\)(?!×)/g
 	const aa = /^αα|αα$/g
 	const b = /♭/g
 	const img = /^!/
@@ -42,7 +42,7 @@ const formatHtml = text => {
 			item = item.replace(codeKeywordOut, '<span class="code-keyword-out">$&</span>') // 一类关键字
 			item = item.replace(codeKeywordIn, '<span class="code-keyword-in">$&</span>') // 二类关键字
 			item = '‥' + item.slice(2, -2) + '‥' // 转换成少数符号的标识符
-			return item.replace(/×/g, '').replace(/\n/g, inlineSplit) // 去除不转注释的×标识，转换成少数符号合并成一行
+			return item.replace(/\n/g, inlineSplit) // 去除不转注释的×标识，转换成少数符号合并成一行
 		})
 		str = str.replace(codeReg, item => { // 代码块内正则
 			item = tagStartEnd ? '<span class="code-reg">' : '</span>'
@@ -79,7 +79,7 @@ const formatHtml = text => {
 			return item.replace(/\s*\n\s*/g, inlineSplit)	// 转换成少数符号的标识符
 		})
 		str = str.replace(/%%(?=\n)[^]*?%%(?=\n)/g, item => item.replace(/\s*\n\s*/g, inlineSplit)) // 表格
-		return str
+		return str.replace(/×/g, '')
 	}
 	
 	// 主要的作用是将开头或结尾的标识符替换成对应的标签，不然没有匹配标识符会当成p标签

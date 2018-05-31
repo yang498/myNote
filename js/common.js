@@ -1,6 +1,7 @@
-/* 待做：
+/* 始于：2017.8.1
+ * 待做：
  * 先把已有的笔记转移，还要重装系统呢，下面这些以后再说
- * 文档内跳转精确到h1、h2
+ * 长按添加书签，右边展示固定菜单，像阿里云一样可展开全部宽度，收起为40*30
  * 可能对代码块的html和css部分稍微再调整
  * 搜索，可参考Algolia，实在不行就拉倒
  * 设置：
@@ -84,6 +85,10 @@ let vue = new Vue({
 	},
 	created() {
 		initHash(this)
+		if(localStorage.getItem('scrollToTitle')) {	// 如果要滚动到某个标题就触发
+			$(localStorage.getItem('scrollToTitle')).click()
+			localStorage.removeItem('scrollToTitle')
+		}
 	},
 	methods: {
 		init() {	// 初始化解析内容
