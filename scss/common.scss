@@ -11,6 +11,7 @@ $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
 [v-cloak] {
     display: none;
 }
+
 .web {
     min-width: 1200px;
     min-height: 100%;
@@ -382,5 +383,14 @@ article {
     }
     .code-reg {
         color: #f80;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    aside {
+        display: none;
+    }
+    article {
+        padding: 10px 20px 0 20px;
     }
 }

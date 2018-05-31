@@ -83,4 +83,7 @@ article .code-string { color: #0c0; }
 article .code-comment { color: #aaa; }
 article .code-reg { color: #f80; }
 
+@media screen and (max-width: 1200px) { aside { display: none; }
+  article { padding: 10px 20px 0 20px; } }
+
 /*# sourceMappingURL=common.css.map */
