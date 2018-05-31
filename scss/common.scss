@@ -12,6 +12,7 @@ $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
     display: none;
 }
 .web {
+    min-width: 1200px;
     min-height: 100%;
     padding-top: 40px;
     overflow: hidden;
@@ -212,13 +213,16 @@ article {
         font-weight: bold;
     }
     .img {
+        width: 100%;
+        max-width: 1000px;
         margin: 5px 0 5px 2em;
     }
     .img-inline {
         margin: 0 5px;
     }
     ul {
-        width: 1000px;
+        width: 100%;
+        max-width: 1000px;
         margin: 5px 0 10px 2em;
         padding: 10px 20px;
         border-left: 10px solid #f80;
@@ -246,7 +250,8 @@ article {
         }
     }
     table {
-        width: 1000px;
+        width: 100%;
+        max-width: 1000px;
         border-radius: 5px;
         margin: 20px 0 20px 2em;
         border: 1px solid #ccc;
@@ -303,19 +308,20 @@ article {
         font-family: inherit;
     }
     pre {
-        width: 1000px;
+        width: 100%;
         line-height: 24px;
         border-radius: 8px;
         font-family: consolas;
         border: 1px solid #ccc;
         background-color: #fafafa;
-        margin-left: 2em;
         overflow-y: hidden;
         padding: 20px 30px;
     }
     .code {
-        width: 1000px;
+        width: 100%;
+        max-width: 1000px;
         position: relative;
+        margin-left: 2em;
         .copy {
             font-size: 14px;
             padding: 1px 8px;
@@ -327,13 +333,13 @@ article {
             transition: 0.2s;
             position: absolute;
             top: 1px;
-            right: -31px;
+            right: 1px;
         }
     }
     .copy-success {
         position: absolute;
         top: 5px;
-        right: -55px;
+        right: -25px;
         color: #0c0;
         opacity: 0;
         font-size: 18px;

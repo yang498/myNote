@@ -144,8 +144,8 @@ commonData.html.wechatApplet = {
 	··
 	
 	###示例图片
-	!./img/html/wechat-applet03.jpg,450
-	!./img/html/wechat-applet04.png,550
+	!./img/html/wechat-applet03.jpg,400
+	!./img/html/wechat-applet04.png,500
 	
 	##wxml
 	
@@ -1234,7 +1234,7 @@ commonData.html.wechatApplet = {
 	小程序把3rd_session存入本地作为用户登录态
 	之后比如请求数据·wx.request()·就携带自定义登录态3rd_session，服务器查询到对应的openid、session_key以返回相关数据
 	‖
-	!./img/html/wechat-applet06.jpg,700
+	!./img/html/wechat-applet06.jpg,600
 	
 	###wx.login
 	调用接口·wx.login()·获取临时登录凭证，以换取用户的 openid、session_key、unionid
@@ -1411,10 +1411,10 @@ commonData.html.wechatApplet = {
 	##微信支付
 	
 	###在小程序后台开通微信支付
-	!./img/html/wechat-applet01.png,1000
+	!./img/html/wechat-applet01.png,800
 	
 	###交互过程示意图
-	!./img/html/wechat-applet02.jpg,1000
+	!./img/html/wechat-applet02.jpg,800
 	
 	###调用的API
 	‖
