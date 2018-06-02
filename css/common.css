@@ -55,7 +55,7 @@ article ul .attr { padding-left: 2em; }
 article ul .head { color: #f00; }
 article ul .type { color: #08f; }
 article ul .default { color: #0c0; }
-article table { width: 100%; max-width: 1000px; border-radius: 5px; margin: 20px 0 20px 2em; border: 1px solid #ccc; overflow: hidden; text-align: center; }
+article table { width: 100%; max-width: 1000px; border-radius: 5px; margin: 10px 0 10px 2em; border: 1px solid #ccc; overflow: hidden; text-align: center; }
 article table thead { color: #fff; background-color: #25A5F7; }
 article table tr { height: 40px; }
 article table tr:nth-child(2n) { background-color: #eee; }

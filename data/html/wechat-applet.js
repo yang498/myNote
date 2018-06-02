@@ -9,6 +9,12 @@ commonData.html.wechatApplet = {
 	在要关联的公众号的左边菜单栏选择小程序管理，点击关联小程序
 	公众号可关联同主体的10个小程序及不同主体的3个小程序，同一个小程序可关联最多500个公众号
 	
+	##常见问题
+	‖
+	小程序代码包大小限制为 10M
+	获取输入框中的内容可以使用·bindblur·失去焦点时触发获取
+	‖
+	
 	#框架
 	
 	##文件结构
@@ -147,66 +153,235 @@ commonData.html.wechatApplet = {
 	!./img/html/wechat-applet03.jpg,400
 	!./img/html/wechat-applet04.png,500
 	
-	##wxml
+	##app.js
+	每个页面有独立的作用域，并提供模块化能力。
+	由于框架并非运行在浏览器中，所以 JavaScript 在 web 中一些能力都无法使用，如 document，window 等。
+	开发者写的所有代码最终将会打包成一份 JavaScript，并在小程序启动的时候运行，直到小程序销毁。类似 ServiceWorker，所以逻辑层也称之为 App Service。
+	###App()
+	App() 函数用来注册一个小程序。接受一个 object 参数，其指定小程序的生命周期函数等。
+	‖
+	onLaunch：生命周期函数--监听小程序初始化，当小程序初始化完成时触发，全局只触发一次
+	onShow：生命周期函数--监听小程序显示，当小程序启动，或从后台进入前台显示，onLaunch和onShow参数如下 :
+		path{String}：打开小程序的路径
+		query{Object}：打开小程序的query
+		scene{Number}：打开小程序的场景值
+		shareTicket{String}：shareTicket，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(7)×')×.click()×)
+		referrerInfo{Object}：当场景为由从另一个小程序或公众号或App打开时，返回此字段
+			appId{String}：来源小程序或公众号或App的 appId，支持返回的场景有：1020、1035、1036、1037、1038、1043
+			extraData{Object}：来源小程序传过来的数据，scene=1037或1038时支持
+	onHide：生命周期函数--监听小程序隐藏，当小程序从前台进入后台
+	onError：错误监听函数，当小程序发生脚本错误，或者 api 调用失败时，会触发 onError 并带上错误信息
+	onPageNotFound：页面不存在监听函数，当小程序出现要打开的页面不存在的情况，会带上页面信息回调该函数，必须是同步处理，异步处理（例如 setTimeout 异步执行）无效
+		path{String}：不存在页面的路径
+		query{Object}：打开不存在页面的query
+		isEntryPage{Boolean}：是否本次启动的首个页面（例如从分享等入口进来，首个页面是开发者配置的分享页面）
+	其他：开发者可以添加任意的函数或数据到参数中，用 this 可以访问
+	‖
+	前台、后台定义：当用户点击右上角关闭，或者按了设备 Home 键离开微信，小程序并没有直接销毁，而是进入了后台；当再次进入微信或再次打开小程序，又会从后台进入前台。需要注意的是：只有当小程序进入后台一定时间（一般是5分钟），或者系统资源占用过高，才会被真正的销毁。
+	关闭小程序：当用户从扫一扫、转发等入口(场景值为1007, 1008, 1011, 1025)进入小程序，且没有置顶小程序的情况下退出，小程序会被销毁。
+	♭注意：♭
+	如果开发者没有添加 onPageNotFound 监听，当跳转页面不存在时，将推入微信客户端原生的页面不存在提示页面
+	如果 onPageNotFound 回调中又重定向到另一个不存在的页面，将推入微信客户端原生的页面不存在提示页面，并且不在回调 onPageNotFound
+	由于Android系统限制，目前还无法获取到按 Home 键退出到桌面，然后从桌面再次进小程序的场景值，对于这种情况，会保留上一次的场景值。
+	生命周期示意图：
+	!./img/html/wechat-applet07.png,600
 	
-	###数据绑定
-	动态数据均来自对应 Page 的 data，使用 Mustache 语法（双大括号 {{}}）将变量包起来，比如：
+	###getApp()
+	全局的 getApp() 函数可以用来获取或修改小程序实例
 	··
-	<view>{{message}}</view>	// 文本内容
-	<view id="item-{{id}}"></view>	// 组件属性
-	<view wx:if="{{condition}}"></view>	// 控制属性
-	<view>{{a+b}}+{{c}}+d</view>	// 算数运算，结果是：3 + 3 + d
-	<view hidden="{{flag?true:false}}">Hidden</view>	// 三元运算
-	<view wx:if="{{length>5}}"></view>	// 逻辑判断
-	<view wx:for="{{[id, 1, 2, 3, 4]}}">{{item}}</view>	// 组合，得到：[0, 1, 2, 3, 4]
-	<template is="objectCombine" data="{{...obj1, ...obj2, e: 5}}"></template>	// 扩展运算符 ... 将对象展开，组成：{a: 1, b: 2, c: 3, d: 4, e: 5}
-	<template is="objectCombine" data="{{...obj3, ...obj4, a, f: 6}}"></template>	// 变量名相同的话后边会覆盖前面：{a: 1, b: 3, f: 6}
-	<template is="objectCombine" data="{{foo, bar}}"></template>	// 对象的 key 和 value 相同可以间接表达
+	// app.js
+	App({
+		globalData: 'I am global data'
+	})
+	
+	// other.js
+	var app = getApp()
+	console.log(app.globalData) // I am global data
+	app.globalData = '来自 app.js 的 globalData'
+	console.log(app.globalData) // 来自 app.js 的 globalData'
+	··
+	♭注意：♭
+	App() 必须在 app.js 中注册，且不能注册多个。
+	不要在定义于 App() 内的函数中调用 getApp() ，使用 this 就可以拿到 app 实例。
+	不要在 onLaunch 的时候调用 getCurrentPages()，此时 page 还没有生成。
+	通过 getApp() 获取实例之后，不要私自调用生命周期函数。
+	
+	##Page.js
+	Page() 函数用来注册一个页面。接受一个 object 参数，其指定页面的初始数据、生命周期函数、事件处理函数等。
+	‖
+	data：页面的数据
+	onLoad：生命周期函数--监听页面加载，直到关闭当前页面栈再进入当前页面才会再次触发
+	onReady：生命周期函数--监听页面初次渲染完成，直到关闭当前页面栈再进入当前页面才会再次触发
+	onShow：生命周期函数--监听页面显示，每次打开页面都会调用一次
+	onHide：生命周期函数--监听页面隐藏，每次关闭页面都会调用一次
+	onUnload：生命周期函数--监听页面卸载，当当前页面栈被关闭时触发一次
+	onPullDownRefresh：页面下拉刷新，需在app.json的window选项中或当前页面的json文件中设置·enablePullDownRefresh·为·true·，当处理完数据刷新后·wx.stopPullDownRefresh()·可以停止下拉刷新
+	onReachBottom：页面上拉触底，可在app.json的window选项中或当前页面的json文件中设置触发距离onReachBottomDistance，默认为50。在触发距离内滑动期间，本事件只会被触发一次。
+在触发距离内滑动期间，本事件只会被触发一次
+	onShareAppMessage：用户点击右上角转发，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(7)×')×.click()×)
+	onPageScroll：监听页面滚动，每次页面滚动时触发，返回参数如下 :
+		scrollTop{Number}：页面在垂直方向已滚动的距离（单位px）
+	onTabItemTap：当前是 tab 页时，点击 tab 时触发，可用于回到顶部或刷新等
+	其他：开发者可以添加任意的函数或数据到参数中，在页面的函数中用 this 可以访问
+	‖
+	###Page.prototype.route
+	·route·字段可以获取到当前页面的路径
+	··
+	Page({
+		onLoad: function () {
+			console.log(this.route)
+		}
+	})
+	··
+	###Page.prototype.setData()
+	·setData·函数用于将数据从逻辑层发送到视图层（异步），同时改变对应的 this.data 的值（同步），参数说明：
+	‖
+	data{Object}!：这次要改变的数据
+		key：要改变的 data 的键名，以数据路径的形式给出，如·'array[2].message'·、·'a.b.c.d'·，并且不需要在 this.data 中预先定义
+		value：要改变的 data 的键值
+	callback{Function}!：回调函数，在这次setData对界面渲染完毕后调用
+	‖
+	♭注意：♭
+	‖
+	直接修改 this.data 而不调用 this.setData 是无法改变页面的状态的，还会造成数据不一致。
+	单次设置的数据不能超过1024kB，请尽量避免一次设置过多的数据。
+	请不要把 data 中任何一项的 value 设为 undefined ，否则这一项将不被设置并可能遗留一些潜在问题
+	‖
+	事实上 setData 中的 key 只能以字符串或中括号的形式书写，并且是中括号的形式时就代表这是一个变量，不能有·a.b·的形式而是·'a.b'·或·[a.b]·，·this.data·是不用写也是无效的，示例代码：
+	··
+	Page({
+		data: {
+			arr: []
+		},
+		onLoad: function (options) {
+			// 假如要一次性修改很多数据，如果直接在循环里面直接调用 setData 是很耗性能的，因为它会不停的渲染
+			// 建议先修改 data（并且这能很好的修改变量），再 setData，这样只会渲染一次，大大减少性能消耗
+			for (let i = 0; i < 100; i++) {
+				this.data.arr.push(i)
+			}
+			this.setData({ arr: this.data.arr })
+		}
+	})
+	··
+	··
+	// 这里有5个input，需要获取输入的值
+	<input bindblur="inputValue" data-type="input1"/>
+	<input bindblur="inputValue" data-type="input2"/>
+	<input bindblur="inputValue" data-type="input3"/>
+	<input bindblur="inputValue" data-type="input4"/>
+	<input bindblur="inputValue" data-type="input5"/>
 	
 	Page({
 		data: {
-			message: 'Hello MINA!',
-			id: 0,
-			condition: true,
-			a: 1,
-			b: 2,
-			c: 3,
-			obj1: {
-				a: 1,
-				b: 2
-			},
-			obj2: {
-				c: 3,
-				d: 4
-			},
-			obj3: {
-				a: 1,
-				b: 2
-			},
-			obj4: {
-				b: 3,
-				f: 4
-			},
-			foo: 'my-foo',
-			bar: 'my-bar'
+			input1: '',
+			input2: '',
+			input3: '',
+			input4: '',
+			input5: ''
+		},
+		inputValue(e) {
+			// 一般是判断类型进行赋值
+			if (e.currentTarget.dataset.type === 'input1') {
+				this.setData({ input1: e.detail.value })
+			} else if (e.currentTarget.dataset.type === 'input2') {
+				this.setData({ input2: e.detail.value })
+			}
+			......
+			
+			// 而可以直接用变量进行对应赋值，减少书写量
+			this.setData({ [e.currentTarget.dataset.type]: e.detail.value })
 		}
 	})
-	
-	// boolean关键字无需在data声明，注意不要直接写 checked="false"，这表示字符串，代表真值
-	<checkbox checked="{{false}}"> </checkbox>
-	
-	// 花括号和引号之间如果有空格，将最终被解析成为字符串
-	<view wx:for="{{[1,2,3]}} ">{{item}}</view>
-	等同于：
-	<view wx:for="{{[1,2,3] + ' '}}">{{item}}</view>
 	··
+	###路由
+	框架以栈的形式维护了当前的所有页面
+	·getCurrentPages()·：该方法用于获取当前页面栈的实例，以数组形式按栈的顺序给出，第一个元素为首页，最后一个元素为当前页面。不要尝试修改页面栈，会导致路由以及页面状态错误。
+	Tab 切换对应的生命周期（以 A、B 页面为 Tabbar 页面，C 是从 A 页面打开的页面，D 页面是从 C 页面打开的页面为例）：
+	%%
+	当前页面,路由后页面,触发的生命周期（按顺序）
+	,,
+	A,B,A.onHide()，B.onLoad()，B.onShow()
+	A,B（再次打开）,A.onHide()，B.onShow()
+	C,A,C.onUnload()，A.onShow()
+	C,B,C.onUnload()，B.onLoad()，B.onShow()
+	D,B,D.onUnload()，C.onUnload()，B.onLoad()，B.onShow()
+	D（从转发进入）,A,D.onUnload()，A.onLoad()，A.onShow()
+	D（从转发进入）,B,D.onUnload()，B.onLoad()，B.onShow()
+	%%
+	###模块化
+	在 JavaScript 文件中声明的变量和函数只在该文件中有效；不同的文件中可以声明相同名字的变量和函数，不会互相影响。
+	可以将一些公共的代码抽离成为一个单独的 js 文件，作为一个模块。模块只有通过·module.exports·或者·exports·才能对外暴露接口。
+	♭需要注意的是：♭
+	·exports·是·module.exports·的一个引用，因此在模块里边随意更改·exports·的指向会造成未知的错误，所以更推荐用·module.exports·，并且·require()·返回的是·module.exports·而不是·exports·
+	小程序目前不支持引入·node_modules·，开发者需要使用到·node_modules·时候拷贝出相关的代码到小程序的目录中
+	··
+	// common.js
+	function sayHello(name) {
+		console.log(\`Hello \${name} !\`)
+	}
+	function sayGoodbye(name) {
+		console.log(\`Goodbye \${name} !\`)
+	}
+
+	module.exports.sayHello = sayHello
+	exports.sayGoodbye = sayGoodbye
+	// 或者
+	module.exports = {
+		sayHello: sayHello
+	}
+	exports = {
+		sayGoodbye
+	}
+	··
+	​在需要使用这些模块的文件中，使用·require(path)·相对路径将公共代码引入，暂时不支持绝对路径
+	··
+	var common = require('common.js')
+	Page({
+		helloMINA: function() {
+			common.sayHello('MINA')
+		},
+		goodbyeMINA: function() {
+			common.sayGoodbye('MINA')
+		}
+	})
+	··
+	###module.exports和exports的区别
+	先来补点 js 基础。示例：
+	··
+	// 当 a 是个 object 或 array 才会造成引用，如果是 string、number、boolean、undefined×、null× 就是独立的
 	
-	###列表渲染
-	在组件上使用·wx:for·控制属性绑定一个数组，即可使用数组中各项的数据重复渲染该组件
-	默认数组的当前项的下标变量名默认为 index，数组当前项的变量名默认为 item
+	var a = {name: '张三'}
+	var b = a
+	console.log(a)	// {name: '张三'}
+	console.log(b)	// {name: '张三'}
+	// a 是一个对象，b 是对 a 的引用，即 a 和 b 指向同一个对象，也就是同一块内存地址，所以输出一样
+
+	b.name = '李四'
+	console.log(a)	// {name: '李四'}
+	console.log(b)	// {name: '李四'}
+	// 修改 b 时，即 a 和 b 指向同一块内存地址的内容发生了改变，所以 a 也会被改变，所以输出一样
+
+	var b = {name: '王五'}
+	console.log(a)	// {name: '李四'}
+	console.log(b)	// {name: '王五'}
+	// 当对 b 覆盖时，b 就指向了一块新的内存地址，即 a 和 b 不再指向同一块内存，a 和 b 已毫无关系，所以输出不一样
+	··
+	而·exports·就是指向的·module.exports·的引用，初始值都为空对象·{}·，所以：
+	··
+	console.log(module.exports)	// {}
+	console.log(exports)	// {}
 	
+	module.exports.sayHello = 'sayHello'	// 同时改变
+	console.log(module.exports)	// {sayHello: 'sayHello'}
+	console.log(exports)	// {sayHello: 'sayHello'}
+	
+	module.exports = {sayMina: 'sayMina'}	// 重新赋值后断开了与 exports 的引用
+	console.log(module.exports)	// {sayMina: 'sayMina'}
+	console.log(exports)	// {sayHello: 'sayHello'}
+	··
+	而·require()·返回的是·module.exports·，所以更推荐用·module.exports·
+		
 	##事件
-	
 	绑定：
 	‖
 	bind：冒泡
@@ -281,8 +456,324 @@ commonData.html.wechatApplet = {
 	‖
 	
 	写法：·bindtap="eventName"·或·bind:tap="eventName"·
-	传参：自定义的以·data-·开头的属性，多个单词用-连接，不能大写，有也会转换成小写，在·e.currentTarget.dataset·可拿到，比如·data-name="WeChat"·
+	传参：在元素上自定义的以·data-·开头的属性，多个单词用-连接，不能大写，有也会转换成小写，在事件回调中·e.currentTarget.dataset·可拿到
 	特殊事件：·<canvas/>·中的触摸事件不可冒泡，所以没有 currentTarget
+	··
+	<view bindtap="onclick" data-name="foo">click me</view>
+	Page({
+		onclick(e) {
+			console.log(e.currentTarget.dataset)	// foo
+		}
+	})
+	··
+	
+	##wxml
+	WXML（WeiXin Markup Language）是框架设计的一套标签语言，结合基础组件、事件系统，可以构建出页面的结构
+	
+	###数据绑定
+	动态数据均来自对应 Page 的 data，使用 Mustache 语法（双大括号 {{}}）将变量包起来，比如：
+	··
+	<view>{{message}}</view>	// 文本内容
+	<view id="item-{{id}}"></view>	// 组件属性
+	<view>{{a+b}}+{{c}}+d</view>	// 算数运算，结果是：3 + 3 + d
+	<view hidden="{{flag?true:false}}">Hidden</view>	// 三元运算
+	<view wx:for="{{[id, 1, 2, 3, 4]}}">{{item}}</view>	// 组合，得到：[0, 1, 2, 3, 4]
+	<template is="objectCombine" data="{{...obj1, ...obj2, e: 5}}"></template>	// 扩展运算符 ... 将对象展开，组成：{a: 1, b: 2, c: 3, d: 4, e: 5}
+	<template is="objectCombine" data="{{...obj3, ...obj4, a, f: 6}}"></template>	// 变量名相同的话后边会覆盖前面：{a: 1, b: 3, f: 6}
+	<template is="objectCombine" data="{{foo, bar}}"></template>	// 对象的 key 和 value 相同可以间接表达
+	
+	Page({
+		data: {
+			message: 'Hello MINA!',
+			id: 0,
+			a: 1,
+			b: 2,
+			c: 3,
+			obj1: {
+				a: 1,
+				b: 2
+			},
+			obj2: {
+				c: 3,
+				d: 4
+			},
+			obj3: {
+				a: 1,
+				b: 2
+			},
+			obj4: {
+				b: 3,
+				f: 4
+			},
+			foo: 'my-foo',
+			bar: 'my-bar'
+		}
+	})
+	
+	// boolean关键字无需在data声明，注意不要直接写 checked="false"，这表示字符串，代表真值
+	<checkbox checked="{{false}}"> </checkbox>
+	
+	// 花括号和引号之间如果有空格，将最终被解析成为字符串
+	<view wx:for="{{[1,2,3]}} ">{{item}}</view>
+	等同于：
+	<view wx:for="{{[1,2,3] + ' '}}">{{item}}</view>
+	··
+	
+	###列表渲染
+	在组件上使用·wx:for·控制属性绑定一个数组，即可使用数组中各项的数据重复渲染该组件
+	··
+	// 默认数组的当前项的下标变量名默认为 index，数组当前项的变量名默认为 item
+	<view wx:for="{{array}}">{{index+1}}、{{item.message}}</view>
+	
+	// 使用 wx:for-item 可以指定元素的变量名，使用 wx:for-index 可以指定下标的变量名
+	<view wx:for="{{array}}" wx:for-index="idx" wx:for-item="name">{{idx+1}}、{{name.message}}</view>
+	
+	Page({
+		data: {
+			array: [
+				{ message: 'foo' },
+				{ message: 'bar' }
+			]
+		}
+	})
+	
+	// 循环一个对象，index 代表 key，item 代表 value
+	<view wx:for="{{obj}}">{{index}}：{{item}}</view>
+	Page({
+		data: {
+			obj: {
+				a: '123',
+				b: '456',
+				c: '789'
+			}
+		}
+	})
+	
+	// wx:for也可以嵌套，这是一个九九乘法表
+	<view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i">
+		<view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="j">
+			<text wx:if="{{i <= j}}">
+				{{i}} * {{j}} = {{i * j}}
+			</text>
+		</view>
+	</view>
+	
+	// 当wx:for的值为字符串时，会将字符串解析成字符串数组
+	<view wx:for="array">{{item}}</view>
+	// 等同于
+	<view wx:for="{{['a','r','r','a','y']}}">{{item}}</view>
+	
+	//  如果花括号和引号之间如果有空格，将最终被解析成为字符串
+	<view wx:for="{{[1,2,3]}} ">{{item}}</view>
+	// 等同于
+	<view wx:for="{{[1,2,3] + ' '}}">{{item}}</view>
+	// 等同于
+	<view wx:for="{{[1, ',', 2, ',', 3, ' ']}}">{{item}}</view>	// 1,2,3' '
+	··
+	·wx:key·：如果列表中项目的位置会动态改变或者有新的项目添加到列表中，并且希望列表中的项目保持自己的特征和状态（如 <input/> 中的输入内容，<switch/> 的选中状态），需要使用·wx:key·来指定列表中项目的唯一的标识符。
+	当数据改变触发渲染层重新渲染的时候，会校正带有 key 的组件，框架会确保他们被重新排序，而不是重新创建，以确保使组件保持自身的状态，并且提高列表渲染时的效率。
+	也就是说假设有一列·<input>·，都是通过循环·arr·创建的，当在·<input>·中输入值后，给·arr·添加一个元素触发渲染层重新渲染，如果没有·wx:key·那所有内容会重新创建，原来·<input>·的值也就不在了，都是一个新的·<input>·框了，而如果有·wx:key·就不会重新创建，只会重新排个序，原来·<input>·的值还在。
+	如不提供·wx:key·，控制台会报一个 warning， 如果明确知道该列表是静态，或者不必关注其顺序，可以选择忽略。
+	·wx:key·的值以两种形式提供：
+	字符串，代表在 for 循环的 array 中 item 的某个属性·property·，该·property·的值需要是列表中唯一的字符串或数字，且不能动态改变。
+	保留关键字·*this·代表在 for 循环中的 item 本身，这种表示需要 item 本身是一个唯一的字符串或者数字。
+	··
+	// 这里的 objectArray 中的 id 的值和 unique 的值都是唯一的字符串或数字，所以 wx:key 填 id 或 unique 都可以
+	<switch wx:for="{{objectArray}}" wx:key="unique"> {{item.id}} </switch>
+	
+	// 这里的 numberArray 中每一项都是唯一的数字，所以 wx:key 填 *this 就可以
+	<switch wx:for="{{numberArray}}" wx:key="*this×"> {{item}} </switch>
+	
+	Page({
+		data: {
+			objectArray: [
+				{id: 5, unique: 'unique_5'},
+				{id: 4, unique: 'unique_4'},
+				{id: 3, unique: 'unique_3'},
+				{id: 2, unique: 'unique_2'},
+				{id: 1, unique: 'unique_1'},
+				{id: 0, unique: 'unique_0'},
+			],
+			numberArray: [1, 2, 3, 4]
+		}
+	})
+	··
+	
+	###条件检测
+	使用·wx:if·来判断是否需要渲染该代码块
+	··
+	<view wx:if="{{condition}}"> True </view>
+	··
+	也可以用·wx:elif·和·wx:else·来添加一个·else·块：
+	··
+	<view wx:if="{{length > 5}}"> 1 </view>
+	<view wx:elif="{{length > 2}}"> 2 </view>
+	<view wx:else> 3 </view>
+	··
+	使用·hidden·可以隐藏代码块，也就是使用了·display:none·
+	··
+	<view hidden> True </view>
+	··
+	·wx:if vs hidden·：
+	·wx:if·是惰性的，如果在初始渲染条件为·false·，框架什么也不做，在条件第一次变成真的时候才开始局部渲染。
+	相比之下，·hidden·就简单的多，组件始终会被渲染，只是简单的控制显示与隐藏。
+	·wx:if·有更高的切换消耗而·hidden·有更高的初始渲染消耗。因此，如果需要频繁切换的情景下，用·hidden·更好，如果在运行时条件不大可能改变则·wx:if·较好。
+	
+	###模板
+	在模板中定义代码片段，然后在不同的地方调用，只在当前页面使用。
+	使用 name 属性，作为模板的名字。然后在·<template/>·内定义代码片段，如：
+	··
+	// 需要的 data 包括 index、msg、time
+	<template name="msgItem">
+		<view>
+			<text> {{index}}: {{msg}} </text>
+			<text> Time: {{time}} </text>
+		</view>
+	</template>
+	··
+	使用模板：使用 is 属性为 template 的 name，声明需要的使用的模板，然后将模板所需要的 data 传入，如：
+	··
+	<template is="msgItem" data="{{...item}}"/>
+	Page({
+		data: {
+			item: {
+				index: 0,
+				msg: 'this× is a template',
+				time: '2016-09-15'
+			}
+		}
+	})
+	··
+	可以动态决定具体需要渲染哪个模板：
+	··
+	<template name="odd">
+		<view> odd </view>
+	</template>
+	<template name="even">
+		<view> even </view>
+	</template>
+
+	<block wx:for="{{[1, 2, 3, 4, 5]}}">
+		<template is="{{item % 2 == 0 ? 'even' : 'odd'}}"/>
+	</block>
+	··
+	模板拥有自己的作用域，只能使用 data 传入的数据以及模版定义文件中定义的·<wxs/>·模块
+	
+	###引用
+	两种文件引用方式·import·和·include·
+	·import·可以在该文件中使用目标文件定义的·template·，比如在·item.wxml·中定义了一个叫·item·的·template·：
+	··
+	<!-- item.wxml -->
+	<template name="item">
+		<text>{{text}}</text>
+	</template>
+	··
+	其他页面引用：
+	··
+	<import src="item.wxml"/>
+	<template is="item" data="{{text: 'forbar'}}"/>
+	··
+	import 有作用域的概念，即只会 import 目标文件中定义的 template，而不会 import 目标文件 import 的 template。
+	如：C import B，B import A，在C中可以使用B定义的template，在B中可以使用A定义的template，但是C不能使用A定义的template。
+	·include·可以将目标文件♭除了 ♭<template/> <wxs/> 外的整个代码引入，相当于是拷贝到·include·位置，如：
+	··
+	<!-- header.wxml -->
+	<view> header </view>
+	
+	<!-- footer.wxml -->
+	<view> footer </view>
+	
+	<!-- index.wxml -->
+	<include src="header.wxml"/>
+	<view> body </view>
+	<include src="footer.wxml"/>
+	··
+	
+	##wxss
+	WXSS（WeiXin Style Sheets）是一套样式语言，用于描述 WXML 的组件样式
+	目前支持的选择器有：·.class|#id|element|element, element|::after|::before·。
+	background-image：不能使用本地图片，可用网络图片，或者 base64，或者使用<image/>标签
+	app.wxss为全局样式。在page的wxss文件中为局部样式，只作用在对应的页面，并会覆盖 app.wxss 中相同的选择器。
+	
+	与 CSS 相比，WXSS 扩展的特性有：尺寸单位和样式导入
+	
+	###尺寸单位
+	单位：·rpx·，根据750rpx屏幕宽度进行自适应。比如：	
+	iPhone6的屏幕宽度为375px，共有750个物理像素，1rpx=0.5px=1物理像素，1px=2rpx
+	在iPhone5下1rpx=0.42px，1px = 2.34rpx
+	在iPhone6 Plus下1rpx=0.552px，1px = 1.81rpx
+	开发时可以以iPhone6作为参考标准。
+
+	###样式导入
+	使用·@import·语句可以导入外联样式表，·@import·后跟需要导入的外联样式表的相对路径，用·;·表示语句结束
+	··
+	/* common.wxss */
+	.small-p {
+		padding:5px;
+	}
+	··
+	··
+	/* app.wxss */
+	@import "common.wxss";
+	.middle-p {
+		padding:15px;
+	}
+	··
+	
+	###内联样式
+	框架组件上支持使用 style、class 属性来控制组件的样式。
+	静态的样式统一写到 class 中。style 接收动态的样式，在运行时会进行解析，请尽量避免将静态的样式写进 style 中，以免影响渲染速度。
+	··
+	<view class="normal_view"/>
+	<view style="color:{{color}};"/>
+	··
+	
+	##wxs
+	WXS（WeiXin Script）是小程序的一套脚本语言，结合 WXML，可以构建出页面的结构
+	WXS 代码模块可以编写在 wxml 文件中的·<wxs>·标签内，或以·.wxs·为后缀名的文件内。相当于·<script>·标签
+	每一个·.wxs·文件和·<wxs>·标签都是一个单独的模块。每个模块都有自己独立的作用域。即在一个模块里面定义的变量与函数，默认为私有的，对其他模块不可见。一个模块要想对外暴露其内部的私有变量与函数，只能通过·module.exports·实现。
+	每个 wxs 模块均有一个内置的 module 对象。通过 exports 属性，可以对外共享本模块的私有变量与函数。
+	·<wxs>·标签：
+	··
+	<wxs module×="foo">
+		var some_msg = "hello world";
+		module.exports = {
+				msg : some_msg,
+		}
+	</wxs>
+	<view> {{foo.msg}} </view>
+	··
+	wxs文件：
+	··
+	// /pages/tools.wxs
+	var foo = "'hello world' from tools.wxs";
+	var bar = function (d) {
+		return d;
+	}
+	module.exports = {
+		FOO: foo,
+		bar: bar,
+	};
+	module.exports.msg = "some msg";
+	··
+	··
+	<!-- page/index/index.wxml -->
+	<wxs src="./../tools.wxs" module×="tools" />
+	<view> {{tools.msg}} </view>
+	<view> {{tools.bar(tools.FOO)}} </view>
+	··
+	·require·函数：在.wxs模块中引用其他 wxs 文件模块，可以使用 require 函数。需要注意如下几点：
+	只能引用 .wxs 文件模块，且必须使用相对路径。
+	wxs 模块均为单例，wxs 模块在第一次被引用时，会自动初始化为单例对象。多个页面，多个地方，多次引用，使用的都是同一个 wxs 模块对象。
+	如果一个 wxs 模块在定义之后，一直没有被引用，则该模块不会被解析与运行。
+	♭注意：♭
+	<wxs> 模块只能在定义模块的 WXML 文件中被访问到。使用 <include> 或 <import> 时，<wxs> 模块不会被引入到对应的 WXML 文件中。
+	<template> 标签中，只能使用定义该 <template> 的 WXML 文件中定义的 <wxs> 模块。
+	
+	##自定义组件
+	com
+	
+	##运行机制
 	
 	#组件
 	
@@ -315,7 +806,7 @@ commonData.html.wechatApplet = {
 		switch：开关
 		textarea：文本域
 	导航
-		navigator：页面链接，可以当成·a·标签
+		navigator：页面链接，可以当成·a·标签，对应API可见α(页面导航|javascript:;" onclick="$('h1:eq(3)×~h2:eq(1)×')×.click()×)
 	媒体
 		audio：音频，1.6.0 版本开始，该组件不再维护。建议使用能力更强的 wx.createInnerAudioContext 接口
 		image：图片，默认宽300px、高225px（4 : 3）
@@ -400,7 +891,60 @@ commonData.html.wechatApplet = {
 	bindconfirm{EventHandle}：点击完成按钮时触发，event.detail = {value: value}
 	‖
 	
+	##open-data
+	用于展示微信开放的数据，比如获取用户头像、昵称无需授权
+	‖
+	type{String}：开放数据类型，可选 :
+		groupName：拉取群名称
+		userNickName：用户昵称
+		userAvatarUrl：用户头像
+		userGender：用户性别
+		userCity：用户所在城市
+		userProvince：用户所在省份
+		userCountry：用户所在国家
+		userLanguage：用户的语言
+	open-gid{String}：群id，当·type="groupName"·时生效，只有当前用户在此群内才能拉取到群名称，获取·open-gid·的方法可查看 α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(7)×')×.click()×)
+	lang{String}[en]：以哪种语言展示 userInfo，当·type="user*"·时生效，有效值有 en（英文）、zh_CN（简体中文）、zh_TW（繁体中文）
+	‖
+	··
+	// 得到什么类型的结果就是什么类型的元素
+	<open-data type="userAvatarUrl"/>	// 相当于image标签
+	<open-data type="userNickName"/>	// 相当于text标签
+	··
+	
 	##button
+	‖
+	size{String}[default]：按钮的大小，可选 default、mini
+	type{String}[default]：按钮的样式类型，可选 primary、default、warn
+	plain{Boolean}[false]：按钮是否镂空，背景色透明
+	disabled{Boolean}[false]：是否禁用
+	loading{Boolean}[false]：名称前是否带 loading 图标
+	form-type{String}：用于 <form/> 组件，点击分别会触发·<form/>·组件的 submit/reset 事件，可选 submit、reset
+	open-type{String}：微信开放能力，可选 :
+		contact：打开客服会话
+		share：触发用户转发
+		getUserInfo：获取用户信息，可以从·bindgetuserinfo·回调中获取到用户信息
+		getPhoneNumber：获取用户手机号，可以从·bindgetphonenumber·回调中获取到用户信息
+		launchApp：打开APP，可以通过·app-parameter·属性设定向APP传的参数
+		openSetting：打开授权设置页
+	hover-class{String}[button-hover]：指定按钮按下去的样式类。当·hover-class="none"·时，没有点击态效果
+		button-hover默认为：·{background-color: rgba(0, 0, 0, 0.1); opacity: 0.7;}·
+	hover-stop-propagation{Boolean}[false]：指定是否阻止本节点的祖先节点出现点击态
+	hover-start-time{Number}[20]：按住后多久出现点击态，单位毫秒
+	hover-stay-time{Number}[70]：手指松开后点击态保留时间，单位毫秒
+	lang{String}[en]：指定返回的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文。当·open-type="getUserInfo"·时生效
+	bindgetuserinfo{Handler}：用户点击该按钮时，会返回获取到的用户信息，回调的detail数据与·wx.getUserInfo·返回的一致。当·open-type="getUserInfo"·时生效
+	session-from{String}：会话来源。当·open-type="contact"·时生效
+	send-message-title{String}[当前标题]：会话内消息卡片标题。当·open-type="contact"·时生效
+	send-message-path{String}[当前分享路径]：会话内消息卡片点击跳转小程序路径。当·open-type="contact"·时生效
+	send-message-img{String}[截图]：会话内消息卡片图片。当·open-type="contact"·时生效
+	show-message-card{Boolean}[false]：显示会话内消息卡片。当·open-type="contact"·时生效
+	bindcontact{Handler}：客服消息回调。当·open-type="contact"·时生效
+	bindgetphonenumber{Handler}：获取用户手机号回调。当·open-type="getphonenumber"·时生效
+	app-parameter{String}：打开 APP 时，向 APP 传递的参数。当·open-type="launchApp"·时生效
+	binderror{Handler}：当使用开放能力时，发生错误的回调。当·open-type="launchApp"·时生效
+	bindopensetting{Handler}：在打开授权设置页后回调。当·open-type="openSetting"·时生效
+	‖
 	
 	##swiper
 	‖
@@ -1225,17 +1769,6 @@ commonData.html.wechatApplet = {
 	
 	##登录
 	
-	###进入小程序登录流程时序说明
-	‖
-	小程序内调用·wx.login()·获取code并传给服务器
-	服务器请求指定接口得到openid、session_key、unionid
-	服务器以安全起见自定义和openid、session_key、unionid关联的登录态并返回小程序
-		比如生成加密随机数称之为3rd_session，以3rd_session为key，openid、session_key、unionid为value进行存储，然后把3rd_session传回小程序
-	小程序把3rd_session存入本地作为用户登录态
-	之后比如请求数据·wx.request()·就携带自定义登录态3rd_session，服务器查询到对应的openid、session_key以返回相关数据
-	‖
-	!./img/html/wechat-applet06.jpg,600
-	
 	###wx.login
 	调用接口·wx.login()·获取临时登录凭证，以换取用户的 openid、session_key、unionid
 	‖
@@ -1261,11 +1794,10 @@ commonData.html.wechatApplet = {
 	返回的结果：
 	‖
 	openid：用户唯一标识
-	session_key：会话密钥
+	session_key：会话密钥，生成对比 signature 以校验数据的完整性和解密 encryptedData
 	unionid：用户在开放平台的唯一标识符（满足UnionID下发条件才会出现）
 	‖
-	·openid·说明：用户在小程序、订阅号、服务号的唯一标识
-	·session_key·说明：用于解密wx.getUserInfo()返回的敏感数据
+	·session_key·说明：用于在服务器解密wx.getUserInfo()返回的敏感数据，为了应用自身的数据安全，开发者服务器不应该把会话密钥下发到小程序，也不应该对外提供这个密钥。
 	·unionid·说明：如果开发者拥有多个移动应用（比如在APP内开发了微信分享、微信支付）、网站应用（比如在某网站开放了微信快捷登录）、和公众帐号，微信针对用户在不同的应用下都有唯一的一个·openId·，所以在不同的公众账号下·openid·是不一样的，但·unionid·却是一样的。
 	对于拥有多个账号的企业来说，·unionid·可以帮助识别不同公众账号下的用户是否是同一个人。这样在不同账号下对该用户提供的服务可以连续起来了，可以实现多个小程序、公众号、APP之间数据互通。还可以去除重复关注的用户数，便于统计真实的关注用户总数
 	·unionid·作为互通的用户标识，不建议作为用户ID，应该用·openid·。否则一旦发生小程序、公众号或者APP迁移到其他的开放平台下，就无法识别出来原来的用户了（迁移指微信开放平台的a帐号迁移到了b帐号）。而迁移小程序只要·appid·不变，·openid·就是不会变的。当然如果能保证账号之间不会迁移用·unionid·作为用户标识也是可以的。
@@ -1273,9 +1805,13 @@ commonData.html.wechatApplet = {
 	1、调用接口wx.getUserInfo，从解密数据中获取UnionID。注意本接口需要用户授权，需妥善处理拒绝授权后的情况
 	2、如果开发者帐号下存在同主体的公众号，并且该用户已经关注了该公众号。可以通过wx.login获取到该用户UnionID
 	3、如果开发者帐号下存在同主体的公众号或移动应用，并且该用户已经授权登录过该公众号或移动应用。也可以通过wx.login获取到
+	微信开放平台绑定小程序流程
+	前提：α(微信开放平台|https://open.weixin.qq.com/)帐号必须已完成开发者资质认证
+	开发者资质认证流程：登录微信开放平台 – 帐号中心 – 开发者资质认证
+	登录微信开放平台—管理中心—公众帐号—绑定公众帐号
 	
 	###wx.getUserInfo
-	获取用户信息，当用户授权才可以使用该接口，否则会报错，只能使用α(<button>|javascript:;" onclick="$('h1:eq(2)×~h2:eq(4)×')×.click()×)将·open-type·设为·getUserInfo·引导用户授权
+	获取用户信息，当用户授权过才可以使用该接口，否则会报错，只能使用α(<button>|javascript:;" onclick="$('h1:eq(2)×~h2:eq(5)×')×.click()×)将·open-type·设为·getUserInfo·引导用户授权，比·wx.login()·的优势在于解密后就能获得·unionid·，而·wx.login()·需要一定的条件
 	‖
 	wx.getUserInfo({
 		withCredentials{Boolean}：是否带上登录态信息，也就是是否返回敏感信息
@@ -1292,8 +1828,8 @@ commonData.html.wechatApplet = {
 					country{String}：所在国家
 					language{String}：语言，简体中文为zh_CN
 				}
-				rawData{String}：不包括敏感信息的原始数据字符串，用于计算签名
-				signature{String}：使用 sha1( rawData + session_key ) 得到字符串，用于校验用户信息
+				rawData{String}：不包括敏感信息的原始数据字符串（userInfo的字符串版），用于计算签名
+				signature{String}：微信端使用 sha1( rawData + session_key ) 得到的加密版字符串，用于校验用户信息
 				encryptedData{String}：包括敏感数据在内的完整用户信息的加密数据
 				iv{String}：加密算法的初始向量
 			}
@@ -1301,42 +1837,95 @@ commonData.html.wechatApplet = {
 		complete{Function}：结束的回调函数
 	})
 	‖
-	encryptedData 解密后为以下 json 结构
+	###加密解密
+	为了确保返回用户数据的安全性，微信会对明文数据进行签名。开发者可以根据业务需要对数据包进行签名校验，确保数据的完整性。
+	1、通过调用接口（如 wx.getUserInfo）获取数据时，接口会同时返回 rawData、signature，其中 signature = sha1( rawData + session_key )
 	··
+	// 假设用户的 session-key
+	HyVFkGl5F5OQWJZZaNzBBg==
+	
+	// 假设用户的 rawData
+	{"nickName":"Band","gender":1,"language":"zh_CN","city":"Guangzhou","province":"Guangdong","country":"CN","avatarUrl":"avatarUrl"}
+	
+	// 加密 sha1( rawData + session_key ) 得到 signature2，用来对比 signature
+	75e81ceda165f4ffa64f4068af58c64b8f54b88c
+	··
+	2、开发者将 signature、rawData 发送到开发者服务器进行校验。服务器利用用户对应的 session_key 使用相同的算法计算出签名 signature2 ，比对 signature 与 signature2 即可校验数据的完整性。
+	3、对 encryptedData 进行解密：
+	‖
+	对称解密使用的算法为·AES-128-CBC·，数据采用·PKCS#7·填充
+	对称解密的目标密文为·Base64_Decode(encryptedData)·
+	对称解密秘钥·aeskey = Base64_Decode(session_key)·，·aeskey·是16字节
+	对称解密算法初始向量为·Base64_Decode(iv)·，其中·iv·由数据接口返回
+	‖
+	··
+	// 部分 nodejs 的 crypto 解密示例
+	// 需要 appId、sessionKey、encryptedData、iv
+	var decipher = crypto.createDecipheriv('aes-128-cbc', sessionKey, iv)
+	decipher.setAutoPadding(true)	// 设置自动 padding，删除填充补位
+	var decoded = decipher.update(encryptedData, 'binary', 'utf8')	// encryptedData 的更新解密
+	decoded += decipher.final('utf8')	// 加上剩余的解密内容
+	decoded = JSON.parse(decoded)	// 转成对象
+	if (decoded.watermark.appid !== appId) {	// 判断敏感数据归属的 appId 和自己的 appId 是否一致
+		throw new Error('Illegal Buffer')
+	}
+	
+	// decoded 即 encryptedData 解密后的数据
 	{
-			"openId": "OPENID",
-			"nickName": "NICKNAME",
-			"gender": GENDER,
-			"city": "CITY",
-			"province": "PROVINCE",
-			"country": "COUNTRY",
-			"avatarUrl": "AVATARURL",
-			"unionId": "UNIONID",
-			"watermark":
-			{
-					"appid":"APPID",
+		"openId": "OPENID",
+		"nickName": "NICKNAME",
+		"gender": GENDER,
+		"city": "CITY",
+		"province": "PROVINCE",
+		"country": "COUNTRY",
+		"avatarUrl": "AVATARURL",
+		"unionId": "UNIONID",
+		"watermark":
+		{
+			"appid":"APPID",
 			"timestamp":TIMESTAMP
-			}
+		}
 	}
 	··
-
-	建议使用场景：
-	‖
-	调用·wx.login·获得·code·，服务器请求指定接口获得·session_key·，用·session_key·解密·wx.getUserInfo()·返回的敏感数据
-	定期使用·wx.getSetting·获取用户的授权情况，若已授权就使用·wx.getUserInfo()·获取用户的最新信息，若未授权就显示授权按钮提示登录并更新信息
-	‖
 	
-	###背景
-	以前调用·wx.getUserInfo·接口会进行一次弹窗授权（拒绝之后再次调用不会弹窗），并且·wx.getUserInfo·依赖·wx.login·（这会有点麻烦），·wx.login·返回的code不能换取unionid，根据解密·wx.getUserInfo·加密的数据才会出现
-	当开发者在小程序首页就调用·wx.getUserInfo·，造成一进入小程序就出现授权弹窗，然后用户脑海闪过一些哲学问题：
+	###会话密钥session_key有效性
+	开发者如果遇到因为session_key不正确而校验签名失败或解密失败，请关注下面几个与session_key有关的注意事项。
+	‖
+	wx.login()调用时，用户的session_key会被更新而致使旧session_key失效。开发者应该在明确需要重新登录时才调用wx.login()，及时通过登录凭证校验接口更新服务器存储的session_key。
+	微信不会把session_key的有效期告知开发者。我们会根据用户使用小程序的行为对session_key进行续期。用户越频繁使用小程序，session_key有效期越长。
+	开发者在session_key失效时，可以通过重新执行登录流程获取有效的session_key。使用接口wx.checkSession()可以校验session_key是否有效，从而避免小程序反复执行登录流程。
+	当开发者在实现自定义登录态时，可以考虑以session_key有效期作为自身登录态有效期，也可以实现自定义的时效性策略。
+	‖
+	wx.checkSession(OBJECT)可校验用户当前session_key是否有效。
+	‖
+	wx.checkSession({
+		success{Function}：成功的回调函数
+		fail{Function}：失败的回调函数
+		complete{Function}：结束的回调函数
+	})
+	‖
+	示例代码：
+	··
+	wx.checkSession({
+		success: function(){
+			// session_key 未过期，并且在本生命周期一直有效
+		},
+		fail: function(){
+			// session_key 已经失效，需要重新执行登录流程
+			wx.login() //重新登录
+			......
+		}
+	})
+	··
+	
+	###设计规范
+	当开发者在小程序首页就调用·wx.getUserInfo·时，会造成一进入小程序就出现授权弹窗，然后用户脑海闪过一些哲学问题：
 	你是谁？
 	我在哪里？
 	我为什么要同意？
 	……
 	这就导致了部分用户点击拒绝授权，如果开发者没有对拒绝的情况做处理，可能会因为不良体验而流失用户。
-	所以微信端做出了调整，·wx.getUserInfo·不依赖·wx.login·就能得到数据，改用·button·组件来获取用户信息（点击弹窗无限制以解决用户再次授权），·wx.login·返回的code能换取unionid
-	这段垮掉：注意调用·wx.getUserInfo·将参数·withCredentials·设为·false·不会出现弹窗授权即可获取昵称头像等信息
-	改成不依赖login
+	所以微信端做出了调整，以前调用·wx.getUserInfo·接口会进行一次弹窗授权（拒绝之后再次调用不会弹窗，只能在授权设置中开启，设置在：右上角 - 关于 - 右上角 - 设置），并且·wx.getUserInfo·依赖·wx.login·，现改为·wx.getUserInfo·不依赖·wx.login·就能得到数据，并不会调用授权窗口，改用·button·组件来获取用户信息（授权无限制以解决用户再次授权），其实如果只需要获取用户的开放信息（头像、昵称等）用α(<open-data>|javascript:;" onclick="$('h1:eq(2)×~h2:eq(4)×')×.click()×)组件就行了，还不用弹窗授权
 	一个好的互联网产品，首页应该传递给用户产品理念，在需要展示用户信息的地方才去提示授权，比如未登录的淘宝在浏览完商品后点击购买才要求登录，如果在小程序使用前一定要用户登录或进行到需要用户登录的操作时，可以将·wx.getUserInfo·的·button·组件放置到页面中，并说明：
 	为什么需要授权？
 	需要用户的什么信息？
@@ -1354,29 +1943,31 @@ commonData.html.wechatApplet = {
 		complete{Function}：结束的回调函数
 	})
 	‖
-	实践
+	
+	###获取用户登录态建议使用场景
+	‖
+	小程序内调用·wx.login()·获取 code 并传给服务器
+	服务器请求指定接口得到openid、session_key、unionid
+	服务器以安全起见自定义和openid、session_key、unionid关联的登录态并返回小程序
+		比如生成加密随机数称之为3rd_session，以3rd_session为key，openid、session_key、unionid为value进行存储，然后把3rd_session传回小程序
+	小程序把3rd_session存入本地作为用户登录态
+	之后比如请求数据·wx.request()·就携带自定义登录态3rd_session，服务器查询到对应的openid、session_key以返回相关数据
+	定期更新登录态的信息，比如用 session_key 的有效期作为登录态的有效期，用·wx.checkSession()·来检查是否有效，若失效则重新请求并保存 session_key 到服务器
+	‖
+	!./img/html/wechat-applet06.jpg,600
+	用open-data展示用户头像昵称等信息
+	需要使用·wx.getUserInfo·的敏感信息
 	··
-	// 若之前已获取过用户信息
-	if (wx.getStorageSync('userInfo')) {
-		// 用户可能会更改昵称和头像，假设每周更新一次，如果时间戳到期就重新获取以更新
-		if (wx.getStorageSync('userInfoDeadline') < Date.now()) {
-			
-		} else {
-			// 
-		}
-	} else {
-		
-	}
 	wx.getSetting({
 		success: res => {
 			// 若已授权直接获取用户信息
-			// 若未授权在需要展示或用到的时候再用button授权
 			if (res.authSetting['scope.userInfo']) {
 				wx.getUserInfo({
 					success: res => {
-						// 使用用户信息
+						// 做相应处理
 					}
 				})
+				// 若未授权用button提示授权
 			}
 		}
 	})
@@ -1469,8 +2060,124 @@ commonData.html.wechatApplet = {
 	})
 	··
 	
+	#工具
+	
+	##介绍
+	开发小程序需使用α(微信开发者工具|https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
+	新建项目时需要在小程序后台注册后的 AppID，没有的话也可选择体验模式，但体验模式无法进行代码真机预览和上传等操作，部分 API 无法正常调用，注意登录的微信号需要是该 AppID 的小程序后台绑定过的开发者
+	微信小程序运行在三端：iOS、Android 和 用于调试的开发者工具。
+	三端的脚本执行环境以及用于渲染非原生组件的环境是各不相同的：
+	在 iOS 上，小程序的 javascript 代码是运行在 JavaScriptCore 中，是由 WKWebView 来渲染的，环境有 iOS8、iOS9、iOS10
+	在 Android 上，小程序的 javascript 代码是通过 X5 JSCore来解析，是由 X5 基于 Mobile Chrome 53/57 内核来渲染的
+	在 开发工具上， 小程序的 javascript 代码是运行在 nwjs 中，是由 Chrome Webview 来渲染的
+	尽管三端的环境是十分相似的，但是还是有些许区别：
+	wxss 渲染表现不一致。尽管可以通过开启样式补全来规避大部分的问题 ，还是建议开发者需要在 iOS 和 Android 上分别检查小程序的真实表现。
+	在 0.10.101000 以及之后版本的开发工具中，会默认使用 babel 将开发者 ES6 语法代码转换为三端都能很好支持的 ES5 的代码，帮助开发者解决环境不同所带来的开发问题。注意在开启 ES6 转换功能的情况下会启用 javasctipt 严格模式
+	
+	##快捷键
+	‖
+	ctrl + X：剪切，如果没有选中文字则剪切当前行
+	ctrl + C：复制，如果没有选中文字则复制当前行
+	shift + alt + F：格式化代码
+	alt + ⬆：代码上移一行
+	alt + ⬇：代码下移一行
+	shift + alt + ⬆：复制并向上粘贴
+	shift + alt + ⬇：复制并向下粘贴
+	ctrl + F：当前文件内搜索
+	shift + ctrl + F：整个项目内搜索
+	shift + ctrl + R：替换
+	ctrl + D：选择下一个匹配
+	ctrl + shift + L：选择所有匹配
+	ctrl + U：光标回退到上一个位置
+	ctrl + I：选中当前行
+	shift + home：选中从行首到光标处
+	shift + end：选中从光标处到行尾
+	‖
+	
+	##Git 状态展示
+	如果所在的小程序工程目录（project.config.json 所在目录）存在 Git 仓库，编辑器可以展示目前的 Git 状态
+	文件图标状态的含义如下：
+	‖
+	U：文件未追踪（Untracked）
+	A：新文件（Added, Staged）
+	M：文件有修改（Modified）
+	+M：文件有修改（Modified, Staged）
+	C：文件有冲突（Conflict）
+	D：文件被删除（Deleted）
+	‖
+	文件夹目录图标状态的含义如下：
+	‖
+	小红点：目录下至少存在一个删除状态的文件
+	小橙点：目录下至少存在一个冲突状态的文件
+	小蓝点：目录下至少存在一个未追踪状态的文件
+	小绿点：目录下至少存在一个修改状态的文件
+	‖
+	如果某一文件存在修改（Modified），可以右键点击此文件，并选择 “与上一版本比较”，则可以查看当前工作区文件与 HEAD 版本的比较
+	比较时文件夹目录图标状态的含义如下：
+	‖
+	蓝色线条：此处的代码有变动
+	绿色线条：此处的代码是新增的
+	红色三角箭头：此处有代码被删除
+	‖
+	
+	##项目配置文件
+	可以在项目根目录使用·project.config.json·文件对项目进行配置
+	‖
+	miniprogramRoot{Path String}：指定小程序源码的目录(需为相对路径)
+	qcloudRoot{Path String}：指定腾讯云项目的目录(需为相对路径)
+	pluginRoot{Path String}：指定插件项目的目录(需为相对路径)
+	compileType{String}：编译类型，可选 miniprogram（小程序）、plugin（小程序插件）
+	setting{Object}：项目设置
+		es6{Boolean}：是否启用 es5 转 es6
+		postcss{Boolean}：上传代码时样式是否自动补全
+		minified{Boolean}：上传代码时是否自动压缩
+		urlCheck{Boolean}：是否检查安全域名和 TLS 版本
+	libVersion{String}：基础库版本
+	appid{String}：项目的 appid，只在新建项目时读取
+	projectname{String}：项目名字，只在新建项目时读取
+	packOptions{Object}：打包配置选项，打包是预览 、上传时对项目进行的必须步骤
+		ignore{Object Array}：用以配置打包时对符合指定规则的文件或文件夹进行忽略，以跳过打包的过程，这些文件或文件夹将不会出现在预览或上传的结果内。每项如下 :
+			type{String}：类型，可选folder（文件夹）、file（文件）、suffix（后缀）、prefix（前缀）
+			value{String}：路径或取值，不支持通配符、正则表达式。若是路径则以小程序目录 (miniprogramRoot) 为根目录
+	scripts{Object}：自定义预处理
+		beforeCompile：编译前预处理命令
+		beforePreview：预览前预处理命令
+		beforeUpload：上传前预处理命令
+	‖
+	
+	##腾讯云
+	开发者可以使用小程序腾讯云支持，开发环境提供免费的主机、https 域名。开发完毕后，还可以三个月内继续使用免费的生产环境。而这一切只需要开发者提供域名。
+	目前服务端支持 NodeJS 和 PHP 两种语言，开发者可以使用微信开发者工具同时进行服务端和小程序的开发。
+	开发环境
+	‖
+	免费使用
+	自动分配测试用二级域名 xxxxxxx.qcloud.la
+	自动部署免费 HTTPS
+	仅可用于线上调试，不可发布
+	代码部署、运行和数据库与生产环境完全分开
+	与微信开发工具打通，可一键部署、调试、重启和恢复代码
+	‖
+	生产环境
+	‖
+	免费使用
+	用户需购买或使用已有的腾讯云域名
+	自动部署免费 HTTPS
+	用于线上发布，不可调试
+	使用微信开发工具上传代码，在腾讯云控制台操作部署，上传和发布分离，降低误操作风险
+	‖
+	通过微信公众平台授权登录腾讯云
+	打开 微信公众平台 注册并登录小程序，按如下步骤操作：
+	‖
+	单击左侧菜单栏中的【设置】
+	单击右侧 Tab 栏中的【开发者工具】
+	单击【腾讯云】，进入腾讯云工具页面，单击【开通】
+	使用小程序绑定的微信扫码即可将小程序授权给腾讯云，开通之后会自动进去腾讯云微信小程序控制台，显示开发环境已开通，此时可以进行后续操作
+	‖
+	注意：此时通过小程序开发者工具查看腾讯云状态并不会显示已开通，已开通状态会在第一次部署开发环境之后才会同步到微信开发者工具上
+	服务端、客户端的 Demo、SDK 的具体文档：α(开发环境和生产环境|https://github.com/tencentyun/wafer2-startup/wiki/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%92%8C%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83)
+	
 	αα
-	小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413)
+	小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
 	αα
 	
 	&2018.6.3
