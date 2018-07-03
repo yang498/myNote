@@ -1,9 +1,11 @@
 commonData.html.weex = {
 	content: `
 	#介绍
-	使用Weex可以构建一个真正的原生应用，跨平台：一份代码支持H5、IOS和Android，接口可扩展，可以和vue搭配，还可以称为vue-native。
-它不是一个 HTML5 库或开发框架，不是一套全新的技术，不是为了解决纯 native 开发的体验问题，不是一个以自身为中心的移动应用开发框架，而是一款轻量级的移动端跨平台动态性技术解决方案。
-
+	使用 Weex 可以构建一个真正的原生应用，它不是一个 HTML5 库或开发框架，不是一套全新的技术，不是为了解决纯 native 开发的体验问题，不是一个以自身为中心的移动应用开发框架，而是一套简单易用的跨平台开发方案，能以 web 的开发体验构建高性能、可扩展的 native 应用，并遵循 W3C 标准实现了统一的 JSEngine 和 DOM API，打造三端一致的 native 应用。其架构如下所示：
+	!./img/html/weex02.jpg,600
+	!./img/html/weex03.jpg,600
+	Weex 的结构是解耦的，渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架。
+	在开发 Weex 页面就像开发普通网页一样；在渲染 Weex 页面时和渲染原生页面一样。
 
 	#安装
 	
@@ -13,7 +15,7 @@ commonData.html.weex = {
 	查看版本号：·weex -v·
 	查看是否安装成功：·weex·
 	如果使用·cnpm·安装后提示权限错误（permission error）：
-	!./imgs/html/weex01.jpg
+	!./img/html/weex01.jpg
 	先卸载之前的·cnpm uninstall -g weex-toolkit·，使用·sudo·关键字进行安装
 	·sudo cnpm install -g weex-toolkit·
 	windows是不支持·sudo·的，卸载完直接用·npm install -g weex-toolkit·
@@ -38,6 +40,6 @@ commonData.html.weex = {
 	·.babelrc·：转es5配置
 	·.eslintrc·：.babelrc转换标准
 
-
+	&2018.6.7
 	`
 }

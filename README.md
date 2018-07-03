@@ -11,7 +11,7 @@
 		interview
 
 
-	common-data.js：所有文档用一个commonData对象变量作为容器，一级菜单作为子属性预先定义好，二级菜单在各自的文件内定义作为二级子属性，可以定义name属性作为展示的名称
+	common-data.js：所有文档用一个commonData对象变量作为容器，一级菜单作为子属性预先定义好，二级菜单在各自的文件内定义作为二级子属性，可选择定义name属性作为展示的名称，否则就用该二级属性名
 	data*.js：一个文档为js文件作为二级菜单，新添加的js注意在index.html引入
 	format-html.js：解析文档
 	index.html：用vue的数据响应做成单页模式，自定义路径达到切换页面的效果

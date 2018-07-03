@@ -285,10 +285,13 @@ article {
     }
     .link {
         font-size: 18px;
+        line-height: 30px;
         margin-top: 50px;
-        padding-top: 20px;
-        text-indent: 2em;
+        padding: 20px 0 0 2em;
         border-top: 1px dashed #999;
+        .pd {
+            margin-left: 2em;
+        }
     }
     time {
         display: block;

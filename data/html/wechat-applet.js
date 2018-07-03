@@ -2,17 +2,75 @@ commonData.html.wechatApplet = {
 	name: '微信小程序',
 	content: `
 	#介绍
-	组件完成
-	##注册
 	
-	##关联公众号
-	在要关联的公众号的左边菜单栏选择小程序管理，点击关联小程序
-	公众号可关联同主体的10个小程序及不同主体的3个小程序，同一个小程序可关联最多500个公众号
+	##起步
+	开发小程序的第一步，你需要α(注册|https://mp.weixin.qq.com/wxopen/waregister?action=step1)一个小程序帐号，通过这个帐号你就可以管理你的小程序。
+	登录α(小程序平台|https://mp.weixin.qq.com)，在菜单 “设置”-“开发设置” 看到小程序的·AppID·了 。
+	小程序的·AppID·相当于小程序平台的一个身份证，后续你会在很多地方要用到 AppID (注意这里要区别于服务号或订阅号的 AppID)。
+	有了小程序帐号之后，就需要α(下载微信开发者工具|https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=201861)来开发小程序。
+	
+	##用户身份
+	一个团队进行小程序的开发，那么团队成员的身份管理是很有必要的。
+	管理员可在小程序管理后台统一管理项目成员（包括开发者、体验者及其他成员）、设置项目成员的权限，包括：开发者/体验者权限、登录小程序管理后台、开发管理、查看小程序数据分析等。	管理入口位于：用户身份 – 成员管理。权限说明：
+	‖
+	开发者权限：可使用小程序开发者工具及开发版小程序进行开发
+	体验者权限：可使用体验版小程序
+	登录：可登录小程序管理后台，无需管理员确认
+	数据分析：使用小程序数据分析功能查看小程序数据
+	开发管理：小程序提交审核、发布、回退
+	开发设置：设置小程序服务器域名、消息推送及扫描普通链接二维码打开小程序
+	暂停服务设置：暂停小程序线上服务
+	‖
+	
+	##小程序的版本
+	‖
+	开发版本：使用开发者工具上传的最新版本代码。开发版本可删除，不影响线上版本和审核中版本的代码。
+	审核中版本：只能有一份代码处于审核中。有审核结果后可以发布到线上，也可直接重新提交审核，覆盖原审核版本。
+	线上版本：线上所有用户使用的代码版本，该版本代码在新版本代码发布后被覆盖更新。
+	‖
+	
+	##公众号关联小程序
+	公众号关联小程序后，将可在图文消息、自定义菜单、模板消息等功能中使用小程序。
+	关联规则：
+	‖
+	所有公众号都可以关联小程序。
+	一个公众号可关联10个同主体的小程序，3个不同主体的小程序。
+	一个小程序可关联500个公众号。
+	公众号一个月可新增关联小程序13次，小程序一个月可新增关联500次。
+	‖
+	关联流程：登录公众号后台-小程序-小程序管理-添加-关联小程序
+	
+	##客服
+	用户可使用小程序客服消息功能，与小程序的客服人员进行沟通。
+	客服消息会话入口有两个：
+	1、小程序内：开发者在小程序内添加客服消息按钮组件，用户可在小程序内唤起客服会话页面，给小程序发消息；
+	2、已使用过的小程序客服消息会聚合显示在微信会话“小程序客服消息”内，用户可以在小程序外查看历史并发送客服消息。
+	可通过以下两种方式下回复用户的消息：
+	1、调用发送客服消息接口；
+	2、使用公众平台网页版客服工具。
+	
+	##小程序二维码
+	在小程序后台可查看下载小程序码
+	也可以自定义配置二维码链接扫码打开
+	进入“设置-开发设置-扫普通链接二维码打开小程序”，开启功能后即可配置二维码规则，注意配置的链接需要校验
+	二维码链接内容会以参数q的形式带给页面，在onLoad事件中提取"q"参数并自行UrlDecode一次，即可获取原二维码的完整内容
 	
 	##常见问题
 	‖
 	小程序代码包大小限制为 10M
+	·background-image·不能使用本地图片，可用网络图片，或者 base64，或者使用·<image/>·标签
+	·this.setData·的·key·不用·this.data·，可用中括号·[]·表示变量
 	获取输入框中的内容可以使用·bindblur·失去焦点时触发获取
+	在Page之外声明的变量并不会在页面返回到上一级之后销毁，也就是不会重置，当然作用域还是在当前页面有效
+	‖
+	
+	##相关小程序
+	‖
+	小程序示例：展示官方demo
+	小程序开发助手：展示开发过的小程序、成员预览时间、小程序更新前后大小
+	小程序数据助手：展示用户的流量数据
+	小游戏数据助手：展示小游戏的流量数据
+	公众平台助手：管理公众号的消息留言通知、流量数据
 	‖
 	
 	#框架
@@ -165,7 +223,7 @@ commonData.html.wechatApplet = {
 		path{String}：打开小程序的路径
 		query{Object}：打开小程序的query
 		scene{Number}：打开小程序的场景值
-		shareTicket{String}：shareTicket，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(7)×')×.click()×)
+		shareTicket{String}：shareTicket，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(6)×')×.click()×)
 		referrerInfo{Object}：当场景为由从另一个小程序或公众号或App打开时，返回此字段
 			appId{String}：来源小程序或公众号或App的 appId，支持返回的场景有：1020、1035、1036、1037、1038、1043
 			extraData{Object}：来源小程序传过来的数据，scene=1037或1038时支持
@@ -218,7 +276,7 @@ commonData.html.wechatApplet = {
 	onPullDownRefresh：页面下拉刷新，需在app.json的window选项中或当前页面的json文件中设置·enablePullDownRefresh·为·true·，当处理完数据刷新后·wx.stopPullDownRefresh()·可以停止下拉刷新
 	onReachBottom：页面上拉触底，可在app.json的window选项中或当前页面的json文件中设置触发距离onReachBottomDistance，默认为50。在触发距离内滑动期间，本事件只会被触发一次。
 在触发距离内滑动期间，本事件只会被触发一次
-	onShareAppMessage：用户点击右上角转发，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(7)×')×.click()×)
+	onShareAppMessage：用户点击右上角转发，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(6)×')×.click()×)
 	onPageScroll：监听页面滚动，每次页面滚动时触发，返回参数如下 :
 		scrollTop{Number}：页面在垂直方向已滚动的距离（单位px）
 	onTabItemTap：当前是 tab 页时，点击 tab 时触发，可用于回到顶部或刷新等
@@ -379,7 +437,7 @@ commonData.html.wechatApplet = {
 	console.log(module.exports)	// {sayMina: 'sayMina'}
 	console.log(exports)	// {sayHello: 'sayHello'}
 	··
-	而·require()·返回的是·module.exports·，所以更推荐用·module.exports·
+	而·require()·返回的是·module.exports·，所以更推荐用·module.exports·，每个 js 的 module 都是独立的，不同 js 对 module.exports 进行赋值都是可以的
 		
 	##事件
 	绑定：
@@ -692,7 +750,6 @@ commonData.html.wechatApplet = {
 	##wxss
 	WXSS（WeiXin Style Sheets）是一套样式语言，用于描述 WXML 的组件样式
 	目前支持的选择器有：·.class|#id|element|element, element|::after|::before·。
-	background-image：不能使用本地图片，可用网络图片，或者 base64，或者使用<image/>标签
 	app.wxss为全局样式。在page的wxss文件中为局部样式，只作用在对应的页面，并会覆盖 app.wxss 中相同的选择器。
 	
 	与 CSS 相比，WXSS 扩展的特性有：尺寸单位和样式导入
@@ -771,9 +828,250 @@ commonData.html.wechatApplet = {
 	<template> 标签中，只能使用定义该 <template> 的 WXML 文件中定义的 <wxs> 模块。
 	
 	##自定义组件
-	com
+	开发者可以将页面内的功能模块抽象成自定义组件，以便在不同的页面中重复使用；也可以将复杂的页面拆分成多个低耦合的模块，有助于代码维护。自定义组件在使用时与基础组件非常相似。
+	###创建自定义组件
+类似于页面，一个自定义组件由 json wxml wxss js 4个文件组成。要编写一个自定义组件，首先需要在 json 文件中进行自定义组件声明（将 component 字段设为 true 可这一组文件设为自定义组件）：
+	··
+	{
+		"component": true
+	}
+	··
+	同时，还要在 wxml 文件中编写组件模版，在 wxss 文件中加入组件样式，它们的写法与页面的写法类似。
+	在组件模板中可以提供一个 <slot> 节点，用于承载组件引用时提供的子节点。
+	代码示例：
+	··
+	<!-- 这是自定义组件的内部WXML结构 -->
+	<view class="inner">{{innerText}}</view>
+	<slot></slot>
+	/* 这里的样式只应用于这个自定义组件 */
+	.inner {
+		color: red;
+	}
+	··
+	··
+	<!-- 引用组件的页面模版 -->
+	<view>
+		<component-tag-name>
+			<!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+			<view>这里是插入到组件slot中的内容</view>
+		</component-tag-name>
+	</view>
+	··
+	默认情况下，一个组件的wxml中只能有一个slot。需要使用多slot时，可以在组件js中声明启用。
+	此时，可以在这个组件的wxml中使用多个slot，以不同的 name 来区分。
+	··
+	<!-- 组件模板 -->
+	<view class="wrapper">
+		<slot name="before"></slot>
+		<view>这里是组件的内部细节</view>
+		<slot name="after"></slot>
+	</view>
+	··
+	使用时，用 slot 属性来将节点插入到不同的slot上。
+	··
+	<!-- 引用组件的页面模版 -->
+	<view>
+		<component-tag-name>
+			<!-- 这部分内容将被放置在组件 <slot name="before"> 的位置上 -->
+			<view slot="before">这里是插入到组件slot name="before"中的内容</view>
+			<!-- 这部分内容将被放置在组件 <slot name="after"> 的位置上 -->
+			<view slot="after">这里是插入到组件slot name="after"中的内容</view>
+		</component-tag-name>
+	</view>
+	··
+	♭注意：在组件wxss中不应使用ID选择器、属性选择器和标签名选择器。♭
+	在自定义组件的 js 文件中，需要使用 Component() 来注册组件，并提供组件的属性定义、内部数据和自定义方法。
+	组件的属性值和内部数据将被用于组件 wxml 的渲染，其中，属性值是可由组件外部传入的。
+	代码示例：
+	··
+	Component({
+		properties: {
+			// 这里定义了innerText属性，属性值可以在组件使用时指定
+			innerText: {
+				type: String,
+				value: 'default value',
+			}
+		},
+		data: {
+			// 这里是一些组件内部数据
+			someData: {}
+		},
+		methods: {
+			// 这里是一个自定义方法
+			customMethod: function(){}
+		}
+	})
+	··
+	###使用自定义组件
+	使用已注册的自定义组件前，首先要在页面的 json 文件中进行引用声明。此时需要提供每个自定义组件的标签名和对应的自定义组件文件路径：
+	··
+	{
+		"usingComponents": {
+			"component-tag-name": "path/to/the/custom/component"
+		}
+	}
+	··
+	这样，在页面的 wxml 中就可以像使用基础组件一样使用自定义组件。节点名即自定义组件的标签名，即组件的文件名，节点属性即传递给组件的属性值。
+	示例代码
+	··
+	<view>
+		<!-- 以下是对一个自定义组件的引用 -->
+		<component-tag-name inner-text="Some text"></component-tag-name>
+	</view>
+	··
+	自定义组件的 wxml 节点结构在与数据结合之后，将被插入到引用位置内。
+	♭注意：♭
+	因为WXML节点标签名只能是小写字母、中划线和下划线的组合，所以自定义组件的标签名也只能包含这些字符。
+	自定义组件也是可以引用自定义组件的，引用方法类似于页面引用自定义组件的方式（使用 usingComponents 字段）。
+	自定义组件和使用自定义组件的页面所在项目根目录名不能以“wx-”为前缀，否则会报错。
+	###behaviors
+	behaviors 是用于组件间代码共享的特性，类似于一些编程语言中的“mixins”或“traits”。
+	每个 behavior 可以包含一组属性、数据、生命周期函数和方法，组件引用它时，它的属性、数据和方法会被合并到组件中，生命周期函数也会在对应时机被调用。每个组件可以引用多个 behavior 。 behavior 也可以引用其他 behavior 。
+	behavior 需要使用 Behavior() 构造器定义。
+	代码示例：
+	··
+	// my-behavior.js
+	module.exports = Behavior({
+		behaviors: [],
+		properties: {
+			myBehaviorProperty: {
+				type: String
+			}
+		},
+		data: {
+			myBehaviorData: {}
+		},
+		attached: function(){},
+		methods: {
+			myBehaviorMethod: function(){}
+		}
+	})
+	··
+	组件引用时，在 behaviors 定义段中将它们逐个列出即可。
+	代码示例：
+	··
+	// my-component.js
+	var myBehavior = require('my-behavior')
+	Component({
+		behaviors: [myBehavior],
+		properties: {
+			myProperty: {
+				type: String
+			}
+		},
+		data: {
+			myData: {}
+		},
+		attached: function(){},
+		methods: {
+			myMethod: function(){}
+		}
+	})
+	··
+	在上例中， my-component 组件定义中加入了 my-behavior ，而 my-behavior 中包含有 myBehaviorProperty 属性、 myBehaviorData 数据字段、 myBehaviorMethod 方法和一个 attached 生命周期函数。这将使得 my-component 中也包含了 my-behavior 的属性和方法。当组件触发 attached 生命周期时，会依次触发 my-behavior 中的 attached 生命周期函数和 my-component 中的 attached 生命周期函数。
+	
+	###组件间关系
+	有时需要实现这样的组件：
+	··
+	<custom-ul>
+		<custom-li> item 1 </custom-li>
+		<custom-li> item 2 </custom-li>
+	</custom-ul>
+	··
+	这个例子中， custom-ul 和 custom-li 都是自定义组件，它们有相互间的关系，相互间的通信往往比较复杂。此时在组件定义时加入 relations 定义段，可以解决这样的问题。示例：
+	··
+	// path/to/custom-ul.js
+	Component({
+		relations: {
+			'./custom-li': {
+				type: 'child', // 关联的目标节点应为子节点
+				linked: function(target) {
+					// 每次有custom-li被插入时执行，target是该节点实例对象，触发在该节点attached生命周期之后
+				},
+				linkChanged: function(target) {
+					// 每次有custom-li被移动后执行，target是该节点实例对象，触发在该节点moved生命周期之后
+				},
+				unlinked: function(target) {
+					// 每次有custom-li被移除时执行，target是该节点实例对象，触发在该节点detached生命周期之后
+				}
+			}
+		},
+		methods: {
+			_getAllLi: function(){
+				// 使用getRelationNodes可以获得nodes数组，包含所有已关联的custom-li，且是有序的
+				var nodes = this.getRelationNodes('path/to/custom-li')
+			}
+		},
+		ready: function(){
+			this._getAllLi()
+		}
+	})
+	··
+	··
+	// path/to/custom-li.js
+	Component({
+		relations: {
+			'./custom-ul': {
+				type: 'parent', // 关联的目标节点应为父节点
+				linked: function(target) {
+					// 每次被插入到custom-ul时执行，target是custom-ul节点实例对象，触发在attached生命周期之后
+				},
+				linkChanged: function(target) {
+					// 每次被移动后执行，target是custom-ul节点实例对象，触发在moved生命周期之后
+				},
+				unlinked: function(target) {
+					// 每次被移除时执行，target是custom-ul节点实例对象，触发在detached生命周期之后
+				}
+			}
+		}
+	})
+	··
+	注意：必须在两个组件定义中都加入relations定义，否则不会生效。
+	
+	###抽象节点
+	有时，自定义组件模版中的一些节点，其对应的自定义组件不是由自定义组件本身确定的，而是自定义组件的调用者确定的。这时可以把这个节点声明为“抽象节点”。
+	例如，我们现在来实现一个“选框组”（selectable-group）组件，它其中可以放置单选框（custom-radio）或者复选框（custom-checkbox）。这个组件的 wxml 可以这样编写：
+	··
+	<!-- selectable-group.wxml -->
+	<view wx:for="{{labels}}">
+		<label>
+			<selectable disabled="{{false}}"></selectable>
+			{{item}}
+		</label>
+	</view>
+	··
+	其中，“selectable”不是任何在 json 文件的 usingComponents 字段中声明的组件，而是一个抽象节点。它需要在 componentGenerics 字段中声明：
+	··
+	{
+		"componentGenerics": {
+			"selectable": true
+		}
+	}
+	··
+	
+	##插件
+	插件的开发和使用自小程序基础库版本 1.9.6 开始支持。
+	插件是对一组 js 接口或自定义组件的封装，用于提供给第三方小程序调用。插件必须嵌入在其他小程序中才能被用户使用。
+	插件开发者可以像开发小程序一样编写一个插件并上传代码，在插件发布之后，其他小程序方可调用。小程序平台会托管插件代码，其他小程序调用时，上传的插件代码会随小程序一起下载运行。
+	相对于普通 js 文件或自定义组件，插件拥有更强的独立性，拥有独立的 API 接口、域名列表等，但同时会受到一些限制，如一些 API 无法调用或功能受限。
+	对于插件开发者，请阅读α(开发插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/development.html)章节；对于插件使用者，请阅读α(使用插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/using.html)章节。
 	
 	##运行机制
+	小程序启动会有两种情况，一种是「冷启动」，一种是「热启动」。 假如用户已经打开过某小程序，然后在一定时间内再次打开该小程序，此时无需重新启动，只需将后台态的小程序切换到前台，这个过程就是热启动；冷启动指的是用户首次打开或小程序被微信主动销毁后再次打开的情况，此时小程序需要重新加载启动。
+	小程序没有重启的概念，当小程序进入后台，客户端会维持一段时间的运行状态，超过一定时间后（目前是5分钟）会被微信主动销毁，当短时间内（5s）连续收到两次以上收到系统内存告警，会进行小程序的销毁。
+	当退出小程序，在小程序没被销毁前再次进入小程序，打开逻辑：
+	A. 打开首页： α(场景值|https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/scene.html)有 1001, 1019, 1022, 1023, 1038, 1056
+	B. 打开小程序指定的某个页面： 场景值为除 A 以外的其他
+	%%
+	上一次的场景,当前打开的场景,效果
+	,,
+	A,A,保留原来的状态
+	B,A,清空原来的页面栈，打开首页（相当于执行 wx.reLaunch 到首页）
+	A 或 B,B,清空原来的页面栈，打开指定页面（相当于执行 wx.reLaunch 到指定页）
+	%%
+	
+	###更新机制
+	小程序冷启动时如果发现有新版本，将会异步下载新版本的代码包，并同时用客户端本地的包进行启动，即新版本的小程序需要等下一次冷启动才会应用上。 如果需要马上应用最新版本，可以使用 α(wx.getUpdateManager|https://developers.weixin.qq.com/miniprogram/dev/api/getUpdateManager.html) API 进行处理。
 	
 	#组件
 	
@@ -903,7 +1201,7 @@ commonData.html.wechatApplet = {
 		userProvince：用户所在省份
 		userCountry：用户所在国家
 		userLanguage：用户的语言
-	open-gid{String}：群id，当·type="groupName"·时生效，只有当前用户在此群内才能拉取到群名称，获取·open-gid·的方法可查看 α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(7)×')×.click()×)
+	open-gid{String}：群id，当·type="groupName"·时生效，只有当前用户在此群内才能拉取到群名称，获取·open-gid·的方法可查看 α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(6)×')×.click()×)
 	lang{String}[en]：以哪种语言展示 userInfo，当·type="user*"·时生效，有效值有 en（英文）、zh_CN（简体中文）、zh_TW（繁体中文）
 	‖
 	··
@@ -1421,7 +1719,8 @@ commonData.html.wechatApplet = {
 	‖
 	返回一个 downloadTask 对象，可通过·onProgressUpdate()·监听下载进度变化事件，参数同 uploadTask，调用·abort()·可取消下载任务
 	
-	##图片
+	##图片和文件
+	###图片
 	‖
 	♭从本地相册选择图片或使用相机拍照♭
 	文件的临时路径在小程序本次启动期间可以正常使用，如需持久保存需在主动调用 wx.saveFile，在小程序下次启动时才能访问得到
@@ -1474,8 +1773,7 @@ commonData.html.wechatApplet = {
 			complete{Function}：完成的回调函数
 		})
 	‖
-	
-	##文件
+	###文件
 	‖
 	♭保存文件到本地♭
 	注意这会把临时文件移动，因此调用成功后传入的 tempFilePath 将不可用，本地文件存储的大小限制为 10M
@@ -2014,40 +2312,24 @@ commonData.html.wechatApplet = {
 		nonceStr{String}!：随机字符串，长度为32个字符以下
 		package{String}!：统一下单接口返回的 prepay_id 参数值，提交格式如·prepay_id=*·
 		signType{String}!：签名算法，暂支持 MD5
-		paySign{String}!：签名
+		paySign{String}!：MD5 签名
 		success{Function}：成功的回调函数
 		fail{Function}：失败的回调函数
 		complete{Function}：结束的回调函数
 	})
 	‖
-	了解更多信息查看：α(小程序支付接口文档|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
-	
-	###示例随机字符串：
-	··
-	// 如果有指定长度的参数就返回指定长度的随机字符串，不指定就返回随机16-32位
-	const getRandomInt = (min, max) => max ? Math.floor(Math.random() * (max - min + 1)) + min : getRandomInt(0, min)
-	const nonceStr = length => {
-		length = length >= 16 ? length : getRandomInt(16, 32)
-		let str = ''
-		const nonce = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-		for (let i = 0; i < length; i++) str += nonce[getRandomInt(nonce.length - 1)]
-		return str
-	}
-	··
-	
-	###package
-	统一下单接口返回的 prepay_id 参数值，格式如：·prepay_id=wx2017033010242291fcfe0db70013231072·
-	
-	###加密解密
+	详细说明需查看：α(小程序支付接口文档|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
+	所有参数在服务器调用统一下单接口返回：α(小程序支付统一下单接口|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1)
+	登录α(微信商户平台|pay.weixin.qq.com)可设置签名密钥
 	
 	###示例代码：
 	··
 	wx.requestPayment({
-		timeStamp: new Date().getSeconds(),
-		nonceStr: nonceStr(),
-		package: '待定',
+		timeStamp: 'timeStamp',
+		nonceStr: 'nonceStr',
+		package: 'package',
 		signType: 'MD5',
-		paySign: '待定',
+		paySign: 'paySign',
 		success(res){	//支付成功
 			res: { requestPayment: ok }
 		},
@@ -2176,10 +2458,40 @@ commonData.html.wechatApplet = {
 	注意：此时通过小程序开发者工具查看腾讯云状态并不会显示已开通，已开通状态会在第一次部署开发环境之后才会同步到微信开发者工具上
 	服务端、客户端的 Demo、SDK 的具体文档：α(开发环境和生产环境|https://github.com/tencentyun/wafer2-startup/wiki/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%92%8C%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83)
 	
-	αα
-	小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
+	#小游戏
+	
+	##介绍
+	微信小游戏是小程序的一个类目。用户完成小程序注册后，可选择“游戏”类目并开始开发、调试小游戏
+	需要两个必要文件：
+	‖
+	game.js：小游戏入口文件
+	game.json：配置文件
+	‖
+	每个小游戏允许上传的代码包总大小为 4MB
+	
+	##game.json
+	开发者工具和客户端需要读取这个配置，完成相关界面渲染和属性设置。
+	‖
+	deviceOrientation{String}[portrait]：屏幕方向，可选 portrait（竖屏）、landscape（横屏）
+	showStatusBar{Boolean}[false]：是否显示状态栏
+	networkTimeout：
+	‖
+	
 	αα
 	
-	&2018.6.3
+		小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
+	小程序社区αhttp://www.wxapp-union.com
+	小程序clubαhttp://www.wxappclub.com
+	
+		知乎：如何入门微信小程序开发，有哪些学习资料？αhttps://www.zhihu.com/question/50907897
+	
+		知乎：微信小程序为什么不用HTML5、CSS，自己搞了个WXML、WXSS，很多框架用不了，好处一点不知道？αhttps://www.zhihu.com/question/51809406
+	
+		知乎：「微信小程序」剖析（二）：框架原理 | 在浏览器上运行的猜想αhttps://zhuanlan.zhihu.com/p/22607204
+	
+		公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析αhttps://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
+	αα
+	
+	&2018.6.7
 	`
 }
