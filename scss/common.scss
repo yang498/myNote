@@ -276,10 +276,10 @@ article {
             padding: 0 20px;
         }
         td {
+			padding: 0 20px;
             border-top: 1px solid #ccc;
             &.td-left {
                 text-align: left;
-                padding-left: 20px;
             }
         }
     }
@@ -287,7 +287,7 @@ article {
         font-size: 18px;
         line-height: 30px;
         margin-top: 50px;
-        padding: 20px 0 0 2em;
+        padding-top: 20px;
         border-top: 1px dashed #999;
         .pd {
             margin-left: 2em;

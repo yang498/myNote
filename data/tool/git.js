@@ -2,10 +2,7 @@ commonData.tool.git = {
 	content: `
 	#安装
 	Windows下安装
-	从 α(Git 官网|https://git-scm.com/downloads) 上下载 Git 客户端并安装到 C 盘
-	将 Git 目录下的 bin（如 C:\\Program Files (x86)\\Git\\bin ）添加到 PATH 环境变量
-	添加环境变量：此电脑 > 属性 > 高级系统设置 > 环境变量
-	选择 PATH, 点击『编辑』，将 bin 的路径（如 C:\\Program Files (x86)\\Git\\bin ）添加到变量值后面
+	从 α(Git 官网|https://git-scm.com/downloads) 上下载安装
 	
 	##用户信息设置
 	安装完 Git 后应该及时设置你的用户名称与邮件地址，此后每次 Git 的提交都会使用这些信息。在终端输入一下命令即可设置你的用户信息。

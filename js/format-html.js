@@ -1,12 +1,12 @@
 const formatHtml = text => {
-	// 每次切换页面都清空重新赋值，注意不要直接写成pageCode = pageH1 = pageH2 = []，不然就变成3个变量公用一个值，一改全改
+	// 每次切换页面pageCode、pageH1、pageH2都清空重新赋值
 	pageCode = []
 	pageH1 = []
 	pageH2 = []
 	let h1Index = -1
 	let tagStartEnd = true
-	const codeKeywordOut = /var|let(?=\s)|const|this(?!×)|function|=>|new(?=\s)|class(?=\s)|\sin(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null(?!×)|undefined(?!×)|console|window(?!'|"|`)|document|typeof|delete|module(?!×)|require/g	// 一类关键字，粉色
-	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of|while|do(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
+	const codeKeywordOut = /var|let(?=\s)|const|this(?!×)|function|=>|=&gt;|new(?=\s)|class(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null(?!×)|undefined(?!×)|console|window(?!'|"|`)|document(?=\.)|typeof|delete|module(?!×|\/)|require(?=\()/g	// 一类关键字，粉色
+	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of|while|\sdo(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
 	const codeComment = /\/\/(?!×)[^]*?\n|\/\*[^]*?\*\/|&lt;!--[^]*?--&gt;/g	// 有可能是个ajax的请求http://，在后面加上条件(?=×)表示不转，最后去除×标识
 	const codeString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g	// 不想被转字符串变绿就在后面加¿，注释内不用，已判断添加
 	const codeInline = /·/g
@@ -55,11 +55,24 @@ const formatHtml = text => {
 			return item
 		})
 		str = str.replace(a, item => '<a href="' + item.replace(/[^]*\||\)$/g, '') + '" target="_blank">' + item.replace(/^α\(|\|[^]*/g, '') + '</a>') // a链接
-		str = str.replace(/αα(?=\n)[^]*?αα(?=\n)/g, item => {	// 相关参考链接
+		
+		// 相关参考链接
+		str = str.replace(/αα(?=\n)[^]*?αα(?=\n)/g, item => {
 			let res = ''
-			item.slice(3, -4).split('\n').forEach(obj => obj==='\t' ? (res+='<br/>') : (res += `<a href="${obj.replace(/[^]*α/, '')}" target="_blank"${/^\t\t[^]*/.test(obj) ? 'class="pd"' : ''}>${obj.replace(/α[^]*|\s/g, '') + ''}</a>，`))
-			return 'αα相关参考链接：' + res.slice(0, -1) + 'αα'
+			item.slice(3, -4).split('\n').forEach(obj => {
+				// 如果该行是个空行，就改成换行+下一行的退格，否则加a标签
+				if (obj === '\t') {
+					res += '<br/><i class="pd"></i>'
+				} else {
+					const href = obj.replace(/[^]*α/, '')
+					const text = obj.replace(/α[^]*|\t/g, '')
+					res += `<a href="${href}" target="_blank">${text}</a>，`
+				}
+				return res
+			})
+			return 'αα相关、参考、学习的链接：' + res.slice(0, -1) + 'αα'
 		})
+		
 		str = str.replace(b, item => { // b加粗标签
 			item = tagStartEnd ? '<b>' : '</b>'
 			tagStartEnd = !tagStartEnd
@@ -99,7 +112,7 @@ const formatHtml = text => {
 			} else if(aa.test(item)) {	// --------------------------------------------αα
 				return `<div class="link">${item.replace(aa, '')}</div>`
 			}  else if(time.test(item)) {	// --------------------------------------------time
-				return `<time>${item.replace(time, '')}</time>`
+				return `<time>最后更新时间：${item.replace(time, '')}</time>`
 			} else if(img.test(item)) {	// --------------------------------------------img
 				item = item.replace(img, '').split(',') // 用逗号加宽高
 				return `<img src="${item[0]}" class="img" style="${item[1] ? 'width:' + unit(item[1]) : ''}${item[2] ? 'height:' + unit(item[2]) : ''}"/>`

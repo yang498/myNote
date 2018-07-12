@@ -61,9 +61,9 @@ article table tr { height: 40px; }
 article table tr:nth-child(2n) { background-color: #eee; }
 article table tr th:not(:last-child), article table tr td:not(:last-child) { border-right: 1px solid #ccc; }
 article table th { padding: 0 20px; }
-article table td { border-top: 1px solid #ccc; }
-article table td.td-left { text-align: left; padding-left: 20px; }
-article .link { font-size: 18px; line-height: 30px; margin-top: 50px; padding: 20px 0 0 2em; border-top: 1px dashed #999; }
+article table td { padding: 0 20px; border-top: 1px solid #ccc; }
+article table td.td-left { text-align: left; }
+article .link { font-size: 18px; line-height: 30px; margin-top: 50px; padding-top: 20px; border-top: 1px dashed #999; }
 article .link .pd { margin-left: 2em; }
 article time { display: block; text-align: right; color: #666; margin: 20px 0; }
 article code { color: #f80; margin: 0 3px; padding: 3px 5px; border-radius: 3px; background-color: #f5f5f5; border: 1px solid #eee; font-family: consolas; }

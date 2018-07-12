@@ -2479,17 +2479,19 @@ commonData.html.wechatApplet = {
 	
 	αα
 	
-		小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
-	小程序社区αhttp://www.wxapp-union.com
-	小程序clubαhttp://www.wxappclub.com
+	小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
 	
-		知乎：如何入门微信小程序开发，有哪些学习资料？αhttps://www.zhihu.com/question/50907897
+	小程序社区：疑难解答、教程、demo、资源αhttp://www.wxapp-union.com
 	
-		知乎：微信小程序为什么不用HTML5、CSS，自己搞了个WXML、WXSS，很多框架用不了，好处一点不知道？αhttps://www.zhihu.com/question/51809406
+	小程序club：同上αhttp://www.wxappclub.com
 	
-		知乎：「微信小程序」剖析（二）：框架原理 | 在浏览器上运行的猜想αhttps://zhuanlan.zhihu.com/p/22607204
+	知乎：如何入门微信小程序开发，有哪些学习资料？αhttps://www.zhihu.com/question/50907897
 	
-		公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析αhttps://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
+	知乎：微信小程序为什么不用HTML5、CSS，自己搞了个WXML、WXSS，很多框架用不了，好处一点不知道？αhttps://www.zhihu.com/question/51809406
+	
+	知乎：「微信小程序」剖析（二）：框架原理 | 在浏览器上运行的猜想αhttps://zhuanlan.zhihu.com/p/22607204
+	
+	公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析αhttps://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
 	αα
 	
 	&2018.6.7
