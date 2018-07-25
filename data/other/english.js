@@ -39,6 +39,28 @@ commonData.other.english = {
 	在时间前面用介词·at·
 	例如：·at nine·：在9点钟，·at about five thirty-five pm·：大约在下午5点35分
 	
-	&2018.07.01
+	##单词本
+	·Monday·：星期一
+	·Tuesday·：星期二
+	·Wednesday·：星期三
+	·Thursday·：星期四
+	·Friday·：星期五
+	·Saturday·：星期六
+	·Sunday·：星期日
+	&nbsp;
+	·January·：一月
+	·February·：二月
+	·March·：三月
+	·April·：四月
+	·May·：五月
+	·June·：六月
+	·July·：七月
+	·August·：八月
+	·September·：九月
+	·October·：十月
+	·November·：十一月
+	·December·：十二月
+	
+	&2018.07.18
 	`
 }

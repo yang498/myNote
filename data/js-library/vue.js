@@ -1,9 +1,43 @@
 commonData.jsLibrary.vue = {
 	content: `
 	#起步
+	下个：组件
+	再下个：cli,.vue形式
+	最后再全部浏览下所有的文档
 	
 	##介绍
 	Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
+	一种轻量级的mvvm框架，它同时吸收了angular和react的优点，因为是国人开发的，所以对中文的支持是非常好的，方便学习，特点：数据驱动视图，响应式。
+	使用scss需安装sass-loader：
+	··
+	npm install --save-dev node-sass		//sass-loader依赖于node-sass
+	npm install --save-dev sass-loader
+	··
+	
+	vue-cli目录：
+	config：环境配置文件
+	build：打包构建文件
+	static：放置静态文件，比如公共样式、js、图片、字体
+	index.html：入口文件，npm run dev开启服务
+	src：vue文件
+	assets：资源文件
+	components：vue组件
+	router.js：路由器
+	main.js：主js文件，实例化vue
+	App.vue：主vue文件，首页
+
+	Package.json说明
+	private：私有
+	scripts：npm脚本指令，npm run 自定义指令
+	dependencies：依赖，上线不必用到
+	devDependencies：开发依赖，一直用到
+	engines：node和npm的要求版本
+	browserslist（数组）：浏览器版本
+
+	app.vue引入组件不能用@
+
+	egret startserver -a
+
 	
 	##安装
 	Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性
@@ -794,7 +828,7 @@ commonData.jsLibrary.vue = {
 	</div>
 	··
 	
-	##JavaScript 钩子
+	##钩子方法
 	可以在属性中声明 JavaScript 钩子，在 methods 中定义对应的方法即可。共有8个：
 	··
 	<transition
@@ -879,7 +913,7 @@ commonData.jsLibrary.vue = {
 	}
 	··
 	
-	##初始渲染的过渡
+	##初始渲染过渡
 	可以通过 appear 特性设置节点在初始渲染的过渡，比如·<transition appear name="fade"></transition>·
 	也可以自定义 CSS 类名：
 	··
@@ -905,6 +939,154 @@ commonData.jsLibrary.vue = {
 	</transition>
 	··
 	
-	&2018.7.12
+	##多个元素过渡
+	使用·v-if/v-else-if/v-else·可以用来定义多个元素过渡。最常见的多标签过渡是一个列表和描述这个列表为空消息的元素：
+	··
+	<transition>
+		<table v-if="items.length > 0">
+			<!-- ... -->
+		</table>
+		<p v-else>Sorry, no items found.</p>
+	</transition>
+	··
+	注意如果是相同的元素之间切换是没有过渡的：
+	··
+	<transition name="fade">
+		<button @click="show=!show" v-if="show">on</button>
+		<button @click="show=!show" v-else>off</button>
+	</transition>
+	··
+	因为 Vue 会高效渲染而复用相同的组件，即上面的·<button>·没有消失过，所以这时需要加上·key·来保持独立性：
+	··
+	<transition name="fade">
+		<button @click="show=!show" v-if="show" key="on">on</button>
+		<button @click="show=!show" v-else key="off">off</button>
+	</transition>
+	··
+	还可以给同一个元素的·key·设置不同的状态来代替·v-if·和·v-else·：
+	··
+	<button @click="show=!show" :key="show">{{show ? 'on' : 'off'}}</button>
+	··
+	使用多个 v-if 的多个元素的过渡可以重写为绑定了动态属性的单个元素过渡。例如：
+	··
+	<transition name="fade">
+		<button @click="show='b'" v-if="show==='a'" key="a">a</button>
+		<button @click="show='c'" v-else-if="show==='b'" key="b">b</button>
+		<button @click="show='a'" v-else key="c">c</button>
+	</transition>
+	··
+	所以也可以重写为：
+	··
+	<transition>
+		<button @click="change" :key="arr[stateIndex]">{{arr[showIndex]}}</button>
+	</transition>
+	
+	data: {
+		stateIndex: 2,
+		arr: ['a', 'b', 'c']
+	},
+	computed: {
+		showIndex: vm => vm.stateIndex + 1 === 3 ? 0 : vm.stateIndex + 1
+	},
+	methods: {
+		change() {
+			this.stateIndex = this.stateIndex===2 ? 0 : this.stateIndex + 1
+		}
+	}
+	··
+	同时生效的进入和离开的过渡不能满足所有要求，所以 Vue 提供了过渡模式：
+	‖
+	in-out：新元素先进行过渡，完成之后当前元素过渡离开。
+	out-in：当前元素先进行过渡，完成之后新元素过渡进入。
+	‖
+	
+	##列表过渡
+	使用·<transition-group>·组件可以实现列表过渡，不同于·<transition>·，它会以一个真实元素呈现，即默认渲染为一个·<span>·。也可以通过·tag·属性更换为其他元素。注意这个组件不能使用过渡模式·in-out·和·out-in·了，内部元素总是需要提供唯一的·key·属性值。
+	··
+	.list {
+		display: flex;
+	}
+	.list-item {
+		margin-right: 10px;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	.fade-enter-active, .fade-leave-active {
+		transition: 0.5s linear;
+	}
+	
+	<button @click="add">Add</button>
+	<button @click="remove">Remove</button>
+	<transition-group name="fade" tag="p">
+		<span v-for="item in items" :key="item" class="list-item">{{item}}</span>
+	</transition-group>
+	
+	data: {
+		arr: [1, 2, 3, 4, 5],
+		nextNum: 6
+	},
+	methods: {
+		randomIndex() {
+			return Math.floor(Math.random() * this.arr.length)
+		},
+		add() {
+			this.arr.splice(this.randomIndex(), 0, this.nextNum++)
+		},
+		remove() {
+			this.arr.splice(this.randomIndex(), 1)
+		}
+	}
+	··
+	这个例子有个小问题，当添加和移除元素的时候，周围的元素会瞬间移动到他们的新布局的位置，而不是平滑的过渡，下面会解决这个问题。
+	
+	##列表排序过渡
+	定义·v-move·的样式会在元素的改变定位的过程中应用过渡，像之前的类名一样，可以通过·name·属性来自定义前缀。
+	··
+	.flip-list-move {
+		transition: transform 1s;
+	}
+	
+	<button @click="shuffle">Shuffle</button>
+	<transition-group name="flip-list" tag="ul">
+		<li v-for="item in items" :key="item">{{ item }}</li>
+	</transition-group>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+	
+	data: {
+    items: [1,2,3,4,5,6,7,8,9]
+  },
+	methods: {
+    shuffle: function () {
+      this.items = _.shuffle(this.items)
+    }
+  }
+	··
+	内部的实现是 Vue 使用了一个叫 α(FLIP|https://aerotwist.com/blog/flip-your-animations/) 简单的动画队列，使用 transforms 将元素从之前的位置平滑过渡新的位置。
+	α(多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/)
+	需要注意的是使用 FLIP 过渡的元素不能设置为·display: inline·。作为替代方案，可以设置为·display: inline-block·或者放置于 flex 中
+	所以上面的加减数字的 css 改成
+	··
+	.list-item {
+		display: inline-block;
+		transition: 0.5s;
+		margin-right: 10px;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	.fade-leave-active {
+		position: absolute;
+	}
+	··
+	即可实现周围元素的过渡
+	
+	##列表的交错过渡
+	
+	
+	&2018.7.25
 	`
 }

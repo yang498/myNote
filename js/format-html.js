@@ -6,7 +6,7 @@ const formatHtml = text => {
 	let h1Index = -1
 	let tagStartEnd = true
 	const codeKeywordOut = /var|let(?=\s)|const|this(?!×)|function|=>|=&gt;|new(?=\s)|class(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null(?!×)|undefined(?!×)|console|window(?!'|"|`)|document(?=\.)|typeof|delete|module(?!×|\/)|require(?=\()/g	// 一类关键字，粉色
-	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of|while|\sdo(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
+	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of(?=\s)|while|\sdo(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
 	const codeComment = /\/\/(?!×)[^]*?\n|\/\*[^]*?\*\/|&lt;!--[^]*?--&gt;/g	// 有可能是个ajax的请求http://，在后面加上条件(?=×)表示不转，最后去除×标识
 	const codeString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g	// 不想被转字符串变绿就在后面加¿，注释内不用，已判断添加
 	const codeInline = /·/g

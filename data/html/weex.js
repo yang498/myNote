@@ -656,6 +656,8 @@ commonData.html.weex = {
 	
 	UI库 - BUI-Weexαhttp://dev.bingocc.com/buiweex/
 	
+	weex封装扩展 - BindingXαhttps://alibaba.github.io/bindingx/
+	
 	weex封装扩展 - erosαhttps://bmfe.github.io/eros-docs/#/
 	
 	weex封装扩展 - Natαhttp://natjs.com/#/zh-cn/
