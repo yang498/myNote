@@ -89,19 +89,24 @@ commonData.other.office = {
 	打开驱动大师检测安装即可
 	
 	#重装系统
+	##名词解释
+	BIOS（Basic Input Output System）：基本输入输出系统，一组固化到计算机内主板上一个 ROM 芯片上的程序，说白了就是系统管理设置
+	Boot：系统引导界面，电脑以哪种模式启动，在 BIOS 中可以设置
+	UEFI（Unified Extensible Firmware Interface）：统一的可扩展固件接口，说白了就是 BIOS 的升级版
+	
 	##准备
 	这一步之前做过的话可以跳过
 	这里以α(通用pe工具箱|http://www.tongyongpe.com/)为例
 	准备一个U盘（最好是空的），先下载好系统安装包，百度就可以了
 	安装好通用pe工具箱程序
-	!./imgs/other/reinstall01.jpg,800
+	!./img/other/reinstall01.jpg,800
 	安装完选择好U盘，点击一键制作USB启动盘（默认勾选NTFS格式，让U盘可以容纳4G以上大文件），注意这会清空U盘，然后把系统安装包放到GHO文件夹内
-	!./imgs/other/reinstall03.jpg,400
+	!./img/other/reinstall03.jpg,400
 	
 	##操作
 	插好U盘，重启电脑，在开机画面出来的时候按住快捷键，比如联想按F12，不知道就去百度，就可以进入选择boot设备窗口了
 	按方向键"↑↓"选择到u盘，然后按回车键进入通用pe主界面
-	!./imgs/other/reinstall02.jpg,800
+	!./img/other/reinstall02.jpg,800
 	进入通用pe主菜单后，选择第一个回车
 	要是"通用PE一键装机"工具没有自动运行的话，我们就手动双击该软件运行它即可
 	该软件会自动识别ISO镜像文件（即U盘的系统安装包），并自动提取里面的GHO文件，然后点击开始，注意这会清空电脑的C盘
@@ -115,8 +120,9 @@ commonData.other.office = {
 	
 	##分区
 	选择快速分区，左边可选择几个分区，右边可调整大小
+	一般分区完需要重启一下才能继续重装系统
 	
-	##手动
+	##手动安装
 	·Local>Partition>From image·，选择gho文件，选择第一个，最后Rest Computer
 	
 	##进不了pe系统
@@ -125,6 +131,22 @@ commonData.other.office = {
 	方法三：下载·diskgenius·将硬盘重新分区
 	方法四：试试其他的U盘启动工具
 	
-	&2018/4/9
+	##重启失败
+	开机显示：windows boot manager has been blocked by the current security policy
+	一般这种问题出现在 win10 或 win8 重装成 win7 的时候，意思是 Windows 启动管理器已被当前安全策略阻止。因为原来装的是 win8 或 win10 系统，所以会开启 UEFI 安全启动选项
+	以联想笔记本为例，刚开机时按 F12 是进入 boot 界面，即重装系统的 pe 界面，在解压 GHO 文件后会提示重启电脑，然后就会开机显示上面的一长串英文，此时需要再次重启电脑，刚开机时按 F2 进入 bios 界面，在右边的界面可以看到选项说明，底部是按键说明
+	‖
+	Security 菜单：选择 Secure BOOT，改为 Disabled，表示关闭安全策略
+	Boot 菜单：
+		选择 boot mode，改为 Legacy First 或 legacy support 或 AUTO，表示修改引导模式为传统优先或其他
+		选择 boot priority，改为 Legacy First 或 legacy support 或 AUTO，表示修改引导优先级为传统优先或其他
+		选择 Launch CSM（如果有这个选项），改为 Enabled
+	Exit 菜单：选择 OS Optimized Defaults，改为 OTHER OS，表示修改默认优先系统为其他系统
+	‖
+	基本上都改为第二个选项就行了，完成后按 F10、选 Yes 保存退出即可
+	再次进入 pe 工具箱，选择快速分区，在左边选择 MBR 类型，GUID类型 主要是针对 win8 以上系统和 UIFI 引导模式，优势是启动速度较快。注意得两个条件齐备才选择 GUID。
+	再次重启电脑就可以了
+	
+	&2018/7/26
 	`
 }
