@@ -6,7 +6,7 @@ commonData.tool.gulp = {
 	gulp是个前端构建工具，它充分借鉴了unix操作系统的管道（pipe）思想，在操作上要比同类型的grunt简单一点
 	
 	##安装
-	gulp基于node，关于node安装请转至α(node|#jsLibrary/node)
+	gulp基于node，关于node安装请转至α(node|#js/node)
 	gulp需要全局安装，打开cmd，执行：·cnpm install -g gulp·
 	再查看版本号，执行·gulp -v·，出现版本号即为正确安装
 	

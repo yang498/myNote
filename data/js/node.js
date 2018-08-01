@@ -1,4 +1,4 @@
-commonData.jsLibrary.node = {
+commonData.js.node = {
 	content: `
 	#介绍
 	##npm安装
