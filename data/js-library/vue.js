@@ -108,7 +108,7 @@ commonData.jsLibrary.vue = {
 	})
 
 	// 也可以用 JavaScript 直接调用方法
-	vm.greet() // => 'Hello Vue.js!'
+	vm.greet() // 'Hello Vue.js!'
 	··
 	如果不传参数比如上面的·v-on:click="greet"·，在方法中默认第一个参数即为事件对象
 	注意如果加了括号或参数即·v-on:click="greet()"·或·v-on:click="greet('msg')"·，是没有事件对象的，此时可以用特殊变量·$event·作为事件对象参数，且不限参数位置
@@ -882,7 +882,7 @@ commonData.jsLibrary.vue = {
 	一个使用 Velocity.js 的简单例子：
 	··
 	<!-- Velocity 和 jQuery.animate 的工作方式类似，也是用来实现 JavaScript 动画的一个很棒的选择 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+	<script src="https://×cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 
 	<div id="example-4">
 		<button @click="show = !show"> Toggle </button>
@@ -1053,7 +1053,7 @@ commonData.jsLibrary.vue = {
 		<li v-for="item in items" :key="item">{{ item }}</li>
 	</transition-group>
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+	<script src="https://×cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
 	
 	data: {
     items: [1,2,3,4,5,6,7,8,9]

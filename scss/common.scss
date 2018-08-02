@@ -378,7 +378,7 @@ article {
     .code-keyword-in {
         color: #08f;
     }
-    .code-string {
+    .code-string, .code-string .code-keyword-in {
         color: #0c0;
     }
     .code-comment {

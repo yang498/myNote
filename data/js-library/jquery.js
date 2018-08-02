@@ -245,16 +245,16 @@ commonData.jsLibrary.jquery = {
 	:not()：除了指定的元素
 	:has()：后代元素中包含指定元素的元素
 	:contains()：后代元素中包含指定文本的元素
-	:empty：没有子元素的元素，有空格也不行
-	:parent：和 :empty 相反，即空标签
+	:empty：没有子元素的元素，有空格也不行，即空标签
+	:parent：和 :empty 相反，即非空标签
 	:hidden：隐藏的元素，即 display:none、type="hidden"，包括隐藏的后代元素
 	:visible：和·:hidden·相反，即未隐藏的元素
 	‖
 	###:not(selector)
-	在选择的元素除去给定选择器的元素，selector 可以是任意的选择器
+	在选择的元素中除去给定选择器的元素，selector 可以是任意的选择器
 	比如·$('input:not(:checked, :disabled)')·表示选择所有除了已选择和已禁用的 input 元素
 	###:has(selector)
-	选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器
+	选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器，根据 length 的长度可判断是否包含某元素
 	比如·$('.demo:has(.text)')·表示在所有·class="demo"·的元素中选择后代元素包含了·class="text"·的
 	###:contains(text)
 	选择匹配的元素的任何后代元素中包含指定文本的元素，text 可以是任意字符，区分大小写，可选择用引号包裹，也可以不用
@@ -610,6 +610,7 @@ commonData.jsLibrary.jquery = {
 	.wrap()：为每个元素添加父元素
 	.wrapAll()：为所有的元素添加一个父元素
 	.wrapInner()：为每个元素的内部添加父元素
+	.unwrap()：为每个元素删除父元素，和 .wrap() 相反
 	‖
 	###.wrap(element/function(index))
 	为匹配的每个元素的外部包裹一个指定的标签，若传入多个元素只使用第一个，若传入多层元素则保留所有元素只使用最里面的第一子元素
@@ -699,7 +700,162 @@ commonData.jsLibrary.jquery = {
 		<div class="test">123 <i></i></div>
 	</div>
 	··
+	###.unwrap([selector])
+	将匹配元素集合的父级元素删除，保留自身，包括兄弟元素，和·.wrap()·相反
+	可选择传入一个选择器在匹配的元素中筛选哪些元素的父元素应该被删除
 	
-	&2018.8.1
+	##删除
+	‖
+	.remove()：删除元素和其后代，包括删除绑定的事件和·.data()·绑定的数据
+	.detach()：删除元素和其后代，保留绑定的事件和·.data()·绑定的数据
+	.empty()：删除元素的后代，即把元素变成空标签
+	‖
+	###.remove([selector])
+	删除匹配的元素和其所有的后代元素，包括删除绑定的事件和·.data()·绑定的数据
+	可选择传入一个选择器在匹配的元素中筛选哪些应该被删除
+	比如·$('.demo').remove()·，·$('.demo').remove(':first')·
+	###.detach([selector])
+	和·.remove()·的用法一样，不同的是会保留绑定的事件和·.data()·绑定的数据，适用于当把元素删除之后再把该元素添加到页面中
+	比如：
+	··
+	<input type="button" value="添加" />
+	<div class="demo remove">remove</div>
+	<div class="demo detach">detach</div>
+	
+	$('.demo').on('click', function () {
+		console.log(123)
+	})
+	var remove = $('.remove').remove()	// 再次被添加无点击效果
+	var detach = $('.detach').detach()	// 再次被添加有点击效果
+	$('input').on('click', function () {
+		$(this).after(remove, detach)
+	})
+	··
+	###.empty()
+	删除匹配元素的所有后代元素，即把元素变成空标签
+	
+	##替换
+	‖
+	.replaceWith()：元素被替换成指定元素
+	.replaceAll()：和 .replaceWith() 相反，指定元素把目标元素替换
+	‖
+	###.replaceWith(newContent/function)
+	将匹配的元素替换成指定元素，直接使用页面的元素替换表示移动该元素覆盖目标元素
+	比如：
+	··
+	<div class="demo">123</div>
+	<div class="demo">456</div>
+	
+	// 替换
+	$('.demo').replaceWith('<h2>demo<h2>')
+	
+	// 变成
+	<h2>demo</h2>
+	<h2>demo</h2>
+	··
+	###.replaceAll(target)
+	和·.replaceWith()·的写法相反，将匹配的元素替换掉每个目标元素
+	比如：·$('<h2>demo<h2>').replaceAll('.demo')·
+	
+	#DOM 状态
+	##追加
+	###.add(selector/html [, context])
+	在已选择的元素中追加选择指定元素，即·$('.demo').add('p')·等同于·$('.demo, p')·
+	比如·$('.demo').removeClass('red').add('p').addClass('active')·表示 .demo 删除 red 类再和 p 元素一起添加 active 类
+	也可以追加 html，即·.add('<p></p>')·，但要先添加页面中才会生效
+	比如·$('.demo').removeClass('red').add('<p></p>').insertAfter('.demo:last').addClass('active')·
+	注意：
+	··
+	var $demo = $('.demo')
+	
+	$demo.add('p')	// 临时保存，不会保存到 $demo 变量中
+	console.log($demo)	// .demo
+	
+	$demo = $demo.add('p')	// 再次保存才行
+	console.log($demo)	// .demo, p
+	··
+	可选择第二个参数筛选要追加的元素
+	比如·$('.demo').add('p', '.box')·表示 p 属于 .box 的后代元素才会被追加，等同于·$('.demo').add('.box p')·
+	
+	##回退
+	###.end()
+	返回元素的上一次状态，通常用于链式调用中
+	比如：
+	··
+	<div class="demo">
+		<div class="first">
+			<div class="child"></div>
+		</div>
+		<div class="second"></div>
+	</div>
+	
+	$('.demo').find('.first').end()	// .demo
+	$('.demo').find('.child').end()	// .demo
+	$('.demo').find('.first').find('.child').end()	// .first
+	$('.demo').find('.first').find('.child').end().end()	// .demo
+	$('.demo').find('.first').removeClass('active').end().find('.second').addClass('active')
+	··
+	
+	#DOM 遍历
+	##循环
+	###.each(function(index, item))
+	循环元素并执行函数
+	接受 2 个参数，index 为当前元素的索引，item 代表当前元素，注意是原生的，也可以用·this·表示当前元素
+	使用·return false·可结束循环
+	比如：
+	··
+	$('.demo').each(function (index, item) {
+		console.log($(this).css('color'))
+	})
+	··
+	
+	#DOM 筛选
+	##筛选
+	###.eq(index)
+	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
+	比如·$('li').eq(2)·表示选择第 3 个 li 元素
+	###.first()
+	在匹配的集合中选择第一个元素
+	比如·$('li').first()·表示选择第 1 个 li 元素
+	###.last()
+	在匹配的集合中选择最后一个元素
+	比如·$('li').last()·表示选择最后 1 个 li 元素
+	###.not(selector/function(index))
+	在选择的元素中除去给定选择器或函数返回值的元素
+	比如·$('.demo').not(':checked, :disabled')·表示选择所有除了已选择和已禁用的 input 元素
+	###.has(selector)
+	选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器，根据 length 的长度可判断是否包含某元素
+	比如·$('.demo').has('.text')·表示在所有·class="demo"·的元素中选择后代元素包含了·class="text"·的
+	###.filter(selector/function(index))
+	筛选出指定的元素
+	比如：
+	··
+	<ul>
+	  <li>A</li>
+	  <li>B</li>
+	  <li class="mark">C</li>
+	  <li class="mark">D</li>
+	</ul>
+	
+	$('li').filter('.mark')	// C, D
+	$('li').filter(':odd')	// B, D
+	$('li').filter(function (index) {	// A, D
+		return index % 3 === 0
+	})
+	··
+	
+	##子元素
+	###.children()
+	获得匹配元素的所有子元素，只获取元素，不包括文字和注释节点
+	比如·$('.demo').children()·
+	###.contents()
+	获得匹配元素的所有子元素，和 .children() 不同的是包括文字和注释节点
+	而且还能获取 iframe 的内容（跨域无法访问，iframe 的网址需要和当前页面同域）
+	比如·$('.demo').contents()·，$('iframe').contents().find('.demo')
+	
+	##判断
+	###.is()
+	
+	&2018.8.2
 	`
 }

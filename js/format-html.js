@@ -1,22 +1,30 @@
 const formatHtml = text => {
-	// 每次切换页面pageCode、pageH1、pageH2都清空重新赋值
+	// 每次切换页面pageCode、pageH1、pageH2都清空再重新赋值
 	pageCode = []
 	pageH1 = []
 	pageH2 = []
 	let h1Index = -1
 	let tagStartEnd = true
+	const htmlTagStart = /&lt;([^!\s'"\/]*?(?=\s|&gt;))/g	// 标签开始
+	const htmlTagEnd = /&lt;\/([^\s'"]*?(?=&gt;))/g	// 标签结束
+	// 开头声明（粉）：var let const void function => new class constructor super static import export default
+	// 循环分支（蓝）：for in of while do if else switch case break continue try catch finally with
+	// 方法：window document console return delete typeof require throw eval instanceof debugger
+	// 类型方法：Object Array Boolean String Number Math Date RegExp Error JSON
+	// 关键字属性：this true false undefined null length prototype
+	// 优先使用键盘上的字符，有冲突了再将常见字符转成特殊字符
 	const codeKeywordOut = /var|let(?=\s)|const|this(?!×)|function|=>|=&gt;|new(?=\s)|class(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null(?!×)|undefined(?!×)|console|window(?!'|"|`)|document(?=\.)|typeof|delete|module(?!×|\/)|require(?=\()/g	// 一类关键字，粉色
 	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of(?=\s)|while|\sdo(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
 	const codeComment = /\/\/(?!×)[^]*?\n|\/\*[^]*?\*\/|&lt;!--[^]*?--&gt;/g	// 有可能是个ajax的请求http://，在后面加上条件(?=×)表示不转，最后去除×标识
 	const codeString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g	// 不想被转字符串变绿就在后面加¿，注释内不用，已判断添加
+	const codeReg = /¦/g	// 直接匹配字符串会转义，而且里面可能会包含多次转义的 /，正则不太常用，先用特殊符号标记，以后再试试
 	const codeInline = /·/g
-	const code = /··[^]*?··/g	// 用于书写
+	const code = /··[^]*?··/g	// 用于书写，经常会用代码块，用`的中文按键书写
 	const codeNew = /‥/g	// 用于匹配
-	const codeReg = /¦/g	// 直接匹配字符串会转义，太复杂，改用特殊符号标记
 	const h1 = /^#/
 	const h2 = /^##/
 	const h3 = /^###/
-	const time = /^&(?=20)/
+	const time = /^&(?=2)/
 	const a = /α\([^]*?\)(?!×)/g
 	const aa = /^αα|αα$/g
 	const b = /♭/g
@@ -31,6 +39,7 @@ const formatHtml = text => {
 	
 	// 主要的作用是将多行标识符按inlineSplit特殊字符合并成单行，整理行内标识符，代码块加颜色
 	String.prototype.formatString = function() {
+		// 从顺序上来说起码从根据字符串的引号开始，不然之前有 html 标签的属性也包含引号，就误判了
 		let str = this
 		str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;')	// 大于小于换成标识符避免和html标签冲突
 		str = str.replace(code, item => { // 多行代码块加颜色
@@ -41,6 +50,8 @@ const formatHtml = text => {
 			item = item.replace(codeComment, item => `<span class="code-comment">${item.replace(/¿/g, '')}</span>`) // 注释
 			item = item.replace(codeKeywordOut, '<span class="code-keyword-out">$&</span>') // 一类关键字
 			item = item.replace(codeKeywordIn, '<span class="code-keyword-in">$&</span>') // 二类关键字
+			item = item.replace(htmlTagStart, '&lt;<span class="code-keyword-in">$1</span>') // 标签开头
+			item = item.replace(htmlTagEnd, '&lt;/<span class="code-keyword-in">$1</span>') // 标签结束
 			item = '‥' + item.slice(2, -2) + '‥' // 转换成少数符号的标识符
 			return item.replace(/\n/g, inlineSplit) // 去除不转注释的×标识，转换成少数符号合并成一行
 		})
