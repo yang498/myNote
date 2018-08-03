@@ -811,6 +811,14 @@ commonData.jsLibrary.jquery = {
 	
 	#DOM 筛选
 	##筛选
+	‖
+	.eq()：第几个
+	.first()：第一个
+	.last()：最后一个
+	.not()：除了哪个
+	.has()：包含哪个才可以
+	.filter()：符合条件的
+	‖
 	###.eq(index)
 	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
 	比如·$('li').eq(2)·表示选择第 3 个 li 元素
@@ -845,6 +853,10 @@ commonData.jsLibrary.jquery = {
 	··
 	
 	##子元素
+	‖
+	.children()：子元素
+	.contents()：包含文本、注释、iframe 的子元素
+	‖
 	###.children()
 	获得匹配元素的所有子元素，只获取元素，不包括文字和注释节点
 	比如·$('.demo').children()·
@@ -854,8 +866,24 @@ commonData.jsLibrary.jquery = {
 	比如·$('.demo').contents()·，$('iframe').contents().find('.demo')
 	
 	##判断
-	###.is()
+	###.is(selector/function(index))
+	判断当前元素合中如果至少一个匹配给定的参数，即若能根据后面的选择器在当前元素中至少找到 1 个，则返回 true，否则返回 false
+	可以传入一个函数，返回 Boolean 值作为结果
+	比如：
+	··
+	<ul>
+		<li>AAA</li>
+		<li>BBB <span>bbb</span></li>
+		<li class="mark">CCC</li>
+		<li class="mark">DDD <span>ddd</span></li>
+	</ul>
 	
-	&2018.8.2
+	$('li').is('.mark')	// true
+	$('ul').on('click', function (event) {
+		$(event.target).is('li') && $(event.target).css('color', 'red')	// 点击 span 不会触发
+	})
+	··
+	
+	&2018.8.3
 	`
 }

@@ -13,6 +13,12 @@ const formatHtml = text => {
 	// 类型方法：Object Array Boolean String Number Math Date RegExp Error JSON
 	// 关键字属性：this true false undefined null length prototype
 	// 优先使用键盘上的字符，有冲突了再将常见字符转成特殊字符
+	// 注释：// /**/ <!-- -->
+	// 引号：' " `
+	// 如果注释中匹配到了以上规则，就在其后面加个×
+	// 协议（避免和注释冲突加×）：http:// https:// wss://
+	// 最后把×替换掉
+	// 匹配正则的难点在于，原本一段代码里面可能会包含多个正则，所以需要非贪婪 *?，但每个正则里面又可能包含多个 /，岂不是就此中断
 	const codeKeywordOut = /var|let(?=\s)|const|this(?!×)|function|=>|=&gt;|new(?=\s)|class(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null(?!×)|undefined(?!×)|console|window(?!'|"|`)|document(?=\.)|typeof|delete|module(?!×|\/)|require(?=\()/g	// 一类关键字，粉色
 	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of(?=\s)|while|\sdo(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
 	const codeComment = /\/\/(?!×)[^]*?\n|\/\*[^]*?\*\/|&lt;!--[^]*?--&gt;/g	// 有可能是个ajax的请求http://，在后面加上条件(?=×)表示不转，最后去除×标识
