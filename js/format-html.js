@@ -1,24 +1,40 @@
 const formatHtml = text => {
-	// 每次切换页面pageCode、pageH1、pageH2都清空再重新赋值
+	// 每次切换页面 pageCode、pageH1、pageH2 都清空再重新赋值
 	pageCode = []
 	pageH1 = []
 	pageH2 = []
 	let h1Index = -1
 	let tagStartEnd = true
+	
+	// 橙色：正则表达式
+	// 绿色：字符串
+	// 青色：循环分支
+	// 蓝色：html 标签，关键字方法
+	// 紫色：类型方法
+	// 粉色：开头声明
+	// 灰色：注释
+	
+	// html，暂不考虑 css，多行处理、函数相似和嵌套不好控制
 	const htmlTagStart = /&lt;([^!\s'"\/]*?(?=\s|&gt;))/g	// 标签开始
 	const htmlTagEnd = /&lt;\/([^\s'"]*?(?=&gt;))/g	// 标签结束
 	// 开头声明（粉）：var let const void function => new class constructor super static import export default
+	const jsStart = /var(?=\s)|let(?=\s)|const(?=\s)|void(?=\s)|function|=&gt;|new(?=\s)|class(?=\s)|constructor(?=\s)|super(?=\s)|static(?=\s)|import(?=\s)|export(?=\s)|default(?=\s)/g
 	// 循环分支（蓝）：for in of while do if else switch case break continue try catch finally with
-	// 方法：window document console return delete typeof require throw eval instanceof debugger
+	const jsLoopFork = /for(?=\s|\()|\sin(?=\s)|of(?=\s)|while|\sdo(?!\w)|if(?=\s|\()|else|switch|case(?=\s)|break|continue|try|catch|finally|with/g
+	// 关键字方法：window document console return delete typeof require throw eval instanceof debugger this true false undefined null length
+	const jsMethod = /window|document|console|return|delete|typeof|require|throw|eval|instanceof|debugger|this|true(?!¿)|false|undefined|null|length/g
 	// 类型方法：Object Array Boolean String Number Math Date RegExp Error JSON
-	// 关键字属性：this true false undefined null length prototype
-	// 优先使用键盘上的字符，有冲突了再将常见字符转成特殊字符
+	const jsType = /Object|Array|Boolean|String|Number|Math|Date|RegExp|Error|JSON/g
+	// 正则尚且能用，注意\/后面不能接,;\s
+	// 正则的问题在于怎么匹配前面没有 \ 的 /，用\/[^]*?\\{0}\/ 是无效的，因为 \ 还是属于 [^]*? 的范围
+	// 正则对空格的处理还是有效的，且空格不会被合并，/a b/g
+	const jsRegExp = /\/[^]*?\/[gim]{0,3}(?=,|;|\s)/g
 	// 注释：// /**/ <!-- -->
+	
 	// 引号：' " `
-	// 如果注释中匹配到了以上规则，就在其后面加个×
-	// 协议（避免和注释冲突加×）：http:// https:// wss://
+	// 引号和注释的范围最大：引号中和注释中匹配到的所有的规则都无效，在其后面加个×，虽然 css 覆盖可以覆盖颜色，但无意义的标签总是不对的
 	// 最后把×替换掉
-	// 匹配正则的难点在于，原本一段代码里面可能会包含多个正则，所以需要非贪婪 *?，但每个正则里面又可能包含多个 /，岂不是就此中断
+	// 使用标签识别符：优先使用键盘上的字符，有冲突了再将常见字符转成特殊字符
 	const codeKeywordOut = /var|let(?=\s)|const|this(?!×)|function|=>|=&gt;|new(?=\s)|class(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null(?!×)|undefined(?!×)|console|window(?!'|"|`)|document(?=\.)|typeof|delete|module(?!×|\/)|require(?=\()/g	// 一类关键字，粉色
 	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of(?=\s)|while|\sdo(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
 	const codeComment = /\/\/(?!×)[^]*?\n|\/\*[^]*?\*\/|&lt;!--[^]*?--&gt;/g	// 有可能是个ajax的请求http://，在后面加上条件(?=×)表示不转，最后去除×标识
@@ -31,12 +47,12 @@ const formatHtml = text => {
 	const h2 = /^##/
 	const h3 = /^###/
 	const time = /^&(?=2)/
-	const a = /α\([^]*?\)(?!×)/g
-	const aa = /^αα|αα$/g
+	const a = /α\([^]*?\)(?!×)/g	// α 应该改成@()
+	const aa = /^αα|αα$/g	// 
 	const b = /♭/g
 	const img = /^!/
 	const imgInline = /¡\([^]*?\)/g
-	const li = /^‖|‖$/g
+	const li = /^‖|‖$/g		// 列表应改成 @@
 	const table = /^%%|%%$/g
 	const inlineSplit = 'ˊ'	// 用于拼接的特殊字符
 	const inlineSplitReg = /ˊ/g	// 用于拼接的特殊字符正则
@@ -51,9 +67,9 @@ const formatHtml = text => {
 		str = str.replace(code, item => { // 多行代码块加颜色
 			item = item.replace(/^\t|/gm, '').replace(/\t/g, '    ') // 去掉开头书写tab，再把其他的tab替换成空格，不然会比较大
 			pageCode.push(item.slice(3, -3).replace(codeReg, '')) // 去首尾换行再保存代码
-			item = item.replace(codeComment, item => item.replace(/'|"|`/g, '$&¿'))	// 注释中的字符串和关键字加标记避免被绿
-			item = item.replace(codeString, item => `<span class="code-string">${item.replace(/¿/g, '')}</span>`) // 字符串，注意此时已经把¿替换掉了，如果注释还是靠¿的话会有冲突
-			item = item.replace(codeComment, item => `<span class="code-comment">${item.replace(/¿/g, '')}</span>`) // 注释
+			item = item.replace(codeComment, item => item.replace(/'|"|`|true/g, '$&¿'))	// 注释中的字符串和关键字加标记避免被绿
+			item = item.replace(codeString, '<span class="code-string">$&</span>') // 字符串，注意此时已经把¿替换掉了，如果注释还是靠¿的话会有冲突
+			item = item.replace(codeComment, '<span class="code-comment">$&</span>') // 注释
 			item = item.replace(codeKeywordOut, '<span class="code-keyword-out">$&</span>') // 一类关键字
 			item = item.replace(codeKeywordIn, '<span class="code-keyword-in">$&</span>') // 二类关键字
 			item = item.replace(htmlTagStart, '&lt;<span class="code-keyword-in">$1</span>') // 标签开头
@@ -109,13 +125,13 @@ const formatHtml = text => {
 			return item.replace(/\s*\n\s*/g, inlineSplit)	// 转换成少数符号的标识符
 		})
 		str = str.replace(/%%(?=\n)[^]*?%%(?=\n)/g, item => item.replace(/\s*\n\s*/g, inlineSplit)) // 表格
-		return str.replace(/×/g, '')
+		return str.replace(/×|¿/g, '')
 	}
 	
 	// 主要的作用是将开头或结尾的标识符替换成对应的标签，不然没有匹配标识符会当成p标签
 	String.prototype.formatTag = function(){
 		return this.split('\n').map(item => {
-			item = item.replace(/^\s+|\s+$/g, '')	// 去空格
+			item = item.replace(/^\s+|\s+$/g, '')	// 前后去空格
 			if(h3.test(item)) {	// --------------------------------------------h3
 				return `<h3>${item.replace(h3, '')}</h3>`
 			} else if(h2.test(item)) {	// --------------------------------------------h2
