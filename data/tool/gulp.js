@@ -1,15 +1,23 @@
 commonData.tool.gulp = {
 	content: `
 	#起步
-	
+
 	##介绍
 	gulp是个前端构建工具，它充分借鉴了unix操作系统的管道（pipe）思想，在操作上要比同类型的grunt简单一点
-	
+
 	##安装
 	gulp基于node，关于node安装请转至α(node|#js/node)
-	gulp需要全局安装，打开cmd，执行：·cnpm install -g gulp·
-	再查看版本号，执行·gulp -v·，出现版本号即为正确安装
-	
+	gulp需要全局安装，打开cmd，执行：
+	··
+	cnpm install -g gulp
+	··
+	查看版本号，执行：
+	··
+	gulp -v
+	··
+
+	##升级
+
 	##package.json
 	package.json是项目必不可少的配置文件，它是存放在项目根目录的普通json文件
 	创建该文件在根目录下打开cmd执行命令：·npm init·
@@ -30,24 +38,31 @@ commonData.tool.gulp = {
 	当然如果之前其他项目有package.json文件的话可以直接复制过来再改也可以
 	所以根目录就生成了一个package.json文件
 	最后说一下package.json不是一定需要，看需求，是为了更方便查看信息和管理
-	
+
 	##gulpfile.js
-	gulpfile.js是gulp项目的主文件，通常位于项目根目录，在其他文件夹下也可以，所以自行新建
-	安装依赖：将gulp写进项目package.json文件的依赖中·cnpm install --save-dev gulp·
-	然后在package.json中的·"devDependencies"·会出现gulp的版本号，比如：· "gulp": "^3.9.1"·
-	如果没有package.json则直接·cnpm install gulp·
-	至于为什么在全局安装gulp后，还需要在项目中本地安装一次，有兴趣可以去搜索，大体就是为了版本的灵活性
-	然后在gulpfile.js中定义任务，比如hello world：
+	gulpfile.js 是 gulp 项目的主文件，通常位于项目根目录，在其他文件夹下也可以，所以自行新建
+	在当前项目中安装 gulp 依赖：
+	··
+	cnpm install gulp
+	··
+	若需要将 gulp 写进项目 package.json 文件的依赖中则可以加上 --save-dev：
+	··
+	cnpm install --save-dev gulp
+	··
+	然后在 package.json 中的·"devDependencies"·会出现 gulp 的版本号，比如：·"gulp": "^3.9.1"·
+	至于为什么在全局安装 gulp 后，还需要在项目中本地安装一次，有兴趣可以去搜索，大体就是为了版本的灵活性
+	###小试牛刀
+	在 gulpfile.js 中定义任务，比如打印 hello world：
 	··
 	var gulp = require('gulp')
-	gulp.task('hello', function(){
+	gulp.task('hello', function () {
 		console.log('hello world')
 	})
 	··
 	再去运行gulp任务，在存放gulpfile.js文件的目录下执行·gulp xxx·命令，后面加上要执行的任务名，例如上面定义的·gulp hello·，如果没有指定任务名，则会执行任务名为·default·的默认任务
-	
-	#API介绍
-	
+
+	#API
+
 	##src()
 	gulp.src(globs[, options])：匹配文件
 	globs：文件匹配模式（类似正则表达式），用来匹配文件路径包括文件名，也可以直接指定某个具体的文件路径。当有多个匹配模式时，该参数可以为一个数组
@@ -93,7 +108,7 @@ commonData.tool.gulp = {
 	·a{0..3}d· 会展开为 a0d，a1d，a2d，a3d
 	·a{b,c{d,e}f}g· 会展开为 abg，acdfg，acefg
 	·a{b,c}d{e,f}g· 会展开为 abdeg，acdeg，abdeg，abdfg
-	
+
 	##dest()
 	gulp.dest(path[, options])：写入文件
 	path：写入文件的路径String or Function（待加样式）可以在函数中返回相应路径
@@ -116,11 +131,11 @@ commonData.tool.gulp = {
 	·gulp.dest(path)·生成的文件路径是传入的♭path♭参数后面再加上·gulp.src()·中有通配符开始出现的那部分路径。例如：
 	··
 	var gulp = reruire('gulp');
-	
+
 	gulp.src('script/**/*.js')	// 有通配符开始出现的那部分路径为 **/*.js
 		.pipe(gulp.dest('dist'))	// 最后生成的文件路径为 dist/**/*.js
 	// 比如 **/*.js 匹配到 js/jquery.js，则生成 dist/js/jquery.js
-	
+
 	gulp.src('script/js/jquery.js')	// 没有通配符取最后的文件名
 		.pipe(gulp.dest('dist'))	// 最后生成的文件路径为 dist/jquery.js
 
@@ -141,7 +156,7 @@ commonData.tool.gulp = {
 	// 假设匹配到的文件为 js/lib/jquery.js 则生成 build/lib/jquery.js
 	··
 	用·gulp.dest()·把文件流写入文件后，文件流仍然可以继续使用，也就是后续可以继续pipe回调
-	
+
 	##task()
 	gulp.task(name[, deps], fn)：定义任务
 	name：自定义任务名
@@ -164,7 +179,7 @@ commonData.tool.gulp = {
 	gulp.task('two', ['one'], function(){
 		console.log('two is done')
 	})
-	
+
 	// gulp two
 	// two is done
 	// one is done
@@ -212,7 +227,7 @@ commonData.tool.gulp = {
 		console.log('two is done')
 	})
 	··
-	
+
 	##watch()
 	gulp.watch(glob[, opts], tasks)：监听文件变化
 	glob：要监听的文件匹配模式，规则和用法与·gulp.src()·方法中的glob相同
@@ -235,15 +250,15 @@ commonData.tool.gulp = {
 		console.log(res.path)	// 变化的文件的路径
 	});
 	··
-	
+
 	#常用插件
-	
+
 	##自动加载
 	安装：·cnpm install --save-dev gulp-load-plugins·
 	通常在gulpfile.js加载插件是这样子的：
 	··
 	var gulp = require('gulp'),
-		a = require('gulp-a'), 
+		a = require('gulp-a'),
 		b = require('gulp-b'),
 		c = require('gulp-c'),
 		d = require('gulp-d'),
@@ -274,7 +289,7 @@ commonData.tool.gulp = {
 	··
 	·gulp-load-plugins·并不会一开始就加载所有package.json里的gulp插件，而是在我们需要用到某个插件的时候，才去加载那个插件
 	注意：因为·gulp-load-plugins·是通过package.json文件来加载插件的，所以要确定需要的插件已经写入到了package.json文件里，并且这些插件都已经安装好了
-	
+
 	##重命名
 	安装：·cnpm install --save-dev gulp-rename·
 	用·gulp.dest()·方法写入文件时，文件名使用的是文件流中的文件名，要想改变可以在写入之前用·gulp-rename·插件来改变文件流中的文件名
@@ -282,7 +297,7 @@ commonData.tool.gulp = {
 	var gulp = require('gulp'),
 		rename = require('gulp-rename'),
 		uglify = require("gulp-uglify")
-	 
+
 	gulp.task('rename', function() {
 		gulp.src('js/jquery.js')
 			.pipe(uglify())  // 压缩
@@ -290,73 +305,73 @@ commonData.tool.gulp = {
 			.pipe(gulp.dest('js'))
 	})
 	··
-	
+
 	##html文件压缩
 	安装：·cnpm install --save-dev gulp-minify-html·
 	··
 	var gulp = require('gulp'),
 		minifyHtml = require("gulp-minify-html")
-	 
+
 	gulp.task('minify-html', function() {
 		gulp.src('html/*.html')
 		.pipe(minifyHtml())
 		.pipe(gulp.dest('dist/html'))
 	})
 	··
-	
+
 	##css文件压缩
 	安装：·cnpm install --save-dev gulp-minify-css·
-	
+
 	##js文件压缩
 	安装：·cnpm install --save-dev gulp-uglify·
-	
+
 	##图片压缩
 	安装：·cnpm install --save-dev gulp-imagemin·
-	
+
 	##文件合并
 	安装：·cnpm install --save-dev gulp-concat·
 	用来把多个文件合并为一个文件，可以用来合并所有js或css等文件，这样就能减少页面的http请求数了
 	··
 	var gulp = require('gulp'),
 		concat = require("gulp-concat")
-	 
+
 	gulp.task('concat', function () {
 		gulp.src('js/*.js')
 		.pipe(concat('all.js')) 	// 合并匹配到的js文件并命名为 "all.js"
 		.pipe(gulp.dest('dist/js'))
 	})
 	··
-	
+
 	##js代码检查
 	安装：·cnpm install --save-dev gulp-jshint·
 	··
 	var gulp = require('gulp'),
 		jshint = require("gulp-jshint")
-	 
+
 	gulp.task('jsLint', function () {
 		gulp.src('js/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter())	// 输出检查结果
 	})
 	··
-	
+
 	## 编译less和sass
 	安装less：·cnpm install --save-dev gulp-less·
 	安装sass：·cnpm install --save-dev gulp-sass·
 	··
 	var gulp = require('gulp'),
 		sass = require("gulp-sass")
- 
+
 	gulp.task('compile-sass', function () {
 		gulp.src([]'sass/*.sass')
 		.pipe(sass())
 		.pipe(gulp.dest('dist/css'))
 	});
 	··
-	
-	##自动刷新
+
+	##浏览器自动刷新
 	安装：·cnpm install --save-dev gulp-livereload·
-	当代码变化时，它可以帮我们自动刷新浏览器页面
+	当保存代码时，它可以帮我们自动刷新浏览器页面
 	该插件最好配合谷歌浏览器来使用，且要安装livereload chrome extension扩展插件
 	··
 	var gulp = require('gulp'),
@@ -375,16 +390,69 @@ commonData.tool.gulp = {
 	  gulp.watch('less/*.less', ['less'])
 	})
 	··
-	
+
 	#实践
-	##套装
-	
+	##开始
+	预先安装自动加载：
+	··
+	cnpm install --save-dev gulp-load-plugins
+	··
+	gulpfile.js 开头：
+	··
+	const gulp = require('gulp')
+	const P = require('gulp-load-plugins')()
+	··
+
+	##自动刷新浏览器
+	###方式一：gulp-livereload
+	安装：
+	··
+	cnpm install --save-dev gulp-livereload
+	··
+	下载安装浏览器插件：LiveReload，目前是 2.1.0 版本
+	livereload 只负责实时刷新，但前提需要开启静态服务，即需要安装 http-server
+	全局安装静态服务：
+	··
+	cnpm install http-server -g
+	··
+	开启服务在根目录运行
+	··
+	http-server
+	··
+	再开一个命令行窗口开启监听
+	··
+	gulp watch
+	··
+	http-server 默认端口是 8080，在浏览器打开·localhost:8080·会默认访问 index.html，或自己加上路径
+	在 LiveReload 插件上点一下以开启，插件图标上的空心圆表示未开启，实心圆表示开启
+	但每次刷新都有缓存是什么鬼？？？
+	###方式二：Browsersync
+	Browsersync 能让浏览器实时、快速响应文件的更改并自动刷新页面
+
+	##sass 编译
+	安装：
+	··
+	cnpm install --save-dev gulp-sass
+	··
+	gulpfile.js：
+	··
+	// 监听文件的改变刷新浏览器
+	gulp.task('watch', function() {
+	  P.livereload.listen()
+	  gulp.watch(['index.html', 'css/*.css', 'scss/*.scss', 'js/*.js', 'data/**/*.js'], function (file) {
+	  	P.livereload.changed(file.path)
+	  })
+	})
+	··
+
+	##啃得起全家桶
+
 	αα
 	gulp中文网-文档αhttps://www.gulpjs.com.cn/docs/getting-started/
 	博客园-无双αhttp://www.cnblogs.com/2050/p/4198792.html
 	npm-所有gulp插件αhttps://www.npmjs.com/search?q=keywords:gulpplugin
 	αα
-	
+
 	&2018.4.12
 	`
 }

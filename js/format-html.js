@@ -5,7 +5,7 @@ const formatHtml = text => {
 	pageH2 = []
 	let h1Index = -1
 	let tagStartEnd = true
-	
+
 	// 橙色：正则表达式
 	// 绿色：字符串
 	// 青色：循环分支
@@ -13,7 +13,7 @@ const formatHtml = text => {
 	// 紫色：类型方法
 	// 粉色：开头声明
 	// 灰色：注释
-	
+
 	// html，暂不考虑 css，多行处理、函数相似和嵌套不好控制
 	const htmlTagStart = /&lt;([^!\s'"\/]*?(?=\s|&gt;))/g	// 标签开始
 	const htmlTagEnd = /&lt;\/([^\s'"]*?(?=&gt;))/g	// 标签结束
@@ -29,8 +29,8 @@ const formatHtml = text => {
 	// 正则的问题在于怎么匹配前面没有 \ 的 /，用\/[^]*?\\{0}\/ 是无效的，因为 \ 还是属于 [^]*? 的范围
 	// 正则对空格的处理还是有效的，且空格不会被合并，/a b/g
 	const jsRegExp = /\/[^]*?\/[gim]{0,3}(?=,|;|\s)/g
-	// 注释：// /**/ <!-- -->
-	
+	// 注释：// /**/ <!-- -->，注释中的注释不解析，/*，但注意不要/**/的嵌套这个就木有办法了
+	// 不解析网址：http://、https://、ws://、wss://，表示文件路径的不解析 html/*（[\w*]/*），超出 \w* 的范围就没有办法了
 	// 引号：' " `
 	// 引号和注释的范围最大：引号中和注释中匹配到的所有的规则都无效，在其后面加个×，虽然 css 覆盖可以覆盖颜色，但无意义的标签总是不对的
 	// 最后把×替换掉
@@ -48,7 +48,7 @@ const formatHtml = text => {
 	const h3 = /^###/
 	const time = /^&(?=2)/
 	const a = /α\([^]*?\)(?!×)/g	// α 应该改成@()
-	const aa = /^αα|αα$/g	// 
+	const aa = /^αα|αα$/g	//
 	const b = /♭/g
 	const img = /^!/
 	const imgInline = /¡\([^]*?\)/g
@@ -58,7 +58,7 @@ const formatHtml = text => {
 	const inlineSplitReg = /ˊ/g	// 用于拼接的特殊字符正则
 	const unit = u => (isNaN(u) ? u : u + 'px') + ';'	// 单位转换一下
 	// [^]*：代表匹配所有字符无限次，但会直到最后一次，中间有x符号也会忽略，所以需要非贪婪[^]*?让它碰到x就停下来，但一次又不行，所以需要g全局匹配
-	
+
 	// 主要的作用是将多行标识符按inlineSplit特殊字符合并成单行，整理行内标识符，代码块加颜色
 	String.prototype.formatString = function() {
 		// 从顺序上来说起码从根据字符串的引号开始，不然之前有 html 标签的属性也包含引号，就误判了
@@ -88,7 +88,7 @@ const formatHtml = text => {
 			return item
 		})
 		str = str.replace(a, item => '<a href="' + item.replace(/[^]*\||\)$/g, '') + '" target="_blank">' + item.replace(/^α\(|\|[^]*/g, '') + '</a>') // a链接
-		
+
 		// 相关参考链接
 		str = str.replace(/αα(?=\n)[^]*?αα(?=\n)/g, item => {
 			let res = ''
@@ -105,7 +105,7 @@ const formatHtml = text => {
 			})
 			return 'αα相关、参考、学习的链接：' + res.slice(0, -1) + 'αα'
 		})
-		
+
 		str = str.replace(b, item => { // b加粗标签
 			item = tagStartEnd ? '<b>' : '</b>'
 			tagStartEnd = !tagStartEnd
@@ -127,7 +127,7 @@ const formatHtml = text => {
 		str = str.replace(/%%(?=\n)[^]*?%%(?=\n)/g, item => item.replace(/\s*\n\s*/g, inlineSplit)) // 表格
 		return str.replace(/×|¿/g, '')
 	}
-	
+
 	// 主要的作用是将开头或结尾的标识符替换成对应的标签，不然没有匹配标识符会当成p标签
 	String.prototype.formatTag = function(){
 		return this.split('\n').map(item => {
