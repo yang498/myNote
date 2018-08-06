@@ -6,41 +6,9 @@ const formatHtml = text => {
 	let h1Index = -1
 	let tagStartEnd = true
 
-	// 橙色：正则表达式
-	// 绿色：字符串
-	// 青色：循环分支
-	// 蓝色：html 标签，关键字方法
-	// 紫色：类型方法
-	// 粉色：开头声明
-	// 灰色：注释
-
-	// html，暂不考虑 css，多行处理、函数相似和嵌套不好控制
-	const htmlTagStart = /&lt;([^!\s'"\/]*?(?=\s|&gt;))/g	// 标签开始
-	const htmlTagEnd = /&lt;\/([^\s'"]*?(?=&gt;))/g	// 标签结束
-	// 开头声明（粉）：var let const void function => new class constructor super static import export default
-	const jsStart = /var(?=\s)|let(?=\s)|const(?=\s)|void(?=\s)|function|=&gt;|new(?=\s)|class(?=\s)|constructor(?=\s)|super(?=\s)|static(?=\s)|import(?=\s)|export(?=\s)|default(?=\s)/g
-	// 循环分支（蓝）：for in of while do if else switch case break continue try catch finally with
-	const jsLoopFork = /for(?=\s|\()|\sin(?=\s)|of(?=\s)|while|\sdo(?!\w)|if(?=\s|\()|else|switch|case(?=\s)|break|continue|try|catch|finally|with/g
-	// 关键字方法：window document console return delete typeof require throw eval instanceof debugger this true false undefined null length
-	const jsMethod = /return|delete|typeof|require|throw|eval|instanceof|debugger|this|true(?!¿)|false|undefined|null|length/g
-	// 类型方法：Object Array Boolean String Number Math Date RegExp Error JSON
-	const jsType = /window|document|console|Object|Array|Boolean|String|Number|Math|Date|RegExp|Error|JSON/g
-	// 正则尚且能用，注意\/后面不能接,;\s
-	// 正则的问题在于怎么匹配前面没有 \ 的 /，用\/[^]*?\\{0}\/ 是无效的，因为 \ 还是属于 [^]*? 的范围
-	// 正则对空格的处理还是有效的，且空格不会被合并，/a b/g
-	const jsRegExp = /\/[^]*?\/[gim]{0,3}(?=,|;|\s)/g
-	// 注释：// /**/ <!-- -->，注释中的注释不解析，/*，但注意不要/**/的嵌套这个就木有办法了
-	// 不解析网址：http://、https://、ws://、wss://，表示文件路径的不解析 html/*（[\w*]/*），超出 \w* 的范围就没有办法了
-	const jsComment = /\/\/[^]*?(?=\n)|\/\*[^]*?\*\/|&lt;!--[^]*?--&gt;/g
-	// 引号：' " `
-	const jsString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g
-	// 引号和注释的范围最大：引号中和注释中匹配到的所有的规则都无效，在其后面加个×，虽然 css 覆盖可以覆盖颜色，但无意义的标签总是不对的
-	// 最后把×替换掉
 	// 使用标签识别符：优先使用键盘上的字符，有冲突了再将常见字符转成特殊字符
 	const codeKeywordOut = /var|let|const|this(?!×)|function|=>|=&gt;|new(?=\s)|class(?=\s)|true(?!¿|\}|:)|false(?!¿|\}|")|null(?!×)|undefined(?!×)|console|window(?!'|"|`)|document(?=\.)|typeof|delete|module(?!×|\/)|require(?=\()/g	// 一类关键字，粉色
 	const codeKeywordIn = /if(?=\s|\()|else(?=\s|\{)|switch|case|break|continue|return|for(?=\s|\()|\sin(?=\s)|of(?=\s)|while|\sdo(?!\w)|Math(?=\.)|Date(?=\.|\()/g	// 二类关键字，蓝色
-	const codeComment = /\/\/(?!×)[^]*?\n|\/\*[^]*?\*\/|&lt;!--[^]*?--&gt;/g	// 有可能是个ajax的请求http://，在后面加上条件(?=×)表示不转，最后去除×标识
-	const codeString = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g	// 不想被转字符串变绿就在后面加¿，注释内不用，已判断添加
 	const codeReg = /¦/g	// 直接匹配字符串会转义，而且里面可能会包含多次转义的 /，正则不太常用，先用特殊符号标记，以后再试试
 	const codeInline = /·/g
 	const code = /··[^]*?··/g	// 用于书写，经常会用代码块，用`的中文按键书写
@@ -59,15 +27,14 @@ const formatHtml = text => {
 	const inlineSplit = 'ˊ'	// 用于拼接的特殊字符
 	const inlineSplitReg = /ˊ/g	// 用于拼接的特殊字符正则
 	const unit = u => (isNaN(u) ? u : u + 'px') + ';'	// 单位转换一下
-	// [^]*：代表匹配所有字符无限次，但会直到最后一次，中间有x符号也会忽略，所以需要非贪婪[^]*?让它碰到x就停下来，但一次又不行，所以需要g全局匹配
 
 	// 将多行标识符按 inlineSplit 特殊字符合并成单行，整理行内标识符，代码块加颜色
 	String.prototype.formatString = function() {
 		let str = this
-		
+
 		// 标签的左右箭头换成转义符，避免和 html 标签冲突
 		str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-		
+
 		// 匹配多行代码块，里面再匹配加颜色
 		str = str.replace(code, item => {
 			// tab 显得比较长，为了格式美观，所以去掉开头 tab，再把其他的 tab 替换成空格
@@ -77,10 +44,12 @@ const formatHtml = text => {
 			// 1、网址开头和路径不解析成注释
 			item = item.replace(REG.unComment, '$&¿')
 			// 2、注释中包含的标签、关键字、正则、字符串加标记避免被匹配
-			item = item.replace(REG.comment, res => res.replace(REG_UN, '$&¿'))
+			item = item.replace(REG.comment, res => REG.un(res))
 			// 3、字符串中包含的标签、关键字、正则加标记避免被匹配，字符串中的注释比如网址开头和路径已排除
-			item = item.replace(REG.comment, res => res.replace(REG_UN, '$&¿'))
-			// 4、加颜色
+			item = item.replace(REG.str, res => REG.un(res))
+			// 4、标记正则，因和结束标签的 / 冲突，先用 ¦ 标记，后面再匹配
+			item = item.replace(REG.reg, '$1¦$2¦')
+			// 5、加颜色
 			// 字符串，绿，从顺序上来说以字符串开始，不然之前有 html 标签的属性也包含引号，就误判了
 			item = item.replace(REG.str, '<span class="color-green">$&</span>')
 			// 注释，灰
@@ -93,12 +62,12 @@ const formatHtml = text => {
 			item = item.replace(REG.methodKeyword, '<span class="color-blue">$&</span>')
 			// 类型方法，紫
 			item = item.replace(REG.type, '<span class="color-purple">$&</span>')
-			// html 开头标签
+			// html 开头标签，蓝，因为这里匹配的是转义过的标签 &lt; &gt;，所以不和上面添加颜色的标签 < > 冲突
 			item = item.replace(REG.start, '&lt;<span class="color-blue">$1</span>')
-			// html 结束标签
+			// html 结束标签，蓝
 			item = item.replace(REG.end, '&lt;/<span class="color-blue">$1</span>')
-			
-			// 转换成少数符号的标识符
+
+			// 转换成少数符号的标识符，应该可以去掉这个和正则的 ¦，给··前后加上限制，最后改链式调用，只有开头的 return，等这个 js 全都完成再全部检查一下页面相关符号
 			item = '‥' + item.slice(2, -2) + '‥'
 			// 去除不转注释的×标识，转换成少数符号合并成一行
 			return item.replace(/\n/g, inlineSplit)

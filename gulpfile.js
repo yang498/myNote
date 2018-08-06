@@ -17,7 +17,7 @@ gulp.task('serve', function () {
             baseDir: "./"
         }
     })
-    
+
     // 监听 scss 文件，如果发生改动则刷新浏览器
     gulp.watch('scss/*.scss', ['sass'])
     // 监听文件，如果发生改动则刷新浏览器

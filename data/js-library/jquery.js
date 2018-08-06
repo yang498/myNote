@@ -7,32 +7,32 @@ commonData.jsLibrary.jquery = {
 	··
 	// 官网最新版本，压缩版在 .js 前加上 .min 即可
 	<script src="https://×code.jquery.com/jquery-git.js"></script>
-	
+
 	// 官网指定版本，压缩版在 .js 前加上 .min 即可
 	<script src="https://×code.jquery.com/jquery-3.2.1.js"></script>
-	
+
 	// github 克隆
 	git clone git://×github.com/jquery/jquery.git
 	// 可以查看并构建特定的版本
 	git checkout 3.2.1
-	
+
 	// npm
 	npm install jquery
-	
+
 	// yarn
 	yarn add jquery
-	
+
 	// bower
 	bower install jquery
 	··
 	更多 CDN：α(CDNJS|https://cdnjs.com/libraries/jquery/)，α(jsDelivr|https://www.jsdelivr.com/package/npm/jquery)，α(Microsoft|https://www.asp.net/ajax/cdn#jQuery_Releases_on_the_CDN_0)，α(Google|https://developers.google.com/speed/libraries/devguide#jquery)
-	
+
 	#选择器
 	使用·$()·可以用来选择 DOM 元素
 	jQuery 使用 CSS 语法来选择元素，并且做了些扩展，所以 jQuery 扩展的选择器要比 css 的选择器消耗多一点性能
 	注意 html 中标签和属性名是不区分大小写的，属性值和 css、js 选择器是区分大小写的，比如·<P Class="Demo">·等同于·<p class="Demo">·，·#Demo·和·#demo·是不同的，但是这种大写行为不应该发生，按照 w3c 标准统一都该使用小写，而且代码也易读
 	·$()·选择的元素是 jQuery 对象，所以能使用 jQuery 方法，想要使用原生的元素只需选择对应的下标即可，比如·$('.demo')[0]·
-	
+
 	##基本
 	‖
 	*：所有
@@ -43,27 +43,27 @@ commonData.jsLibrary.jquery = {
 	$.escapeSelector()：转义选择器中的特殊字符·. # , : [ ] = @·
 	html：可以选择一段 html 以使用 jQuery 的方法
 	‖
-	
+
 	###*
 	选择所有元素
 	比如·$('*')·表示选择当前页面所有元素，包扩 html、head 等，·$('#dome *')·表示选择·id="dome"·元素下的所有元素
-	
+
 	###element
 	选择给定元素名的所有元素
 	比如·$('div')·表示选择所有·div·元素
-	
+
 	###.class
 	选择给定样式类名的所有元素
 	比如·$('.demo')·表示选择所有·class="demo"·的元素
-	
+
 	####id
 	选择给定 id 的元素，如果有多个相同 id 的元素（但应避免这种行为）只返回第一个
 	比如·$('#demo')·表示选择·id="demo"·的元素
-	
+
 	###selector, selectorN
 	选择给定选择器的所有元素
 	比如·$("div, #demo, .class")·表示选择所有·<div></div>·、·id="demo"·、·class="text"·的元素
-	
+
 	###$.escapeSelector(selector)
 	如果定义的选择器包含·. # , : [ ] = @·，需先用该方法转义，否则获取不了或有歧义，当然也不建议这种选择器符号出现在选择器中
 	比如要获取·id="#demo.text"·，则·$('##demo.text')·是无效的，应改成·$('#' + $.escapeSelector('#demo.text'))·
@@ -71,11 +71,11 @@ commonData.jsLibrary.jquery = {
 	也可以自定义加斜杠的方法：
 	··
 	function jq(selector) {
-		return selector.replace(¦/(:|\\.|\\[|\\]|,|=|@)/g¦, '\\\\$1')
+		return selector.replace(/[:\\.\\[\\],=@]/g, '\\\\$&')
 	}
 	··
 	使用：·$('#' + jq('#demo.text'))·
-	
+
 	###html
 	可以选择一段 html 以使用 jQuery 的方法
 	比如：
@@ -83,7 +83,7 @@ commonData.jsLibrary.jquery = {
 	var html = '<div class="demo"><i></i></div>'
 	$(html).find('i')	// <i></i>
 	··
-	
+
 	##层级
 	‖
 	parent>child：所有子元素
@@ -103,7 +103,7 @@ commonData.jsLibrary.jquery = {
 	###prev~siblings
 	选择同一层级中所有在 prev 元素之后的 siblings 元素
 	比如·$('#demo~.text')·，若 siblings 为空则选择所有 prev 之后的所有元素：·$('#demo~')·
-	
+
 	##属性
 	属性值的引号是可选的，也就是·[attr=value]·和·[attr="value"]·是一样的，但是当要表示多个属性值时，就必须用引号了，比如·[attr=val1 val2]·是会报错的，需加上引号·[attr="val1 val2"]·，而且多个属性值的顺序也是不能变的，比如要获取·class="demo active"·需写成·$('[class="demo active"]')·，写成·$('[class="active demo"]')·是获取不了的
 	‖
@@ -140,7 +140,7 @@ commonData.jsLibrary.jquery = {
 	###[attr|="value"]
 	选择所有属性值正好是 value 或以 value- 开头的元素，通常用于选择 a 链接中的 hreflang 属性
 	比如·$('a[hreflang|="en"]')·表示选择·hreflang="en"·或·hreflang="en-UK"·，不会选择·hreflang="english"·
-	
+
 	##子元素
 	‖
 	:first：第一个
@@ -191,7 +191,7 @@ commonData.jsLibrary.jquery = {
 		<li>G</li>
 		<li>H</li>
 	</ul>
-	
+
 	$('li:nth-child(1)')	// A （必须是父元素的第一个子元素，所以没有 E）
 	$('li:nth-child(2)')	// B E
 	$('li:nth-child(odd)')	// A C F H
@@ -217,7 +217,7 @@ commonData.jsLibrary.jquery = {
 	###:only-of-type
 	和·:only-child·不同的是会忽略其他不同的元素
 	比如·$('button:only-child')·表示选择所有 button 如果其父元素不含其他 button 元素，有其他比如 input 元素不管
-	
+
 	##基本筛选
 	‖
 	:eq()：第几个
@@ -239,7 +239,7 @@ commonData.jsLibrary.jquery = {
 	比如·$('li:odd')·表示选择所有 li 中第 1 3 5 7 9... 个元素
 	###:even
 	选择索引值为偶数元素，即选择索引值为 0 2 4 6 8... 的元素
-	
+
 	##内容筛选
 	‖
 	:not()：除了指定的元素
@@ -268,7 +268,7 @@ commonData.jsLibrary.jquery = {
 	选择所有隐藏的元素，隐藏的标准是：·display:none·，·input type="hidden"·，祖先节点符合以上情况，不会被渲染的标签（head、meta、title、style、script 等）
 	###:visible
 	选择所有显示的元素，和·:hidden·相反
-	
+
 	##其他筛选
 	‖
 	:lang()：指定语言的元素,
@@ -291,7 +291,7 @@ commonData.jsLibrary.jquery = {
 	选择所有标题元素，等同于·$('h1, h2, h3, h4, h4, h6')·
 	###:root
 	选择根元素，等同于·$('html')·
-	
+
 	##表单筛选
 	‖
 	:input：表单元素，即 input, textarea, select, button
@@ -342,7 +342,7 @@ commonData.jsLibrary.jquery = {
 	选择所有没被禁用的元素，即·$(':not([disabled])')·
 	###:focus
 	选择当前获取焦点的元素，适用于表单元素和 a 标签，按 Tab 键也能选择焦点，所以给其他元素添加 tabindex 属性，也能被 :focus 选择
-	
+
 	#DOM 属性
 	##css
 	‖
@@ -414,7 +414,7 @@ commonData.jsLibrary.jquery = {
 	定义·.css()·属性中哪些属性值不需要使用单位，以确定在设置数值时哪些需要加上单位 px
 	默认包含的属性有：·zIndex fontWeight opacity zoom lineHeight widows orphans fillOpacity columnCount order flexGrow flexShrink·，这些属性的值都为·$.cssNumber.someCSSProp = true·
 	比如·$.cssNumber.left = true·表示之后的·.css('left', 100)·是不会自动加单位 px 的，即这是个无效的设置
-	
+
 	##属性
 	‖
 	.val()：获取或设置 value 值
@@ -456,7 +456,7 @@ commonData.jsLibrary.jquery = {
 	###.removeProp(propertyName)
 	用来删除由·.prop()·方法设置的自定义属性集，多个属性使用空格隔开
 	注意不要用来删除原生的属性，比如 checked disabled，这将完全移除该属性，不能再次被添加到元素上。使用·.prop()·来设置这些属性设置为 false 代替比较好
-	
+
 	##数据
 	‖
 	.data()：在元素上存储或读取任意相关数据，包括元素上的 data- 开头的属性
@@ -480,7 +480,7 @@ commonData.jsLibrary.jquery = {
 	比如：
 	··
 	<div class="demo" data-demo="demo" data-test-a="hh"></div>
-	
+
 	$('.demo').data()	// 返回 {demo: "demo", testA: "hh"}
 	$('.demo').data({'test-a': 'hhhh', 'test-b': 'bbbb'})	// 覆盖存储，不会直接修改元素的 data- 里面的属性值
 	$('.demo').data()	// 返回 {demo: "demo", testA: "hhhh", testB: "bbbb"}
@@ -499,7 +499,7 @@ commonData.jsLibrary.jquery = {
 	###$.hasData(element)
 	判断元素是否有·.data()·绑定的数据，如果有返回 true，否则返回 false，注意 element 是原生的
 	比如·$.hasData($('.demo')[0])·
-	
+
 	##尺寸
 	‖
 	.width()：获取宽度，不包括 padding 和 border
@@ -524,7 +524,7 @@ commonData.jsLibrary.jquery = {
 	获取宽度，包括 padding 和 border，可传入一个·true·表示包括 margin，用法同·.width()·
 	###.outerHeight([includeMargin/value/function])
 	获取高度，用法同·.outerWidth()·
-	
+
 	##位置
 	‖
 	.offset()：获取或设置相对于文档的 left 和 top 值
@@ -546,7 +546,7 @@ commonData.jsLibrary.jquery = {
 	可以传入 1 个数值以设置这个距离，比如设为 0 表示回到顶部
 	###.scrollLeft([value])
 	获取或设置相对于左边滚动的距离，用法同·.scrollTop()·
-	
+
 	#DOM 操作
 	##复制
 	###.clone([withDataAndEvents] [, deepWithDataAndEvents])
@@ -560,7 +560,7 @@ commonData.jsLibrary.jquery = {
 	比如·$('.demo').appendTo('.test')·表示·$('.demo')·被移动到·$('.test')·里面的末尾处
 	注意元素的动态状态也会复制，比如·<input type="text">·输入的值，选中的复选框，出于性能方面的考虑，·<textarea>·输入的值和·<select>·选中的值不会被复制
 	复制的元素在插入到文档之前，可以修改该复制的元素
-	
+
 	##内部添加
 	‖
 	.text()：获取或设置文本
@@ -587,7 +587,7 @@ commonData.jsLibrary.jquery = {
 	在每个匹配元素里面的开始处添加参数内容，和·.append()·的用法一样
 	###.prependTo(target)
 	和·.prepend()·的写法相反，要添加的内容被添加到元素里面的开始处
-	
+
 	##外部添加
 	‖
 	.after()：在元素后面添加
@@ -604,7 +604,7 @@ commonData.jsLibrary.jquery = {
 	和·.after()·的写法相反，要添加的内容被添加到元素的后面
 	###.insertBefore(target)
 	和·.before()·的写法相反，要添加的内容被添加到元素的前面
-	
+
 	##外部包裹
 	‖
 	.wrap()：为每个元素添加父元素
@@ -622,7 +622,7 @@ commonData.jsLibrary.jquery = {
 	添加外层标签
 	··
 	$('.demo').wrap('<div class="test"></div>')
-	
+
 	// 变成
 	<div class="test">
 		<div class="demo"></div>
@@ -640,9 +640,9 @@ commonData.jsLibrary.jquery = {
 		</div>
 		<div class="third"></div>
 	</div>
-	
+
 	$('.demo').wrap('.test')
-	
+
 	// 变成
 	<div class="test">
 		<div class="first">
@@ -674,7 +674,7 @@ commonData.jsLibrary.jquery = {
 	添加外层标签
 	··
 	$('.demo').wrap('<div class="test"></div>')
-	
+
 	// 变成
 	<div class="test">
 		<div class="demo"></div>
@@ -691,7 +691,7 @@ commonData.jsLibrary.jquery = {
 	添加外层标签
 	··
 	$('.demo').wrapInner('<div class="test"></div>')
-	
+
 	// 变成
 	<div class="demo">
 		<div class="test">123 <i></i></div>
@@ -703,7 +703,7 @@ commonData.jsLibrary.jquery = {
 	###.unwrap([selector])
 	将匹配元素集合的父级元素删除，保留自身，包括兄弟元素，和·.wrap()·相反
 	可选择传入一个选择器在匹配的元素中筛选哪些元素的父元素应该被删除
-	
+
 	##删除
 	‖
 	.remove()：删除元素和其后代，包括删除绑定的事件和·.data()·绑定的数据
@@ -721,7 +721,7 @@ commonData.jsLibrary.jquery = {
 	<input type="button" value="添加" />
 	<div class="demo remove">remove</div>
 	<div class="demo detach">detach</div>
-	
+
 	$('.demo').on('click', function () {
 		console.log(123)
 	})
@@ -733,7 +733,7 @@ commonData.jsLibrary.jquery = {
 	··
 	###.empty()
 	删除匹配元素的所有后代元素，即把元素变成空标签
-	
+
 	##替换
 	‖
 	.replaceWith()：元素被替换成指定元素
@@ -745,10 +745,10 @@ commonData.jsLibrary.jquery = {
 	··
 	<div class="demo">123</div>
 	<div class="demo">456</div>
-	
+
 	// 替换
 	$('.demo').replaceWith('<h2>demo<h2>')
-	
+
 	// 变成
 	<h2>demo</h2>
 	<h2>demo</h2>
@@ -756,7 +756,7 @@ commonData.jsLibrary.jquery = {
 	###.replaceAll(target)
 	和·.replaceWith()·的写法相反，将匹配的元素替换掉每个目标元素
 	比如：·$('<h2>demo<h2>').replaceAll('.demo')·
-	
+
 	#DOM 状态
 	##追加
 	###.add(selector/html [, context])
@@ -767,16 +767,16 @@ commonData.jsLibrary.jquery = {
 	注意：
 	··
 	var $demo = $('.demo')
-	
+
 	$demo.add('p')	// 临时保存，不会保存到 $demo 变量中
 	console.log($demo)	// .demo
-	
+
 	$demo = $demo.add('p')	// 再次保存才行
 	console.log($demo)	// .demo, p
 	··
 	可选择第二个参数筛选要追加的元素
 	比如·$('.demo').add('p', '.box')·表示 p 属于 .box 的后代元素才会被追加，等同于·$('.demo').add('.box p')·
-	
+
 	##回退
 	###.end()
 	返回元素的上一次状态，通常用于链式调用中
@@ -788,14 +788,14 @@ commonData.jsLibrary.jquery = {
 		</div>
 		<div class="second"></div>
 	</div>
-	
+
 	$('.demo').find('.first').end()	// .demo
 	$('.demo').find('.child').end()	// .demo
 	$('.demo').find('.first').find('.child').end()	// .first
 	$('.demo').find('.first').find('.child').end().end()	// .demo
 	$('.demo').find('.first').removeClass('active').end().find('.second').addClass('active')
 	··
-	
+
 	#DOM 遍历
 	##循环
 	###.each(function(index, item))
@@ -808,7 +808,7 @@ commonData.jsLibrary.jquery = {
 		console.log($(this).css('color'))
 	})
 	··
-	
+
 	#DOM 筛选
 	##筛选
 	‖
@@ -844,14 +844,14 @@ commonData.jsLibrary.jquery = {
 	  <li class="mark">C</li>
 	  <li class="mark">D</li>
 	</ul>
-	
+
 	$('li').filter('.mark')	// C, D
 	$('li').filter(':odd')	// B, D
 	$('li').filter(function (index) {	// A, D
 		return index % 3 === 0
 	})
 	··
-	
+
 	##子元素
 	‖
 	.children()：子元素
@@ -864,7 +864,7 @@ commonData.jsLibrary.jquery = {
 	获得匹配元素的所有子元素，和 .children() 不同的是包括文字和注释节点
 	而且还能获取 iframe 的内容（跨域无法访问，iframe 的网址需要和当前页面同域）
 	比如·$('.demo').contents()·，$('iframe').contents().find('.demo')
-	
+
 	##判断
 	###.is(selector/function(index))
 	判断当前元素合中如果至少一个匹配给定的参数，即若能根据后面的选择器在当前元素中至少找到 1 个，则返回 true，否则返回 false
@@ -877,13 +877,13 @@ commonData.jsLibrary.jquery = {
 		<li class="mark">CCC</li>
 		<li class="mark">DDD <span>ddd</span></li>
 	</ul>
-	
+
 	$('li').is('.mark')	// true
 	$('ul').on('click', function (event) {
 		$(event.target).is('li') && $(event.target).css('color', 'red')	// 点击 span 不会触发
 	})
 	··
-	
+
 	&2018.8.3
 	`
 }
