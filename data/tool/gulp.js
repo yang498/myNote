@@ -363,48 +363,57 @@ commonData.tool.gulp = {
 		sass = require("gulp-sass")
 
 	gulp.task('compile-sass', function () {
-		gulp.src([]'sass/*.sass')
+		gulp.src('sass/*.sass')
 		.pipe(sass())
 		.pipe(gulp.dest('dist/css'))
-	});
+	})
 	··
 
 	##浏览器自动刷新
-	安装：·cnpm install --save-dev gulp-livereload·
-	当保存代码时，它可以帮我们自动刷新浏览器页面
-	该插件最好配合谷歌浏览器来使用，且要安装livereload chrome extension扩展插件
+	###Browsersync
+	Browsersync 能让浏览器实时、快速响应文件的更改并自动刷新页面，同一个 WiFi 中的任何设备都可以方便地访问到
+	安装：
 	··
-	var gulp = require('gulp'),
-		less = require('gulp-less'),
-		livereload = require('gulp-livereload')
+	cnpm install --save-dev browser-sync
+	··
+	在命令行中使用：
+	··
+	browser-sync start --server --files "css/*.css"
+	··
+	多个文件使用逗号隔开：
+	··
+	browser-sync start --server --files "css/*.css, *.html"
+	··
+	如果已经有其他本地服务器环境 PHP 或类似的，BrowserSync 将通过代理 URL(localhost:3000) 来查看网站：
+	··
+	browser-sync start --proxy "主机名（ip/域名）" "css/*.css"
+	··
+	若本地创建了服务器环境并绑定了 Browsersync.cn 来访问，Browsersync 将提供一个新的地址 localhost:3000 来访问 Browsersync.cn：
+	··
+	browser-sync start --proxy "Browsersync.cn" "css/*.css"
+	··
+	在 gulp 中的 gulpfile.js 使用：
+	··
+	var gulp        = require('gulp')
+	var browserSync = require('browser-sync').create()
 
-	gulp.task('less', function() {
-	  gulp.src('less/*.less')
-		.pipe(less())
-		.pipe(gulp.dest('css'))
-		.pipe(livereload())
+	// 静态服务器
+	gulp.task('browser-sync', function() {
+		browserSync.init({
+			server: {
+				baseDir: './'
+			}
+		})
 	})
 
-	gulp.task('watch', function() {
-	  livereload.listen()	// 要在这里调用listen()方法
-	  gulp.watch('less/*.less', ['less'])
+	// 代理模式
+	gulp.task('browser-sync', function() {
+		browserSync.init({
+			proxy: '你的域名或IP'
+		})
 	})
 	··
-
-	#实践
-	##开始
-	预先安装自动加载：
-	··
-	cnpm install --save-dev gulp-load-plugins
-	··
-	gulpfile.js 开头：
-	··
-	const gulp = require('gulp')
-	const P = require('gulp-load-plugins')()
-	··
-
-	##自动刷新浏览器
-	###方式一：gulp-livereload
+	###gulp-livereload
 	安装：
 	··
 	cnpm install --save-dev gulp-livereload
@@ -419,6 +428,16 @@ commonData.tool.gulp = {
 	··
 	http-server
 	··
+	gulpfile.js：
+	··
+	// 监听文件的改变刷新浏览器
+	gulp.task('watch', function() {
+		P.livereload.listen()
+		gulp.watch(['index.html', 'css/*.css', 'scss/*.scss', 'js/*.js', 'data/**/*.js'], function (file) {
+			P.livereload.changed(file.path)
+		})
+	})
+	··
 	再开一个命令行窗口开启监听
 	··
 	gulp watch
@@ -426,8 +445,44 @@ commonData.tool.gulp = {
 	http-server 默认端口是 8080，在浏览器打开·localhost:8080·会默认访问 index.html，或自己加上路径
 	在 LiveReload 插件上点一下以开启，插件图标上的空心圆表示未开启，实心圆表示开启
 	但每次刷新都有缓存是什么鬼？？？
-	###方式二：Browsersync
-	Browsersync 能让浏览器实时、快速响应文件的更改并自动刷新页面
+	改？？？
+	··
+	document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+	··
+	相比 Browsersync 来说还要插件，功能也少了点，推荐使用 Browsersync
+
+	#实践
+	##开始
+	安装自动加载：
+	··
+	cnpm install --save-dev gulp-load-plugins
+	··
+	安装 Browsersync：
+	··
+	cnpm install --save-dev browser-sync
+	··
+	gulpfile.js：
+	··
+	const gulp = require('gulp')
+	const P = require('gulp-load-plugins')()
+	const browserSync = require('browser-sync').create()
+	
+	gulp.task('serve', function () {
+		// 开启服务
+		browserSync.init({
+			server: {
+				baseDir: "./"
+			}
+		})
+		
+		// 监听文件，如果发生改动则刷新浏览器
+		gulp.watch(['index.html', 'css/*.css', 'scss/*.scss', 'js/*.js', 'data/**/*.js']).on('change', browserSync.reload)
+	})
+	··
+	执行命令后会自动打开浏览器进入 localhost:3000，改动相关文件就会刷新浏览器了：
+	··
+	gulp serve
+	··
 
 	##sass 编译
 	安装：
@@ -436,16 +491,35 @@ commonData.tool.gulp = {
 	··
 	gulpfile.js：
 	··
-	// 监听文件的改变刷新浏览器
-	gulp.task('watch', function() {
-	  P.livereload.listen()
-	  gulp.watch(['index.html', 'css/*.css', 'scss/*.scss', 'js/*.js', 'data/**/*.js'], function (file) {
-	  	P.livereload.changed(file.path)
-	  })
+	const gulp = require('gulp')
+	const P = require('gulp-load-plugins')()
+	const browserSync = require('browser-sync').create()
+	
+	// 获取 scss 文件，编译，将结果输出到 css 文件中，刷新浏览器并注入流
+	gulp.task('sass', function () {
+		return gulp.src('scss/*.scss')
+			.pipe(P.sass({outputStyle: 'compact'}))
+			.pipe(gulp.dest('css'))
+			.pipe(browserSync.reload({stream: true}))
+	})
+	
+	gulp.task('serve', function () {
+    // 开启服务
+    browserSync.init({
+        server: {
+            baseDir: "./"
+        }
+    })
+		
+    // 监听 scss 文件，如果发生改动则刷新浏览器
+		gulp.watch('scss/*.scss', ['sass'])
+    // 监听文件，如果发生改动则刷新浏览器
+    gulp.watch(['index.html', 'css/*.css', 'js/*.js', 'data/**/*.js']).on('change', browserSync.reload)
 	})
 	··
 
 	##啃得起全家桶
+	综合以上：
 
 	αα
 	gulp中文网-文档αhttps://www.gulpjs.com.cn/docs/getting-started/
