@@ -14,9 +14,7 @@ let REG_UN = {
 
 // 将 REG 加上 (?!¿)，用来匹配
 let REG = {}
-for (let key in REG_UN) {
-	REG[key] = new RegExp(REG_UN[key].split('|').map(item => item + '(?!¿)').join('|'), 'g')
-}
+for (let key in REG_UN) REG[key] = new RegExp(REG_UN[key].split('|').map(item => item + '(?!¿)').join('|'), 'g')
 
 // 将 REG_UN 合并以做不匹配的标记
 REG_UN = new RegExp(Object.values(REG_UN).join('|'), 'g')
