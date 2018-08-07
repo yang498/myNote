@@ -1,7 +1,7 @@
 commonData.html.weex = {
 	content: `
 	#起步
-	
+
 	##介绍
 	使用 Weex 可以构建一个真正的原生应用，它不是一个 HTML5 库或开发框架，不是一套全新的技术，不是为了解决纯 native 开发的体验问题，不是一个以自身为中心的移动应用开发框架，而是一套简单易用的跨平台开发方案，能以 web 的开发体验构建高性能、可扩展的 native 应用，并遵循 W3C 标准实现了统一的 JSEngine 和 DOM API，打造三端一致的 native 应用。其工作架构如下所示：
 	!./img/html/weex02.jpg,600
@@ -9,10 +9,10 @@ commonData.html.weex = {
 	在客户端运行一个 JavaScript 引擎，随时接收 JavaScript 代码
 	在客户端设计一套 JS Bridge，让 native 代码可以和 JavaScript 引擎相互通信
 	Weex 在 iOS 中使用 JSCore ，在 Android 中使用 v8，因此都支持es5
-	!(./img/html/weex03.jpg,450)!(./img/html/weex04.png,450)
+	![./img/html/weex03.jpg,450]![./img/html/weex04.png,450]
 	Weex 的结构是解耦的，渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架。
 	在开发 Weex 页面就像开发普通网页一样；在渲染 Weex 页面时和渲染原生页面一样。
-	
+
 	##安装开发环境
 	安装 weex-toolkit 脚手架工具
 	使用npm安装：·npm install -g weex-toolkit·
@@ -24,13 +24,13 @@ commonData.html.weex = {
 	·sudo cnpm install -g weex-toolkit·
 	windows是不支持·sudo·的，卸载完直接用·npm install -g weex-toolkit·
 	如果还不行，直接删除npm和npm-cache目录下与weex相关的文件和目录
-	
+
 	##初始化
 	·weex init project-name·
 	或在建好的文件夹下直接·weex init·
 	通过·cnpm install·安装项目依赖
 	如果以后出现·cannot find module ...·这样的错误，可以试试删除node_modules重装依赖·cnpm install·
-	
+
 	##目录
 	!!
 	src/*：编写页面代码
@@ -49,7 +49,7 @@ commonData.html.weex = {
 	.babelrc：转es5配置
 	.eslintrc：.babelrc转换标准
 	!!
-	
+
 	##常用命令
 	!!
 	npm run dev：监听文件改动编译生成js文件，比如改动src/foo.vue后，自动编译到dist/app.web.js，让webpack.config.js 去控制文件的输入和输出，以及如何处理等
@@ -61,9 +61,9 @@ commonData.html.weex = {
 	weex compile src dist：打包指定目录，src为源文件目录，dist为打包目标目录，可以单文件打包weex compile src/foo.vue dist
 	weex platform add android/ios：用模拟器查看运行效果
 	!!
-	
+
 	#组件
-	
+
 	##目录
 	!!
 	text：文本容器
@@ -88,7 +88,7 @@ commonData.html.weex = {
 	waterfall：瀑布流布局的组件容器
 	web：网页容器
 	!!
-	
+
 	##image
 	·<image>·不支持background，只有background-color，src也不支持相对和本地路径，需用网络路径代替，resize属性在iOS上无效，需要设置好宽高，placeholder属性为，注意当源图片的src是个空字符串或不存在时不显示占位图
 	属性：
@@ -127,7 +127,7 @@ commonData.html.weex = {
 		naturalWidth{Number}：图片宽度，如果图片加载失败则为0
 		naturalHeight{Number}：图片高度，如果图片加载失败则为0
 	!!
-	
+
 	##refresh
 	下拉刷新，只能在scroller、list、waterfall中使用
 	###属性
@@ -153,11 +153,11 @@ commonData.html.weex = {
 				<text class="refresh-text">{{pullingBorder?'释放刷新':'下拉刷新'}}</text>
 			</div>
 		</refresh>
-		
+
 		<cell></cell>
 		...
 	</list>
-	
+
 	// script
 	data: {
 		refreshing: false,	// 是否显示下拉刷新
@@ -182,7 +182,7 @@ commonData.html.weex = {
 				this.refreshing = false
 			})
 	}
-	
+
 	// css
 	.refresh {
 		width: 750px;
@@ -215,10 +215,10 @@ commonData.html.weex = {
 		font-size: 32px;
 	}
 	··
-	
+
 	#模块
 	使用模块需要先引入，比如·const animation = weex.requireModule('animation')·
-	
+
 	##目录
 	!!
 	animation：过渡动画
@@ -234,7 +234,7 @@ commonData.html.weex = {
 	webSocket：客户端和服务器双向通信
 	webview：操作·<web>·网页的前进、后退、刷新、向当前页面发送数据
 	!!
-	
+
 	##animation
 	过渡动画：·animation.transition(el, options, callback)·
 	!!
@@ -266,7 +266,7 @@ commonData.html.weex = {
 	示例：
 	··
 	const animation = weex.requireModule('animation')
-	
+
 	animation.transition(this.$refs.xx, {
 		styles: {
 			color: '#f00',
@@ -280,7 +280,7 @@ commonData.html.weex = {
 		modal.toast({ message: 'animation finished' })
 	})
 	··
-	
+
 	##clipboard
 	获取或设置粘贴板的内容，注意仅支持文本拷贝，不支持 html5。
 	###API
@@ -293,13 +293,13 @@ commonData.html.weex = {
 	###示例
 	··
 	const clipboard = weex.requireModule('clipboard')
-	
+
 	clipboard.setString('来自clipboard')
 	clipboard.getString(res => {
 		this.message = 'text from clipboard:' + res.data
 	})
 	··
-	
+
 	##dom
 	###scrollToElement(ref, options)
 	滚动到相应节点，这个 API 只能用于可滚动组件的子节点，例如 <scroller>，<list> 等可滚动组件中。
@@ -311,7 +311,7 @@ commonData.html.weex = {
 	!!
 	··
 	const dom = weex.requireModule('dom')
-	
+
 	dom.scrollToElement(this.$refs.item10[0], { offset: 10 })
 	··
 	###getComponentRect(ref, callback)
@@ -339,30 +339,30 @@ commonData.html.weex = {
 		'src': "url('http://×at.alicdn.com/t/font_1469606063_76593.ttf')"
 	})
 	··
-	
+
 	##modal
 	··
 	const modal = weex.requireModule('modal')	//引入模块
-	
+
 	// 提示消息，在显示一段时间之后自动消失
 	modal.toast({
 		message{String}：'要提示的消息',
 		duration{Number}[3]: 持续的时间，以秒为单位，Android大于3秒会使用系统变量LONG，否则是SHORT
 	})
-	
+
 	// 提示警告框
 	modal.alert({
 		message{String}：'要提示的消息',
 		okTitle{String}[OK]：'确定按钮的文字'
 	}, callback{Function}：用户操作完成后的回调)
-	
+
 	// 确认框
 	modal.confirm({
 		message{String}：'要提示的消息',
 		okTitle{String}[OK]：'确定按钮的文字',
 		cancelTitle{String}[Cancel]：'取消按钮的文字'
 	}, callback{Function(res)}：用户操作完成后的回调，res为确定按钮上的文字)
-	
+
 	// 提示输入框
 	modal.prompt({
 		message{String}：'要提示的消息',
@@ -373,9 +373,9 @@ commonData.html.weex = {
 		data{String}：用户输入的信息
 	)
 	··
-	
+
 	##picker
-	
+
 	###pick(options, [callback])：单选
 	!!
 	options：样式参数
@@ -394,7 +394,7 @@ commonData.html.weex = {
 		result{String}：结果三种类型 success, cancel, error
 		data{Number}：选择的选项，仅成功确认时候存在
 	!!
-	
+
 	###pickDate(options, [callback])：日期选择
 	!!
 	options{Object}：选项参数
@@ -405,7 +405,7 @@ commonData.html.weex = {
 		result{String}：结果三种类型 success, cancel, error
 		data{String}：选择的值，格式为yyyy-MM-dd，仅成功确认的时候存在。
 	!!
-	
+
 	###pickTime(options, [callback])：时间选择
 	!!
 	options{Object}：选项参数
@@ -414,7 +414,7 @@ commonData.html.weex = {
 		result{String}：结果三种类型 success, cancel, error
 		data{String}：选择的值，格式为HH:mm，仅成功确认的时候存在。
 	!!
-	
+
 	##stream
 	网络请求：·stream.fetch(options, callback, [progressCallback])·
 	!!
@@ -443,7 +443,7 @@ commonData.html.weex = {
 	♭注意：♭
 	默认·Content-Type·是·application/x-www-form-urlencoded·，如果需要通过POST json，需设为·application/json·
 	如果url带有中文需先用·encodeURI()·或·encodeURIComponent()·进行转码
-	
+
 	#事件
 	!!
 	click：点击
@@ -481,7 +481,7 @@ commonData.html.weex = {
 		isRegisteredComponent: (moduleName: string, methodName: string) => boolean	// 检测某个特定的组件是否可用
 	}
 	··
-	
+
 	##weex.config
 	包含了当前 Weex 页面的所有环境信息
 	··
@@ -510,7 +510,7 @@ commonData.html.weex = {
 		weexVersion：0.9.4，weex sdk版本
 		scale：3.0，页面缩放比例
 	!!
-	
+
 	##weex.supports
 	Weex 的组件和模块都是可以注册和配置的，这样导致了在不同环境中组件和模块的支持情况不一样。就使用 weex.supports 接口在运行期检测某个功能在当前环境中是否可用。
 	使用格式为·weex.supports('@{type}/{name}')·
@@ -525,24 +525,24 @@ commonData.html.weex = {
 	// 检测某个组件是否可用：
 	weex.supports('@component/slider') // true
 	weex.supports('@component/my-tab') // false
-	
+
 	// 检测某个模块是否可用：
 	weex.supports('@module/stream')  // true
 	weex.supports('@module/abcdef')  // false
-	
+
 	// 检测某个模块是否包含某个方法：
 	weex.supports('@module/dom.getComponentRect') // true
 	weex.supports('@module/navigator.jumpToPage') // false
-	
+
 	// 无效的输入：
 	weex.supports('div') // null
 	weex.supports('module/*') // null
 	weex.supports('@stream/fetch') // null
 	weex.supports('getComponentRect') // null
 	··
-	
+
 	#常见问题
-	
+
 	##css
 	在 Weex 里， 每一个 Vue 组件的样式都是 scoped
 	&nbsp;
@@ -573,14 +573,14 @@ commonData.html.weex = {
 	ios设置flex-direction: row;子元素横排无效，需再加一层div
 	&nbsp;
 	给·<scroller>·和·<list>·加高度，ios没问题，在Android上大于屏幕会是100%
-	
+
 	##js
 	默认不会开启事件冒泡，需在每个template的最大父容器上添加·bubble="true"·属性
 	&nbsp;
 	目前在 Weex 里不支持事件冒泡和捕获，因此 Weex 原生组件不支持事件修饰符，例如.prevent，.capture，.stop，.self
 	&nbsp;
 	es6（暂时发现）：支持·let·, ·const·, ·=>·，对象属性同名简写，不支持·for of·循环
-	
+
 	##vue的不支持
 	!!
 	组件
@@ -592,7 +592,7 @@ commonData.html.weex = {
 		deactivated：不支持·<keep-alive>·
 	模板指令
 		v-html：Weex 中没有 HTML 解析器
-		v-show：不支持·display:none;·，
+		v-show：不支持·display:none;·
 		v-cloak：不支持·[attr]·选择器，只支持·.class·
 	实例方法
 		vm.$mount()：无需手动安装 Vue 实例
@@ -606,19 +606,19 @@ commonData.html.weex = {
 		Vue.config.performance：同 Vue.config.devtools
 		Vue.config.keyCodes：在移动端不需要
 	!!
-	
+
 	#动态性
-	
+
 	##说明
 	今天在移动端，尤其是像手机淘宝这样的 App 中，动态性问题逐渐成为一个比较棘手的问题。所谓动态性，就是把移动应用本身的灵活性、迭代更新的周期和成本优化到极致。比如手机淘宝的店铺首页，它允许商家实时装修自己的店铺，更新自家的商品、活动等信息；再比如淘宝、天猫每次大促的会场页面，要求我们非常灵活的及时调整界面信息和状态，确保在瞬息万变的活动当天紧跟促销节奏，应对各种突发情况。
 	所以我们不必要为这些动态性在多个端投入重复的精力，更不应该因此而频繁的触发新版本。所以动态性问题在今天的移动端显得尤其重要。
 	有时候可能只改了那么1、2行代码就想更新一个版本的代价也就比较高了，尤其iOS还有审核周期
-	
+
 	##解决方案
 	通过在线加载文件，比如在原生界面中嵌入 webview，React Native 在线加载 js 文件
 	这样只需修改在线文件即可修改页面
 	比如加载weex编译的js文件
-	
+
 	##工作模式
 	Weex的三种工作模式。
 	###全页模式
@@ -629,7 +629,7 @@ commonData.html.weex = {
 	在H5种使用Weex，类比WVC。一些较复杂或特殊的H5页面短期内无法完全转为Weex全页模式（或RN），比如互动类页面、一些复杂频道页等。这个痛点的解决办法是：在现有的H5页面上做微调，引入Native解决长列表内存暴增、滚动不流畅、动画/手势体验差等问题。
 	&nbsp;
 	另外，WVC将会融入到Weex中，成为Weex的H5 Components模式。
-	
+
 	@@!
 	weex官方文档|http://weex-project.io/cn/guide/index.html
 	weex playground：Weex Native 运行时实例 & Weex 文件预览工具|http://weex-project.io/cn/tools/playground.html

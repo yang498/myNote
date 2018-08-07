@@ -13,6 +13,7 @@
 
 	common-data.js：所有文档用一个commonData对象变量作为容器，一级菜单作为子属性预先定义好，二级菜单在各自的文件内定义作为二级子属性，可选择定义name属性作为展示的名称，否则就用该二级属性名
 	data*.js：一个文档为js文件作为二级菜单，新添加的js注意在index.html引入
+	regexp.js：解析文档用到的正则
 	format-html.js：解析文档
 	index.html：用vue的数据响应做成单页模式，自定义路径达到切换页面的效果
 	common.js：
@@ -23,14 +24,14 @@
 #匹配规则：format-html.js
 	标题：以#开头，h1：#，h2：##，h3：###
 	图片：以!开头，!src,width,height
-	行内图片：¡(src,width,height)
+	行内图片：![src,width,height]
 	链接：@[text|href]
 	底部相关参考链接：
 		@@（加 ! 表示多行）
 		text|href
 		@@
 	加粗：^^text^^
-	列表：‖text‖
+	列表：!!text!!
 	行内代码：·code·
 	代码块:··code··，和替换的‥
 	表格：
@@ -39,8 +40,8 @@
 		,0,1,800	居中为0或空，左对齐为1，最后为宽
 		1,2,3
 		%%
-	time:&number
-	
-	字符串内的链接是网络路径，在//后加×可取消注释
-	页内标题点击(右中括号后面接¿不会被解析)：@[注意|javascript:;" onclick="$('h1:eq(1)~h2:eq(0)').click()]
-	如果包含多个 3 级标题，在 2 级标题开头用列表说明
+	最后更新时间:&number
+
+	Tips：
+		页内标题点击(右中括号后面接¿不会被解析)：@[注意|javascript:;" onclick="$('h1:eq(1)~h2:eq(0)').click()]
+		如果包含多个 3 级标题，在 2 级标题开头用列表说明

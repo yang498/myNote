@@ -5,9 +5,9 @@ let REG_UN = {
 	// 开头声明，粉
 	statement: 'var|let|const|void|function|=&gt;|new|class\s|constructor|super|static|import|export|default',
 	// 循环分支，青
-	loopFork: 'for| in |of|while|\sdo|if\s|else|switch|case|break|continue|try|catch|finally|with',
+	loopFork: 'for | in |of\s|while|\sdo|if |else|switch|case|break|continue|try|catch|finally|with',
 	// 方法关键字，蓝
-	methodKeyword: 'return|delete|typeof|require|throw|eval|instanceof|debugger|this|length',
+	methodKeyword: 'return|delete|typeof|require\s|throw|eval|instanceof|debugger|this|length',
 	// 类型方法，紫
 	type: 'window|document|console|true|false|undefined|null|Object|Array|Boolean|String|Number|Math|Date|RegExp|Error|JSON'
 }
@@ -63,9 +63,9 @@ REG.h1 = /^#/
 REG.h2 = /^##/
 REG.h3 = /^###/
 // 图片
-REG.img = /^!([^,\(]*),?(\d*),?(\d*)/
+REG.img = /^!(?!!)([^,\(]*),?(\d*),?(\d*)/
 // 行内图片
-REG.imgInline = /!\(([^,]*),?(\d*),?(\d*)\)/g
+REG.imgInline = /!\[([^,]*),?(\d*),?(\d*)\]/g
 // 图片和行内图片的处理方式是一样的，就放到一个方法里面
 REG.imgFn = (item, reg) => item.replace(reg, (res, $1, $2, $3) => {
 	return `<img src="${$1}" ${$2 ? `style="width:${$2}px;${$3 ? `height:${$3}px;` : ''}"` : ''}/>`
@@ -74,6 +74,7 @@ REG.imgFn = (item, reg) => item.replace(reg, (res, $1, $2, $3) => {
 REG.multiLine = /\n([^]*?(?=\n))/g
 // 列表
 REG.list = /!!(?=\n)[^]*?!!(?=\n)/g
+REG.listTag = /^!!|!!$/g
 // 底部链接，单行
 REG.linkOneLine = /@@(?=\n)[^]*?@@(?=\n)/g
 // 底部链接，多行
@@ -82,3 +83,5 @@ REG.linkMultiLine = /@@!(?=\n)[^]*?@@(?=\n)/g
 REG.linkInside = /(\s*)([^]*)\|([^]*)/g
 // 底部链接，标签
 REG.link = /^@@|@@$/g
+// 最后更新时间
+REG.time = /^&(?=2)/
