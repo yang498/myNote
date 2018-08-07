@@ -5,24 +5,24 @@ commonData.other.english = {
 	##时钟
 	
 	###整点
-	♭基数词 + o'clock♭，也可以省略·o'clock·
+	^^基数词 + o'clock^^，也可以省略·o'clock·
 	例如：·eight o'clock·：8点，·ten·：10点
 	特定：·noon·：中午12点，·midnight·：半夜0点
 	
 	###时+分
-	♭直接读数字♭
+	^^直接读数字^^
 	例如：·six forty·：06:40
 	&nbsp;
-	♭分钟数少于等于30分钟用分 + past + 时♭，其中·past·是介词，意思是“过”
+	^^分钟数少于等于30分钟用分 + past + 时^^，其中·past·是介词，意思是“过”
 	例如：·twenty past four·：04:20
 	&nbsp;
-	♭分钟数多于30分钟用（60-分钟）+ to +（小时+1）♭，其中·to·是介词，意思是“差”
+	^^分钟数多于30分钟用（60-分钟）+ to +（小时+1）^^，其中·to·是介词，意思是“差”
 	例如：·twenty-five to nine·：08:35，差25分钟九点
 	&nbsp;
-	♭分钟数是30分钟可用 half（一半）♭
+	^^分钟数是30分钟可用 half（一半）^^
 	例如：·half past nine·：09:30
 	&nbsp;
-	♭分钟数是15分钟可用 a quarter（一刻钟，四分之一）♭
+	^^分钟数是15分钟可用 a quarter（一刻钟，四分之一）^^
 	例如：·a quarter past twelve·：12:15
 	
 	###上下午

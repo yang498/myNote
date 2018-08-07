@@ -235,13 +235,13 @@ article {
     b {
         font-weight: bold;
     }
-    .img {
+    img {
         width: 100%;
         max-width: 1000px;
         margin: 5px 0 5px 2em;
-    }
-    .img-inline {
-        margin: 0 5px;
+		.inline {
+			margin: 0 5px;
+		}
     }
     ul {
         width: 100%;
@@ -312,6 +312,7 @@ article {
         padding-top: 20px;
         border-top: 1px dashed #999;
         .pd {
+			display: block;
             margin-left: 2em;
         }
     }
@@ -393,21 +394,6 @@ article {
     }
     pre .copy:active {
         color: #25A5F7;
-    }
-    .code-keyword-out {
-        color: #f08;
-    }
-    .code-keyword-in {
-        color: #08f;
-    }
-    .code-string, .code-string .code-keyword-in {
-        color: #0c0;
-    }
-    .code-comment {
-        color: #aaa;
-    }
-    .code-reg {
-        color: #f80;
     }
 }
 

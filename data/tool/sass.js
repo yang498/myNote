@@ -50,7 +50,8 @@ commonData.tool.sass = {
 
 	##安装
 	###ruby
-	因为 sass 依赖于 ruby 环境，先在@(官网下载|https://rubyinstaller.org/downloads)安装 ruby 环境，注意安装时勾选 Add Ruby executables to your PATH 这个选项以添加环境变量
+	因为 sass 依赖于 ruby 环境来编译，先在@[官网下载|https://rubyinstaller.org/downloads]安装 ruby 环境，注意安装时勾选 Add Ruby executables to your PATH 这个选项以添加环境变量
+	也可以使用其他的方式编译，比如 gulp、webpack 等，甚至一些编辑器比如 webstorm 都能自动编译
 	###sass
 	安装完毕后在开始菜单栏找到 Ruby 文件，打开 Start Command Prompt with Ruby，在命令行中输入：
 	··
@@ -70,7 +71,6 @@ commonData.tool.sass = {
 	··
 
 	##指令
-	这里是使用 sass 的命令，也可以使用其他的方式，比如 gulp、webpack 等，甚至一些编辑器比如 webstorm 都能自动编译
 	##编译模式
 	写法：·scss --watch scss:css --style 编译模式·
 	现有如下 scss：

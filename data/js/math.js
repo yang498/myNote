@@ -7,11 +7,11 @@ commonData.js.math = {
 	const getRandomInt = (min, max) => max ? Math.floor(Math.random() * (max - min + 1)) + min : getRandomInt(0, min)
 	
 	// 如果有指定长度的参数就返回指定长度的随机字符串，不指定就返回随机16-32位
-	const nonceStr = length => {
-		length = length >= 16 ? length : getRandomInt(16, 32)
+	const nonceStr = len => {
+		len = len >= 16 ? len : getRandomInt(16, 32)
 		let str = ''
 		const nonce = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-		for (let i = 0; i < length; i++) str += nonce[getRandomInt(nonce.length - 1)]
+		for (let i = 0; i < len; i++) str += nonce[getRandomInt(nonce.length - 1)]
 		return str
 	}
 	··

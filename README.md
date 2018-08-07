@@ -24,12 +24,12 @@
 	标题：以#开头，h1：#，h2：##，h3：###
 	图片：以!开头，!src,width,height
 	行内图片：¡(src,width,height)
-	链接：α(text|href)
+	链接：@[text|href]
 	底部相关参考链接：
-		αα
-		textαhref
-		αα
-	加粗：♭text♭
+		@@（加 ! 表示多行）
+		text|href
+		@@
+	加粗：^^text^^
 	列表：‖text‖
 	行内代码：·code·
 	代码块:··code··，和替换的‥
@@ -42,5 +42,5 @@
 	time:&number
 	
 	字符串内的链接是网络路径，在//后加×可取消注释
-	页内标题点击：α(注意|javascript:;" onclick="$('h1:eq(1)×~h2:eq(0)×')×.click()×)
+	页内标题点击(右中括号后面接¿不会被解析)：@[注意|javascript:;" onclick="$('h1:eq(1)~h2:eq(0)').click()]
 	如果包含多个 3 级标题，在 2 级标题开头用列表说明

@@ -521,11 +521,11 @@ commonData.tool.gulp = {
 	##啃得起全家桶
 	综合以上：
 
-	αα
-	gulp中文网-文档αhttps://www.gulpjs.com.cn/docs/getting-started/
-	博客园-无双αhttp://www.cnblogs.com/2050/p/4198792.html
-	npm-所有gulp插件αhttps://www.npmjs.com/search?q=keywords:gulpplugin
-	αα
+	@@
+	gulp中文网-文档|https://www.gulpjs.com.cn/docs/getting-started/
+	博客园-无双|http://www.cnblogs.com/2050/p/4198792.html
+	npm-所有gulp插件|https://www.npmjs.com/search?q=keywords:gulpplugin
+	@@
 
 	&2018.4.12
 	`

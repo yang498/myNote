@@ -9,7 +9,7 @@ commonData.html.weex = {
 	在客户端运行一个 JavaScript 引擎，随时接收 JavaScript 代码
 	在客户端设计一套 JS Bridge，让 native 代码可以和 JavaScript 引擎相互通信
 	Weex 在 iOS 中使用 JSCore ，在 Android 中使用 v8，因此都支持es5
-	¡(./img/html/weex03.jpg,450)¡(./img/html/weex04.png,450)
+	!(./img/html/weex03.jpg,450)!(./img/html/weex04.png,450)
 	Weex 的结构是解耦的，渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架。
 	在开发 Weex 页面就像开发普通网页一样；在渲染 Weex 页面时和渲染原生页面一样。
 	
@@ -32,7 +32,7 @@ commonData.html.weex = {
 	如果以后出现·cannot find module ...·这样的错误，可以试试删除node_modules重装依赖·cnpm install·
 	
 	##目录
-	‖
+	!!
 	src/*：编写页面代码
 	dist/*：生成的js文件
 	app.js：weex页面的入口
@@ -48,10 +48,10 @@ commonData.html.weex = {
 		phantom-limb.js：鼠标模拟touch
 	.babelrc：转es5配置
 	.eslintrc：.babelrc转换标准
-	‖
+	!!
 	
 	##常用命令
-	‖
+	!!
 	npm run dev：监听文件改动编译生成js文件，比如改动src/foo.vue后，自动编译到dist/app.web.js，让webpack.config.js 去控制文件的输入和输出，以及如何处理等
 	npm run serve：开启服务查看页面，在http://localhost:8080/index.html可查看
 	npm run build：打包
@@ -60,12 +60,12 @@ commonData.html.weex = {
 	weex debug：调试，也可调试单文件weex debug foo.vue
 	weex compile src dist：打包指定目录，src为源文件目录，dist为打包目标目录，可以单文件打包weex compile src/foo.vue dist
 	weex platform add android/ios：用模拟器查看运行效果
-	‖
+	!!
 	
 	#组件
 	
 	##目录
-	‖
+	!!
 	text：文本容器
 	a：链接，注意不能在里面直接添加文本，需用text标签包裹
 	div：容器，不能直接添加文本，里面用text标签包裹，超出会隐藏
@@ -87,23 +87,23 @@ commonData.html.weex = {
 	video：视频
 	waterfall：瀑布流布局的组件容器
 	web：网页容器
-	‖
+	!!
 	
 	##image
 	·<image>·不支持background，只有background-color，src也不支持相对和本地路径，需用网络路径代替，resize属性在iOS上无效，需要设置好宽高，placeholder属性为，注意当源图片的src是个空字符串或不存在时不显示占位图
 	属性：
-	‖
+	!!
 	placeholder{String}：URL、Base64，在图片下载中时显示一张占位图，当加载后会被删除
 	resize{String}[stretch]：显示模式，可选cover（完全覆盖）、contain（完全显示）、stretch（拉伸覆盖）
-	‖
+	!!
 	###模块方法
 	save：保存图片内容到本地文件或相册，此操作可能需要设备相关权限
-	‖
+	!!
 	callback{Function}：在图片被写入到本地文件或相册后的回调
 		result{Object}：回调结果对象，属性列表
 			success{Boolean}：标记图片是否已写入完成
 			errorDesc{String}：如果图像没有成功写入，该字符串包含了详细的错误描述
-	‖
+	!!
 	示例：
 	··
 	<image ref="poster" src="path/to/image.png"/>
@@ -121,28 +121,28 @@ commonData.html.weex = {
 	###事件
 	load：当加载完成 src 指定的图片时触发
 	事件对象：
-	‖
+	!!
 	success{Boolean}：标记图片是否成功加载
 	size{Object}：加载的图片大小对象
 		naturalWidth{Number}：图片宽度，如果图片加载失败则为0
 		naturalHeight{Number}：图片高度，如果图片加载失败则为0
-	‖
+	!!
 	
 	##refresh
 	下拉刷新，只能在scroller、list、waterfall中使用
 	###属性
-	‖
+	!!
 	display{String}[show]：控制组件的显示隐藏，可选show、hide
-	‖
+	!!
 	事件：
-	‖
+	!!
 	refresh：下拉完时触发，即手松开的时候
 	pullingdown：被下拉时触发，即手移动的时候，事件参数对象属性如下
 		dy: 前后两次回调滑动距离的差值
 		pullingDistance: 下拉的距离
 		viewHeight: refresh 组件高度
 		type: “pullingdown” 常数字符串
-	‖
+	!!
 	###示例
 	··
 	<list>
@@ -220,7 +220,7 @@ commonData.html.weex = {
 	使用模块需要先引入，比如·const animation = weex.requireModule('animation')·
 	
 	##目录
-	‖
+	!!
 	animation：过渡动画
 	clipboard：获取或设置粘贴板的内容
 	dom：滚动节点到某个位置，获取节点信息，添加字体规则
@@ -233,11 +233,11 @@ commonData.html.weex = {
 	stream：网络请求
 	webSocket：客户端和服务器双向通信
 	webview：操作·<web>·网页的前进、后退、刷新、向当前页面发送数据
-	‖
+	!!
 	
 	##animation
 	过渡动画：·animation.transition(el, options, callback)·
-	‖
+	!!
 	el：将要执行动画的元素，通过设置ref属性和this.$refs调用
 	options：参数
 		styles：动画样式
@@ -260,9 +260,9 @@ commonData.html.weex = {
 			ease-in：由慢到快
 			ease-out：由快到慢
 			ease-in-out：由慢到快，到中间点再由快到慢
-			cubic-bezier(x1, y1, x2, y2)：自定义α(贝塞尔|http://cubic-bezier.com/)值
+			cubic-bezier(x1, y1, x2, y2)：自定义@[贝塞尔|http://cubic-bezier.com/]值
 	callback：动画执行完毕之后的回调函数。在iOS上可以获取动画执行是否成功的信息，Android木有
-	‖
+	!!
 	示例：
 	··
 	const animation = weex.requireModule('animation')
@@ -284,12 +284,12 @@ commonData.html.weex = {
 	##clipboard
 	获取或设置粘贴板的内容，注意仅支持文本拷贝，不支持 html5。
 	###API
-	‖
+	!!
 	getString(callback(res))：获取粘贴板的内容
 		res.data：获取到的文本内容
 		res.result：返回状态，可能为 success 或 fail
 	setString(text)：将一段文本复制到剪切板，相当于手动复制文本
-	‖
+	!!
 	###示例
 	··
 	const clipboard = weex.requireModule('clipboard')
@@ -303,12 +303,12 @@ commonData.html.weex = {
 	##dom
 	###scrollToElement(ref, options)
 	滚动到相应节点，这个 API 只能用于可滚动组件的子节点，例如 <scroller>，<list> 等可滚动组件中。
-	‖
+	!!
 	ref{Node}：要滚动的节点
 	options{Object}:
 		offset{Number}[0]: 一个到其可见位置的偏移距离
 		animated{Boolean}[true]：是否需要附带滚动动画
-	‖
+	!!
 	··
 	const dom = weex.requireModule('dom')
 	
@@ -377,7 +377,7 @@ commonData.html.weex = {
 	##picker
 	
 	###pick(options, [callback])：单选
-	‖
+	!!
 	options：样式参数
 		items{Array}：数据源
 		index{Number}：默认选中的选项
@@ -393,10 +393,10 @@ commonData.html.weex = {
 	callback{Function(res{Object})}：选择完的回调函数。res参数属性如下
 		result{String}：结果三种类型 success, cancel, error
 		data{Number}：选择的选项，仅成功确认时候存在
-	‖
+	!!
 	
 	###pickDate(options, [callback])：日期选择
-	‖
+	!!
 	options{Object}：选项参数
 		value{String}：必填，默认选中的选项，时间格式为yyyy-MM-dd
 		max{String}：可选，date 的最大值
@@ -404,20 +404,20 @@ commonData.html.weex = {
 	callback{Function(ret{Object})}：选择完的回调函数。res参数属性如下
 		result{String}：结果三种类型 success, cancel, error
 		data{String}：选择的值，格式为yyyy-MM-dd，仅成功确认的时候存在。
-	‖
+	!!
 	
 	###pickTime(options, [callback])：时间选择
-	‖
+	!!
 	options{Object}：选项参数
 		value{String}：必填，默认选中的选项，时间格式为HH:mm
 	callback{Function(ret{Object})}：选择完的回调函数。res参数属性如下
 		result{String}：结果三种类型 success, cancel, error
 		data{String}：选择的值，格式为HH:mm，仅成功确认的时候存在。
-	‖
+	!!
 	
 	##stream
 	网络请求：·stream.fetch(options, callback, [progressCallback])·
-	‖
+	!!
 	options{Object}：请求的选项
 		method{String}：GET/POST，GET请求不支持body方式传递参数，需使用url传参
 		url{String}：请求的URL
@@ -439,13 +439,13 @@ commonData.html.weex = {
 		length{Number}：已经接受到的数据长度，可以从响应头中获取总长度
 		statusText{String}：状态文本
 		headers{Object}：响应头
-	‖
+	!!
 	♭注意：♭
 	默认·Content-Type·是·application/x-www-form-urlencoded·，如果需要通过POST json，需设为·application/json·
 	如果url带有中文需先用·encodeURI()·或·encodeURIComponent()·进行转码
 	
 	#事件
-	‖
+	!!
 	click：点击
 	longpress：长按
 	swipe：轻扫，根据 type 可判断方向
@@ -463,7 +463,7 @@ commonData.html.weex = {
 	panend：拖动结束
 	horizontalpan：水平拖动
 	verticalpan：垂直拖动
-	‖
+	!!
 	注意：在scroller, list，webview滚动容器上有些可能无效
 
 
@@ -494,7 +494,7 @@ commonData.html.weex = {
 	通过调用·this.$getConfig()·也能获取同样的信息：·weex.config === this.$getConfig()·
 	还提供了全局环境变量WXEnvironment：·weex.config.env === WXEnvironment·
 	比如返回：
-	‖
+	!!
 	bundleUrl：xxx.js，当前页面js的url
 	bundleType：当前页面的开发框架，可以是 "Vue" 或者 "Rax"
 	env：环境对象
@@ -509,7 +509,7 @@ commonData.html.weex = {
 		osVersion：5.1，系统版本
 		weexVersion：0.9.4，weex sdk版本
 		scale：3.0，页面缩放比例
-	‖
+	!!
 	
 	##weex.supports
 	Weex 的组件和模块都是可以注册和配置的，这样导致了在不同环境中组件和模块的支持情况不一样。就使用 weex.supports 接口在运行期检测某个功能在当前环境中是否可用。
@@ -582,7 +582,7 @@ commonData.html.weex = {
 	es6（暂时发现）：支持·let·, ·const·, ·=>·，对象属性同名简写，不支持·for of·循环
 	
 	##vue的不支持
-	‖
+	!!
 	组件
 		transition：在移动端 enter 与 leave 的概念可能有点不同，并且 Weex 不支持·display: none;·
 		transition-group：同 transition
@@ -597,7 +597,7 @@ commonData.html.weex = {
 	实例方法
 		vm.$mount()：无需手动安装 Vue 实例
 	选项
-		template：Weex 用的是 α(只包含运行时构建|https://cn.vuejs.org/v2/guide/installation.html#%E8%BF%90%E8%A1%8C%E6%97%B6-%E7%BC%96%E8%AF%91%E5%99%A8-vs-%E5%8F%AA%E5%8C%85%E5%90%AB%E8%BF%90%E8%A1%8C%E6%97%B6)
+		template：Weex 用的是 @[只包含运行时构建|https://cn.vuejs.org/v2/guide/installation.html#%E8%BF%90%E8%A1%8C%E6%97%B6-%E7%BC%96%E8%AF%91%E5%99%A8-vs-%E5%8F%AA%E5%8C%85%E5%90%AB%E8%BF%90%E8%A1%8C%E6%97%B6]
 		comments
 	全局API
 		Vue.compile：同 template
@@ -605,7 +605,7 @@ commonData.html.weex = {
 		Vue.config.devtools：只在 Web 环境下支持
 		Vue.config.performance：同 Vue.config.devtools
 		Vue.config.keyCodes：在移动端不需要
-	‖
+	!!
 	
 	#动态性
 	
@@ -630,38 +630,23 @@ commonData.html.weex = {
 	&nbsp;
 	另外，WVC将会融入到Weex中，成为Weex的H5 Components模式。
 	
-	αα
-	
-	weex官方文档αhttp://weex-project.io/cn/guide/index.html
-	
-	weex playground：Weex Native 运行时实例 & Weex 文件预览工具αhttp://weex-project.io/cn/tools/playground.html
-	
-	淘宝 NPM 镜像的 weex 扩展组件αhttps://npm.taobao.org/package/weex-components
-	
-	weex功能扩展 - 马伟奇的简书αhttps://www.jianshu.com/p/88ebcdc21d66
-	
-	weex学院：疑难解答、demoαhttps://www.weexdaxue.com
-	
-	github - weex相关插件αhttps://github.com/weex-plugins
-	
-	github - joggerplus/awesome-weex：教程、文章、工具、demoαhttps://github.com/joggerplus/awesome-weex
-	
-	github - vczero/weex-learning：Weex 学习/实践指南αhttps://github.com/vczero/weex-learning
-	
-	demo：Weex 300行代码开发一款简易的跑步Appαhttps://segmentfault.com/a/1190000008901154
-	
-	demo：Weex开发之路（二） - 完成一个ToDoList项目αhttp://ios.jobbole.com/91773/
-	
-	UI库 - Weex UIαhttps://alibaba.github.io/weex-ui/#/
-	
-	UI库 - BUI-Weexαhttp://dev.bingocc.com/buiweex/
-	
-	weex封装扩展 - BindingXαhttps://alibaba.github.io/bindingx/
-	
-	weex封装扩展 - erosαhttps://bmfe.github.io/eros-docs/#/
-	
-	weex封装扩展 - Natαhttp://natjs.com/#/zh-cn/
-	αα
+	@@!
+	weex官方文档|http://weex-project.io/cn/guide/index.html
+	weex playground：Weex Native 运行时实例 & Weex 文件预览工具|http://weex-project.io/cn/tools/playground.html
+	淘宝 NPM 镜像的 weex 扩展组件|https://npm.taobao.org/package/weex-components
+	weex功能扩展 - 马伟奇的简书|https://www.jianshu.com/p/88ebcdc21d66
+	weex学院：疑难解答、demo|https://www.weexdaxue.com
+	github - weex相关插件|https://github.com/weex-plugins
+	github - joggerplus/awesome-weex：教程、文章、工具、demo|https://github.com/joggerplus/awesome-weex
+	github - vczero/weex-learning：Weex 学习/实践指南|https://github.com/vczero/weex-learning
+	demo：Weex 300行代码开发一款简易的跑步App|https://segmentfault.com/a/1190000008901154
+	demo：Weex开发之路（二） - 完成一个ToDoList项目|http://ios.jobbole.com/91773/
+	UI库 - Weex UI|https://alibaba.github.io/weex-ui/#/
+	UI库 - BUI-Weex|http://dev.bingocc.com/buiweex/
+	weex封装扩展 - BindingX|https://alibaba.github.io/bindingx/
+	weex封装扩展 - eros|https://bmfe.github.io/eros-docs/#/
+	weex封装扩展 - Nat|http://natjs.com/#/zh-cn/
+	@@
 
 	&2018.7.5
 	`
