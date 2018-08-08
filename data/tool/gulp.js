@@ -6,7 +6,7 @@ commonData.tool.gulp = {
 	gulp是个前端构建工具，它充分借鉴了unix操作系统的管道（pipe）思想，在操作上要比同类型的grunt简单一点
 
 	##安装
-	gulp基于node，关于node安装请转至α(node|#js/node)
+	gulp基于node，关于node安装请转至@[node|#js/node]
 	gulp需要全局安装，打开cmd，执行：
 	··
 	cnpm install -g gulp
@@ -22,7 +22,7 @@ commonData.tool.gulp = {
 	package.json是项目必不可少的配置文件，它是存放在项目根目录的普通json文件
 	创建该文件在根目录下打开cmd执行命令：·npm init·
 	然后按提示依次输入命令回车
-	‖
+	!!
 	name[demo]：项目名称
 	version[1.0.0]：版本号
 	description：项目描述
@@ -32,7 +32,7 @@ commonData.tool.gulp = {
 	keywords：关键描述
 	author：作者
 	license[ISC]：许可协议
-	‖
+	!!
 	就会有package.json文件的预览，·Is this ok? (yes)·输入y回车即可
 	如果嫌麻烦的话直接不输入全都回车也行，反正在package.json里面可以再改嘛
 	当然如果之前其他项目有package.json文件的话可以直接复制过来再改也可以
@@ -67,13 +67,13 @@ commonData.tool.gulp = {
 	gulp.src(globs[, options])：匹配文件
 	globs：文件匹配模式（类似正则表达式），用来匹配文件路径包括文件名，也可以直接指定某个具体的文件路径。当有多个匹配模式时，该参数可以为一个数组
 	options：可选参数，通常情况下不需要用到
-	‖
+	!!
 	options：{
 		base{String}：默认值为基础路径，gulp.dest()会介绍
 		buffer{Boolean}[true]：设置为 false 将会以 stream 方式返回 file.contents 而不是文件 buffer 的形式，这在处理一些大文件的时候将会很有用
 		read{Boolean}[true]：设置为 false 那么 file.contents 会返回空值（null），也就是并不会去读取文件
 	}
-	‖
+	!!
 	gulp内部使用了node-glob模块来实现其文件匹配功能，可以使用下面这些特殊的字符来匹配我们想要的文件：
 	·*·：匹配文件路径中的0个或多个字符，但不会匹配路径分隔符，除非路径分隔符出现在末尾
 	·**·：匹配路径中的0个或多个目录及其子目录，需要单独出现，即它左右不能有其他东西了。如果出现在末尾，也能匹配文件。
@@ -121,14 +121,14 @@ commonData.tool.gulp = {
 	··
 	gulp的使用流程一般是这样子的：
 	&nbsp;&nbsp;&nbsp;&nbsp;首先通过·gulp.src()·方法获取到要处理的文件流，然后把文件流通过·pipe()·方法导入到gulp的插件中，最后把经过插件处理后的流再通过·pipe()·方法导入到·gulp.dest()·中，·gulp.dest()·方法则把流中的内容写入到文件中
-	&nbsp;&nbsp;&nbsp;&nbsp;给·gulp.dest()·传入的路径参数，只能用来指定要生成的文件的♭目录♭，而不能指定生成文件的♭文件名♭，它生成文件的文件名使用的是导入到它的文件流自身的文件名，所以♭生成的文件名是由导入到它的文件流决定♭的，即使给它♭传入带有文件名♭的路径参数，然后它也会把这个文件名♭当做是目录名♭，若输出的文件不存在将会自动创建，有则覆盖，例如：
+	&nbsp;&nbsp;&nbsp;&nbsp;给·gulp.dest()·传入的路径参数，只能用来指定要生成的文件的^^目录^^，而不能指定生成文件的^^文件名^^，它生成文件的文件名使用的是导入到它的文件流自身的文件名，所以^^生成的文件名是由导入到它的文件流决定^^的，即使给它^^传入带有文件名^^的路径参数，然后它也会把这个文件名^^当做是目录名^^，若输出的文件不存在将会自动创建，有则覆盖，例如：
 	··
 	var gulp = require('gulp')
 	gulp.src('js/juery.js')
 		.pipe(gulp.dest('dist/juery.min.js'))
 	// 最终生成的文件路径为 dist/juery.min.js/jquery.js，而不是dist/juery.min.js
 	··
-	·gulp.dest(path)·生成的文件路径是传入的♭path♭参数后面再加上·gulp.src()·中有通配符开始出现的那部分路径。例如：
+	·gulp.dest(path)·生成的文件路径是传入的^^path^^参数后面再加上·gulp.src()·中有通配符开始出现的那部分路径。例如：
 	··
 	var gulp = reruire('gulp');
 

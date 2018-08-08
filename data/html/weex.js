@@ -440,7 +440,7 @@ commonData.html.weex = {
 		statusText{String}：状态文本
 		headers{Object}：响应头
 	!!
-	♭注意：♭
+	^^注意：^^
 	默认·Content-Type·是·application/x-www-form-urlencoded·，如果需要通过POST json，需设为·application/json·
 	如果url带有中文需先用·encodeURI()·或·encodeURIComponent()·进行转码
 
@@ -516,11 +516,11 @@ commonData.html.weex = {
 	使用格式为·weex.supports('@{type}/{name}')·
 	type 必须是 "component" 和 "module" 之一
 	name 可以是标签名、模块名，也可以指定模块中的某个方法名（和模块名用·.·隔开）
-	♭返回值：♭
+	^^返回值：^^
 	支持该特性返回·true·。
 	不支持该特性返回·false·。
 	参数格式错误或无法确定是否支持返回·null·。
-	♭示例：♭
+	^^示例：^^
 	··
 	// 检测某个组件是否可用：
 	weex.supports('@component/slider') // true

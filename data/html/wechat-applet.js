@@ -4,15 +4,15 @@ commonData.html.wechatApplet = {
 	#介绍
 	
 	##起步
-	开发小程序的第一步，你需要α(注册|https://mp.weixin.qq.com/wxopen/waregister?action=step1)一个小程序帐号，通过这个帐号你就可以管理你的小程序。
-	登录α(小程序平台|https://mp.weixin.qq.com)，在菜单 “设置”-“开发设置” 看到小程序的·AppID·了 。
+	开发小程序的第一步，你需要@[注册|https://mp.weixin.qq.com/wxopen/waregister?action=step1]一个小程序帐号，通过这个帐号你就可以管理你的小程序。
+	登录@[小程序平台|https://mp.weixin.qq.com]，在菜单 “设置”-“开发设置” 看到小程序的·AppID·了 。
 	小程序的·AppID·相当于小程序平台的一个身份证，后续你会在很多地方要用到 AppID (注意这里要区别于服务号或订阅号的 AppID)。
-	有了小程序帐号之后，就需要α(下载微信开发者工具|https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=201861)来开发小程序。
+	有了小程序帐号之后，就需要@[下载微信开发者工具|https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=201861]来开发小程序。
 	
 	##用户身份
 	一个团队进行小程序的开发，那么团队成员的身份管理是很有必要的。
 	管理员可在小程序管理后台统一管理项目成员（包括开发者、体验者及其他成员）、设置项目成员的权限，包括：开发者/体验者权限、登录小程序管理后台、开发管理、查看小程序数据分析等。	管理入口位于：用户身份 – 成员管理。权限说明：
-	‖
+	!!
 	开发者权限：可使用小程序开发者工具及开发版小程序进行开发
 	体验者权限：可使用体验版小程序
 	登录：可登录小程序管理后台，无需管理员确认
@@ -20,24 +20,24 @@ commonData.html.wechatApplet = {
 	开发管理：小程序提交审核、发布、回退
 	开发设置：设置小程序服务器域名、消息推送及扫描普通链接二维码打开小程序
 	暂停服务设置：暂停小程序线上服务
-	‖
+	!!
 	
 	##小程序的版本
-	‖
+	!!
 	开发版本：使用开发者工具上传的最新版本代码。开发版本可删除，不影响线上版本和审核中版本的代码。
 	审核中版本：只能有一份代码处于审核中。有审核结果后可以发布到线上，也可直接重新提交审核，覆盖原审核版本。
 	线上版本：线上所有用户使用的代码版本，该版本代码在新版本代码发布后被覆盖更新。
-	‖
+	!!
 	
 	##公众号关联小程序
 	公众号关联小程序后，将可在图文消息、自定义菜单、模板消息等功能中使用小程序。
 	关联规则：
-	‖
+	!!
 	所有公众号都可以关联小程序。
 	一个公众号可关联10个同主体的小程序，3个不同主体的小程序。
 	一个小程序可关联500个公众号。
 	公众号一个月可新增关联小程序13次，小程序一个月可新增关联500次。
-	‖
+	!!
 	关联流程：登录公众号后台-小程序-小程序管理-添加-关联小程序
 	
 	##客服
@@ -56,57 +56,57 @@ commonData.html.wechatApplet = {
 	二维码链接内容会以参数q的形式带给页面，在onLoad事件中提取"q"参数并自行UrlDecode一次，即可获取原二维码的完整内容
 	
 	##常见问题
-	‖
+	!!
 	小程序代码包大小限制为 10M
 	·background-image·不能使用本地图片，可用网络图片，或者 base64，或者使用·<image/>·标签
 	·this.setData·的·key·不用·this.data·，可用中括号·[]·表示变量
 	获取输入框中的内容可以使用·bindblur·失去焦点时触发获取
 	在Page之外声明的变量并不会在页面返回到上一级之后销毁，也就是不会重置，当然作用域还是在当前页面有效
-	‖
+	!!
 	
 	##相关小程序
-	‖
+	!!
 	小程序示例：展示官方demo
 	小程序开发助手：展示开发过的小程序、成员预览时间、小程序更新前后大小
 	小程序数据助手：展示用户的流量数据
 	小游戏数据助手：展示小游戏的流量数据
 	公众平台助手：管理公众号的消息留言通知、流量数据
-	‖
+	!!
 	
 	#框架
 	
 	##文件结构
 	小程序包含一个描述整体程序的 app 和多个描述各自页面的 page。
 	一个小程序主体部分由三个文件组成，必须放在项目的根目录，如下：
-	‖
+	!!
 	app.js!：小程序逻辑，公共js，比如声明全局变量
 	app.json!：小程序公共设置
 	app.wxss：小程序公共样式表
-	‖
+	!!
 	一个小程序页面由四个文件组成，分别是：
-	‖
+	!!
 	wxml!：页面结构
 	wxss：页面样式表
 	js!：页面逻辑
 	json：页面配置
-	‖
-	♭注意：为了方便开发者减少配置项，描述页面的四个文件必须具有相同的路径与文件名。♭
+	!!
+	^^注意：为了方便开发者减少配置项，描述页面的四个文件必须具有相同的路径与文件名。^^
 	
 	##app.json
 	配置项列表：
-	‖
+	!!
 	pages{String Array}!：设置页面路径
 	window{Object}：设置默认页面的窗口表现
 	tabBar{Object}：设置底部 tab 的表现
 	networkTimeout{Object}：设置网络超时时间
 	debug{Boolean}：设置是否开启 debug 模式，在控制台面板显示调试信息以 info 的形式给出，有Page的注册，页面路由，数据更新，事件触发
-	‖
+	!!
 	
 	###pages
-	接受一个数组，每一项都是字符串，来指定小程序由哪些页面组成。每一项代表对应页面的【路径+文件名】信息，♭数组的第一项代表小程序的初始页面。小程序中新增/减少页面，都需要对 pages 数组进行修改。♭
+	接受一个数组，每一项都是字符串，来指定小程序由哪些页面组成。每一项代表对应页面的【路径+文件名】信息，^^数组的第一项代表小程序的初始页面。小程序中新增/减少页面，都需要对 pages 数组进行修改。^^
 	文件名不需要写文件后缀，因为框架会自动去寻找路径下 .json, .js, .wxml, .wxss 四个文件进行整合。
 	比如初始开发目录为：
-	‖
+	!!
 	pages/
 		index/
 			index.wxml
@@ -118,7 +118,7 @@ commonData.html.wechatApplet = {
 	app.js
 	app.json
 	app.wxss
-	‖
+	!!
 
 	则需要在 app.json 中写
 	··
@@ -132,7 +132,7 @@ commonData.html.wechatApplet = {
 	
 	###window
 	用于设置小程序的状态栏、导航条、标题、窗口背景色。属性说明：
-	‖
+	!!
 	navigationBarBackgroundColor{HexColor}[#000000]：导航栏背景颜色，如"#000000"	
 	navigationBarTextStyle{String}[white]：导航栏标题颜色，仅支持 black/white	
 	navigationBarTitleText{String}：导航栏标题文字内容	
@@ -143,11 +143,11 @@ commonData.html.wechatApplet = {
 	backgroundColorBottom{String}[#ffffff]：底部窗口的背景色，仅 iOS 支持
 	enablePullDownRefresh{Boolean}[false]：是否开启下拉刷新，详见页面相关事件处理函数	
 	onReachBottomDistance{Number}[50]：页面上拉触底事件触发时距页面底部距离，单位为px
-	‖
+	!!
 	
 	###tabBar
-	如果小程序是一个多 tab 应用（客户端窗口的底部或顶部有 tab 栏可以切换页面），可以通过 tabBar 配置项指定 tab 栏的表现，以及 tab 切换时显示的对应页面。	♭注意：当设置 position 为 top 时将不会显示 icon，配置最少2个、最多5个。♭属性说明：
-	‖
+	如果小程序是一个多 tab 应用（客户端窗口的底部或顶部有 tab 栏可以切换页面），可以通过 tabBar 配置项指定 tab 栏的表现，以及 tab 切换时显示的对应页面。	^^注意：当设置 position 为 top 时将不会显示 icon，配置最少2个、最多5个。^^属性说明：
+	!!
 	color{HexColor}!：tab 上的文字默认颜色
 	selectedColor{HexColor}!：tab 上的文字选中时的颜色
 	backgroundColor{HexColor}!：tab 的背景色
@@ -158,16 +158,16 @@ commonData.html.wechatApplet = {
 		iconPath{String}：图片路径，大小限制为40kb，建议尺寸为 81*81px，当 postion 为 top 时此参数无效，不支持网络图片
 		selectedIconPath{String}：选中时的图片路径，同 iconPath
 	position{String}[bottom]：可选值 bottom、top
-	‖
+	!!
 	
 	###networkTimeout
 	可以设置各种网络请求的超时时间。
-	‖
+	!!
 	request{Number}[60000]：wx.request 的超时时间，单位毫秒
 	connectSocket{Number}[60000]：wx.connectSocket 的超时时间，单位毫秒
 	uploadFile{Number}[60000]：wx.uploadFile 的超时时间，单位毫秒
 	downloadFile{Number}[60000]：wx.downloadFile 的超时时间，单位毫秒
-	‖
+	!!
 	示例代码：
 	··
 	{
@@ -217,13 +217,13 @@ commonData.html.wechatApplet = {
 	开发者写的所有代码最终将会打包成一份 JavaScript，并在小程序启动的时候运行，直到小程序销毁。类似 ServiceWorker，所以逻辑层也称之为 App Service。
 	###App()
 	App() 函数用来注册一个小程序。接受一个 object 参数，其指定小程序的生命周期函数等。
-	‖
+	!!
 	onLaunch：生命周期函数--监听小程序初始化，当小程序初始化完成时触发，全局只触发一次
 	onShow：生命周期函数--监听小程序显示，当小程序启动，或从后台进入前台显示，onLaunch和onShow参数如下 :
 		path{String}：打开小程序的路径
 		query{Object}：打开小程序的query
 		scene{Number}：打开小程序的场景值
-		shareTicket{String}：shareTicket，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(6)×')×.click()×)
+		shareTicket{String}：shareTicket，详见@[转发|javascript:;" onclick="$('h1:eq(3)~h2:eq(6)').click()]
 		referrerInfo{Object}：当场景为由从另一个小程序或公众号或App打开时，返回此字段
 			appId{String}：来源小程序或公众号或App的 appId，支持返回的场景有：1020、1035、1036、1037、1038、1043
 			extraData{Object}：来源小程序传过来的数据，scene=1037或1038时支持
@@ -234,10 +234,10 @@ commonData.html.wechatApplet = {
 		query{Object}：打开不存在页面的query
 		isEntryPage{Boolean}：是否本次启动的首个页面（例如从分享等入口进来，首个页面是开发者配置的分享页面）
 	其他：开发者可以添加任意的函数或数据到参数中，用 this 可以访问
-	‖
+	!!
 	前台、后台定义：当用户点击右上角关闭，或者按了设备 Home 键离开微信，小程序并没有直接销毁，而是进入了后台；当再次进入微信或再次打开小程序，又会从后台进入前台。需要注意的是：只有当小程序进入后台一定时间（一般是5分钟），或者系统资源占用过高，才会被真正的销毁。
 	关闭小程序：当用户从扫一扫、转发等入口(场景值为1007, 1008, 1011, 1025)进入小程序，且没有置顶小程序的情况下退出，小程序会被销毁。
-	♭注意：♭
+	^^注意：^^
 	如果开发者没有添加 onPageNotFound 监听，当跳转页面不存在时，将推入微信客户端原生的页面不存在提示页面
 	如果 onPageNotFound 回调中又重定向到另一个不存在的页面，将推入微信客户端原生的页面不存在提示页面，并且不在回调 onPageNotFound
 	由于Android系统限制，目前还无法获取到按 Home 键退出到桌面，然后从桌面再次进小程序的场景值，对于这种情况，会保留上一次的场景值。
@@ -258,7 +258,7 @@ commonData.html.wechatApplet = {
 	app.globalData = '来自 app.js 的 globalData'
 	console.log(app.globalData) // 来自 app.js 的 globalData'
 	··
-	♭注意：♭
+	^^注意：^^
 	App() 必须在 app.js 中注册，且不能注册多个。
 	不要在定义于 App() 内的函数中调用 getApp() ，使用 this 就可以拿到 app 实例。
 	不要在 onLaunch 的时候调用 getCurrentPages()，此时 page 还没有生成。
@@ -266,7 +266,7 @@ commonData.html.wechatApplet = {
 	
 	##Page.js
 	Page() 函数用来注册一个页面。接受一个 object 参数，其指定页面的初始数据、生命周期函数、事件处理函数等。
-	‖
+	!!
 	data：页面的数据
 	onLoad：生命周期函数--监听页面加载，直到关闭当前页面栈再进入当前页面才会再次触发
 	onReady：生命周期函数--监听页面初次渲染完成，直到关闭当前页面栈再进入当前页面才会再次触发
@@ -276,12 +276,12 @@ commonData.html.wechatApplet = {
 	onPullDownRefresh：页面下拉刷新，需在app.json的window选项中或当前页面的json文件中设置·enablePullDownRefresh·为·true·，当处理完数据刷新后·wx.stopPullDownRefresh()·可以停止下拉刷新
 	onReachBottom：页面上拉触底，可在app.json的window选项中或当前页面的json文件中设置触发距离onReachBottomDistance，默认为50。在触发距离内滑动期间，本事件只会被触发一次。
 在触发距离内滑动期间，本事件只会被触发一次
-	onShareAppMessage：用户点击右上角转发，详见α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(6)×')×.click()×)
+	onShareAppMessage：用户点击右上角转发，详见@[转发|javascript:;" onclick="$('h1:eq(3)~h2:eq(6)').click()]
 	onPageScroll：监听页面滚动，每次页面滚动时触发，返回参数如下 :
 		scrollTop{Number}：页面在垂直方向已滚动的距离（单位px）
 	onTabItemTap：当前是 tab 页时，点击 tab 时触发，可用于回到顶部或刷新等
 	其他：开发者可以添加任意的函数或数据到参数中，在页面的函数中用 this 可以访问
-	‖
+	!!
 	###Page.prototype.route
 	·route·字段可以获取到当前页面的路径
 	··
@@ -293,18 +293,18 @@ commonData.html.wechatApplet = {
 	··
 	###Page.prototype.setData()
 	·setData·函数用于将数据从逻辑层发送到视图层（异步），同时改变对应的 this.data 的值（同步），参数说明：
-	‖
+	!!
 	data{Object}!：这次要改变的数据
 		key：要改变的 data 的键名，以数据路径的形式给出，如·'array[2].message'·、·'a.b.c.d'·，并且不需要在 this.data 中预先定义
 		value：要改变的 data 的键值
 	callback{Function}!：回调函数，在这次setData对界面渲染完毕后调用
-	‖
-	♭注意：♭
-	‖
+	!!
+	^^注意：^^
+	!!
 	直接修改 this.data 而不调用 this.setData 是无法改变页面的状态的，还会造成数据不一致。
 	单次设置的数据不能超过1024kB，请尽量避免一次设置过多的数据。
 	请不要把 data 中任何一项的 value 设为 undefined ，否则这一项将不被设置并可能遗留一些潜在问题
-	‖
+	!!
 	事实上 setData 中的 key 只能以字符串或中括号的形式书写，并且是中括号的形式时就代表这是一个变量，不能有·a.b·的形式而是·'a.b'·或·[a.b]·，·this.data·是不用写也是无效的，示例代码：
 	··
 	Page({
@@ -369,7 +369,7 @@ commonData.html.wechatApplet = {
 	###模块化
 	在 JavaScript 文件中声明的变量和函数只在该文件中有效；不同的文件中可以声明相同名字的变量和函数，不会互相影响。
 	可以将一些公共的代码抽离成为一个单独的 js 文件，作为一个模块。模块只有通过·module.exports·或者·exports·才能对外暴露接口。
-	♭需要注意的是：♭
+	^^需要注意的是：^^
 	·exports·是·module.exports·的一个引用，因此在模块里边随意更改·exports·的指向会造成未知的错误，所以更推荐用·module.exports·，并且·require()·返回的是·module.exports·而不是·exports·
 	小程序目前不支持引入·node_modules·，开发者需要使用到·node_modules·时候拷贝出相关的代码到小程序的目录中
 	··
@@ -441,15 +441,15 @@ commonData.html.wechatApplet = {
 		
 	##事件
 	绑定：
-	‖
+	!!
 	bind：冒泡
 	catch：不冒泡
 	capture-bind：捕获
 	capture-catch：取消冒泡和中断捕获
-	‖
+	!!
 	
 	类型：
-	‖
+	!!
 	touchstart：手指触摸动作开始
 	touchmove：手指触摸后移动
 	touchend：手指触摸动作结束	
@@ -462,10 +462,10 @@ commonData.html.wechatApplet = {
 	animationend：会在一个 WXSS animation 动画完成时触发
 	touchforcechange：在支持 3D Touch 的 iPhone 设备，重按时会触发
 	其他事件属于特定组件，比如submit、input、scroll，且无特殊声明的都是不冒泡事件
-	‖
+	!!
 	
 	事件对象：
-	‖
+	!!
 	eventName(e) {
 		e：{
 			"type"："tap",	事件类型
@@ -511,7 +511,7 @@ commonData.html.wechatApplet = {
 			}]
 		}
 	}
-	‖
+	!!
 	
 	写法：·bindtap="eventName"·或·bind:tap="eventName"·
 	传参：在元素上自定义的以·data-·开头的属性，多个单词用-连接，不能大写，有也会转换成小写，在事件回调中·e.currentTarget.dataset·可拿到
@@ -733,7 +733,7 @@ commonData.html.wechatApplet = {
 	··
 	import 有作用域的概念，即只会 import 目标文件中定义的 template，而不会 import 目标文件 import 的 template。
 	如：C import B，B import A，在C中可以使用B定义的template，在B中可以使用A定义的template，但是C不能使用A定义的template。
-	·include·可以将目标文件♭除了 ♭<template/> <wxs/> 外的整个代码引入，相当于是拷贝到·include·位置，如：
+	·include·可以将目标文件^^除了 ^^<template/> <wxs/> 外的整个代码引入，相当于是拷贝到·include·位置，如：
 	··
 	<!-- header.wxml -->
 	<view> header </view>
@@ -823,7 +823,7 @@ commonData.html.wechatApplet = {
 	只能引用 .wxs 文件模块，且必须使用相对路径。
 	wxs 模块均为单例，wxs 模块在第一次被引用时，会自动初始化为单例对象。多个页面，多个地方，多次引用，使用的都是同一个 wxs 模块对象。
 	如果一个 wxs 模块在定义之后，一直没有被引用，则该模块不会被解析与运行。
-	♭注意：♭
+	^^注意：^^
 	<wxs> 模块只能在定义模块的 WXML 文件中被访问到。使用 <include> 或 <import> 时，<wxs> 模块不会被引入到对应的 WXML 文件中。
 	<template> 标签中，只能使用定义该 <template> 的 WXML 文件中定义的 <wxs> 模块。
 	
@@ -879,7 +879,7 @@ commonData.html.wechatApplet = {
 		</component-tag-name>
 	</view>
 	··
-	♭注意：在组件wxss中不应使用ID选择器、属性选择器和标签名选择器。♭
+	^^注意：在组件wxss中不应使用ID选择器、属性选择器和标签名选择器。^^
 	在自定义组件的 js 文件中，需要使用 Component() 来注册组件，并提供组件的属性定义、内部数据和自定义方法。
 	组件的属性值和内部数据将被用于组件 wxml 的渲染，其中，属性值是可由组件外部传入的。
 	代码示例：
@@ -920,7 +920,7 @@ commonData.html.wechatApplet = {
 	</view>
 	··
 	自定义组件的 wxml 节点结构在与数据结合之后，将被插入到引用位置内。
-	♭注意：♭
+	^^注意：^^
 	因为WXML节点标签名只能是小写字母、中划线和下划线的组合，所以自定义组件的标签名也只能包含这些字符。
 	自定义组件也是可以引用自定义组件的，引用方法类似于页面引用自定义组件的方式（使用 usingComponents 字段）。
 	自定义组件和使用自定义组件的页面所在项目根目录名不能以“wx-”为前缀，否则会报错。
@@ -1054,13 +1054,13 @@ commonData.html.wechatApplet = {
 	插件是对一组 js 接口或自定义组件的封装，用于提供给第三方小程序调用。插件必须嵌入在其他小程序中才能被用户使用。
 	插件开发者可以像开发小程序一样编写一个插件并上传代码，在插件发布之后，其他小程序方可调用。小程序平台会托管插件代码，其他小程序调用时，上传的插件代码会随小程序一起下载运行。
 	相对于普通 js 文件或自定义组件，插件拥有更强的独立性，拥有独立的 API 接口、域名列表等，但同时会受到一些限制，如一些 API 无法调用或功能受限。
-	对于插件开发者，请阅读α(开发插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/development.html)章节；对于插件使用者，请阅读α(使用插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/using.html)章节。
+	对于插件开发者，请阅读@[开发插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/development.html]章节；对于插件使用者，请阅读@[使用插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/using.html]章节。
 	
 	##运行机制
 	小程序启动会有两种情况，一种是「冷启动」，一种是「热启动」。 假如用户已经打开过某小程序，然后在一定时间内再次打开该小程序，此时无需重新启动，只需将后台态的小程序切换到前台，这个过程就是热启动；冷启动指的是用户首次打开或小程序被微信主动销毁后再次打开的情况，此时小程序需要重新加载启动。
 	小程序没有重启的概念，当小程序进入后台，客户端会维持一段时间的运行状态，超过一定时间后（目前是5分钟）会被微信主动销毁，当短时间内（5s）连续收到两次以上收到系统内存告警，会进行小程序的销毁。
 	当退出小程序，在小程序没被销毁前再次进入小程序，打开逻辑：
-	A. 打开首页： α(场景值|https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/scene.html)有 1001, 1019, 1022, 1023, 1038, 1056
+	A. 打开首页： @[场景值|https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/scene.html]有 1001, 1019, 1022, 1023, 1038, 1056
 	B. 打开小程序指定的某个页面： 场景值为除 A 以外的其他
 	%%
 	上一次的场景,当前打开的场景,效果
@@ -1071,7 +1071,7 @@ commonData.html.wechatApplet = {
 	%%
 	
 	###更新机制
-	小程序冷启动时如果发现有新版本，将会异步下载新版本的代码包，并同时用客户端本地的包进行启动，即新版本的小程序需要等下一次冷启动才会应用上。 如果需要马上应用最新版本，可以使用 α(wx.getUpdateManager|https://developers.weixin.qq.com/miniprogram/dev/api/getUpdateManager.html) API 进行处理。
+	小程序冷启动时如果发现有新版本，将会异步下载新版本的代码包，并同时用客户端本地的包进行启动，即新版本的小程序需要等下一次冷启动才会应用上。 如果需要马上应用最新版本，可以使用 @[wx.getUpdateManager|https://developers.weixin.qq.com/miniprogram/dev/api/getUpdateManager.html] API 进行处理。
 	
 	#组件
 	
@@ -1079,7 +1079,7 @@ commonData.html.wechatApplet = {
 	每个页面默认有个·<page></page>·滚动父容器，可以不用添加最大父容器
 	
 	##目录
-	‖
+	!!
 	视图容器
 		view：视图容器，可以当成·div·标签
 		scroll-view：可滚动视图容器
@@ -1087,7 +1087,7 @@ commonData.html.wechatApplet = {
 		movable-view：可移动的视图容器，在页面中可以拖拽滑动
 		cover-view：覆盖在原生组件（map/video/canvas/camera）之上的文本视图，支持嵌套（cover-view/cover-image）
 	基础内容
-		icon：图标，目前有¡(./img/html/wechat-applet05.jpg,auto,30)，注意wxss无法改变color、size、line-height
+		icon：图标，目前有![./img/html/wechat-applet05.jpg,auto,30]，注意wxss无法改变color、size、line-height
 		text：文字容器，内联元素
 		rich-text：富文字容器
 		progress：进度条
@@ -1104,7 +1104,7 @@ commonData.html.wechatApplet = {
 		switch：开关
 		textarea：文本域
 	导航
-		navigator：页面链接，可以当成·a·标签，对应API可见α(页面导航|javascript:;" onclick="$('h1:eq(3)×~h2:eq(1)×')×.click()×)
+		navigator：页面链接，可以当成·a·标签，对应API可见@[页面导航|javascript:;" onclick="$('h1:eq(3)~h2:eq(1)').click()]
 	媒体
 		audio：音频，1.6.0 版本开始，该组件不再维护。建议使用能力更强的 wx.createInnerAudioContext 接口
 		image：图片，默认宽300px、高225px（4 : 3）
@@ -1122,7 +1122,7 @@ commonData.html.wechatApplet = {
 		ad：广告，目前暂时以邀请制开放申请，请留意后续模板消息的通知
 	其他
 		block：常用于wx:for，以包含多个节点，自身不在页面中显示，比如用于通讯录列表和车的品牌列表 :
-	‖
+	!!
 	··
 	<block wx:for="{{list}}">
 		<text>{{letter}}</text>	// A,B,C
@@ -1142,18 +1142,18 @@ commonData.html.wechatApplet = {
 	··
 	
 	##text
-	‖
+	!!
 	selectable{Boolean}[false]：文本是否可选中
 	space{String}[false]：是否显示连续空格，可选 : 
 		ensp：中文字符空格一半大小
 		emsp：中文字符空格大小
 		nbsp：根据字体设置的空格大小
 	decode{Boolean}[false]：是否解码，可解析的有 : ·&amp;nbsp;· ·&amp;lt;· ·&amp;gt;· ·&amp;amp;· ·&amp;apos;· ·&amp;ensp;· ·&amp;emsp;·
-	‖
+	!!
 	注意：各个操作系统的空格标准并不一致，<text/> 组件内只支持 <text/> 嵌套，除了文本节点以外的其他节点都无法长按选中
 	
 	##image
-	‖
+	!!
 	src{String}：图片资源地址
 	mode{String}[scaleToFill]：图片裁剪缩放模式
 		scaleToFill：100%
@@ -1163,10 +1163,10 @@ commonData.html.wechatApplet = {
 	lazy-load{Boolean}[false]：图片懒加载，只在page与scroll-view下的image有效
 	binderror{HandleEvent}：当错误发生时，发布到 AppService 的事件名，事件对象event.detail = {errMsg: 'something wrong'}
 	bindload{HandleEvent}：当图片载入完毕时，发布到 AppService 的事件名，事件对象event.detail = {height:'图片高度px', width:'图片宽度px'}
-	‖
+	!!
 	
 	##input
-	‖
+	!!
 	value{String}：输入框的初始内容
 	type{String}[text]：input的类型，可选text（文本）、number（数字）、digit（有小数点的数字）、idcard（身份证）
 	password{Boolean}[false]：是否是密码类型
@@ -1187,11 +1187,11 @@ commonData.html.wechatApplet = {
 	bindfocus{EventHandle}：输入框聚焦时触发，event.detail = {value: value}	
 	bindblur{EventHandle}：输入框失去焦点时触发，event.detail = {value: value}
 	bindconfirm{EventHandle}：点击完成按钮时触发，event.detail = {value: value}
-	‖
+	!!
 	
 	##open-data
 	用于展示微信开放的数据，比如获取用户头像、昵称无需授权
-	‖
+	!!
 	type{String}：开放数据类型，可选 :
 		groupName：拉取群名称
 		userNickName：用户昵称
@@ -1201,9 +1201,9 @@ commonData.html.wechatApplet = {
 		userProvince：用户所在省份
 		userCountry：用户所在国家
 		userLanguage：用户的语言
-	open-gid{String}：群id，当·type="groupName"·时生效，只有当前用户在此群内才能拉取到群名称，获取·open-gid·的方法可查看 α(转发|javascript:;" onclick="$('h1:eq(3)×~h2:eq(6)×')×.click()×)
+	open-gid{String}：群id，当·type="groupName"·时生效，只有当前用户在此群内才能拉取到群名称，获取·open-gid·的方法可查看 @[转发|javascript:;" onclick="$('h1:eq(3)~h2:eq(6)').click()]
 	lang{String}[en]：以哪种语言展示 userInfo，当·type="user*"·时生效，有效值有 en（英文）、zh_CN（简体中文）、zh_TW（繁体中文）
-	‖
+	!!
 	··
 	// 得到什么类型的结果就是什么类型的元素
 	<open-data type="userAvatarUrl"/>	// 相当于image标签
@@ -1211,7 +1211,7 @@ commonData.html.wechatApplet = {
 	··
 	
 	##button
-	‖
+	!!
 	size{String}[default]：按钮的大小，可选 default、mini
 	type{String}[default]：按钮的样式类型，可选 primary、default、warn
 	plain{Boolean}[false]：按钮是否镂空，背景色透明
@@ -1242,10 +1242,10 @@ commonData.html.wechatApplet = {
 	app-parameter{String}：打开 APP 时，向 APP 传递的参数。当·open-type="launchApp"·时生效
 	binderror{Handler}：当使用开放能力时，发生错误的回调。当·open-type="launchApp"·时生效
 	bindopensetting{Handler}：在打开授权设置页后回调。当·open-type="openSetting"·时生效
-	‖
+	!!
 	
 	##swiper
-	‖
+	!!
 	indicator-dots{Boolean}[false]：是否显示指示点
 	indicator-color{Color}[rgba(0, 0, 0, 0.3)]：指示点颜色
 	indicator-active-color{Color}[#000]：选中指示点颜色
@@ -1264,7 +1264,7 @@ commonData.html.wechatApplet = {
 	bindanimationfinish{EventHandle}：动画结束时会触发 animationfinish 事件，event.detail 同上
 	子组件
 		swiper-item{item-id}[""]：该 swiper-item 的标识符
-	‖
+	!!
 	注意：如果在 bindchange 的事件回调函数中使用 setData 改变 current 值，则有可能导致 setData 被不停地调用，因而通常情况下请在改变 current 值前检测 source 字段来判断是否是由于用户触摸引起
 
 	
@@ -1272,17 +1272,17 @@ commonData.html.wechatApplet = {
 	从底部弹起的滚动选择器，现支持五种选择器，通过mode来区分，分别是普通、多列、时间、日期、省市区，默认是普通选择器。选择器的选项>=5个在手机上就会循环展示。
 	
 	###普通选择器：mode="selector"（默认可以不填）
-	‖
+	!!
 	range{Array/Object Array}[[]]：mode为 selector 或 multiSelector 时，range 有效
 	range-key{String}：当 range 是一个 Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容
 	value{Number}[0]：value 的值表示选择了 range 中的第几个（下标从 0 开始）
 	bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = { value: value }
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
-	‖
+	!!
 	
 	###多列选择器：mode="multiSelector"
-	‖
+	!!
 	range{二维Array/二维Object Array}[[]]：mode为 selector 或 multiSelector 时，range 有效
 	range-key{String}：当 range 是一个 二维Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容
 	value{Array}[[]]：value 的值表示选择了 range 中的第几个
@@ -1290,20 +1290,20 @@ commonData.html.wechatApplet = {
 	bindcolumnchange{EventHandle}：某一列的值改变时触发 columnchange 事件，event.detail = {column: column, value: value}，column 的值表示改变了第几列（下标从0开始），value 的值表示变更值的下标
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
-	‖
+	!!
 	
 	###时间选择器：mode="time"
-	‖
+	!!
 	value{String}：选中的时间，格式为"hh:mm"
 	start{String}：时间范围的开始，格式为"hh:mm"
 	end{String}：时间范围的结束，格式为"hh:mm"
 	bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = {value: value}
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
-	‖
+	!!
 	
 	###日期选择器：mode="date"
-	‖
+	!!
 	value{String}[0]：选中的日期，格式为"YYYY-MM-DD"
 	start{String}：日期范围的开始，格式为"YYYY-MM-DD"
 	end{String}：日期范围的结束，格式为"YYYY-MM-DD"
@@ -1311,16 +1311,16 @@ commonData.html.wechatApplet = {
 	bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = {value: value}
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
-	‖
+	!!
 	
 	###省市区选择器：mode="region"
-	‖
+	!!
 	value{Array}[[]]：选中的省市区，默认选中每一列的第一个值
 	custom-item{String}：可为每一列的顶部添加一个自定义的项
 	bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = {value: value}
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
-	‖
+	!!
 	
 	示例：
 	··
@@ -1380,8 +1380,8 @@ commonData.html.wechatApplet = {
 	#API
 	
 	##目录
-	‖
-	♭网络♭
+	!!
+	^^网络^^
 		发起请求
 			wx.request：发起网络请求
 		上传下载
@@ -1396,21 +1396,21 @@ commonData.html.wechatApplet = {
 			wx.closeSocket：关闭 WebSocket 连接
 			wx.onSocketClose：监听WebSocket关闭
 			SocketTask：WebSocket 任务，可通过 wx.connectSocket 接口创建返回
-	♭媒体♭
+	^^媒体^^
 		图片
 			wx.chooseImage：从本地相册选择图片或使用相机拍照
 			wx.previewImage：预览图片
 			wx.getImageInfo：获取图片信息
 			wx.saveImageToPhotosAlbum：保存图片到系统相册
 		录音、音频、音乐、视频的播放、控制等
-	♭文件♭
+	^^文件^^
 		wx.saveFile：保存文件到本地
 		wx.getFileInfo：获取文件信息
 		wx.getSavedFileList：获取本地已保存的文件列表
 		wx.getSavedFileInfo：获取已保存到本地文件的文件信息
 		wx.removeSavedFile：删除本地存储的文件
 		wx.openDocument：新开页面打开文档，支持格式有 doc, xls, ppt, pdf, docx, xlsx, pptx
-	♭数据缓存♭
+	^^数据缓存^^
 		wx.setStorage：异步存储本地存储在指定的 key 中，若原来 key 有内容会覆盖
 		wx.setStorageSync：上面的同步接口
 		wx.getStorage：异步获取本地存储在指定的 key 中的内容
@@ -1421,12 +1421,12 @@ commonData.html.wechatApplet = {
 		wx.removeStorageSync：上面的同步接口
 		wx.clearStorage：清空所有本地缓存
 		wx.clearStorageSync：上面的同步接口
-	♭位置♭
+	^^位置^^
 		wx.getLocation：获取当前位置的经纬度、速度、高度
 		wx.chooseLocation：打开地图选择位置
 		wx.openLocation：​使用微信内置地图查看位置
 		wx.createMapContext：操作组件内 <map/> 组件
-	♭设备♭
+	^^设备^^
 		系统信息
 			wx.getSystemInfo：获取系统信息，比如手机品牌、操作系统等
 			wx.getSystemInfoSync：上面的同步接口
@@ -1447,7 +1447,7 @@ commonData.html.wechatApplet = {
 			wx.getScreenBrightness：获取屏幕亮度
 			wx.setKeepScreenOn：设置是否保持常亮状态，仅在当前小程序生效，离开小程序后失效
 		加速度计、罗盘、蓝牙、iBeacon、NFC、Wi-Fi的初始化、监听、关闭等
-	♭界面♭
+	^^界面^^
 		交互反馈
 			wx.showToast：显示消息提示框，可选 success、loading、none
 			wx.showLoading：显示 loading 提示框, 需主动调用 wx.hideLoading 才能关闭提示框
@@ -1493,10 +1493,10 @@ commonData.html.wechatApplet = {
 			nodesRef.fields：获取节点的相关信息
 			selectorQuery.exec：执行所有的请求，在callback的第一个参数中返回
 		canvas绘图、WXML节点布局相交状态
-	♭第三方平台♭
+	^^第三方平台^^
 		wx.getExtConfig：获取第三方平台自定义的数据字段
 		wx.getExtConfigSync：上面的同步接口
-	♭开放接口♭
+	^^开放接口^^
 		登录
 			wx.login：获取临时登录凭证（code）
 			wx.checkSession：校验用户当前session_key是否有效
@@ -1516,17 +1516,17 @@ commonData.html.wechatApplet = {
 			wx.navigateBackMiniProgram：返回到上一个小程序，只有在当前小程序是被其他小程序打开时可以调用成功
 			launchApp：打开App，需由 <button> 组件调用
 		模板消息（微信通知），客服消息（客服会话时用户发送消息相关），获取小程序的二维码，卡券，微信设置，微信运动，发票抬头，生物认证（指纹、人脸识别），附近的小程序，插件管理，内容安全（检验图片或文字是否违规）
-	♭其他♭
+	^^其他^^
 		数据常规分析：开发者通过数据分析接口，可获取到小程序的各项数据指标，便于进行数据存储和整理
 		wx.reportAnalytics：自定义数据上报接口
 		wx.getUpdateManager：管理小程序更新
 		wx.createWorker：创建一个多线程 Worker 线程，并返回 Worker 实例
 		wx.reportMonitor：自定义业务数据监控上报接口
 		wx.setEnableDebug：设置是否打开调试开关，此开关对正式版也能生效
-	‖
+	!!
 	
 	##页面导航
-	‖
+	!!
 	wx.navigateTo({	保留当前页面跳转到非 tabBar 的页面，可返回原页面，目前页面路径最多只能十层
 		url{String}!：路径，可带参数，参数与路径之间使用?分隔，参数键与参数值用=相连，不同参数用&分隔
 		success{Function}：接口调用成功的回调函数
@@ -1539,13 +1539,13 @@ commonData.html.wechatApplet = {
 	wx.navigateBack({	关闭当前页面返回上一页面或多级页面（不刷新返回的页面）
 		delta{Number}[1]：返回的页面数，如果 delta 大于现有页面数，则返回到首页，可通过 getCurrentPages() 获取当前的页面栈决定需要返回几层
 	})
-	‖
+	!!
 	
 	##提示框
 	
 	###消息提示框
 	在指定时间 duration 后自动消失
-	‖
+	!!
 	wx.showToast({
 		title{String}!：提示的内容
 		icon{String}：图标，可选success、loading、none
@@ -1557,11 +1557,11 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调函数
 	})
 	wx.hideToast()：主动隐藏消息提示框
-	‖
+	!!
 	
 	###loading提示框
 	需调用 wx.hideLoading() 后才会消失
-	‖
+	!!
 	wx.showLoading({
 		title{String}!：提示的内容
 		mask{Boolean}[false]：是否显示透明蒙层，防止触摸穿透
@@ -1570,10 +1570,10 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调函数
 	})
 	wx.hideLoading()：隐藏loading提示框
-	‖
+	!!
 	
 	###模态弹窗
-	‖
+	!!
 	wx.showModal({
 		title{String}!：提示的标题
 		content{String}!：提示的内容
@@ -1590,10 +1590,10 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调函数
 		complete{Function}：完成的回调函数
 	})
-	‖
+	!!
 	
 	###操作菜单
-	‖
+	!!
 	wx.showActionSheet({
 		itemList{String Array}!：按钮的文字数组，数组长度最大为6个
 		itemColor{HexColor}[#000]：按钮的文字颜色
@@ -1604,7 +1604,7 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调函数
 		complete{Function}：完成的回调函数
 	})
-	‖
+	!!
 	
 	##网络请求
 	
@@ -1621,7 +1621,7 @@ commonData.html.wechatApplet = {
 	小程序会自动对 BOM 头进行过滤。
 	
 	###发起网络请求
-	‖
+	!!
 	wx.request({
 		url{String}!：服务器接口地址
 		data{Object/String/ArrayBuffer}：请求的参数，如果是非 String 类型会转换成 String 类型，转换规则如下 :
@@ -1641,7 +1641,7 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调函数
 		complete{Function}：完成的回调函数
 	})
-	‖
+	!!
 	返回一个 requestTask 对象，可调用·abort()·用于中断请求任务，比如：
 	··
 	const requestTask = wx.request({
@@ -1657,7 +1657,7 @@ commonData.html.wechatApplet = {
 	###上传文件
 	将本地资源上传到开发者服务器，客户端发起一个·HTTPS POST·请求，其中·content-type·为·multipart/form-data·
 	比如通过·wx.chooseImage·等接口获取到一个本地资源的临时文件路径后上传到服务器
-	‖
+	!!
 	wx.uploadFile({
 		url{String}!：服务器接口地址
 		filePath{String}!：要上传文件资源的路径
@@ -1672,14 +1672,14 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调函数
 		complete{Function}：完成的回调函数
 	})
-	‖
+	!!
 	返回一个 uploadTask 对象，可通过·onProgressUpdate()·监听上传进度变化事件，调用·abort()·可取消上传任务
 	·onProgressUpdate·返回参数说明：
-	‖
+	!!
 	progress{Number}：下载进度百分比
 	totalBytesWritten{Number}：已经下载的数据长度，单位 Bytes
 	totalBytesExpectedToWrite{Number}：预期需要下载的数据总长度，单位 Bytes
-	‖
+	!!
 	示例代码：
 	··
 	const uploadTask = wx.uploadFile({
@@ -1704,7 +1704,7 @@ commonData.html.wechatApplet = {
 	下载文件资源到本地，客户端直接发起一个·HTTP GET·请求，返回文件的本地临时路径
 	文件的临时路径，在小程序本次启动期间可以正常使用，如需持久保存，需在主动调用·wx.saveFile·，才能在小程序下次启动时访问得到。
 	注意在·header·中指定合理的·Content-Type·字段，以保证客户端正确处理文件类型
-	‖
+	!!
 	wx.downloadFile({
 		url{String}!：服务器接口地址
 		header{Object}[{'content-type':'application/json'}]：请求头，不能设置 Referer
@@ -1716,13 +1716,13 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调函数
 		complete{Function}：完成的回调函数
 	})
-	‖
+	!!
 	返回一个 downloadTask 对象，可通过·onProgressUpdate()·监听下载进度变化事件，参数同 uploadTask，调用·abort()·可取消下载任务
 	
 	##图片和文件
 	###图片
-	‖
-	♭从本地相册选择图片或使用相机拍照♭
+	!!
+	^^从本地相册选择图片或使用相机拍照^^
 	文件的临时路径在小程序本次启动期间可以正常使用，如需持久保存需在主动调用 wx.saveFile，在小程序下次启动时才能访问得到
 		wx.chooseImage({
 			count{Number}[9]：最多可以选择的图片张数
@@ -1741,7 +1741,7 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭预览图片，左右滑动可切换图片，长按可选择保存或转发、收藏♭
+	^^预览图片，左右滑动可切换图片，长按可选择保存或转发、收藏^^
 		wx.previewImage({
 			urls{StringArray}!：图片路径列表
 			current{String}[urls[0]]：当前显示图片路径
@@ -1749,7 +1749,7 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭获取图片信息♭
+	^^获取图片信息^^
 		wx.getImageInfo({
 			src{String}!：图片的路径，可以是相对、临时文件、存储文件、网络路径
 			success{Function(res)}：成功的回调函数
@@ -1765,17 +1765,17 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭保存图片到系统相册♭
+	^^保存图片到系统相册^^
 		wx.saveImageToPhotosAlbum({
 			filePath{String}!：图片文件路径，可以是临时文件路径也可以是永久文件路径，不支持网络图片路径
 			success{Function}：成功的回调函数
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	‖
+	!!
 	###文件
-	‖
-	♭保存文件到本地♭
+	!!
+	^^保存文件到本地^^
 	注意这会把临时文件移动，因此调用成功后传入的 tempFilePath 将不可用，本地文件存储的大小限制为 10M
 		wx.saveFile({
 			tempFilePath{String}!：需要保存的文件的临时路径
@@ -1786,7 +1786,7 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭获取文件信息♭
+	^^获取文件信息^^
 		wx.getFileInfo({
 			filePath{String}!：本地文件路径
 			digestAlgorithm{String}：计算文件摘要的算法，默认值 md5，有效值 md5、sha1
@@ -1799,7 +1799,7 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭获取本地已保存的文件列表♭
+	^^获取本地已保存的文件列表^^
 		wx.getSavedFileList({
 			success{Function(res)}：成功的回调函数
 				res：{
@@ -1812,7 +1812,7 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭获取本地文件的文件信息♭
+	^^获取本地文件的文件信息^^
 	此接口只能用于获取已保存到本地的文件，若需要获取临时文件信息，需使用 wx.getFileInfo
 		wx.getSavedFileInfo({
 			filePath{String}!：文件路径
@@ -1825,14 +1825,14 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭删除本地存储的文件♭
+	^^删除本地存储的文件^^
 		wx.removeSavedFile({
 			filePath{String}!：需要删除的文件路径
 			success{Function}：成功的回调函数
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	♭新开页面打开文档♭
+	^^新开页面打开文档^^
 	支持格式：doc, xls, ppt, pdf, docx, xlsx, pptx
 		wx.openDocument({
 			filePath{String}!：文件路径，可通过 downFile 获得
@@ -1841,44 +1841,44 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调函数
 			complete{Function}：完成的回调函数
 		})
-	‖
+	!!
 	
 	##常用
 	
 	###打电话
-	‖
+	!!
 	wx.makePhoneCall({
 		phoneNumber{String}!：需要拨打的电话号码
 		success{Function}：成功的回调
 		fail{Function}：失败的回调
 		complete{Function}：完成的回调
 	})
-	‖
+	!!
 	
 	###设置页面标题
-	‖
+	!!
 	wx.setNavigationBarTitle({
 		title{String}!：页面标题
 		success{Function}：成功的回调
 		fail{Function}：失败的回调
 		complete{Function}：完成的回调
 	})
-	‖
+	!!
 	
 	###滚动页面
-	‖
+	!!
 	wx.pageScrollTo({
 		scrollTop{Number}!：滚动到页面的目标位置（单位px）
 		duration{Number}：滚动动画的时长，默认300ms，单位 ms
 	})
-	‖
+	!!
 	
 	###下拉刷新
 	在当前页面的 json 文件中的 window 属性设置·enablePullDownRefresh·为 true
 	在 Page 中定义·onPullDownRefresh·函数，当用户手动下拉的时候就会触发该事件
 	当处理完数据刷新后调用·wx.stopPullDownRefresh()·可以停止下拉刷新
 	也可以使用·wx.startPullDownRefresh()·主动调用下拉刷新
-	‖
+	!!
 	wx.startPullDownRefresh({
 		success{Function(res)}：成功的回调
 			res：{
@@ -1887,11 +1887,11 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调
 		complete{Function}：完成的回调
 	})
-	‖
+	!!
 	
 	###获取位置
 	获取当前位置的经纬度、速度、高度。当用户离开小程序后，此接口无法调用；当用户点击“显示在聊天顶部”时，此接口可继续调用
-	‖
+	!!
 	wx.getLocation({
 		type{String}[wgs84]：返回 gps 坐标，选择 gcj02 返回可用于 wx.openLocation 的坐标
 		altitude{Boolean}：传入 true 会返回高度信息，由于获取高度需要较高精确度，会减慢接口返回速度
@@ -1908,11 +1908,11 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调
 		complete{Function}：完成的回调
 	})
-	‖
+	!!
 	
 	##转发
 	在 Page 中定义 onShareAppMessage 函数，右上角菜单才会显示“转发”按钮， return 一个 Object 用于自定义转发内容
-	‖
+	!!
 	onShareAppMessage(res) {
 		res：{
 			from{String}：转发事件来源。button：页面内转发按钮；menu：右上角转发菜单
@@ -1924,32 +1924,32 @@ commonData.html.wechatApplet = {
 			imageUrl：图片路径，支持PNG及JPG，默认为当前页面的截图，长宽比是 5:4
 		}
 	}
-	‖
+	!!
 	通常开发者希望转发出去的小程序被二次打开的时候能够获取到一些信息，例如群的标识。
 	调用·wx.showShareMenu·并且设置 withShareTicket 为·true·，当用户将小程序转发到任一群聊之后，此转发卡片在群聊中被其他用户打开时，可以在·App.onLaunch()·或·App.onShow·获取到一个 shareTicket。通过调用·wx.getShareInfo()·接口传入此 shareTicket 可以获取到转发信息。
 	注意只有转发到群聊中打开才可以获取到 shareTickets 返回值，单聊没有 shareTickets，shareTicket 仅在当前小程序生命周期内有效。
-	‖
-	♭显示当前页面的转发按钮♭
+	!!
+	^^显示当前页面的转发按钮^^
 		wx.showShareMenu({
 			withShareTicket{Boolean}：是否使用带 shareTicket 的转发
 			success{Function}：成功的回调
 			fail{Function}：失败的回调
 			complete{Function}：完成的回调
 		})
-	♭隐藏转发按钮♭
+	^^隐藏转发按钮^^
 		wx.hideShareMenu({
 			success{Function}：成功的回调
 			fail{Function}：失败的回调
 			complete{Function}：完成的回调
 		})
-	♭更新转发属性♭
+	^^更新转发属性^^
 		wx.updateShareMenu({
 			withShareTicket{Boolean}：是否使用带 shareTicket 的转发
 			success{Function}：成功的回调
 			fail{Function}：失败的回调
 			complete{Function}：完成的回调
 		})
-	♭获取转发详细信息♭
+	^^获取转发详细信息^^
 		wx.getShareInfo({
 			shareTicket{String}!：shareTicket
 			timeout{Number}：超时时间，单位 ms
@@ -1962,12 +1962,12 @@ commonData.html.wechatApplet = {
 			fail{Function}：失败的回调
 			complete{Function}：完成的回调
 		})
-	‖
+	!!
 	
 	##数据缓存
 	大小限制为 10MB，异步接口无阻塞有回调函数，同步接口有阻塞无回调函数但写法简单
-	‖
-	♭存储♭
+	!!
+	^^存储^^
 		wx.setStorage({
 			key{String}!：键名
 			data{Object/String}!：键值
@@ -1976,7 +1976,7 @@ commonData.html.wechatApplet = {
 			complete{Function}：完成的回调
 		})
 		wx.setStorageSync(key{String}!, data{Object/String}!)
-	♭读取单个♭
+	^^读取单个^^
 		wx.getStorage({
 			key{String}!：键名
 			success{Function(res)}!：成功的回调，res = {data: key对应的内容}
@@ -1984,7 +1984,7 @@ commonData.html.wechatApplet = {
 			complete{Function}：完成的回调
 		})
 		wx.getStorageSync(key{String}!)：返回的结果即键值
-	♭读取全部♭
+	^^读取全部^^
 		wx.getStorageInfo({
 			success{Function(res)}!：成功的回调
 				res：{
@@ -1996,7 +1996,7 @@ commonData.html.wechatApplet = {
 			complete{Function}：完成的回调
 		})
 		wx.getStorageInfoSync()：返回的结果即上面的异步接口成功的回调的res
-	♭删除单个♭
+	^^删除单个^^
 		wx.removeStorage({
 			key{String}!：键名
 			success{Function}!：成功的回调
@@ -2004,23 +2004,23 @@ commonData.html.wechatApplet = {
 			complete{Function}：完成的回调
 		})
 		wx.removeStorageSync(key{String}!)
-	♭删除全部♭
+	^^删除全部^^
 		wx.clearStorage()
 		wx.clearStorageSync()
-	‖
+	!!
 	
 	##WXML节点信息
 	·wx.createSelectorQuery()·：返回一个·SelectorQuery·对象实例，调用相关方法以获取相关节点：
-	‖
+	!!
 	in(component)：选择自定义组件 component 内的节点
 	select(selector)：在当前页面下选择第一个匹配的节点，返回一个NodesRef对象实例，用于获取节点信息，selector支持 :
 		#id、.class、#id, .class、.parent>.child、.parent .children、.parent >>> .children（跨自定义组件的后代选择器）
 	selectAll(selector)：在当前页面下选择所有匹配的节点，返回一个数组形式的NodesRef对象实例
 	selectViewport()：选择显示区域（当前页面），可用于获取显示区域的尺寸、滚动位置等信息，返回一个NodesRef对象实例
 	exec([callback])：执行所有的请求，请求结果按请求次序构成数组，在callback的第一个参数中返回
-	‖
+	!!
 	返回的 NodesRef 对象实例可调用的方法有：
-	‖
+	!!
 	boundingClientRect([callback])：返回节点信息，包括 id、dataset、left、right、top、bottom、width、height，单位为px
 	scrollOffset([callback])：返回节点滚动位置信息，节点必须是 scroll-view 或 viewport，包括 id、dataset、scrollTop、scrollLeft，单位为px
 	fields(fields,[callback])：自定义指定获取节点的相关信息，返回值是nodesRef对应的selectorQuery。可指定获取的字段包括
@@ -2030,7 +2030,7 @@ commonData.html.wechatApplet = {
 		size{Boolean}[false]：是否返回节点尺寸（width、height）
 		scrollOffset{Boolean}[false]：是否返回节点的 scrollLeft scrollTop ，节点必须是scroll-view或viewport
 		properties{StringArray}[[]]：指定节点属性名列表，以返回对应属性值（ id、class、style 和事件绑定的属性值不可获取）
-	‖
+	!!
 	
 	示例代码：
 	··
@@ -2069,7 +2069,7 @@ commonData.html.wechatApplet = {
 	
 	###wx.login
 	调用接口·wx.login()·获取临时登录凭证，以换取用户的 openid、session_key、unionid
-	‖
+	!!
 	wx.login({
 		timeout{Number}：超时时间，单位 ms
 		success{Function(res)}!：成功的回调
@@ -2080,21 +2080,21 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调
 		complete{Function}：完成的回调
 	})
-	‖
+	!!
 	然后在服务器后台调用指定接口，使用 code 换取 openid、session_key、unionid，地址：·https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code·
 	参数说明：
-	‖
+	!!
 	appid!：小程序唯一标识，在小程序后台或微信开发者工具可查看
 	secret!：小程序的 app secret，在小程序后台查看
 	js_code!：wx.login 得到的 code
 	grant_type!：填写为 authorization_code 即可
-	‖
+	!!
 	返回的结果：
-	‖
+	!!
 	openid：用户唯一标识
 	session_key：会话密钥，生成对比 signature 以校验数据的完整性和解密 encryptedData
 	unionid：用户在开放平台的唯一标识符（满足UnionID下发条件才会出现）
-	‖
+	!!
 	·session_key·说明：用于在服务器解密wx.getUserInfo()返回的敏感数据，为了应用自身的数据安全，开发者服务器不应该把会话密钥下发到小程序，也不应该对外提供这个密钥。
 	·unionid·说明：如果开发者拥有多个移动应用（比如在APP内开发了微信分享、微信支付）、网站应用（比如在某网站开放了微信快捷登录）、和公众帐号，微信针对用户在不同的应用下都有唯一的一个·openId·，所以在不同的公众账号下·openid·是不一样的，但·unionid·却是一样的。
 	对于拥有多个账号的企业来说，·unionid·可以帮助识别不同公众账号下的用户是否是同一个人。这样在不同账号下对该用户提供的服务可以连续起来了，可以实现多个小程序、公众号、APP之间数据互通。还可以去除重复关注的用户数，便于统计真实的关注用户总数
@@ -2104,13 +2104,13 @@ commonData.html.wechatApplet = {
 	2、如果开发者帐号下存在同主体的公众号，并且该用户已经关注了该公众号。可以通过wx.login获取到该用户UnionID
 	3、如果开发者帐号下存在同主体的公众号或移动应用，并且该用户已经授权登录过该公众号或移动应用。也可以通过wx.login获取到
 	微信开放平台绑定小程序流程
-	前提：α(微信开放平台|https://open.weixin.qq.com/)帐号必须已完成开发者资质认证
+	前提：@[微信开放平台|https://open.weixin.qq.com/]帐号必须已完成开发者资质认证
 	开发者资质认证流程：登录微信开放平台 – 帐号中心 – 开发者资质认证
 	登录微信开放平台—管理中心—公众帐号—绑定公众帐号
 	
 	###wx.getUserInfo
-	获取用户信息，当用户授权过才可以使用该接口，否则会报错，只能使用α(<button>|javascript:;" onclick="$('h1:eq(2)×~h2:eq(5)×')×.click()×)将·open-type·设为·getUserInfo·引导用户授权，比·wx.login()·的优势在于解密后就能获得·unionid·，而·wx.login()·需要一定的条件
-	‖
+	获取用户信息，当用户授权过才可以使用该接口，否则会报错，只能使用@[<button>|javascript:;" onclick="$('h1:eq(2)~h2:eq(5)').click()]将·open-type·设为·getUserInfo·引导用户授权，比·wx.login()·的优势在于解密后就能获得·unionid·，而·wx.login()·需要一定的条件
+	!!
 	wx.getUserInfo({
 		withCredentials{Boolean}：是否带上登录态信息，也就是是否返回敏感信息
 		lang{String}[en]：指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文
@@ -2134,7 +2134,7 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调函数
 		complete{Function}：结束的回调函数
 	})
-	‖
+	!!
 	###加密解密
 	为了确保返回用户数据的安全性，微信会对明文数据进行签名。开发者可以根据业务需要对数据包进行签名校验，确保数据的完整性。
 	1、通过调用接口（如 wx.getUserInfo）获取数据时，接口会同时返回 rawData、signature，其中 signature = sha1( rawData + session_key )
@@ -2150,12 +2150,12 @@ commonData.html.wechatApplet = {
 	··
 	2、开发者将 signature、rawData 发送到开发者服务器进行校验。服务器利用用户对应的 session_key 使用相同的算法计算出签名 signature2 ，比对 signature 与 signature2 即可校验数据的完整性。
 	3、对 encryptedData 进行解密：
-	‖
+	!!
 	对称解密使用的算法为·AES-128-CBC·，数据采用·PKCS#7·填充
 	对称解密的目标密文为·Base64_Decode(encryptedData)·
 	对称解密秘钥·aeskey = Base64_Decode(session_key)·，·aeskey·是16字节
 	对称解密算法初始向量为·Base64_Decode(iv)·，其中·iv·由数据接口返回
-	‖
+	!!
 	··
 	// 部分 nodejs 的 crypto 解密示例
 	// 需要 appId、sessionKey、encryptedData、iv
@@ -2188,20 +2188,20 @@ commonData.html.wechatApplet = {
 	
 	###会话密钥session_key有效性
 	开发者如果遇到因为session_key不正确而校验签名失败或解密失败，请关注下面几个与session_key有关的注意事项。
-	‖
+	!!
 	wx.login()调用时，用户的session_key会被更新而致使旧session_key失效。开发者应该在明确需要重新登录时才调用wx.login()，及时通过登录凭证校验接口更新服务器存储的session_key。
 	微信不会把session_key的有效期告知开发者。我们会根据用户使用小程序的行为对session_key进行续期。用户越频繁使用小程序，session_key有效期越长。
 	开发者在session_key失效时，可以通过重新执行登录流程获取有效的session_key。使用接口wx.checkSession()可以校验session_key是否有效，从而避免小程序反复执行登录流程。
 	当开发者在实现自定义登录态时，可以考虑以session_key有效期作为自身登录态有效期，也可以实现自定义的时效性策略。
-	‖
+	!!
 	wx.checkSession(OBJECT)可校验用户当前session_key是否有效。
-	‖
+	!!
 	wx.checkSession({
 		success{Function}：成功的回调函数
 		fail{Function}：失败的回调函数
 		complete{Function}：结束的回调函数
 	})
-	‖
+	!!
 	示例代码：
 	··
 	wx.checkSession({
@@ -2223,7 +2223,7 @@ commonData.html.wechatApplet = {
 	我为什么要同意？
 	……
 	这就导致了部分用户点击拒绝授权，如果开发者没有对拒绝的情况做处理，可能会因为不良体验而流失用户。
-	所以微信端做出了调整，以前调用·wx.getUserInfo·接口会进行一次弹窗授权（拒绝之后再次调用不会弹窗，只能在授权设置中开启，设置在：右上角 - 关于 - 右上角 - 设置），并且·wx.getUserInfo·依赖·wx.login·，现改为·wx.getUserInfo·不依赖·wx.login·就能得到数据，并不会调用授权窗口，改用·button·组件来获取用户信息（授权无限制以解决用户再次授权），其实如果只需要获取用户的开放信息（头像、昵称等）用α(<open-data>|javascript:;" onclick="$('h1:eq(2)×~h2:eq(4)×')×.click()×)组件就行了，还不用弹窗授权
+	所以微信端做出了调整，以前调用·wx.getUserInfo·接口会进行一次弹窗授权（拒绝之后再次调用不会弹窗，只能在授权设置中开启，设置在：右上角 - 关于 - 右上角 - 设置），并且·wx.getUserInfo·依赖·wx.login·，现改为·wx.getUserInfo·不依赖·wx.login·就能得到数据，并不会调用授权窗口，改用·button·组件来获取用户信息（授权无限制以解决用户再次授权），其实如果只需要获取用户的开放信息（头像、昵称等）用@[<open-data>|javascript:;" onclick="$('h1:eq(2)~h2:eq(4)').click()]组件就行了，还不用弹窗授权
 	一个好的互联网产品，首页应该传递给用户产品理念，在需要展示用户信息的地方才去提示授权，比如未登录的淘宝在浏览完商品后点击购买才要求登录，如果在小程序使用前一定要用户登录或进行到需要用户登录的操作时，可以将·wx.getUserInfo·的·button·组件放置到页面中，并说明：
 	为什么需要授权？
 	需要用户的什么信息？
@@ -2233,17 +2233,17 @@ commonData.html.wechatApplet = {
 	
 	###wx.getSetting
 	获取用户的当前设置，返回值中只会出现小程序已经向用户请求过的权限
-	‖
+	!!
 	wx.getSetting({
 		success{Function(res)}：成功的回调函数
 			res：authSetting用户授权结果，其中 key 为 scope 值，value 为 Bool 值，表示用户是否允许授权
 		fail{Function}：失败的回调函数
 		complete{Function}：结束的回调函数
 	})
-	‖
+	!!
 	
 	###获取用户登录态建议使用场景
-	‖
+	!!
 	小程序内调用·wx.login()·获取 code 并传给服务器
 	服务器请求指定接口得到openid、session_key、unionid
 	服务器以安全起见自定义和openid、session_key、unionid关联的登录态并返回小程序
@@ -2251,7 +2251,7 @@ commonData.html.wechatApplet = {
 	小程序把3rd_session存入本地作为用户登录态
 	之后比如请求数据·wx.request()·就携带自定义登录态3rd_session，服务器查询到对应的openid、session_key以返回相关数据
 	定期更新登录态的信息，比如用 session_key 的有效期作为登录态的有效期，用·wx.checkSession()·来检查是否有效，若失效则重新请求并保存 session_key 到服务器
-	‖
+	!!
 	!./img/html/wechat-applet06.jpg,600
 	用open-data展示用户头像昵称等信息
 	需要使用·wx.getUserInfo·的敏感信息
@@ -2306,7 +2306,7 @@ commonData.html.wechatApplet = {
 	!./img/html/wechat-applet02.jpg,800
 	
 	###调用的API
-	‖
+	!!
 	wx.requestPayment({
 		timeStamp{String}!：时间戳从1970年1月1日00:00:00至今的秒数，即当前的时间
 		nonceStr{String}!：随机字符串，长度为32个字符以下
@@ -2317,10 +2317,10 @@ commonData.html.wechatApplet = {
 		fail{Function}：失败的回调函数
 		complete{Function}：结束的回调函数
 	})
-	‖
-	详细说明需查看：α(小程序支付接口文档|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
-	所有参数在服务器调用统一下单接口返回：α(小程序支付统一下单接口|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1)
-	登录α(微信商户平台|pay.weixin.qq.com)可设置签名密钥
+	!!
+	详细说明需查看：@[小程序支付接口文档|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1]
+	所有参数在服务器调用统一下单接口返回：@[小程序支付统一下单接口|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1]
+	登录@[微信商户平台|pay.weixin.qq.com]可设置签名密钥
 	
 	###示例代码：
 	··
@@ -2345,7 +2345,7 @@ commonData.html.wechatApplet = {
 	#工具
 	
 	##介绍
-	开发小程序需使用α(微信开发者工具|https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
+	开发小程序需使用@[微信开发者工具|https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html]
 	新建项目时需要在小程序后台注册后的 AppID，没有的话也可选择体验模式，但体验模式无法进行代码真机预览和上传等操作，部分 API 无法正常调用，注意登录的微信号需要是该 AppID 的小程序后台绑定过的开发者
 	微信小程序运行在三端：iOS、Android 和 用于调试的开发者工具。
 	三端的脚本执行环境以及用于渲染非原生组件的环境是各不相同的：
@@ -2357,7 +2357,7 @@ commonData.html.wechatApplet = {
 	在 0.10.101000 以及之后版本的开发工具中，会默认使用 babel 将开发者 ES6 语法代码转换为三端都能很好支持的 ES5 的代码，帮助开发者解决环境不同所带来的开发问题。注意在开启 ES6 转换功能的情况下会启用 javasctipt 严格模式
 	
 	##快捷键
-	‖
+	!!
 	ctrl + X：剪切，如果没有选中文字则剪切当前行
 	ctrl + C：复制，如果没有选中文字则复制当前行
 	shift + alt + F：格式化代码
@@ -2374,37 +2374,37 @@ commonData.html.wechatApplet = {
 	ctrl + I：选中当前行
 	shift + home：选中从行首到光标处
 	shift + end：选中从光标处到行尾
-	‖
+	!!
 	
 	##Git 状态展示
 	如果所在的小程序工程目录（project.config.json 所在目录）存在 Git 仓库，编辑器可以展示目前的 Git 状态
 	文件图标状态的含义如下：
-	‖
+	!!
 	U：文件未追踪（Untracked）
 	A：新文件（Added, Staged）
 	M：文件有修改（Modified）
 	+M：文件有修改（Modified, Staged）
 	C：文件有冲突（Conflict）
 	D：文件被删除（Deleted）
-	‖
+	!!
 	文件夹目录图标状态的含义如下：
-	‖
+	!!
 	小红点：目录下至少存在一个删除状态的文件
 	小橙点：目录下至少存在一个冲突状态的文件
 	小蓝点：目录下至少存在一个未追踪状态的文件
 	小绿点：目录下至少存在一个修改状态的文件
-	‖
+	!!
 	如果某一文件存在修改（Modified），可以右键点击此文件，并选择 “与上一版本比较”，则可以查看当前工作区文件与 HEAD 版本的比较
 	比较时文件夹目录图标状态的含义如下：
-	‖
+	!!
 	蓝色线条：此处的代码有变动
 	绿色线条：此处的代码是新增的
 	红色三角箭头：此处有代码被删除
-	‖
+	!!
 	
 	##项目配置文件
 	可以在项目根目录使用·project.config.json·文件对项目进行配置
-	‖
+	!!
 	miniprogramRoot{Path String}：指定小程序源码的目录(需为相对路径)
 	qcloudRoot{Path String}：指定腾讯云项目的目录(需为相对路径)
 	pluginRoot{Path String}：指定插件项目的目录(需为相对路径)
@@ -2425,74 +2425,67 @@ commonData.html.wechatApplet = {
 		beforeCompile：编译前预处理命令
 		beforePreview：预览前预处理命令
 		beforeUpload：上传前预处理命令
-	‖
+	!!
 	
 	##腾讯云
 	开发者可以使用小程序腾讯云支持，开发环境提供免费的主机、https 域名。开发完毕后，还可以三个月内继续使用免费的生产环境。而这一切只需要开发者提供域名。
 	目前服务端支持 NodeJS 和 PHP 两种语言，开发者可以使用微信开发者工具同时进行服务端和小程序的开发。
 	开发环境
-	‖
+	!!
 	免费使用
 	自动分配测试用二级域名 xxxxxxx.qcloud.la
 	自动部署免费 HTTPS
 	仅可用于线上调试，不可发布
 	代码部署、运行和数据库与生产环境完全分开
 	与微信开发工具打通，可一键部署、调试、重启和恢复代码
-	‖
+	!!
 	生产环境
-	‖
+	!!
 	免费使用
 	用户需购买或使用已有的腾讯云域名
 	自动部署免费 HTTPS
 	用于线上发布，不可调试
 	使用微信开发工具上传代码，在腾讯云控制台操作部署，上传和发布分离，降低误操作风险
-	‖
+	!!
 	通过微信公众平台授权登录腾讯云
 	打开 微信公众平台 注册并登录小程序，按如下步骤操作：
-	‖
+	!!
 	单击左侧菜单栏中的【设置】
 	单击右侧 Tab 栏中的【开发者工具】
 	单击【腾讯云】，进入腾讯云工具页面，单击【开通】
 	使用小程序绑定的微信扫码即可将小程序授权给腾讯云，开通之后会自动进去腾讯云微信小程序控制台，显示开发环境已开通，此时可以进行后续操作
-	‖
+	!!
 	注意：此时通过小程序开发者工具查看腾讯云状态并不会显示已开通，已开通状态会在第一次部署开发环境之后才会同步到微信开发者工具上
-	服务端、客户端的 Demo、SDK 的具体文档：α(开发环境和生产环境|https://github.com/tencentyun/wafer2-startup/wiki/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%92%8C%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83)
+	服务端、客户端的 Demo、SDK 的具体文档：@[开发环境和生产环境|https://github.com/tencentyun/wafer2-startup/wiki/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%92%8C%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83]
 	
 	#小游戏
 	
 	##介绍
 	微信小游戏是小程序的一个类目。用户完成小程序注册后，可选择“游戏”类目并开始开发、调试小游戏
 	需要两个必要文件：
-	‖
+	!!
 	game.js：小游戏入口文件
 	game.json：配置文件
-	‖
+	!!
 	每个小游戏允许上传的代码包总大小为 4MB
 	
 	##game.json
 	开发者工具和客户端需要读取这个配置，完成相关界面渲染和属性设置。
-	‖
+	!!
 	deviceOrientation{String}[portrait]：屏幕方向，可选 portrait（竖屏）、landscape（横屏）
 	showStatusBar{Boolean}[false]：是否显示状态栏
 	networkTimeout：
-	‖
+	!!
 	
-	αα
-	
-	小程序官方文档αhttps://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
-	
-	小程序社区：疑难解答、教程、demo、资源αhttp://www.wxapp-union.com
-	
-	小程序club：同上αhttp://www.wxappclub.com
-	
-	知乎：如何入门微信小程序开发，有哪些学习资料？αhttps://www.zhihu.com/question/50907897
-	
-	知乎：微信小程序为什么不用HTML5、CSS，自己搞了个WXML、WXSS，很多框架用不了，好处一点不知道？αhttps://www.zhihu.com/question/51809406
-	
-	知乎：「微信小程序」剖析（二）：框架原理 | 在浏览器上运行的猜想αhttps://zhuanlan.zhihu.com/p/22607204
-	
-	公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析αhttps://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
-	αα
+	@@!
+	小程序官方文档|https://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
+	小程序社区：疑难解答、教程、demo、资源|http://www.wxapp-union.com
+	小程序club：同上|http://www.wxappclub.com
+	知乎：如何入门微信小程序开发，有哪些学习资料？|https://www.zhihu.com/question/50907897
+	知乎：微信小程序为什么不用HTML5、CSS，自己搞了个WXML、WXSS，很多框架用不了，好处一点不知道？|https://www.zhihu.com/question/51809406
+	知乎：「微信小程序」剖析（二）：框架原理 | 在浏览器上运行的猜想|https://zhuanlan.zhihu.com/p/22607204
+	公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析|https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
+	@@
 	
 	&2018.6.7
 	`

@@ -2,7 +2,7 @@ commonData.tool.git = {
 	content: `
 	#安装
 	Windows下安装
-	从 α(Git 官网|https://git-scm.com/downloads) 上下载安装
+	从 @[Git 官网|https://git-scm.com/downloads] 上下载安装
 
 	##用户信息设置
 	安装完 Git 后应该及时设置你的用户名称与邮件地址，此后每次 Git 的提交都会使用这些信息。在终端输入一下命令即可设置你的用户信息。

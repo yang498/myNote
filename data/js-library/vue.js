@@ -41,10 +41,10 @@ commonData.jsLibrary.vue = {
 	
 	##安装
 	Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性
-	可以在浏览器上安装 α(Vue Devtools|https://github.com/vuejs/vue-devtools#vue-devtools) 以方便审查和调试 Vue 应用
+	可以在浏览器上安装 @[Vue Devtools|https://github.com/vuejs/vue-devtools#vue-devtools] 以方便审查和调试 Vue 应用
 	###直接用·<script>·引入
-	α(开发版本：未压缩，包含完整的警告和调试模式|https://vuejs.org/js/vue.js)
-	α(生产版本：压缩版，删除了警告|https://vuejs.org/js/vue.min.js)
+	@[开发版本：未压缩，包含完整的警告和调试模式|https://vuejs.org/js/vue.js]
+	@[生产版本：压缩版，删除了警告|https://vuejs.org/js/vue.min.js]
 	也可以使用 CDN 手动引入指定的版本号，和指定·vue.js·或·vue.min.js·
 	··
 	<script src="https://×cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
@@ -71,12 +71,12 @@ commonData.jsLibrary.vue = {
 	注意：所有的挂载元素会被 Vue 生成的 DOM 替换，因此不推荐挂载 root 实例到·<html>·或者·<body>·上。
 	
 	##数据
-	‖
+	!!
 	data：数据对象
 	methods：方法对象
 	computed：计算属性
 	watch：监听属性
-	‖
+	!!
 	data、methods、computed 是定义数据，watch 是监听数据
 	Vue 实例也代理了数据对象上所有的属性，因此访问·vm.a·等价于访问·vm.$data.a·。
 	数据选项的子属性都会被代理到 Vue 实例上，所以可以直接用比如·vm.msg·直接读取
@@ -172,11 +172,11 @@ commonData.jsLibrary.vue = {
 	监听数据的变化做出相应的处理，可以监听·data·中的变量或·$route·等，键为观察的对象（为对象路径时需用引号），值为对应的处理，可以为函数、方法名（需用引号）、选项
 	为函数或方法名时有2个参数，第一个为当前的值，第二个为改变前的值
 	选项可以是一个数组，每个元素为函数或方法名，也可以是一个对象，属性如下：
-	‖
+	!!
 	handler{Function/String}：函数或方法名（需用引号）
 	deep{Boolean}：是否深度监听（不能监听到对象属性值的变化，数组的值变化可以，若数组包含对象请参考前一句话）
 	immediate{Boolean}：是否在监听开始之后被立即调用
-	‖
+	!!
 	注意：不应该使用·=>·来定义函数，因为会改变·this·的指向，方法中的·this·本就绑定为 Vue 实例
 	··
 	var vm = new Vue({
@@ -308,7 +308,7 @@ commonData.jsLibrary.vue = {
 	
 	##v-html
 	更新元素的值，即改变·innerHTML·，插入的内容不会作为 Vue 模板进行编译
-	注意不要渲染未知的 html ，可能会导致 α(XSS 攻击|https://en.wikipedia.org/wiki/Cross-site_scripting)，比如渲染用户提交的内容
+	注意不要渲染未知的 html ，可能会导致 @[XSS 攻击|https://en.wikipedia.org/wiki/Cross-site_scripting]，比如渲染用户提交的内容
 	··
 	<div v-html="html"></div>
 	··
@@ -320,7 +320,7 @@ commonData.jsLibrary.vue = {
 	··
 	
 	##v-if/else/else-if
-	♭v-if♭ 根据表达式的值的真假条件渲染元素。在切换时元素及它的数据绑定 / 组件被销毁并重建
+	^^v-if^^ 根据表达式的值的真假条件渲染元素。在切换时元素及它的数据绑定 / 组件被销毁并重建
 	··
 	<h1 v-if="ok">Yes</h1>
 	··
@@ -332,19 +332,19 @@ commonData.jsLibrary.vue = {
 	  <p>Paragraph 2</p>
 	</template>
 	··
-	♭v-else♭ 元素必须紧跟在带·v-if·或者·v-else-if·的元素的后面，否则它将不会被识别
+	^^v-else^^ 元素必须紧跟在带·v-if·或者·v-else-if·的元素的后面，否则它将不会被识别
 	··
 	<div v-if="Math.random() > 0.5">Now you see me</div>
 	<div v-else>Now you don't</div>
 	··
-	♭v-else-if♭ 类似于·v-else·，也必须紧跟在带·v-if·或者·v-else-if·的元素之后
+	^^v-else-if^^ 类似于·v-else·，也必须紧跟在带·v-if·或者·v-else-if·的元素之后
 	··
 	<div v-if="type === 'A'"> A </div>
 	<div v-else-if="type === 'B'"> B </div>
 	<div v-else-if="type === 'C'"> C </div>
 	<div v-else> Not A/B/C </div>
 	··
-	♭v-show VS v-if：♭·v-if·有更高的切换开销，而·v-show·有更高的初始渲染开销。所以频繁地切换用·v-show·较好，否则用·v-if·
+	^^v-show VS v-if：^^·v-if·有更高的切换开销，而·v-show·有更高的初始渲染开销。所以频繁地切换用·v-show·较好，否则用·v-if·
 	###用 key 管理可复用的元素
 	Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。
 	··
@@ -372,13 +372,13 @@ commonData.jsLibrary.vue = {
 	
 	##v-for
 	根据一组数组的选项列表进行渲染，写法有：
-	‖
+	!!
 	item in array：array 为源数据，item 代表源数据的每一项
 	item of array：同上，另一种写法
 	(item, index) in array：index 为当前项的索引
 	(value, key, index) in object：当循环对象时 item 作为键值，index 作为键名，第 3 个为当前项的索引
 		注意在遍历对象时，是按·Object.keys()·的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的
-	‖
+	!!
 	··
 	<div v-for="item in array"></div>
 	<div v-for="item of array"></div>
@@ -416,10 +416,10 @@ commonData.jsLibrary.vue = {
 	重新替换数组并不会丢弃现有 DOM 重新渲染整个列表，Vue 仍会高效的重用，请放心食用
 	###js限制
 	由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
-	‖
+	!!
 	利用索引直接设置一个项时，例如：vm.items[1] = 'x'
 	修改数组的长度时，例如：vm.items.length = 2
-	‖
+	!!
 	第一类问题可以用·splice()·方法代替：·vm.items.splice(index, 1, newValue)·
 	也可以用·Vue.set·：·Vue.set(vm.items, index, newValue)·
 	或·vm.$set·：·vm.$set(vm.items, index, newValue)·
@@ -483,12 +483,12 @@ commonData.jsLibrary.vue = {
 	
 	##v-on
 	绑定事件监听器，可缩写为·@·，用在普通元素上时，只能监听原生 DOM 事件。用在自定义元素组件上时，也可以监听子组件触发的自定义事件。支持的修饰符有：
-	‖
+	!!
 	.stop：阻止冒泡，调用 event.stopPropagation()
 	.prevent：阻止默认行为，调用 event.preventDefault()
 	.capture：添加事件侦听器时使用 capture 捕获模式
 	.self：事件是从侦听器绑定的元素本身触发时才触发回调
-	.keyCode/keyAlias：事件是从特定键触发时才触发回调，比如13代表enter键，可以查看α(keyCode对照表|http://www.t086.com/article/4315)，这通常是比较难记的，所以最常用的按键提供了别名:
+	.keyCode/keyAlias：事件是从特定键触发时才触发回调，比如13代表enter键，可以查看@[keyCode对照表|http://www.t086.com/article/4315]，这通常是比较难记的，所以最常用的按键提供了别名:
 		.enter：回车
 		.tab：制表
 		.delete：删除和退格
@@ -517,7 +517,7 @@ commonData.jsLibrary.vue = {
 	.right：点击鼠标右键时触发
 	.middle：点击鼠标中键时触发
 	.passive：以 { passive: true } 模式添加侦听器，此模式会忽略 event.preventDefault() 行为
-	‖
+	!!
 	注意使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用·v-on:click.prevent.self·会阻止所有的点击，而·v-on:click.self.prevent·只会阻止对元素自身的点击。
 	··
 	<!-- 方法处理器 -->
@@ -579,11 +579,11 @@ commonData.jsLibrary.vue = {
 	在绑定 prop 时，prop 必须在子组件中声明。
 	没有参数时，可以绑定到一个包含键值对的对象。注意此时 class 和 style 绑定不支持数组和对象。
 	支持的修饰符有：
-	‖
+	!!
 	.prop：被用于绑定 DOM 属性 (property)
 	.camel：将用短横线连接的特性名转换为驼峰式
 	.sync：语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器
-	‖
+	!!
 	··
 	<!-- 绑定一个属性 -->
 	<img v-bind:src="imageSrc">
@@ -631,11 +631,11 @@ commonData.jsLibrary.vue = {
 	<input :value="searchText" @input="searchText=$event.target.value"/>
 	··
 	支持的修饰符有：
-	‖
+	!!
 	.lazy：取代 input 改为 change 事件
 	.number：输入字符串转为数字类型，因为即使·type="number"·也是返回字符串
 	.trim：输入首尾空格过滤
-	‖
+	!!
 	注意·v-model·会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源。应在 data 选项中声明初始值。
 	·v-model·不会更新需要拼写语言的过程，如果需要就用·input·事件
 	··
@@ -734,25 +734,25 @@ commonData.jsLibrary.vue = {
 	##概述
 	Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。
 	包括以下工具：
-	‖
+	!!
 	在 CSS 过渡和动画中自动应用 class
 	可以配合使用第三方 CSS 动画库，如 Animate.css
 	在过渡钩子函数中使用 JavaScript 直接操作 DOM
 	可以配合使用第三方 JavaScript 动画库，如 Velocity.js
-	‖
+	!!
 	在下列情形中可以使用·<transition>·元素定义过渡动画，注意只能包含一个根元素
-	‖
+	!!
 	条件渲染：使用 v-if
 	条件展示：使用 v-show
 	动态组件
 	组件根节点
-	‖
+	!!
 	当插入或删除包含在 transition 组件中的元素时，Vue 将会做以下处理：
-	‖
+	!!
 	自动嗅探目标元素是否应用了 CSS 过渡或动画，如果是，在恰当的时机添加/删除 CSS 类名。
 	如果过渡组件提供了 JavaScript 钩子函数，这些钩子函数将在恰当的时机被调用。
 	如果没有找到 JavaScript 钩子并且也没有检测到 CSS 过渡/动画，DOM 操作 (插入/删除) 在下一帧中立即执行。(注意此指浏览器逐帧动画机制，和 Vue 的 nextTick 概念不同)
-	‖
+	!!
 	###同时使用过渡动画
 	在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 animation 很快的被触发并完成了，而 transition 效果还没结束。在这种情况中，你就需要使用 type 特性并设置 animation 或 transition 来明确声明你需要 Vue 监听的类型。
 	###显性的过度动画持续时间
@@ -764,14 +764,14 @@ commonData.jsLibrary.vue = {
 	
 	##类名
 	在进入/离开的过渡中，会有 6 个 class 切换：
-	‖
+	!!
 	v-enter：定义进入过渡的开始状态。在元素被插入之前生效，被插入之后的下一帧移除。
 	v-enter-active：定义进入过渡生效时的状态。在过渡/动画完成之后移除，用来定义进入过渡的过程时间，延迟和曲线函数。
 	v-enter-to：定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。
 	v-leave：定义离开过渡的开始状态。下一帧被移除。
 	v-leave-active：定义离开过渡生效时的状态。在过渡/动画完成之后移除。用来定义离开过渡的过程时间，延迟和曲线函数。
 	v-leave-to：定义离开过渡的结束状态。在过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。
-	‖
+	!!
 	!./img/js-library/vue02.png,600
 	这些是默认的类名，即以·v·开头，可以给·<transition>·自定义一个 name 属性以更换开头，比如·<transition name="fade">·代表·v-enter·就会被替换为·fade-enter·
 	比如 v-if 的过渡
@@ -995,10 +995,10 @@ commonData.jsLibrary.vue = {
 	}
 	··
 	同时生效的进入和离开的过渡不能满足所有要求，所以 Vue 提供了过渡模式：
-	‖
+	!!
 	in-out：新元素先进行过渡，完成之后当前元素过渡离开。
 	out-in：当前元素先进行过渡，完成之后新元素过渡进入。
-	‖
+	!!
 	
 	##列表过渡
 	使用·<transition-group>·组件可以实现列表过渡，不同于·<transition>·，它会以一个真实元素呈现，即默认渲染为一个·<span>·。也可以通过·tag·属性更换为其他元素。注意这个组件不能使用过渡模式·in-out·和·out-in·了，内部元素总是需要提供唯一的·key·属性值。
@@ -1064,8 +1064,8 @@ commonData.jsLibrary.vue = {
     }
   }
 	··
-	内部的实现是 Vue 使用了一个叫 α(FLIP|https://aerotwist.com/blog/flip-your-animations/) 简单的动画队列，使用 transforms 将元素从之前的位置平滑过渡新的位置。
-	α(多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/)
+	内部的实现是 Vue 使用了一个叫 @[FLIP|https://aerotwist.com/blog/flip-your-animations/] 简单的动画队列，使用 transforms 将元素从之前的位置平滑过渡新的位置。
+	@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
 	需要注意的是使用 FLIP 过渡的元素不能设置为·display: inline·。作为替代方案，可以设置为·display: inline-block·或者放置于 flex 中
 	所以上面的加减数字的 css 改成
 	··

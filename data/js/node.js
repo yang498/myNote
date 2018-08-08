@@ -11,7 +11,7 @@ commonData.js.node = {
 	nvm 是 nodejs 的版本管理工具
 
 	##nodejs 安装
-	@(中文官网下载|http://nodejs.cn/download/)，安装完成后，检查是否安装成功在命令行输入
+	@[中文官网下载|http://nodejs.cn/download/]，安装完成后，检查是否安装成功在命令行输入
 	··
 	node -v         // nodejs 的版本
 	npm -v          // npm 包管理器的版本
@@ -25,7 +25,7 @@ commonData.js.node = {
 	npm install xxx -g：声明-g才有xxx命令
 
 	##cnpm 安装
-	npm 毕竟是国外的，所以网速自然就比不上国内的了，而国内有 npm 的@(淘宝镜像 cnpm|https://npm.taobao.org/)，每 10 分钟一次以保证尽量与 npm 官方服务同步
+	npm 毕竟是国外的，所以网速自然就比不上国内的了，而国内有 npm 的@[淘宝镜像 cnpm|https://npm.taobao.org/]，每 10 分钟一次以保证尽量与 npm 官方服务同步
 	安装指令：
 	··
 	npm install -g cnpm --registry=https://registry.npm.taobao.org

@@ -26,7 +26,7 @@ commonData.other.office = {
 	5、将第二行复制，想要打开几个微信就复制几行
 	6、保存后将文件后缀修改为【.bat】
 	7、双击打开即可运行
-	此方法来自知乎问题α(电脑上怎么登录几个微信（微信多开）？|https://www.zhihu.com/question/41110715)
+	此方法来自知乎问题@[电脑上怎么登录几个微信（微信多开）？|https://www.zhihu.com/question/41110715]
 	
 	#office
 	ctrl+z后退，ctrl+y前进
@@ -36,8 +36,8 @@ commonData.other.office = {
 	设置目录
 	
 	##excel
-	鼠标移动到单元格的右下角¡(./imgs/other/office01.jpg,200)会出现+号，任意拖动可复制多个，往内拖动是清除本单元格，如果拖动的是含运算符号的数字类型往右或下是累加，往左或上是累减，此时再按ctrl键会再次出现小+号¡(./imgs/other/office02.jpg,200)为不改变的复制
-	鼠标移动到单元格边缘会出现十字箭头¡(./imgs/other/office03.jpg,200)，按住鼠标左键可移动，如果目标单元格有内容则会提示是否覆盖，此时再按ctrl键会出现小+号¡(./imgs/other/office04.jpg,200)为复制到目标单元格且不会提示是否覆盖
+	鼠标移动到单元格的右下角![./imgs/other/office01.jpg,200]会出现+号，任意拖动可复制多个，往内拖动是清除本单元格，如果拖动的是含运算符号的数字类型往右或下是累加，往左或上是累减，此时再按ctrl键会再次出现小+号![./imgs/other/office02.jpg,200]为不改变的复制
+	鼠标移动到单元格边缘会出现十字箭头![./imgs/other/office03.jpg,200]，按住鼠标左键可移动，如果目标单元格有内容则会提示是否覆盖，此时再按ctrl键会出现小+号![./imgs/other/office04.jpg,200]为复制到目标单元格且不会提示是否覆盖
 	鼠标移到单元格右下角，按住ctrl+shift进行拖动可插入单元格，往内拖动是清除本单元格
 	tab：切换到右一个单元格，enter：切换到下一个单元格，shift+tab和shift+enter则是后退
 	ctrl+鼠标左键：选择单个
@@ -96,7 +96,7 @@ commonData.other.office = {
 	
 	##准备
 	这一步之前做过的话可以跳过
-	这里以α(通用pe工具箱|http://www.tongyongpe.com/)为例
+	这里以@[通用pe工具箱|http://www.tongyongpe.com/]为例
 	准备一个U盘（最好是空的），先下载好系统安装包，百度就可以了
 	安装好通用pe工具箱程序
 	!./img/other/reinstall01.jpg,800
@@ -135,14 +135,14 @@ commonData.other.office = {
 	开机显示：windows boot manager has been blocked by the current security policy
 	一般这种问题出现在 win10 或 win8 重装成 win7 的时候，意思是 Windows 启动管理器已被当前安全策略阻止。因为原来装的是 win8 或 win10 系统，所以会开启 UEFI 安全启动选项
 	以联想笔记本为例，刚开机时按 F12 是进入 boot 界面，即重装系统的 pe 界面，在解压 GHO 文件后会提示重启电脑，然后就会开机显示上面的一长串英文，此时需要再次重启电脑，刚开机时按 F2 进入 bios 界面，在右边的界面可以看到选项说明，底部是按键说明
-	‖
+	!!
 	Security 菜单：选择 Secure BOOT，改为 Disabled，表示关闭安全策略
 	Boot 菜单：
 		选择 boot mode，改为 Legacy First 或 legacy support 或 AUTO，表示修改引导模式为传统优先或其他
 		选择 boot priority，改为 Legacy First 或 legacy support 或 AUTO，表示修改引导优先级为传统优先或其他
 		选择 Launch CSM（如果有这个选项），改为 Enabled
 	Exit 菜单：选择 OS Optimized Defaults，改为 OTHER OS，表示修改默认优先系统为其他系统
-	‖
+	!!
 	基本上都改为第二个选项就行了，完成后按 F10、选 Yes 保存退出即可
 	再次进入 pe 工具箱，选择快速分区，在左边选择 MBR 类型，GUID类型 主要是针对 win8 以上系统和 UIFI 引导模式，优势是启动速度较快。注意得两个条件齐备才选择 GUID。
 	再次重启电脑就可以了

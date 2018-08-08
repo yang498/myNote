@@ -16,7 +16,7 @@ commonData.css.css = {
 	}
 	··
 	###容器的属性
-	‖
+	!!
 	flex-direction：控制排列方向
 		row（默认）：水平方向
 		row-reverse：水平方向，顺序倒置
@@ -42,9 +42,9 @@ commonData.css.css = {
 	align-content：多行对齐方式，如果子元素只有一行该属性不起作用，
 		stretch（默认值）：每行垂直方向平均占满
 		其余属性和 justify-content 属性相同
-	‖
+	!!
 	###子元素的属性
-	‖
+	!!
 	align-self：设置单个子元素的对齐方式，可覆盖 align-items 属性，如果没有父元素，则等同于stretch
 		auto（默认值）：继承父元素的 align-items 的属性
 		其余属性和 align-items 属性相同
@@ -54,7 +54,7 @@ commonData.css.css = {
 	flex-basis：定义子元素在水平方向占据的空间，即设置宽度，默认值为auto，即子元素的本来大小。可以使用各种单位。
 	flex：flex-grow、flex-shrink 和 flex-basis的简写，默认值为·0 1 auto·，后两个属性可选。
 		两个快捷值：auto (·1 1 auto·) 和 none (·0 0 auto·)
-	‖
+	!!
 	
 	#技巧
 	##超出省略

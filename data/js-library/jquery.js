@@ -25,7 +25,7 @@ commonData.jsLibrary.jquery = {
 	// bower
 	bower install jquery
 	··
-	更多 CDN：α(CDNJS|https://cdnjs.com/libraries/jquery/)，α(jsDelivr|https://www.jsdelivr.com/package/npm/jquery)，α(Microsoft|https://www.asp.net/ajax/cdn#jQuery_Releases_on_the_CDN_0)，α(Google|https://developers.google.com/speed/libraries/devguide#jquery)
+	更多 CDN：@[CDNJS|https://cdnjs.com/libraries/jquery/]，@[jsDelivr|https://www.jsdelivr.com/package/npm/jquery]，@[Microsoft|https://www.asp.net/ajax/cdn#jQuery_Releases_on_the_CDN_0]，@[Google|https://developers.google.com/speed/libraries/devguide#jquery]
 
 	#选择器
 	使用·$()·可以用来选择 DOM 元素
@@ -34,7 +34,7 @@ commonData.jsLibrary.jquery = {
 	·$()·选择的元素是 jQuery 对象，所以能使用 jQuery 方法，想要使用原生的元素只需选择对应的下标即可，比如·$('.demo')[0]·
 
 	##基本
-	‖
+	!!
 	*：所有
 	element：标签名
 	.class：样式名
@@ -42,7 +42,7 @@ commonData.jsLibrary.jquery = {
 	selector, selectorN：多选
 	$.escapeSelector()：转义选择器中的特殊字符·. # , : [ ] = @·
 	html：可以选择一段 html 以使用 jQuery 的方法
-	‖
+	!!
 
 	###*
 	选择所有元素
@@ -85,12 +85,12 @@ commonData.jsLibrary.jquery = {
 	··
 
 	##层级
-	‖
+	!!
 	parent>child：所有子元素
 	ancestor descendant：所有后代元素
 	prev+next：下一个元素
 	prev~siblings：后面的所有元素
-	‖
+	!!
 	###parent>child
 	选择 parent 的子元素中筛选 child 的所有元素
 	比如·$('#demo>.text')·，若 child 为空则选择 parent 的所有子元素：·$('#demo>')·
@@ -106,7 +106,7 @@ commonData.jsLibrary.jquery = {
 
 	##属性
 	属性值的引号是可选的，也就是·[attr=value]·和·[attr="value"]·是一样的，但是当要表示多个属性值时，就必须用引号了，比如·[attr=val1 val2]·是会报错的，需加上引号·[attr="val1 val2"]·，而且多个属性值的顺序也是不能变的，比如要获取·class="demo active"·需写成·$('[class="demo active"]')·，写成·$('[class="active demo"]')·是获取不了的
-	‖
+	!!
 	[attr]：属性
 	[attr="value"]：属性 + 值
 	[attr!="value"]：不包括该属性 + 值
@@ -115,7 +115,7 @@ commonData.jsLibrary.jquery = {
 	[attr^="value"]：以指定字符串开头的属性
 	[attr$="value"]：以指定字符串结尾的属性
 	[attr|="value"]：正好是 value 或以 value- 开头的属性
-	‖
+	!!
 	###[attr]
 	选择所有含有 attr 属性的元素
 	比如·$('[class]')·
@@ -142,7 +142,7 @@ commonData.jsLibrary.jquery = {
 	比如·$('a[hreflang|="en"]')·表示选择·hreflang="en"·或·hreflang="en-UK"·，不会选择·hreflang="english"·
 
 	##子元素
-	‖
+	!!
 	:first：第一个
 	:last：最后一个
 	:first-child：所有父级元素下的第一个子元素
@@ -155,7 +155,7 @@ commonData.jsLibrary.jquery = {
 	:nth-last-of-type()：:nth-of-type() 的倒数版
 	:only-child：父元素只包含唯一子元素的那个子元素
 	:only-of-type：:only-child 的忽略其他元素版
-	‖
+	!!
 	###:first
 	在匹配的集合中选择第一个元素
 	比如·$('li:first')·表示选择第 1 个 li 元素
@@ -219,13 +219,13 @@ commonData.jsLibrary.jquery = {
 	比如·$('button:only-child')·表示选择所有 button 如果其父元素不含其他 button 元素，有其他比如 input 元素不管
 
 	##基本筛选
-	‖
+	!!
 	:eq()：第几个
 	:gt()：大于给定 index 的元素
 	:lt()：小于给定 index 的元素
 	:odd：奇数
 	:even：偶数
-	‖
+	!!
 	###:eq(index)
 	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
 	比如·$('li:eq(2)')·表示选择第 3 个 li 元素
@@ -241,7 +241,7 @@ commonData.jsLibrary.jquery = {
 	选择索引值为偶数元素，即选择索引值为 0 2 4 6 8... 的元素
 
 	##内容筛选
-	‖
+	!!
 	:not()：除了指定的元素
 	:has()：后代元素中包含指定元素的元素
 	:contains()：后代元素中包含指定文本的元素
@@ -249,7 +249,7 @@ commonData.jsLibrary.jquery = {
 	:parent：和 :empty 相反，即非空标签
 	:hidden：隐藏的元素，即 display:none、type="hidden"，包括隐藏的后代元素
 	:visible：和·:hidden·相反，即未隐藏的元素
-	‖
+	!!
 	###:not(selector)
 	在选择的元素中除去给定选择器的元素，selector 可以是任意的选择器
 	比如·$('input:not(:checked, :disabled)')·表示选择所有除了已选择和已禁用的 input 元素
@@ -270,13 +270,13 @@ commonData.jsLibrary.jquery = {
 	选择所有显示的元素，和·:hidden·相反
 
 	##其他筛选
-	‖
+	!!
 	:lang()：指定语言的元素,
 	:animated：jQuery 动画中的元素,
 	:target：id 和当前 hash 值相同的元素,
 	:header：所有标题，即 h1, h2, h3, h4, h4, h6,
 	:root：根元素，即 html
-	‖
+	!!
 	###:lang(language)
 	选择指定语言的所有元素
 	比如·$('div:lang(en)')·表示选择·<div lang="en">·和·<div lang="en-us">·及其所有子元素，如果子元素中有其他语言比如·<div lang="fr">·将不会被选择
@@ -293,7 +293,7 @@ commonData.jsLibrary.jquery = {
 	选择根元素，等同于·$('html')·
 
 	##表单筛选
-	‖
+	!!
 	:input：表单元素，即 input, textarea, select, button
 	:text：文本类型元素
 	:password：密码类型元素
@@ -309,7 +309,7 @@ commonData.jsLibrary.jquery = {
 	:disabled：禁用的元素
 	:enabled：未禁用的元素
 	:focus：获取焦点的元素
-	‖
+	!!
 	###:input
 	选择所有表单元素，即·$('input, textarea, select, button')·
 	###:text
@@ -345,7 +345,7 @@ commonData.jsLibrary.jquery = {
 
 	#DOM 属性
 	##css
-	‖
+	!!
 	.addClass()：添加 class
 	.removeClass()：删除 class
 	.toggleClass()：切换 class
@@ -353,7 +353,7 @@ commonData.jsLibrary.jquery = {
 	.css()：获取或设置样式
 	$.cssHooks：扩展 .css()
 	$.cssNumber：在用 .css() 设置数值时哪些属性不用加 px
-	‖
+	!!
 	###.addClass(className/function)
 	为每个匹配的元素添加指定的样式类名，多个样式名以空格隔开
 	比如·$('.demo').addClass('active')·，·$('.demo').addClass('active tab')·
@@ -416,13 +416,13 @@ commonData.jsLibrary.jquery = {
 	比如·$.cssNumber.left = true·表示之后的·.css('left', 100)·是不会自动加单位 px 的，即这是个无效的设置
 
 	##属性
-	‖
+	!!
 	.val()：获取或设置 value 值
 	.attr()：获取或设置属性值
 	.removeAttr()：删除属性值
 	.prop()：获取或设置包含 Boolean 值的属性值
 	.removeProp()：删除由·.prop()·方法自定义的属性，或永久删除原生属性
-	‖
+	!!
 	###.val([value/function])
 	获取或设置元素的 value 值，通常用于表单元素中
 	比如·$('input.name').val()·表示获取输入框的值
@@ -458,13 +458,13 @@ commonData.jsLibrary.jquery = {
 	注意不要用来删除原生的属性，比如 checked disabled，这将完全移除该属性，不能再次被添加到元素上。使用·.prop()·来设置这些属性设置为 false 代替比较好
 
 	##数据
-	‖
+	!!
 	.data()：在元素上存储或读取任意相关数据，包括元素上的 data- 开头的属性
 	.removeData()：删除·.data()·绑定的数据，不影响元素上的 data- 属性
 	$.data()：.data() 的另一种写法，原生元素作为第一个参数
 	$.removeData()：.removeData() 的另一种写法，原生元素作为第一个参数
 	$.hasData()：判断元素是否有 .data() 绑定的数据，原生元素作为参数
-	‖
+	!!
 	###.data([key] [, value])
 	在指定的元素上存储或读取任意相关数据，key 为字符串类型，value 为任意非 undefined 类型
 	如果匹配的是多个元素，只读取第一个，需要全部读取要用循环，当然存储是全部存储
@@ -501,14 +501,14 @@ commonData.jsLibrary.jquery = {
 	比如·$.hasData($('.demo')[0])·
 
 	##尺寸
-	‖
+	!!
 	.width()：获取宽度，不包括 padding 和 border
 	.height()：获取高度，用法同 .width()
 	.innerWidth()：获取宽度，包括 padding，不包括 border，用法同 .width()
 	.innerHeight()：获取高度，用法同 .innerWidth()
 	.outerWidth()：获取宽度，包括 padding 和 border，可传入一个 true 表示包括 margin，用法同 .width()
 	.outerHeight()：获取高度，用法同·.outerWidth()·
-	‖
+	!!
 	###.width([value/function])
 	为匹配的元素集合中获取第一个元素的当前计算宽度值，返回数字，不包括 padding 和 border，设置了·box-sizing: border-box;·也会减去 padding 和 border
 	·.css(width)·返回的是带单位的字符串，为样式设置的计算宽度
@@ -526,13 +526,13 @@ commonData.jsLibrary.jquery = {
 	获取高度，用法同·.outerWidth()·
 
 	##位置
-	‖
+	!!
 	.offset()：获取或设置相对于文档的 left 和 top 值
 	.offsetParent()：获取离指定元素最近的非 static 定位的祖先元素
 	.position()：获取相对于离指定元素最近的非 static 定位的祖先元素的 left 和 top 值
 	.scrollTop()：获取或设置相对于顶部滚动的距离
 	.scrollLeft()：获取或设置相对于左边滚动的距离
-	‖
+	!!
 	###.offset([coordinates/function])
 	返回一个对象，包含 left 和 top，坐标相对于文档，即网页左上角
 	可以传入 1 个参数以设置 left 和 top，形式如·{left: 100, top: 100}·，使用后该元素将会添加·relative·定位
@@ -551,10 +551,10 @@ commonData.jsLibrary.jquery = {
 	##复制
 	###.clone([withDataAndEvents] [, deepWithDataAndEvents])
 	深拷贝指定元素，包括子元素
-	‖
+	!!
 	withDataAndEvents{Boolean}[false]：该元素是否复制绑定的事件和·.data()·设置的值
 	deepWithDataAndEvents{Boolean}[withDataAndEvents]：该元素的所有后代元素是否复制绑定的事件和·.data()·设置的值，默认和第一个参数保持一致，即·.clone()·等同于·.clone(false, false)·，·.clone(true)·等同于·.clone(true, true)·
-	‖
+	!!
 	比如·$('.demo').clone().appendTo('.test')·
 	若元素未经复制就进行添加等操作表示移动该元素
 	比如·$('.demo').appendTo('.test')·表示·$('.demo')·被移动到·$('.test')·里面的末尾处
@@ -562,14 +562,14 @@ commonData.jsLibrary.jquery = {
 	复制的元素在插入到文档之前，可以修改该复制的元素
 
 	##内部添加
-	‖
+	!!
 	.text()：获取或设置文本
 	.html()：获取或设置 html
 	.append()：在元素里面的最后添加
 	.appendTo()：写法和 .append() 相反
 	.prepend()：在元素里面的开头添加
 	.prependTo()：写法和 .prepend() 相反
-	‖
+	!!
 	###.text([text/function])
 	获取或设置匹配元素集合中每个元素的合并文本，包括所有的后代元素
 	不传入参数表示获取，传入 1 个参数表示设置内容为传入的参数
@@ -589,12 +589,12 @@ commonData.jsLibrary.jquery = {
 	和·.prepend()·的写法相反，要添加的内容被添加到元素里面的开始处
 
 	##外部添加
-	‖
+	!!
 	.after()：在元素后面添加
 	.before()：在元素前面添加
 	.insertAfter()：写法和 .after() 相反
 	.insertBefore()：写法和 .before() 相反
-	‖
+	!!
 	###.after(content [, ...content] / function(index, html))
 	在匹配元素的每个元素后面插入参数的内容，作为兄弟节点，参数用法同·.append()·
 	比如·$('.demo').after('<i></i>')·
@@ -606,12 +606,12 @@ commonData.jsLibrary.jquery = {
 	和·.before()·的写法相反，要添加的内容被添加到元素的前面
 
 	##外部包裹
-	‖
+	!!
 	.wrap()：为每个元素添加父元素
 	.wrapAll()：为所有的元素添加一个父元素
 	.wrapInner()：为每个元素的内部添加父元素
 	.unwrap()：为每个元素删除父元素，和 .wrap() 相反
-	‖
+	!!
 	###.wrap(element/function(index))
 	为匹配的每个元素的外部包裹一个指定的标签，若传入多个元素只使用第一个，若传入多层元素则保留所有元素只使用最里面的第一子元素
 	比如现有元素：
@@ -705,11 +705,11 @@ commonData.jsLibrary.jquery = {
 	可选择传入一个选择器在匹配的元素中筛选哪些元素的父元素应该被删除
 
 	##删除
-	‖
+	!!
 	.remove()：删除元素和其后代，包括删除绑定的事件和·.data()·绑定的数据
 	.detach()：删除元素和其后代，保留绑定的事件和·.data()·绑定的数据
 	.empty()：删除元素的后代，即把元素变成空标签
-	‖
+	!!
 	###.remove([selector])
 	删除匹配的元素和其所有的后代元素，包括删除绑定的事件和·.data()·绑定的数据
 	可选择传入一个选择器在匹配的元素中筛选哪些应该被删除
@@ -735,10 +735,10 @@ commonData.jsLibrary.jquery = {
 	删除匹配元素的所有后代元素，即把元素变成空标签
 
 	##替换
-	‖
+	!!
 	.replaceWith()：元素被替换成指定元素
 	.replaceAll()：和 .replaceWith() 相反，指定元素把目标元素替换
-	‖
+	!!
 	###.replaceWith(newContent/function)
 	将匹配的元素替换成指定元素，直接使用页面的元素替换表示移动该元素覆盖目标元素
 	比如：
@@ -811,14 +811,14 @@ commonData.jsLibrary.jquery = {
 
 	#DOM 筛选
 	##筛选
-	‖
+	!!
 	.eq()：第几个
 	.first()：第一个
 	.last()：最后一个
 	.not()：除了哪个
 	.has()：包含哪个才可以
 	.filter()：符合条件的
-	‖
+	!!
 	###.eq(index)
 	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
 	比如·$('li').eq(2)·表示选择第 3 个 li 元素
@@ -853,10 +853,10 @@ commonData.jsLibrary.jquery = {
 	··
 
 	##子元素
-	‖
+	!!
 	.children()：子元素
 	.contents()：包含文本、注释、iframe 的子元素
-	‖
+	!!
 	###.children()
 	获得匹配元素的所有子元素，只获取元素，不包括文字和注释节点
 	比如·$('.demo').children()·

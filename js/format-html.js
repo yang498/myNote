@@ -130,8 +130,8 @@ const formatHtml = text => {
 			else if (REG.time.test(item)) {
 				return `<time>最后更新时间：${item.replace(REG.time, '')}</time>`
 			}
-			// 剩下的都是段落
-			else {
+			// 剩下的除了空行都是段落
+			else if (item !== '') {
 				return `<p>${item}</p>`
 			}
 		}).join('')

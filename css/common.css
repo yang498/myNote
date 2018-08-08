@@ -27,7 +27,7 @@ header .menu > li ul li, header .set ul li { line-height: 40px; transition: 0.2s
 header .menu { display: flex; }
 header .menu img { height: 40px; vertical-align: top; }
 header .menu > li { width: 100px; line-height: 40px; transition: 0.2s ease-out; }
-header .option { display: flex; }
+header .option { display: flex; height: 40px; }
 header .option .search { display: flex; align-items: center; }
 header .option .search i { color: #ccc; transform: translateX(-195px); }
 header .option .search input { width: 200px; height: 28px; padding: 0 10px 0 30px; border-radius: 15px; }
