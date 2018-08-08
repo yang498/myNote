@@ -22,6 +22,7 @@
 		左边菜单：点击左边h1和h2文字就触发对应的h1和h2点击
 
 #匹配规则：format-html.js
+	优先参考 markdown 和使用键盘上的字符，有冲突了再将常见字符转成特殊字符
 	标题：以#开头，h1：#，h2：##，h3：###
 	图片：以!开头，!src,width,height
 	行内图片：![src,width,height]

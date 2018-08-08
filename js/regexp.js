@@ -53,7 +53,7 @@ REG.codeInline = /·/g
 // 代码块，用于改变内部标签，因为和行内代码块的标记是一样的，所以最后改成特殊符号
 REG.codeBlock = /··(?=\s)[^]*?··(?=\s)/g
 // 代码块，用于改变外层标签
-REG.codeBlockTag = /‥/g
+REG.codeBlockTag = /^‥|‥$/g
 // 链接，<a>
 REG.a = /@\[([^]+?)\|([^]+?)\](?!¿)/g
 // 加粗，<b>
@@ -75,6 +75,9 @@ REG.multiLine = /\n([^]*?(?=\n))/g
 // 列表
 REG.list = /!!(?=\n)[^]*?!!(?=\n)/g
 REG.listTag = /^!!|!!$/g
+// 表格
+REG.table = /%%(?=\n)[^]*?%%(?=\n)/g
+REG.tableTag = /^%%|%%$/g
 // 底部链接，单行
 REG.linkOneLine = /@@(?=\n)[^]*?@@(?=\n)/g
 // 底部链接，多行

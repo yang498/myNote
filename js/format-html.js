@@ -1,22 +1,11 @@
 const formatHtml = text => {
-	// 每次切换页面 pageCode、pageH1、pageH2 都清空再重新赋值
-	pageCode = []
-	pageH1 = []
-	pageH2 = []
-	let h1Index = -1
-	let tagStartEnd = true
+	pageCode = []	// 当前页面代码
+	pageH1 = []	// 当前页面 h1 标题文字
+	pageH2 = []	// 当前页面 h2 标题文字
+	let h1Index = -1	// 当前页面匹配 h1 时的索引，配合增加 h2 标题文字
 
-	// 只用一个 return
-	// 多行的有：代码块、表格、底部链接
-	// 改动的符号有：a 链接、b 标签、行内图片、列表、底部链接
-	// 等这个 js 全都完成再全部检查一下页面相关符号
-	// 使用标签识别符：优先使用键盘上的字符，有冲突了再将常见字符转成特殊字符
-	const table = /^%%|%%$/g
-	const inlineSplit = 'ˊ'	// 用于拼接的特殊字符
-	const inlineSplitReg = /ˊ/g	// 用于拼接的特殊字符正则
-
-	// 将多行标识符按 inlineSplit 的特殊字符合并成单行，和整理行内标识符
-	String.prototype.formatString = function() {
+	// 整理行内标识符，多行合并成单行，多行的有：列表、表格、代码块、底部链接
+	String.prototype.formatString = function () {
 		// 文档内包含标签的左右箭头换成转义符，避免解析成 html 标签
 		return this.replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
@@ -42,8 +31,8 @@ const formatHtml = text => {
 					.replace(REG.reg, '$1<span class="color-orange">$2</span>')	// 正则，橙
 					.replace(REG.start, '&lt;<span class="color-blue">$1</span>')	// html 开头标签，蓝
 					.replace(REG.end, '&lt;/<span class="color-blue">$1</span>')	// html 结束标签，蓝
-				// 转换成特殊标识符避免和行内代码块标识符冲突，以 inlineSplit 连接合并成一行
-				return ('‥' + item.slice(2, -2) + '‥').replace(/\n/g, inlineSplit)
+				// 换成特殊标识符避免和行内代码块冲突，再合并成一行，代码块需要保留回车格式，不像列表和表格外部都用标签包裹无需回车
+				return '‥' + item.slice(3, -3).replace(/\n/g, 'ˊ') + '‥'
 			})
 
 			// 行内代码块，<code>
@@ -62,26 +51,38 @@ const formatHtml = text => {
 				$1.replace(REG.linkInside, '<a href="$3" target="_blank" class="pd">$2</a>')).replace('\n', '') + '@@')
 
 			// 列表，去掉开头缩进，在每一行中替换，每个缩进换成 css 控制，开头加类型（橙色）、默认值（粉色）、必填加粗
-			.replace(REG.list, item => {
-				return ('!!' + item.slice(3, -3).replace(/^\t/gm, '')
-					.replace(REG.multiLine, res => res.replace(/\t/g, '<i class="attr"></i>')
-					.replace(/[^]*(?=：)/, start => '<i class="head">' +
-						start.replace('{', ' <i class="type">{').replace('}', '}</i>')
-							.replace('[', ' <i class="default">[').replace(/]+/, '$&</i>')
-							.replace('!', ' <b>!</b>') + '</i>'
-					)) + '!!')
-					.replace(/\n/g, inlineSplit)
-			})
+			.replace(REG.list, item => '!!' + item.slice(2, -2).replace(/^\t/gm, '').replace(REG.multiLine, (res, $1) =>
+				'<li>' + $1.replace(/\t/g, '<i class="attr"></i>').replace(/[^]*(?=：)/, start =>
+					'<i class="head">' + start
+						.replace('{', ' <i class="type">{').replace('}', '}</i>')
+						.replace('[', ' <i class="default">[').replace(/]+/, '$&</i>')
+						.replace('!', ' <b>!</b>')
+					+ '</i>')
+				+ '</li>').replace('\n', '') + '!!')
 
-			// 表格，合并成单行
-			.replace(/%%(?=\n)[^]*?%%(?=\n)/g, item => item.replace(/\n\s*/g, inlineSplit))
+			// 表格，按每行分隔，第二行作为对齐方式，第二行最后有数字代表表格宽度，第一行作为表头，第三行之后作为内容
+			.replace(REG.table, item => {
+				item = item.slice(3, -4).replace(/^\t/gm, '').split('\n')
+				const align = item[1].split(',')
+				const widthIndex = align.length - 1 > item[0].match(/,/g).length ? align.length - 1 : false
+				item = item.map((tr, index) => {
+					if (index === 0) {
+						return '<thead><tr><th>' + tr.replace(/,/g, '</th><th>') + '</th></tr></thead><tbody>'
+					} else if (index > 1) {
+						return '<tr>' + tr.split(',').map((td, i) =>
+						`<td ${align[i] === '1' ? 'class="td-left"' : ''}>${td}</td>`).join('') + '</tr>'
+					}
+				}).join('')
+				// 因为表格需要加宽度，在外面不好加，所以就在这里处理
+				return `<table ${widthIndex ? 'style="width:' + align[widthIndex] + 'px"' : ''}>${item}</tbody></table>`
+			})
 
 			// 去掉防误触 ¿，一般用于代码块和 a 标签
 			.replace(/¿/g, '')
 	}
 
 	// 将文档分割成每一行进行处理，开头或结尾的标识符替换成对应的标签，没有标识符的当成 p 标签
-	String.prototype.formatTag = function(){
+	String.prototype.formatTag = function () {
 		return this.split('\n').map(item => {
 			// 去掉开头缩进
 			item = item.replace(/^\s*/, '')
@@ -107,7 +108,19 @@ const formatHtml = text => {
 			}
 			// 列表
 			else if (REG.listTag.test(item)) {
-				return `<ul><li>${item.replace(REG.listTag, '').replace(inlineSplitReg, '</li><li>')}</li></ul>`
+				return `<ul>${item.replace(REG.listTag, '')}</ul>`
+			}
+			// 表格
+			else if(table.test(item)) {
+				return item.replace(REG.tableTag, '')
+			}
+			// 代码块
+			else if(REG.codeBlockTag.test(item)) {
+				return `<div class="code">
+							<span class="copy" onclick="copyCode(this)">复制</span>
+							<pre>${item.replace(REG.codeBlockTag, '').replace(/ˊ/g, '\n')}</pre>
+							<i class="iconfont icon-dui2 copy-success" onanimationend="this.classList.remove('copy-success-active')"></i>
+						</div>`
 			}
 			// 底部链接
 			else if (REG.link.test(item)) {
@@ -116,23 +129,6 @@ const formatHtml = text => {
 			// 最后更新时间
 			else if (REG.time.test(item)) {
 				return `<time>最后更新时间：${item.replace(REG.time, '')}</time>`
-			}
-			// 表格
-			else if(table.test(item)) {
-				let res = item.slice(3, -3).split(inlineSplit),	// 去标识符还原每行
-					th = '<th>' + res[0].replace(/,/g, '</th><th>') + '</th>', // 第一行代表thead，逗号变成承上启下的结束和开始标签
-					left = res[1].split(','), // 分成数组用于下面判断，第二行代表该列向左对齐就扣1，居中就扣0或不扣，多出来的代表表格的宽度
-					// 先分割每一行也就是tr，再对tr分割成td进行判断是否添加向左对齐的class
-					tr = res.map((item, i) => i > 1 ? '<tr>' + item.split(',').map((item, i) => `<td ${left[i]==1?'class="td-left"':''}>${item}</td>`).join('') + '</tr>' : '').join('')
-				return `<table ${left.length > res[0].split(',').length ? 'style="width:'+left[left.length-1]+'px"' : ''}><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table>`
-			}
-			// 代码块
-			else if(REG.codeBlockTag.test(item)) {
-				return item.replace(inlineSplitReg, '\n').replace(REG.codeBlockTag, () => {
-					REG.tagStartEnd = !REG.tagStartEnd
-					return REG.tagStartEnd ? '<div class="code"><span class="copy" onclick="copyCode(this)">复制</span><pre>'
-					: `</pre><i class="iconfont icon-dui2 copy-success" onanimationend="this.classList.remove('copy-success-active')"></i></div>`
-				})
 			}
 			// 剩下的都是段落
 			else {

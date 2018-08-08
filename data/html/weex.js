@@ -598,7 +598,7 @@ commonData.html.weex = {
 		vm.$mount()：无需手动安装 Vue 实例
 	选项
 		template：Weex 用的是 @[只包含运行时构建|https://cn.vuejs.org/v2/guide/installation.html#%E8%BF%90%E8%A1%8C%E6%97%B6-%E7%BC%96%E8%AF%91%E5%99%A8-vs-%E5%8F%AA%E5%8C%85%E5%90%AB%E8%BF%90%E8%A1%8C%E6%97%B6]
-		comments
+		comments：是否保留且渲染模板中的 HTML 注释
 	全局API
 		Vue.compile：同 template
 	全局配置
