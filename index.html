@@ -26,7 +26,12 @@
 					</li>
 				</ul>
 				<div class="option">
-					<div class="search"><input type="text"/><i class="iconfont icon-search"></i></div>
+					<div class="search">
+						<i :class="['iconfont','icon-search',isSearch?'active':'']" @click="isSearch=!isSearch"></i>
+						<transition enter-class="active" leave-to-class="active">
+							<input type="text" placeholder="搜索建设中" v-if="isSearch"/>
+						</transition>
+					</div>
 					<div class="set">
 						<i class="iconfont icon-shezhi"></i>
 						<ul>

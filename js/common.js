@@ -55,12 +55,12 @@ $(window).on('scroll', function(){	// 监听页面滚动改变当前h1和h2的ac
 			scrollTimer = null
 			if(asideClick) {	// 如果是点击左边菜单的滚动不触发，避免重复
 				h1Active = asideActive()
-				if(vue.asideActive !== h1Active) {	// 当前h1改变后再改变：h1的active和h2的高度
-					vue.asideActive = h1Active
+				if(vm.asideActive !== h1Active) {	// 当前h1改变后再改变：h1的active和h2的高度
+					vm.asideActive = h1Active
 					h2Height()
 				}
 				$asideH2 = $('h1').eq(h1Active).nextUntil('h1').filter('h2')	// 更新h2元素用于获取h2的active
-				vue.asideActive2 = asideActive2()
+				vm.asideActive2 = asideActive2()
 			}
 		}, 100)
 	}
@@ -68,15 +68,16 @@ $(window).on('scroll', function(){	// 监听页面滚动改变当前h1和h2的ac
 	if(isPageHash) {	// 如果是手动点击就改回false
 		isPageHash = false
 	} else {	// 如果是点击刷新、前进后退和手动输入地址栏，获取赋值父子路径，然后初始化
-		vue.menuParent = location.hash.replace(/^#|\/[^]*/g, '')
-		vue.menuChild = location.hash.replace(/[^]*\//, '')
-		initHash(vue)
+		vm.menuParent = location.hash.replace(/^#|\/[^]*/g, '')
+		vm.menuChild = location.hash.replace(/[^]*\//, '')
+		initHash(vm)
 	}
 })
 
-let vue = new Vue({
+let vm = new Vue({
 	el: '.web',
 	data: {
+		isSearch: false,	// 切换搜索框
 		index: true,	// 切换目录和文章
 		menuParent: location.hash.replace(/^#|\/[^]*/g, ''),	// 父级路径
 		menuChild: location.hash.replace(/[^]*\//, ''),	// 子级路径

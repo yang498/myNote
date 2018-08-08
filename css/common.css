@@ -19,7 +19,7 @@
 
 header { width: 100%; text-align: center; color: #fff; background-color: #00B4FA; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 1; }
 header i.iconfont { font-size: 20px; }
-header .menu li:hover, header .menu li.active, header .set:hover, header .set li:hover, header .back-top:hover { background-color: #08f; }
+header .menu li:hover, header .menu li.active, header .search i:not(.active):hover, header .set:hover, header .set li:hover, header .back-top:hover { background-color: #08f; }
 header .menu > li, header .set { cursor: pointer; position: relative; }
 header .menu > li:hover ul, header .set:hover ul { height: auto; opacity: 1; }
 header .menu > li ul, header .set ul { width: 100%; height: 0; opacity: 0; overflow: hidden; background-color: #00B4FA; border-radius: 0 0 5px 5px; transition: 0.2s ease-out; position: absolute; top: 100%; left: 0; }
@@ -28,10 +28,12 @@ header .menu { display: flex; }
 header .menu img { height: 40px; vertical-align: top; }
 header .menu > li { width: 100px; line-height: 40px; transition: 0.2s ease-out; }
 header .option { display: flex; height: 40px; }
-header .option .search { display: flex; align-items: center; }
-header .option .search i { color: #ccc; transform: translateX(-195px); }
-header .option .search input { width: 200px; height: 28px; padding: 0 10px 0 30px; border-radius: 15px; }
-header .option .set, header .option .back-top { width: 60px; line-height: 40px; }
+header .option .search { display: flex; position: relative; }
+header .option .search i { cursor: pointer; transition: 0.3s ease-out; }
+header .option .search i.active { color: #ccc; cursor: default; transform: translateX(-255px); }
+header .option .search input { width: 300px; height: 34px; padding: 0 5px 0 30px; border-radius: 5px; position: absolute; top: 3px; right: 0; z-index: -1; opacity: 1; transition: 0.3s ease-out; }
+header .option .search input.active { width: 60px; opacity: 0; }
+header .option .search i, header .option .set, header .option .back-top { width: 60px; line-height: 40px; }
 header .option .back-top { display: block; transition: 0.2s ease-out; cursor: pointer; }
 
 section { width: 600px; margin: 0 auto; padding: 20px 0 40px; }

@@ -57,7 +57,7 @@ header {
     i.iconfont {
         font-size: 20px;
     }
-    .menu li:hover, .menu li.active, .set:hover, .set li:hover, .back-top:hover {
+    .menu li:hover, .menu li.active, .search i:not(.active):hover, .set:hover, .set li:hover, .back-top:hover {
         background-color: $blue;
     }
     .menu>li, .set {
@@ -101,19 +101,34 @@ header {
 		height: 40px;
         .search {
             display: flex;
-            align-items: center;
+			position: relative;
             i {
-                color: #ccc;
-                transform:translateX(-195px);
+				cursor: pointer;
+				transition: 0.3s ease-out;
+				&.active {
+					color: #ccc;
+					cursor: default;
+					transform: translateX(-255px);
+				}
             }
             input {
-                width: 200px;
-                height: 28px;
-                padding: 0 10px 0 30px;
-                border-radius: 15px;
+				width: 300px;
+                height: 34px;
+                padding: 0 5px 0 30px;
+                border-radius: 5px;
+				position: absolute;
+				top: 3px;
+				right: 0;
+				z-index: -1;
+				opacity: 1;
+				transition: 0.3s ease-out;
+				&.active {
+					width: 60px;
+					opacity: 0;
+				}
             }
         }
-        .set, .back-top {
+        .search i, .set, .back-top {
             width: 60px;
             line-height: 40px;
         }
