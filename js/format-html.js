@@ -111,7 +111,7 @@ const formatHtml = text => {
 				return `<ul>${item.replace(REG.listTag, '')}</ul>`
 			}
 			// 表格
-			else if(table.test(item)) {
+			else if(REG.tableTag.test(item)) {
 				return item.replace(REG.tableTag, '')
 			}
 			// 代码块
