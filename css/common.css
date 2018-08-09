@@ -86,7 +86,8 @@ article code { color: #f80; margin: 0 3px; padding: 3px 5px; border-radius: 3px;
 article span { font-family: inherit; }
 article pre { width: 100%; line-height: 24px; border-radius: 8px; font-family: consolas; border: 1px solid #ccc; background-color: #fafafa; overflow-y: hidden; padding: 20px 30px; }
 article .code { width: 100%; max-width: 1000px; position: relative; margin-left: 2em; }
-article .code .copy { font-size: 14px; padding: 1px 8px; background-color: #fff; box-shadow: 0 0 0 1px #ccc; border-top-right-radius: 8px; border-bottom-left-radius: 8px; cursor: pointer; transition: 0.2s; position: absolute; top: 1px; right: 1px; }
+article .code .copy { font-size: 14px; padding: 1px 8px; background-color: #fff; border: 1px solid #ccc; border-top-right-radius: 8px; border-bottom-left-radius: 8px; cursor: pointer; transition: 0.2s; position: absolute; top: 0; right: 0; }
+article .code .copy:hover { background-color: #fafafa; }
 article .copy-success { position: absolute; top: 5px; right: -25px; color: #0c0; opacity: 0; font-size: 18px; }
 article .copy-success-active { animation: copy 1s; }
 @keyframes copy { 80% { opacity: 1; transform: translateY(-30px); }

@@ -369,14 +369,17 @@ article {
             font-size: 14px;
             padding: 1px 8px;
             background-color: #fff;
-            box-shadow: 0 0 0 1px #ccc;
+            border: 1px solid #ccc;
             border-top-right-radius: 8px;
             border-bottom-left-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
             position: absolute;
-            top: 1px;
-            right: 1px;
+            top: 0;
+            right: 0;
+			&:hover {
+				background-color: #fafafa;
+			}
         }
     }
     .copy-success {

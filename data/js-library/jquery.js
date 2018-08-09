@@ -473,7 +473,7 @@ commonData.jsLibrary.jquery = {
 	此为临时存储的数据，页面刷新就会没有
 	比如：
 	··
-	$('.demo').data('test-a','hhhh')	// 存储
+	$('.demo').data('test-a', 'hhhh')	// 存储
 	$('.demo').data()	// 返回 {testA: "hhhh"}
 	··
 	如果元素上有以·data-·开头的属性，那也会被·.data()·方法使用，·data-·之后的字符串就是 key，值就是 value
@@ -808,8 +808,17 @@ commonData.jsLibrary.jquery = {
 		console.log($(this).css('color'))
 	})
 	··
+	##循环返回
+	###.map(callback(index, domElement))
+	通过一个函数匹配当前集合中的每个元素，生成新的 jQuery 对象
+	比如：
+	··
+	$('p').append($('input').map(function(){
+		return $(this).val()
+	}).get().join(', '))
+	··
 
-	#DOM 筛选
+	#DOM 选择
 	##筛选
 	!!
 	.eq()：第几个
@@ -818,6 +827,7 @@ commonData.jsLibrary.jquery = {
 	.not()：除了哪个
 	.has()：包含哪个才可以
 	.filter()：符合条件的
+	.slice()：截取一段
 	!!
 	###.eq(index)
 	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
@@ -851,7 +861,10 @@ commonData.jsLibrary.jquery = {
 		return index % 3 === 0
 	})
 	··
-
+	###.slice(start [, end ])
+	根据指定的下标范围，生成新的 jQuery 对象，start 和 end 都是整数，包括 start 不包括 end，可以是负数表示倒数，不填 end 表示直到最后
+	比如·$('li').slice(2, 4)·表示选择下标为第 2 和 第 3 的 li 元素
+	
 	##子元素
 	!!
 	.children()：子元素
@@ -864,6 +877,30 @@ commonData.jsLibrary.jquery = {
 	获得匹配元素的所有子元素，和 .children() 不同的是包括文字和注释节点
 	而且还能获取 iframe 的内容（跨域无法访问，iframe 的网址需要和当前页面同域）
 	比如·$('.demo').contents()·，$('iframe').contents().find('.demo')
+	
+	##父元素
+	!!
+	.parent()：父元素
+	.parents()：祖先元素
+	.parentsUntil()：祖先元素直到哪里
+	!!
+	
+	##兄弟元素
+	!!
+	.prev()：前一个
+	.next()：后一个
+	.prevAll()：前面所有
+	.nextAll()：后面所有
+	.siblings()：前后所有
+	.prevUntil()：前面直到哪里
+	.nextUntil()：后面直到哪里
+	!!
+	
+	##查找
+	!!
+	.find()：往下找
+	.closest()：往上找
+	!!
 
 	##判断
 	###.is(selector/function(index))
@@ -884,6 +921,6 @@ commonData.jsLibrary.jquery = {
 	})
 	··
 
-	&2018.8.3
+	&2018.8.9
 	`
 }
