@@ -1,5 +1,5 @@
 const formatHtml = text => {
-	pageCode = []	// 当前页面代码
+	pageCode = []	// 当前页面代码块以准备复制
 	pageH1 = []	// 当前页面 h1 标题文字
 	pageH2 = []	// 当前页面 h2 标题文字
 	let h1Index = -1	// 当前页面匹配 h1 时的索引，配合增加 h2 标题文字
@@ -43,6 +43,7 @@ const formatHtml = text => {
 			.replace(REG.b, item => REG.addTag('b'))
 			// 行内图片，<img>
 			.replace(REG.imgInline, item => REG.imgFn(item, REG.imgInline))
+
 			// 底部链接，单行，在每一行中替换，里面转 <a> ，最后合并成一行
 			.replace(REG.linkOneLine, item => '@@学习参考链接：' + item.slice(2, -3).replace(REG.multiLine, (res, $1) =>
 				$1.replace(REG.linkInside, '<a href="$3" target="_blank">$2</a>，')).replace(/\n|，$/gm, '') + '@@')
@@ -74,7 +75,7 @@ const formatHtml = text => {
 					}
 				}).join('')
 				// 因为表格需要加宽度，在外面不好加，所以就在这里处理
-				return `<table ${widthIndex ? 'style="width:' + align[widthIndex] + 'px"' : ''}>${item}</tbody></table>`
+				return `%%<table ${widthIndex ? 'style="width:' + align[widthIndex] + 'px"' : ''}>${item}</tbody></table>%%`
 			})
 
 			// 去掉防误触 ¿，一般用于代码块和 a 标签

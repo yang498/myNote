@@ -143,8 +143,6 @@ commonData.jsLibrary.jquery = {
 
 	##子元素
 	!!
-	:first：第一个
-	:last：最后一个
 	:first-child：所有父级元素下的第一个子元素
 	:last-child：所有父级元素下的最后一个子元素
 	:first-of-type：:first-child 的忽略其他元素版
@@ -156,12 +154,6 @@ commonData.jsLibrary.jquery = {
 	:only-child：父元素只包含唯一子元素的那个子元素
 	:only-of-type：:only-child 的忽略其他元素版
 	!!
-	###:first
-	在匹配的集合中选择第一个元素
-	比如·$('li:first')·表示选择第 1 个 li 元素
-	###:last
-	在匹配的集合中选择最后一个元素
-	比如·$('li:last')·表示选择最后 1 个 li 元素
 	###:first-child
 	选择所有父级元素下的第一个子元素，若指定的元素之前有其他元素则不会被获取
 	比如·$('li:first-child')·表示如果有多个 ul 将会选择每个 ul 下的第 1 个 li 元素，若第 1 个 li 之前有其他元素则不会被获取
@@ -221,6 +213,8 @@ commonData.jsLibrary.jquery = {
 	##基本筛选
 	!!
 	:eq()：第几个
+	:first：第一个
+	:last：最后一个
 	:gt()：大于给定 index 的元素
 	:lt()：小于给定 index 的元素
 	:odd：奇数
@@ -229,6 +223,12 @@ commonData.jsLibrary.jquery = {
 	###:eq(index)
 	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
 	比如·$('li:eq(2)')·表示选择第 3 个 li 元素
+	###:first
+	在匹配的集合中选择第一个元素
+	比如·$('li:first')·表示选择第 1 个 li 元素
+	###:last
+	在匹配的集合中选择最后一个元素
+	比如·$('li:last')·表示选择最后 1 个 li 元素
 	###:gt(index)
 	在匹配的集合中选择索引值大于给定 index 的元素，index 可以为负数表示从 -1 即最后一个开始算起
 	比如·$('li:eq(2)')·表示选择第 3 个之后的所有 li 元素，不包括第 3 个，·$('li:eq(-1)')·将不选择任何元素，·$('li:eq(-3)')·表示选择最后 2 个元素，因为 -1 和 -2 大于 -3
@@ -864,7 +864,7 @@ commonData.jsLibrary.jquery = {
 	###.slice(start [, end ])
 	根据指定的下标范围，生成新的 jQuery 对象，start 和 end 都是整数，包括 start 不包括 end，可以是负数表示倒数，不填 end 表示直到最后
 	比如·$('li').slice(2, 4)·表示选择下标为第 2 和 第 3 的 li 元素
-	
+
 	##子元素
 	!!
 	.children()：子元素
@@ -877,14 +877,14 @@ commonData.jsLibrary.jquery = {
 	获得匹配元素的所有子元素，和 .children() 不同的是包括文字和注释节点
 	而且还能获取 iframe 的内容（跨域无法访问，iframe 的网址需要和当前页面同域）
 	比如·$('.demo').contents()·，$('iframe').contents().find('.demo')
-	
+
 	##父元素
 	!!
 	.parent()：父元素
 	.parents()：祖先元素
 	.parentsUntil()：祖先元素直到哪里
 	!!
-	
+
 	##兄弟元素
 	!!
 	.prev()：前一个
@@ -895,7 +895,7 @@ commonData.jsLibrary.jquery = {
 	.prevUntil()：前面直到哪里
 	.nextUntil()：后面直到哪里
 	!!
-	
+
 	##查找
 	!!
 	.find()：往下找
