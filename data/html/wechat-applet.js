@@ -5,6 +5,7 @@ commonData.html.wechatApplet = {
 	
 	##起步
 	开发小程序的第一步，你需要@[注册|https://mp.weixin.qq.com/wxopen/waregister?action=step1]一个小程序帐号，通过这个帐号你就可以管理你的小程序。
+	一个帐号只能发布一个小程序，同一个主体身份下个人帐户可创建 5 个、企业 50 个的小程序账号
 	登录@[小程序平台|https://mp.weixin.qq.com]，在菜单 “设置”-“开发设置” 看到小程序的·AppID·了 。
 	小程序的·AppID·相当于小程序平台的一个身份证，后续你会在很多地方要用到 AppID (注意这里要区别于服务号或订阅号的 AppID)。
 	有了小程序帐号之后，就需要@[下载微信开发者工具|https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=201861]来开发小程序。

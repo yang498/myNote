@@ -15,15 +15,29 @@ commonData.html.weex = {
 
 	##安装开发环境
 	安装 weex-toolkit 脚手架工具
-	使用npm安装：·npm install -g weex-toolkit·
-	查看版本号：·weex -v·
-	查看是否安装成功：·weex·
-	如果使用·cnpm·安装后提示权限错误（permission error）：
+	使用npm安装：
+	··
+	npm install -g weex-toolkit
+	··
+	查看版本号：
+	··
+	weex -v
+	··
+	查看是否安装成功：
+	··
+	weex
+	··
+	如果使用·cnpm·安装，可能会出现权限错误（permission error）：
 	!./img/html/weex01.jpg
-	先卸载之前的·cnpm uninstall -g weex-toolkit·，使用·sudo·关键字进行安装
-	·sudo cnpm install -g weex-toolkit·
-	windows是不支持·sudo·的，卸载完直接用·npm install -g weex-toolkit·
-	如果还不行，直接删除npm和npm-cache目录下与weex相关的文件和目录
+	先卸载之前的：
+	··
+	cnpm uninstall -g weex-toolkit··
+	然后使用·sudo·关键字进行安装：
+	··
+	sudo cnpm install -g weex-toolkit
+	··
+	windows 是不支持·sudo·的，卸载完直接用·npm·安装即可
+	如果还不行，直接删除 npm 和 npm-cache 目录下与 weex 相关的文件和目录
 
 	##初始化
 	·weex init project-name·
