@@ -50,10 +50,8 @@
 			<section v-if="index">
 				<ul>
 					<li v-for="(value, key) in commonData">
-						<h2 v-cloak>{{value.name}}</h2>
-						<ul>
-							<li v-for="(content, name) in value" v-cloak @click="changePage(key, name)" v-if="name!=='name'">{{content.name||name}}</li>
-						</ul>
+						<b v-cloak>{{value.name}}</b>
+						<span v-for="(content, name) in value" v-cloak @click="changePage(key, name)" v-if="name!=='name'">{{content.name||name}}</span>
 					</li>
 				</ul>
 			</section>
@@ -71,42 +69,42 @@
 
 		<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue-2.5.16.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<!-- data start -->
 		<script src="data/common-data.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="data/html/html.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/html/mobile.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/html/weex.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/html/wechat-applet.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/html/website.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="data/css/css.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/css/animation.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="data/css-library/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="data/js/grammar.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/js/object.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/js/array.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/js/string.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/js/math.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/js/node.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="data/js-library/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/js-library/vue.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="data/tool/sass.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/tool/git.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/tool/gulp.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/tool/webpack.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script src="data/other/interview.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/other/office.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/other/article.js" type="text/javascript" charset="utf-8"></script>
 		<script src="data/other/english.js" type="text/javascript" charset="utf-8"></script>
 		<!-- data end -->
-		
+
 		<script src="js/regexp.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/format-html.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>

@@ -141,25 +141,29 @@ header {
 }
 
 section {
-    width: 600px;
-    margin: 0 auto;
     padding: 20px 0 40px;
-    h1 {
+    font-size: 18px;
+    text-align: center;
+    li {
+        margin: 40px 0;
+    }
+    b {
         font-size: 24px;
         font-weight: bold;
-        text-align: center;
+        margin-right: 20px;
     }
-    h2 {
-        font-size: 20px;
-        font-weight: bold;
-        margin: 20px 0 5px;
-    }
-    li li {
+    span {
+        margin: 0 10px;
         line-height: 30px;
         color: $weex;
         cursor: pointer;
+        border: 1px solid $weex;
+        border-radius: 3px;
+        padding: 3px 6px;
+        transition-duration:$ti-fast;
         &:hover {
-            color: $blue;
+            color: #fff;
+            background-color: $weex;
         }
     }
 }
