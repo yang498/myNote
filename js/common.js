@@ -1,20 +1,15 @@
-/* 始于：2017.7.31
+/* start 2017.7.31
  * 待做：
- * li 里面加个引用，凸显层级
  * 点击每个页面加上 title 名，比如前端笔记 - 微信小程序
- * 长按添加书签，右边展示固定菜单，像阿里云一样可展开全部宽度，收起为40*30
- * 可能对代码块的html和css部分稍微再调整颜色
- * 搜索，可参考Algolia，实在不行就拉倒
+ * 搜索：可参考 Algolia，实在不行就拉倒
  * 设置：
  * 		回到上次：页面在关闭前用localstorage记录当前位置，下次再打开提示是否回到上次的位置，可以关闭和5秒后以3秒淡出，也可以勾选不再提醒，设置也可以更改打开或关闭
  * 		换肤：把相关颜色抽离出来，点击出现弹窗，可选择预定颜色和自定义调配，有滑竿和手动输入rgb和16进制颜色（3个tab选项：纯色、渐变色、图片），把选择的颜色保存在localstorage，所涉及的颜色：header和aside的背景色，h1和h2的颜色，表格的表头
- * 		换背景：点击出现弹窗，更换web容器的背景，同换肤的3个选项，可以取标签和阮一峰这种柔和一点的，百度一下
+ * 		换背景：点击出现弹窗，更换web容器的背景，同换肤的3个选项
  * 		反馈页列表：第一次留下大名，直接提交内容，谁都可以留言
  * 		关于本站：属性说明{}代表类型，[]代表默认值，!代表必填，HexColor类型代表十六进制颜色值（比如：#ff0000），某些文档只对常用和关键部分进行说明，其他一行带过，这考虑到官方文档都有而且都在更新，如果只是单纯的复制粘贴又有什么意义呢，还不如看官方文档
  * 		github链接
- * 
- * format-html需要升级改造，起码要条理清晰、代码易读
- * 把index.html做个适配移动端触控的页面，数据当然不变，需要做mobile.html、mobile.scss
+ * 做个移动端适配，可能需要新的 mobile.html、mobile.scss
  */
 
 let h1Active = 0	// 记录h1的active，不必重复调用asideActive()
@@ -90,10 +85,10 @@ let vm = new Vue({
 	},
 	created() {
 		initHash(this)
-		if(localStorage.getItem('scrollToTitle')) {	// 如果要滚动到某个标题就触发
-			$(localStorage.getItem('scrollToTitle')).click()
-			localStorage.removeItem('scrollToTitle')
-		}
+		//if(localStorage.getItem('scrollToTitle')) {	// 如果要滚动到某个标题就触发
+			//$(localStorage.getItem('scrollToTitle')).click()
+			//localStorage.removeItem('scrollToTitle')
+		//}
 	},
 	methods: {
 		init() {	// 初始化解析内容
