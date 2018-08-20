@@ -407,7 +407,7 @@ commonData.html.wechatApplet = {
 	###module.exports和exports的区别
 	先来补点 js 基础。示例：
 	··
-	// 当 a 是个 object 或 array 才会造成引用，如果是 string、number、boolean、undefined×、null× 就是独立的
+	// 当 a 是个 object 或 array 才会造成引用，如果是 string、number、boolean、undefined、null 就是独立的
 	
 	var a = {name: '张三'}
 	var b = a
@@ -641,7 +641,7 @@ commonData.html.wechatApplet = {
 	<switch wx:for="{{objectArray}}" wx:key="unique"> {{item.id}} </switch>
 	
 	// 这里的 numberArray 中每一项都是唯一的数字，所以 wx:key 填 *this 就可以
-	<switch wx:for="{{numberArray}}" wx:key="*this×"> {{item}} </switch>
+	<switch wx:for="{{numberArray}}" wx:key="*this"> {{item}} </switch>
 	
 	Page({
 		data: {
@@ -697,7 +697,7 @@ commonData.html.wechatApplet = {
 		data: {
 			item: {
 				index: 0,
-				msg: 'this× is a template',
+				msg: 'this is a template',
 				time: '2016-09-15'
 			}
 		}
@@ -793,7 +793,7 @@ commonData.html.wechatApplet = {
 	每个 wxs 模块均有一个内置的 module 对象。通过 exports 属性，可以对外共享本模块的私有变量与函数。
 	·<wxs>·标签：
 	··
-	<wxs module×="foo">
+	<wxs module="foo">
 		var some_msg = "hello world";
 		module.exports = {
 				msg : some_msg,
@@ -816,7 +816,7 @@ commonData.html.wechatApplet = {
 	··
 	··
 	<!-- page/index/index.wxml -->
-	<wxs src="./../tools.wxs" module×="tools" />
+	<wxs src="./../tools.wxs" module="tools" />
 	<view> {{tools.msg}} </view>
 	<view> {{tools.bar(tools.FOO)}} </view>
 	··
@@ -1684,7 +1684,7 @@ commonData.html.wechatApplet = {
 	示例代码：
 	··
 	const uploadTask = wx.uploadFile({
-    url: 'http://×example.weixin.qq.com/upload',
+    url: 'http://example.weixin.qq.com/upload',
     filePath: tempFilePaths[0],
     name: 'file',
     success: function(res){

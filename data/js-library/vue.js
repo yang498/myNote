@@ -47,7 +47,7 @@ commonData.jsLibrary.vue = {
 	@[生产版本：压缩版，删除了警告|https://vuejs.org/js/vue.min.js]
 	也可以使用 CDN 手动引入指定的版本号，和指定·vue.js·或·vue.min.js·
 	··
-	<script src="https://×cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 	··
 	###NPM
 	在用 Vue 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用。同时 Vue 也提供配套工具来开发单文件组件。默认安装最新稳定版：
@@ -816,7 +816,7 @@ commonData.jsLibrary.vue = {
 	###自定义类名
 	通常通过自定义类名可以结合第三方 CSS 动画库使用，只需定义对应的属性·enter-class·、·enter-active-class·、·enter-to-class·、·leave-class·、·leave-active-class·、·leave-to-class·
 	··
-	<link href="https://×cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+	<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
 
 	<div id="example-3">
 		<button @click="show = !show">
@@ -882,7 +882,7 @@ commonData.jsLibrary.vue = {
 	一个使用 Velocity.js 的简单例子：
 	··
 	<!-- Velocity 和 jQuery.animate 的工作方式类似，也是用来实现 JavaScript 动画的一个很棒的选择 -->
-	<script src="https://×cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 
 	<div id="example-4">
 		<button @click="show = !show"> Toggle </button>
@@ -1053,7 +1053,7 @@ commonData.jsLibrary.vue = {
 		<li v-for="item in items" :key="item">{{ item }}</li>
 	</transition-group>
 	
-	<script src="https://×cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
 	
 	data: {
     items: [1,2,3,4,5,6,7,8,9]

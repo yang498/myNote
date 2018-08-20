@@ -6,13 +6,13 @@ commonData.jsLibrary.jquery = {
 	可以通过各种方式使用：
 	··
 	// 官网最新版本，压缩版在 .js 前加上 .min 即可
-	<script src="https://×code.jquery.com/jquery-git.js"></script>
+	<script src="https://code.jquery.com/jquery-git.js"></script>
 
 	// 官网指定版本，压缩版在 .js 前加上 .min 即可
-	<script src="https://×code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
 	// github 克隆
-	git clone git://×github.com/jquery/jquery.git
+	git clone git://github.com/jquery/jquery.git
 	// 可以查看并构建特定的版本
 	git checkout 3.2.1
 

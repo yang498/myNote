@@ -350,7 +350,7 @@ commonData.html.weex = {
 	const dom = weex.requireModule('dom')
 	dom.addRule('fontFace', {
 		'fontFamily': "iconfont2",	// 注意不要和已有的字体名称冲突，所以要特殊一点
-		'src': "url('http://×at.alicdn.com/t/font_1469606063_76593.ttf')"
+		'src': "url('http://at.alicdn.com/t/font_1469606063_76593.ttf')"
 	})
 	··
 
