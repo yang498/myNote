@@ -1,8 +1,3 @@
-/*
-	interview：面试
-		browser：浏览器
-		http：请求
-*/
 commonData.other.interview = {
 	name: '面试',
 	content: `
@@ -94,6 +89,6 @@ commonData.other.interview = {
 	4XX：客户端请求错误，比如403资源不可用，服务器拒绝了，404 Not Found
 	5XX：服务器错误，不能完成对请求的处理
 
-	&2017.8.1
+	&2017.8.1（面试上了，不搞了🛴🙃
 	`
 }

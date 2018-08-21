@@ -53,7 +53,7 @@ header .option .search i, header .option .set, header .option .back-top { width:
 
 header .option .back-top { display: block; transition: 0.2s ease-out; cursor: pointer; }
 
-section { padding: 20px 0 40px; font-size: 18px; text-align: center; }
+section { padding: 20px 0; font-size: 18px; text-align: center; }
 
 section li { margin: 40px 0; }
 

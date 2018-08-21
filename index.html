@@ -11,27 +11,38 @@
 
 	<body>
 		<div class="web">
+			<!-- 头部 start -->
 			<header>
+				<!-- 左边的目录 -->
 				<ul class="menu">
-					<li @click="directory" :class="index?'active':''">
+					<!-- 一级目录 -->
+					<li @click="directory" :class="index ? 'active' : ''">
 						<img src="img/logo.jpg"/>
 					</li>
-					<!-- 每个一级目录都有一个name属性用来显示说明 -->
-					<li v-for="(value, key) in commonData" :class="menuParent===key&&!index?'active':''">
+					<!-- key 作为一级目录路径，value 的 name 作为一级目录名 -->
+					<li v-for="(value, key) in commonData" :class="menuParent === key && !index ? 'active' : ''">
 						<span v-cloak>{{value.name}}</span>
 						<ul>
-							<!-- 所以如果该属性名为name就不显示，如果二级目录没有name属性说明就直接用二级目录名 -->
-							<li v-for="(content, name) in value" :class="menuChild===name&&!index?'active':''" @click="changePage(key, name)" v-if="name!=='name'">{{content.name||name}}</li>
+							<!-- 二级属性路径除了 name 和 directory 不显示，content.name 或 name 作为二级目录名 -->
+							<li v-for="(content, name) in value"
+								v-if="name !== 'name' && name !== 'directory'"
+								:class="menuChild === name && !index ? 'active' : ''"
+								@click="changePage(key, name)"
+							>{{content.name || name}}</li>
 						</ul>
 					</li>
 				</ul>
+				
+				<!-- 右边的菜单 -->
 				<div class="option">
+					<!-- 搜索框 -->
 					<div class="search">
-						<i :class="['iconfont','icon-search',isSearch?'active':'']" @click="isSearch=!isSearch"></i>
+						<i :class="['iconfont icon-search',isSearch?'active':'']" @click="isSearch=!isSearch"></i>
 						<transition enter-class="active" leave-to-class="active">
 							<input type="text" placeholder="搜索建设中" v-if="isSearch"/>
 						</transition>
 					</div>
+					<!-- 设置 -->
 					<div class="set">
 						<i class="iconfont icon-shezhi"></i>
 						<ul>
@@ -43,68 +54,50 @@
 							</li>
 						</ul>
 					</div>
+					<!-- 回到顶部/底部 -->
 					<i class="iconfont icon-arrowhead-bottom back-top" onclick="scrollToTop(document.documentElement.scrollHeight)"></i>
 					<i class="iconfont icon-arrowhead-top back-top" onclick="scrollToTop(0)"></i>
 				</div>
 			</header>
+			<!-- 头部 end -->
+			
+			<!-- 目录索引页 start -->
 			<section v-if="index">
 				<ul>
 					<li v-for="(value, key) in commonData">
 						<b v-cloak>{{value.name}}</b>
-						<span v-for="(content, name) in value" v-cloak @click="changePage(key, name)" v-if="name!=='name'">{{content.name||name}}</span>
+						<span v-for="(content, name) in value"
+							v-if="name !== 'name' && name !== 'directory'"
+							@click="changePage(key, name)"
+						v-cloak>{{content.name || name}}</span>
 					</li>
 				</ul>
 			</section>
-			<!-- aside的右边框初始化的时候不加载好看一点 -->
+			<!-- 目录索引页 end -->
+			
+			<!-- 文档左边目录 -->
 			<aside v-if="!index" :class="index?'':'active'">
 				<ul class="h1">
-					<li v-for="(item, index) of asideH1" :class="index===asideActive?'active':''" v-cloak @click="onAsideH1(index)">{{item}}</li>
+					<li v-for="(item, index) of asideH1"
+						:class="index === asideActive ? 'active' : ''"
+						@click="onAsideH1(index)"
+					v-cloak>{{item}}</li>
 				</ul>
 				<ul class="h2">
-					<li v-for="(item, index) of asideH2[asideActive]" :class="index===asideActive2?'active':''" v-cloak @click="onAsideH2(index)">{{item}}</li>
+					<li v-for="(item, index) of asideH2[asideActive]"
+						:class="index === asideActive2 ? 'active' : ''"
+						@click="onAsideH2(index)"
+					v-cloak>{{item}}</li>
 				</ul>
 			</aside>
+			
+			<!-- 文档内容 -->
 			<article v-if="!index" v-html="article"></article>
 		</div>
 
 		<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue-2.5.16.js" type="text/javascript" charset="utf-8"></script>
-
-		<!-- data start -->
-		<script src="data/common-data.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="data/html/html.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/html/mobile.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/html/weex.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/html/wechat-applet.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/html/website.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="data/css/css.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/css/animation.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="data/css-library/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="data/js/grammar.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/js/object.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/js/array.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/js/string.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/js/math.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/js/node.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="data/js-library/jquery.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/js-library/vue.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="data/tool/sass.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/tool/git.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/tool/gulp.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/tool/webpack.js" type="text/javascript" charset="utf-8"></script>
-
-		<script src="data/other/interview.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/other/office.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/other/article.js" type="text/javascript" charset="utf-8"></script>
-		<script src="data/other/english.js" type="text/javascript" charset="utf-8"></script>
-		<!-- data end -->
-
+		<script src="data/common-data.js" type="text/javascript" charset="utf-8" id="import"></script>
 		<script src="js/regexp.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/format-html.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
