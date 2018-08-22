@@ -259,8 +259,9 @@ article {
         width: 100%;
         max-width: 1000px;
         margin: 5px 0 5px 2em;
-		.inline {
+		&.inline {
 			margin: 0 5px;
+			vertical-align: text-bottom;
 		}
     }
     ul {

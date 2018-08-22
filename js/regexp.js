@@ -65,13 +65,13 @@ REG.h3 = /^###/
 // 图片
 REG.img = /^!(?!!)([^,\(]*),?([^,]*),?([^]*)/
 // 行内图片
-REG.imgInline = /!\[([^,]*),?([^\]]*),?([^\]]*)\]/g
+REG.imgInline = /!\[([^,]*),?([^\],]*),?([^\]]*)\]/g
 // 单位转换，数字加 px，非数字保持原样
 REG.unit = num => isNaN(num) ? num + ';' : num + 'px;'
-// 图片和行内图片的处理方式是一样的，就放到一个方法里面
-REG.imgFn = (item, reg) => item.replace(reg, (res, $1, $2, $3) => {
-	const width = $2 ? `style="width:${REG.unit($2)}${$3 ? 'height:' + REG.unit($3) : ''}"` : ''
-	return `<img src="${$1}" ${width}/>`
+// 图片和行内图片的处理方式是一样的，就放到一个方法里面，加上第 3 个参数以区分行内图片
+REG.imgFn = (item, reg, inline) => item.replace(reg, (res, $1, $2, $3) => {
+	const width = $2 ? `style="width:${REG.unit($2)} ${$3 ? 'height:' + REG.unit($3) : ''}"` : ''
+	return `<img src="${$1}" ${inline ? 'class="inline"' : ''} ${width}/>`
 })
 // 匹配每一行，适用于：列表、底部链接
 REG.multiLine = /\n([^]*?(?=\n))/g

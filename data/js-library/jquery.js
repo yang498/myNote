@@ -876,7 +876,7 @@ commonData.jsLibrary.jquery = {
 	###.contents()
 	获得匹配元素的所有子元素，和 .children() 不同的是包括文字和注释节点
 	而且还能获取 iframe 的内容（跨域无法访问，iframe 的网址需要和当前页面同域）
-	比如·$('.demo').contents()·，$('iframe').contents().find('.demo')
+	比如·$('.demo').contents()·，·$('iframe').contents().find('.demo')·
 
 	##父元素
 	!!
@@ -884,6 +884,10 @@ commonData.jsLibrary.jquery = {
 	.parents()：祖先元素
 	.parentsUntil()：祖先元素直到哪里
 	!!
+	###parent([selector])
+	获取元素的父元素，可以传入一个参数 selector 以筛选获得的父元素
+	比如·('p').parent()·表示获取所有 p 元素的父元素，·('p').parent('.active')·表示获取带有 active 类的父元素
+	###parents
 
 	##兄弟元素
 	!!

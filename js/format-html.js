@@ -42,7 +42,7 @@ const formatHtml = text => {
 			// 加粗，<b>
 			.replace(REG.b, item => REG.addTag('b'))
 			// 行内图片，<img>
-			.replace(REG.imgInline, item => REG.imgFn(item, REG.imgInline))
+			.replace(REG.imgInline, item => REG.imgFn(item, REG.imgInline, true))
 
 			// 底部链接，单行，在每一行中替换，里面转 <a> ，最后合并成一行
 			.replace(REG.linkOneLine, item => '@@学习参考链接：' + item.slice(2, -3).replace(REG.multiLine, (res, $1) =>
