@@ -759,6 +759,10 @@ commonData.jsLibrary.jquery = {
 
 	#DOM 状态
 	##追加
+	!!
+	.add()：在已选择的元素中追加指定元素
+	.addBack()：在已选择的元素中追加前一个选择的元素
+	!!
 	###.add(selector/html [, context])
 	在已选择的元素中追加选择指定元素，即·$('.demo').add('p')·等同于·$('.demo, p')·
 	比如·$('.demo').removeClass('red').add('p').addClass('active')·表示 .demo 删除 red 类再和 p 元素一起添加 active 类
@@ -776,6 +780,9 @@ commonData.jsLibrary.jquery = {
 	··
 	可选择第二个参数筛选要追加的元素
 	比如·$('.demo').add('p', '.box')·表示 p 属于 .box 的后代元素才会被追加，等同于·$('.demo').add('.box p')·
+	###.addBack()
+	在已选择的元素中追加前一个选择的元素
+	比如·$('.demo').nextAll().addBack()·表示选择 .demo 和之后所有的兄弟元素
 
 	##回退
 	###.end()
@@ -884,10 +891,16 @@ commonData.jsLibrary.jquery = {
 	.parents()：祖先元素
 	.parentsUntil()：祖先元素直到哪里
 	!!
-	###parent([selector])
+	###.parent([selector])
 	获取元素的父元素，可以传入一个参数 selector 以筛选获得的父元素
 	比如·('p').parent()·表示获取所有 p 元素的父元素，·('p').parent('.active')·表示获取带有 active 类的父元素
-	###parents
+	###.parents([selector])
+	获取元素的所有祖先元素，可以传入一个参数 selector 以筛选获得的祖先元素
+	###.parentsUntil([selector/element] [, selector])
+	获取元素的所有祖先元素，直到遇到选择器或某元素停止，结果不包含终点元素
+	比如·('p').parentsUntil('body')·表示获取 body 内所有 p 元素的祖先元素
+	可以传入第二个参数 selector 以筛选获得的祖先元素
+	比如·('p').parentsUntil('body', div)·表示获取 body 内所有 p 元素的 div 标签祖先元素
 
 	##兄弟元素
 	!!
@@ -899,12 +912,31 @@ commonData.jsLibrary.jquery = {
 	.prevUntil()：前面直到哪里
 	.nextUntil()：后面直到哪里
 	!!
+	###.prev([selector])
+	获取元素紧邻的前一个兄弟元素，可以传入一个参数 selector 以筛选获得的兄弟元素
+	###.next([selector])
+	下一个兄弟元素，和·.prev()·相反
+	###.prevAll([selector])
+	前面所有兄弟元素，用法和·.prev()·一样
+	###.nextAll([selector])
+	后面所有兄弟元素，和·.prevAll()·相反
+	###.siblings([selector])
+	前后所有兄弟元素，·.prevAll()·和·.nextAll()·加起来
+	###.prevUntil([selector/element] [, selector])
+	前面所有兄弟元素直到哪里停下，可以传入第二个参数 selector 以筛选获得的兄弟元素
+	###.nextUntil([selector/element] [, selector])
+	后面所有兄弟元素直到哪里停下，和·.prevUntil()·相反
 
 	##查找
 	!!
 	.find()：往下找
 	.closest()：往上找
 	!!
+	###.find(selector/element)
+	在所有子孙元素中找到匹配的元素
+	###.closest(selector/element [, element])
+	从内向外从自己开始在所有祖先元素中找到最先匹配的那个元素，可以传入第二个参数以限定范围
+	比如·$('ul').closest('div', $('.active')[0])·表示找到 ul 的最近祖先元素中的 div 元素，并且属于 .active 类的子孙元素
 
 	##判断
 	###.is(selector/function(index))
@@ -925,6 +957,6 @@ commonData.jsLibrary.jquery = {
 	})
 	··
 
-	&2018.8.9
+	&2018.8.23
 	`
 }

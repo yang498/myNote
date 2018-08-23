@@ -38,7 +38,7 @@ let script = ''
 for (let dataKey in commonData) {
 	const firstDir = dataKey.replace(/[A-Z]/g, '-$&').toLowerCase()
 	for (let secondDir of commonData[dataKey].directory) {
-		script += `<script src="data/${firstDir}/${secondDir}.js" type="text/javascript" charset="utf-8" async></script>`
+		script += `<script src="data/${firstDir}/${secondDir}.js" type="text/javascript" charset="utf-8"></script>`
 	}
 }
 $('#import').after(script)
