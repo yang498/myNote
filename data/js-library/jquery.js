@@ -957,6 +957,29 @@ commonData.jsLibrary.jquery = {
 	})
 	··
 
-	&2018.8.23
+	#过渡动画
+	##.hide()
+	###.hide([duration] [, easing] [, complete])
+	隐藏匹配的元素，直接使用·.hide()·没有动画，相当于·.css('display', 'none')·
+	!!
+	duration{Number/String}[400/normal]：动画持续时间，单位 ms，默认 normal(400)，可选 fast(200)、slow(600)
+	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear，其他曲线需要使用插件，比如 @[jQuery Easing Plugin|http://gsgd.co.uk/sandbox/jquery/easing/]
+	complete{Function}：在动画完成时要执行的函数
+	!!
+	3 个参数都是单独可选的，比如直接传入一个函数将默认启用了·duration 的 400·和·easing 的 swing·
+	动画改变的是：width、height、opacity，直到变成 0，然后设置行内样式·display:none;·
+	在开始动画前会将·display·属性值保存在 jQuery 的数据缓存中，如果再次恢复比如使用·.show()·其·display·可以恢复到其初始值
+	注意如果原来是·display:inline;·将会在动画的过程中暂时变成·display:inline-block;·，因为这样才能对 width 和 height 做出改变
+	###.hide(options)
+	也可以传入一个 object ，支持的选项有：
+	!!
+	duration{Number/String}[400/normal]：动画持续时间，单位 ms，默认 normal(400)，可选 fast(200)、slow(600)
+	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear，其他曲线需要使用插件，比如 @[jQuery Easing Plugin|http://gsgd.co.uk/sandbox/jquery/easing/]
+	complete{Function}：在动画完成时要执行的函数
+	queue{Boolean/String}[true]：是否将动画放置在效果队列中，若设为 false 将立即开始动画，若设为一个字符串则表示为该动画队列加上名称，执行时只是加入队列中，动画不会立即启动，执行该队列需调用·.dequeue('queuename')·才会启动
+	specialEasing{Object}：一组一个或多个通过相应的参数和相对简单函数定义的 CSS 属性
+	!!
+
+	&2018.8.26
 	`
 }
