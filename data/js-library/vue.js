@@ -1056,13 +1056,13 @@ commonData.jsLibrary.vue = {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
 	
 	data: {
-    items: [1,2,3,4,5,6,7,8,9]
-  },
+		items: [1,2,3,4,5,6,7,8,9]
+	},
 	methods: {
-    shuffle: function () {
-      this.items = _.shuffle(this.items)
-    }
-  }
+		shuffle: function () {
+			this.items = _.shuffle(this.items)
+		}
+	}
 	··
 	内部的实现是 Vue 使用了一个叫 @[FLIP|https://aerotwist.com/blog/flip-your-animations/] 简单的动画队列，使用 transforms 将元素从之前的位置平滑过渡新的位置。
 	@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
@@ -1083,10 +1083,231 @@ commonData.jsLibrary.vue = {
 	}
 	··
 	即可实现周围元素的过渡
+	FLIP 动画不仅可以实现单列过渡，@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
 	
-	##列表的交错过渡
+	###列表的交错过渡
 	
+	#组件
+	##Vue.component()
+	·Vue.component(id, [definition])·：注册或获取全局组件，给定的 id 作为组件的名称
+	··
+	// 注册组件，传入一个扩展过的构造器
+	Vue.component('my-component', Vue.extend({ /* ... */ }))
 	
-	&2018.7.25
+	// 注册组件，传入一个选项对象 (自动调用 Vue.extend)
+	Vue.component('my-component', { /* ... */ })
+	
+	// 获取注册的组件 (始终返回构造器)
+	var MyComponent = Vue.component('my-component')
+	··
+	###注册组件
+	··
+	// 定义一个名为 button-counter 的新组件：
+	Vue.component('button-counter', {
+		template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+		data: function () {
+	    	return {
+	    		count: 0
+	    	}
+		}
+	})
+	
+	// 直接在 Vue 中使用，可以多次复用
+	<button-counter></button-counter>
+	<button-counter></button-counter>
+	··
+	参数和·new Vue·时基本相同，不同的是·el·选项换成·template·模板，组件模板同样只能有一个根元素，且·data·是个函数
+	^^一个组件的 data 选项必须是一个函数^^，多次复用时数据才是独立的，如果只是一个对象，那么多个同样的组件之间数据是共用的
+	###props
+	当要给组件传值的时候需要·props {Array}·，自定义任意属性名即可
+	··
+	Vue.component('blog-post', {
+		props: ['title'],
+		template: '<h3>{{ title }}</h3>'
+	})
+	
+	// 定义的 title 属性即传给组件的值
+	<blog-post title="My journey with Vue"></blog-post>
+	<blog-post title="Blogging with Vue"></blog-post>
+	
+	// 和 data 使用
+	<blog-post v-for="post in posts" :key="post.id" :title="post.title"></blog-post>
+	··
+	###$emit()
+	当组件向外部传值时需通过·$emit()·定义事件名，相当于模板内将点击事件换个名字：
+	··
+	Vue.component('blog-post', {
+		template: \`
+		    <button v-on:click="$emit('welcome')">
+				Click me to be welcomed
+			</button>
+		\`
+	})
+	
+	// 使用
+	<blog-post @welcome="hi"></blog-post>
+	
+	methods: {
+		hi() {
+			alert('Hi!')
+		}
+	}
+	··
+	第二个之后的参数代表传递的参数：
+	··
+	Vue.component('blog-post', {
+		template: \`
+		    <button v-on:click="$emit('welcome', 20, 30)">
+				Click me to be welcomed
+			</button>
+		\`
+	})
+	
+	// 通过 $event 访问，代表传递的第一个参数 20
+	<div :style="{'font-size': fz + 'px'}">welcome</div>
+	<blog-post @welcome="fz = $event"></blog-post>
+	data: {
+		fz: 16
+	}
+	
+	// 如果是一个方法，参数与传入的值一一对应
+	<div :style="{'font-size': fz + 'px'}">welcome</div>
+	<blog-post @welcome="test"></blog-post>
+	data: {
+		fz: 16
+	},
+	methods: {
+		test(res1, res2) {
+			this.fz = res1	// 20
+			console.log(res2)	// 30
+		}
+	}
+	··
+	也可以在 methods 里面通过·this.$emit·调用：
+	··
+	Vue.component('magic-eight-ball', {
+		template: '<button v-on:click="giveAdvice">Click me for advice</button>',
+		data: function () {
+			return {
+				possibleAdvice: ['Yes', 'No', 'Maybe']
+			}
+		},
+		methods: {
+			giveAdvice: function () {
+				var randomAdviceIndex = Math.floor(Math.random() * this.possibleAdvice.length)
+				this.$emit('give-advice', this.possibleAdvice[randomAdviceIndex])
+			}
+		}
+	})
+	
+	// 使用
+	<magic-eight-ball v-on:give-advice="showAdvice"></magic-eight-ball>
+	methods: {
+		showAdvice: function (advice) {
+			alert(advice)
+		}
+	}
+	··
+	###在组件上使用 v-model
+	因为·v-model·的原理是：
+	··
+	<input :value="searchText" @input="searchText = $event.target.value">
+	··
+	所以在组件上就是同时完成外部向组件内传值、组件向外部传值，由于·$event·在组件内的含义不同，需要改写成：
+	··
+	Vue.component('custom-input', {
+		props: ['value'],
+		template: \`<input :value="value" @input="$emit('input', $event.target.value)" />\`
+	})
+	
+	// 现在可以使用 v-model 了
+	<custom-input v-model="searchText"></custom-input>
+	data: {
+		searchText: ''
+	}
+	··
+	###通过插槽分发内容
+	和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样：
+	··
+	Vue.component('alert-box', {
+		template: \`
+			<div class="demo-alert-box">
+				<strong>Error!</strong>
+			</div>
+		\`
+	})
+	
+	// 添加文本
+	<alert-box>Something bad happened.</alert-box>
+	··
+	直接添加内容是无效的，需要使用 slot 在需要的地方加入：
+	··
+	Vue.component('alert-box', {
+		template: \`
+			<div class="demo-alert-box">
+				<strong>Error!</strong>
+				<slot></slot>
+			</div>
+		\`
+	})
+	··
+	###动态切换组件
+	通过 Vue 的·<component>·元素和·is·属性可以切换组件，相当于·if·：
+	··
+	<div id="dynamic-component-demo" class="demo">
+		<button
+			v-for="tab in tabs"
+			:key="tab"
+			:class="{active: currentTab === tab}"
+			@click="currentTab = tab"
+		>{{ tab }}</button>
+		<component :is="currentTabComponent" class="tab" ></component>
+	</div>
+	
+	// js
+	Vue.component('tab-home', {
+		template: '<div>Home component</div>' 
+	})
+	Vue.component('tab-posts', {
+		template: '<div>Posts component</div>' 
+	})
+	Vue.component('tab-archive', {
+		template: '<div>Archive component</div>' 
+	})
+	
+	new Vue({
+		el: '#dynamic-component-demo',
+		data: {
+			currentTab: 'Home',
+			tabs: ['Home', 'Posts', 'Archive']
+		},
+		computed: {
+			currentTabComponent: function () {
+				return 'tab-' + this.currentTab.toLowerCase()
+			}
+		}
+	})
+	··
+	###解析 DOM 模板时的注意事项
+	有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。比如：
+	··
+	<table>
+		<blog-post-row></blog-post-row>
+	</table>
+	··
+	·<blog-post-row>·会被作为无效的内容提升到外部，即等同于：
+	··
+	<blog-post-row></blog-post-row>
+	<table>
+	</table>
+	··
+	此时需要使用·is·属性来代替才会正常渲染：
+	··
+	<table>
+		<tr is="blog-post-row"></tr>
+	</table>
+	··
+	
+	&2018.8.29
 	`
 }

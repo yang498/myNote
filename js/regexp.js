@@ -38,7 +38,7 @@ REG.comment = /\/\/(?!¿)[^]*?(?=\n)|\/\*(?!¿)[^]*?\*\/(?!¿)|&lt;!--[^]*?--&gt
 REG.unComment = /http:\/\/|https:\/\/|ws:\/\/|wss:\/\/|[\w\*]\/\*|[\w\*]\*\/|git:\/\//g
 // 标签、关键字、正则加标记不匹配
 REG.un = res => res.replace(REG.startUn, '&lt;¿$1')
-	.replace(REG.endUn, '&lt;¿$1')
+	.replace(REG.endUn, '&lt;¿/$1')
 	.replace(REG_UN, '$&¿')
 	.replace(REG.regUn, '$1/¿$3')
 
