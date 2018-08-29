@@ -25,7 +25,7 @@ const formatHtml = text => {
 					.replace(REG.str, '<span class="color-green">$&</span>')	// 字符串，绿
 					.replace(REG.comment, '<span class="color-gray">$&</span>')	// 注释，灰
 					.replace(REG.statement, '<span class="color-pink">$&</span>')	// 开头声明，粉
-					.replace(REG.loopFork, '<span class="color-cyan">$&</span>')// 循环分支，青
+					.replace(REG.loopFork, '<span class="color-purple">$&</span>')// 循环分支，紫
 					.replace(REG.methodKeyword, '<span class="color-blue">$&</span>')	// 方法关键字，蓝
 					.replace(REG.type, '<span class="color-purple">$&</span>')	// 类型方法，紫
 					.replace(REG.reg, '$1<span class="color-orange">$2</span>')	// 正则，橙
