@@ -1088,7 +1088,7 @@ commonData.jsLibrary.vue = {
 	###列表的交错过渡
 	
 	#组件
-	##Vue.component()
+	##全局注册
 	·Vue.component(id, [definition])·：注册或获取全局组件，给定的 id 作为组件的名称
 	··
 	// 注册组件，传入一个扩展过的构造器
@@ -1100,7 +1100,55 @@ commonData.jsLibrary.vue = {
 	// 获取注册的组件 (始终返回构造器)
 	var MyComponent = Vue.component('my-component')
 	··
-	###注册组件
+	###命名方式
+	!!
+	kebab-case 短横线隔开：Vue.component('my-component-name', { /* ... */ })，在 html 中使用·<my-component-name>·
+	PascalCase 驼峰式：Vue.component('MyComponentName', { /* ... */ })，引用这个元素时都可以使用·<my-component-name>·或·<MyComponentName>·，但在 html 中只能使用·<my-component-name>·
+	!!
+	
+	##局部注册
+	如果你使用一个像 webpack 这样的构建系统，全局注册所有的组件会被包含在最终的构建结果中。这造成了用户下载的 JavaScript 的无谓的增加。在这些情况下可以通过一个普通的 JavaScript 对象来定义组件：
+	··
+	var ComponentA = { /* ... */ }
+	var ComponentB = { /* ... */ }
+	var ComponentC = { /* ... */ }
+	
+	// 然后在 new Vue 中的 components 选项定义组件
+	// 属性名就是 Vue.component 的 id，属性值就是选项
+	new Vue({
+		el: '#app'
+		components: {
+			'component-a': ComponentA,
+			'component-b': ComponentB,
+			'component-c': ComponentC
+		}
+	})
+	··
+	^^注意^^局部注册的组件在其子组件中不可用
+	可以在其组件的子属性中再次声明，例如 ComponentA 在 ComponentB 中使用：
+	··
+	var ComponentA = { /* ... */ }
+	var ComponentB = {
+		components: {
+			'component-a': ComponentA
+		}
+	}
+	··
+	也可以在模块系统中局部注册，例如在 ComponentB.js 或 ComponentB.vue 文件中：
+	··
+	import ComponentA from './ComponentA'
+	import ComponentC from './ComponentC'
+
+	export default {
+		components: {
+			ComponentA,
+			ComponentC
+		},
+	}
+	··
+	现在 ComponentA 和 ComponentC 都可以在 ComponentB 的模板中使用了
+	
+	##注册组件
 	··
 	// 定义一个名为 button-counter 的新组件：
 	Vue.component('button-counter', {
@@ -1307,6 +1355,13 @@ commonData.jsLibrary.vue = {
 		<tr is="blog-post-row"></tr>
 	</table>
 	··
+	需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：
+	!!
+	字符串 (例如·template: '...'·)
+	单文件组件 (·.vue·)
+	·<script type="text/x-template">·
+	!!
+	
 	
 	&2018.8.29
 	`
