@@ -75,6 +75,24 @@ commonData.js.grammar = {
 	{}=={}	// false
 	[]==[]	// false
 	··
+	
+	##this
+	··
+	var a = 'a'
+	var obj = {
+		a: 1,
+		b: this.a,	// 'a'
+		c: function () {
+			console.log(this.a)	// 1
+		},
+		d: function () {
+			var e = function () {
+				console.log(this.a)
+			}
+			e()	// 'a'
+		}
+	}
+	··
 
 	&2018.4.14
 	`

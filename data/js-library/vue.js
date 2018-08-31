@@ -1166,8 +1166,9 @@ commonData.jsLibrary.vue = {
 	··
 	参数和·new Vue·时基本相同，不同的是·el·选项换成·template·模板，组件模板同样只能有一个根元素，且·data·是个函数
 	^^一个组件的 data 选项必须是一个函数^^，多次复用时数据才是独立的，如果只是一个对象，那么多个同样的组件之间数据是共用的
-	###props
-	当要给组件传值的时候需要·props {Array}·，自定义任意属性名即可
+	
+	##props
+	当要给组件传值的时候需要·props {Array/Object}·，自定义任意属性名即可
 	··
 	Vue.component('blog-post', {
 		props: ['title'],
@@ -1181,7 +1182,92 @@ commonData.jsLibrary.vue = {
 	// 和 data 使用
 	<blog-post v-for="post in posts" :key="post.id" :title="post.title"></blog-post>
 	··
-	###$emit()
+	^^注意^^ html 中是不区分大小写的，所以·postTitle·需改成·post-title·，当然在·template·中使用时没有这个限制，即：
+	··
+	Vue.component('blog-post', {
+		props: ['postTitle'],
+		template: '<h3>{{ postTitle }}</h3>'
+	})
+	
+	// html 中使用
+	<blog-post post-title="My journey with Vue"></blog-post>
+	··
+	###类型
+	一般以字符串数组的方式列出 prop：
+	··
+	props: ['title', 'likes', 'isPublished', 'commentIds', 'author']
+	··
+	也可以用对象的形式指定值类型，key 作为 prop 的名称，value 作为类型，当未按照指定类型传值时 Vue 会在控制台发出警告：
+	可选·String/Number/Boolean/Array/Object/Date/Function/Symbol/null·
+	··
+	props: {
+		title: String,	// 字符串
+		likes: Number,	// 数字
+		isPublished: Boolean,	// 布尔值
+		commentIds: null,	// 任意类型
+		author: [Array, Object], // 用数组表示多类型
+		content: {	// 用对象指定属性
+			type: String,	// 类型为字符串
+			required: true,	// 是否必填
+			default: '空'	// 默认值
+		},
+		content2: {
+			type: [Object, Array],	// 类型为对象或字符串时
+			default: function () {	// 默认值必须通过函数返回，否则会造成共用
+				return { message: 'hello' }
+			}
+		},
+		content3: {
+			validator: function (value) {	// 自定义验证函数
+				// 这个值必须匹配下列字符串中的一个，否则 Vue 将会产生一个控制台的警告（开发环境）
+				return ['success', 'warning', 'danger'].indexOf(value) !== -1
+			}
+		}
+	}
+	··
+	而使用的指定类型的方式就需要注意^^没有通过·v-bind·绑定的属性都是字符串类型^^，所以记得加上·v-bind·，比如：
+	··
+	Vue.component('blog-post', {
+		props: {
+			likes: Number,
+			isPublished: Boolean
+		},
+		template: '<span v-if="isPublished">{{ likes }}</span>'
+	})
+	
+	// html
+	<blog-post likes="36" isPublished="false"></blog-post> // 报错，实际都是 String 类型
+	<blog-post :likes="36" :isPublished="false"></blog-post>	// 用 v-bind 告诉 Vue 这是个表达式而非字符串
+	··
+	###传入一个对象的所有属性
+	直接使用不带参数的·v-bind·可传入一个对象（注意此时不能使用简写·:·）：
+	··
+	data: {
+		book: {
+			id: 1,
+			name: 'vue',
+			title: 'My Journey with Vue'
+		}
+	}
+	
+	<blog-post v-bind="book"></blog-post>
+	// 等同于
+	<blog-post :id="book.id" :name="book.name" :title="book.title"></blog-post>
+	··
+	###替换/合并已有的特性
+	比如：
+	··
+	Vue.component('blog-post', {
+		template: '<span class="demo">demo</span>'
+	})
+	
+	// html
+	<blog-post class="active"></blog-post>
+	··
+	这个时候就定义了 2 个类名，默认会将它们合并，即·class="demo active"·，style 也会如此，如果是其他属性将会覆盖组件的
+	
+	
+	##$emit()
 	当组件向外部传值时需通过·$emit()·定义事件名，相当于模板内将点击事件换个名字：
 	··
 	Vue.component('blog-post', {

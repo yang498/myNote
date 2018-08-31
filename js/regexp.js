@@ -3,7 +3,7 @@
 // 在单词结尾又是在开头的单词，比如 let applet，这个时候就手动加 ¿，再改实在太累了，这种情况也少见
 let REG_UN = {
 	// 开头声明，粉
-	statement: 'var|let |const|void|function|=&gt;|new |class\s|constructor|super|static|import|export|default',
+	statement: 'var|let |const|void|function|=&gt;|new |class\s|constructor|super|static|import|export |default',
 	// 循环分支，紫
 	loopFork: 'for | in |of\s|while|\sdo|if |else |switch|case|break|continue|try\s|catch|finally|with',
 	// 方法关键字，蓝
