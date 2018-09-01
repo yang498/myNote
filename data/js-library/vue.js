@@ -1,10 +1,6 @@
 commonData.jsLibrary.vue = {
 	content: `
 	#起步
-	下个：组件
-	再下个：cli,.vue形式
-	最后再全部浏览下所有的文档
-	
 	##介绍
 	Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
 	一种轻量级的mvvm框架，它同时吸收了angular和react的优点，因为是国人开发的，所以对中文的支持是非常好的，方便学习，特点：数据驱动视图，响应式。
@@ -624,12 +620,20 @@ commonData.jsLibrary.vue = {
 	··
 	
 	##v-model
-	在表单控件或者组件上创建双向绑定。适用的组件有：·<input> <select> <textarea> components·
+	在表单控件或者组件上创建双向绑定，监听输入和输出。适用的组件有：·<input> <select> <textarea> components·
+	在文本框中：
 	··
-	<input v-model="searchText"/>
+	<input type="text" v-model="searchText"/>
 	// 等同于
 	<input :value="searchText" @input="searchText=$event.target.value"/>
 	··
+	在多选框中：
+	··
+	<input type="text" v-model="searchText"/>
+	// 等同于
+	<input type="checkbox" :checked="checked" @change="$event.target.checked"/>
+	··
+	其它元素依次类推
 	支持的修饰符有：
 	!!
 	.lazy：取代 input 改为 change 事件
@@ -1166,6 +1170,68 @@ commonData.jsLibrary.vue = {
 	··
 	参数和·new Vue·时基本相同，不同的是·el·选项换成·template·模板，组件模板同样只能有一个根元素，且·data·是个函数
 	^^一个组件的 data 选项必须是一个函数^^，多次复用时数据才是独立的，如果只是一个对象，那么多个同样的组件之间数据是共用的
+	###动态切换组件
+	通过 Vue 的·<component>·元素和·is·属性可以切换组件，相当于·if·：
+	··
+	<div id="dynamic-component-demo" class="demo">
+		<button
+			v-for="tab in tabs"
+			:key="tab"
+			:class="{active: currentTab === tab}"
+			@click="currentTab = tab"
+		>{{ tab }}</button>
+		<component :is="currentTabComponent" class="tab" ></component>
+	</div>
+	
+	// js
+	Vue.component('tab-home', {
+		template: '<div>Home component</div>' 
+	})
+	Vue.component('tab-posts', {
+		template: '<div>Posts component</div>' 
+	})
+	Vue.component('tab-archive', {
+		template: '<div>Archive component</div>' 
+	})
+	
+	new Vue({
+		el: '#dynamic-component-demo',
+		data: {
+			currentTab: 'Home',
+			tabs: ['Home', 'Posts', 'Archive']
+		},
+		computed: {
+			currentTabComponent: function () {
+				return 'tab-' + this.currentTab.toLowerCase()
+			}
+		}
+	})
+	··
+	###解析 DOM 模板时的注意事项
+	有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。比如：
+	··
+	<table>
+		<blog-post-row></blog-post-row>
+	</table>
+	··
+	·<blog-post-row>·会被作为无效的内容提升到外部，即等同于：
+	··
+	<blog-post-row></blog-post-row>
+	<table>
+	</table>
+	··
+	此时需要使用·is·属性来代替才会正常渲染：
+	··
+	<table>
+		<tr is="blog-post-row"></tr>
+	</table>
+	··
+	需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：
+	!!
+	字符串 (例如·template: '...'·)
+	单文件组件 (·.vue·)
+	·<script type="text/x-template">·
+	!!
 	
 	##props
 	当要给组件传值的时候需要·props {Array/Object}·，自定义任意属性名即可
@@ -1258,24 +1324,74 @@ commonData.jsLibrary.vue = {
 	比如：
 	··
 	Vue.component('blog-post', {
-		template: '<span class="demo">demo</span>'
+		template: '<span class="demo" message="hhh">demo</span>'
 	})
 	
 	// html
-	<blog-post class="active"></blog-post>
+	<blog-post class="active" message="hello"></blog-post>
+	
+	// 在浏览器中，class 和 style 会合并，其他属性会覆盖组件的
+	<blog-post class="demo active" message="hello"></blog-post>
 	··
-	这个时候就定义了 2 个类名，默认会将它们合并，即·class="demo active"·，style 也会如此，如果是其他属性将会覆盖组件的
-	
-	
-	##$emit()
-	当组件向外部传值时需通过·$emit()·定义事件名，相当于模板内将点击事件换个名字：
+	###禁用继承
+	如果不希望组件的根元素继承特性，可以在组件的选项中设置·inheritAttrs: false·，注意这个选项对 class 和 style 绑定不影响，	比如：
 	··
 	Vue.component('blog-post', {
-		template: \`
-		    <button v-on:click="$emit('welcome')">
-				Click me to be welcomed
-			</button>
-		\`
+		template: '<span class="demo" weather="cloudy">demo</span>'
+	})
+	
+	// html
+	<blog-post class="active" weather="sunny"></blog-post>
+	
+	// 浏览器中显示覆盖了组件的 weather 属性
+	<span class="demo active" weather="sunny">demo</span>
+	··
+	若加上了·inheritAttrs: false·：
+	··
+	Vue.component('blog-post', {
+		inheritAttrs: false,
+		template: '<span class="demo" weather="cloudy">demo</span>'
+	})
+	
+	// html
+	<blog-post class="active" weather="sunny"></blog-post>
+	
+	// 浏览器中显示未覆盖 
+	<span class="demo active" weather="cloudy">demo</span>
+	··
+	默认不会显示未在组件上声明的元素，通过实例属性·$attrs·则可以让继承特性生效，比如：
+	··
+	Vue.component('blog-post', {
+		template: '<span class="demo">demo</span>',
+		created() {
+			console.log(this.$attrs)
+		}
+	})
+	
+	// html
+	<blog-post class="active" message="hello"></blog-post>
+	
+	// 浏览器中未显示 message 属性，可以在看到控制台打印 {message: 'hello'}，说明接收到了属性但未使用
+	<span class="demo active">demo</span>
+	··
+	需要在元素上显示时可以加上·v-bind="$attrs"·：
+	··
+	Vue.component('blog-post', {
+		template: '<span class="demo" v-bind="$attrs">demo</span>',
+	})
+	
+	// html
+	<blog-post class="active" message="hello"></blog-post>
+	
+	// 浏览器中显示了 message 属性
+	<span class="demo active" message="hello">demo</span>
+	··
+	
+	##$emit()
+	当组件向外部传值时需通过·$emit()·自定义事件名，相当于模板内将点击事件换个名字：
+	··
+	Vue.component('blog-post', {
+		template: \`<button v-on:click="$emit('welcome')">Click me to be welcomed</button>\`
 	})
 	
 	// 使用
@@ -1290,11 +1406,7 @@ commonData.jsLibrary.vue = {
 	第二个之后的参数代表传递的参数：
 	··
 	Vue.component('blog-post', {
-		template: \`
-		    <button v-on:click="$emit('welcome', 20, 30)">
-				Click me to be welcomed
-			</button>
-		\`
+		template: \`<button v-on:click="$emit('welcome', 20, 30)">Click me to be welcomed</button>\`
 	})
 	
 	// 通过 $event 访问，代表传递的第一个参数 20
@@ -1342,6 +1454,7 @@ commonData.jsLibrary.vue = {
 		}
 	}
 	··
+	^^注意大小写^^，如果定义·this.$emit('myEvent')·，在 html 中使用时需改成小写：·@myevent=""·
 	###在组件上使用 v-model
 	因为·v-model·的原理是：
 	··
@@ -1360,95 +1473,112 @@ commonData.jsLibrary.vue = {
 		searchText: ''
 	}
 	··
-	###通过插槽分发内容
+	一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件可能会将 value 特性用于不同的目的。·model·选项可以用来避免这样的冲突：
+	··
+	Vue.component('base-checkbox', {
+	  model: {
+	    prop: 'checked',
+	    event: 'change'
+	  },
+	  props: {
+	    checked: Boolean
+	  },
+	  template: \`<input type="checkbox" :checked="checked" @change="$emit('change', $event.target.checked)">\`
+	})
+	
+	// html
+	<base-checkbox v-model="lovingVue"></base-checkbox>
+	··
+	这里的 lovingVue 的值将会传入这个名为 checked 的 prop。同时当·<base-checkbox>·触发一个 change 事件并附带一个新的值的时候，这个 lovingVue 的属性将会被更新
+	@[将原生事件绑定到组件|https://cn.vuejs.org/v2/guide/components-custom-events.html#%E5%B0%86%E5%8E%9F%E7%94%9F%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%88%B0%E7%BB%84%E4%BB%B6]
+	@[.sync 修饰符|https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6]
+	
+	##slot
 	和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样：
 	··
 	Vue.component('alert-box', {
 		template: \`
 			<div class="demo-alert-box">
-				<strong>Error!</strong>
+				<strong>Hello </strong>
 			</div>
 		\`
 	})
 	
 	// 添加文本
-	<alert-box>Something bad happened.</alert-box>
+	<alert-box>World</alert-box>
+	
+	// 浏览器中
+	<div class="demo-alert-box">
+		<strong>Hello </strong>
+	</div>
 	··
 	直接添加内容是无效的，需要使用 slot 在需要的地方加入：
 	··
 	Vue.component('alert-box', {
 		template: \`
 			<div class="demo-alert-box">
-				<strong>Error!</strong>
+				<strong>Hello </strong>
 				<slot></slot>
 			</div>
 		\`
 	})
-	··
-	###动态切换组件
-	通过 Vue 的·<component>·元素和·is·属性可以切换组件，相当于·if·：
-	··
-	<div id="dynamic-component-demo" class="demo">
-		<button
-			v-for="tab in tabs"
-			:key="tab"
-			:class="{active: currentTab === tab}"
-			@click="currentTab = tab"
-		>{{ tab }}</button>
-		<component :is="currentTabComponent" class="tab" ></component>
+	
+	// 添加文本
+	<alert-box>World</alert-box>
+	
+	// 浏览器中
+	<div class="demo-alert-box">
+		<strong>Hello </strong>
+		World
 	</div>
-	
-	// js
-	Vue.component('tab-home', {
-		template: '<div>Home component</div>' 
-	})
-	Vue.component('tab-posts', {
-		template: '<div>Posts component</div>' 
-	})
-	Vue.component('tab-archive', {
-		template: '<div>Archive component</div>' 
-	})
-	
-	new Vue({
-		el: '#dynamic-component-demo',
-		data: {
-			currentTab: 'Home',
-			tabs: ['Home', 'Posts', 'Archive']
-		},
-		computed: {
-			currentTabComponent: function () {
-				return 'tab-' + this.currentTab.toLowerCase()
-			}
-		}
+	··
+	插槽内可以包含任何模板代码，包括 HTML 和其他组件
+	###多个插槽
+	通过·<slot>·的·name·属性定义名称来使用：
+	··
+	Vue.component('blog-post', {
+		template: \`
+			<div class="container">
+				<header>
+					<slot name="header"></slot>
+				</header>
+				<main>
+					<slot></slot>
+				</main>
+				<footer>
+					<slot name="footer"></slot>
+				</footer>
+			</div>
+		\`
 	})
 	··
-	###解析 DOM 模板时的注意事项
-	有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。比如：
+	在 html 中使用：
 	··
-	<table>
-		<blog-post-row></blog-post-row>
-	</table>
+	<blog-post>
+		<h1 slot="header">这里是 header 内部</h1>
+		<h2 slot="header">这里是 header 内部2</h2>
+			
+		<p>这里是 main 内部</p>
+		<p>这里是 main 内部2</p>
+  		
+		<p slot="footer">这里是 footer 内部</p>
+	</blog-post>
 	··
-	·<blog-post-row>·会被作为无效的内容提升到外部，即等同于：
+	多个相同的插槽可以使用·<template>·包裹：
 	··
-	<blog-post-row></blog-post-row>
-	<table>
-	</table>
+	<blog-post>
+	 	<template slot="header">
+			<h1>这里是 header 内部</h1>
+			<h2>这里是 header 内部2</h2>
+		</template>
+			
+		<p>这里是 main 内部</p>
+		<p>这里是 main 内部2</p>
+  		
+		<p slot="footer">这里是 footer 内部</p>
+	</blog-post>
 	··
-	此时需要使用·is·属性来代替才会正常渲染：
-	··
-	<table>
-		<tr is="blog-post-row"></tr>
-	</table>
-	··
-	需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：
-	!!
-	字符串 (例如·template: '...'·)
-	单文件组件 (·.vue·)
-	·<script type="text/x-template">·
-	!!
 	
-	
-	&2018.8.29
+	&2018.9.1
 	`
 }
