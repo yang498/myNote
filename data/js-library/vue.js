@@ -1534,7 +1534,7 @@ commonData.jsLibrary.vue = {
 	··
 	插槽内可以包含任何模板代码，包括 HTML 和其他组件
 	###多个插槽
-	通过·<slot>·的·name·属性定义名称来使用：
+	通过·<slot>·的·name·属性定义名称来使用，可以保留一个未命名插槽作为默认插槽，未定义名称的都会在其中输出，比如：
 	··
 	Vue.component('blog-post', {
 		template: \`
@@ -1578,6 +1578,14 @@ commonData.jsLibrary.vue = {
 		<p slot="footer">这里是 footer 内部</p>
 	</blog-post>
 	··
+	###插槽的默认内容
+	在·<slot>·元素内添加内容可作为默认内容，如果在使用这个插件时提供了内容将会覆盖默认的，否则就显示默认的：
+	··
+	<button type="submit">
+		<slot>Submit</slot>
+	</button>
+	··
+	###编译作用域
 	
 	&2018.9.1
 	`
