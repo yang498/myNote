@@ -7,6 +7,7 @@ $vue: #42b983;
 $hui: #eee;
 $blue: #08f;
 $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
+//code 清新粉 #ff3860
 
 .color-red {
 	color: #f00;
@@ -347,12 +348,11 @@ article {
         margin: 20px 0;
     }
     code {
-        color: #f80;
+        color: #ff3860;
         margin: 0 3px;
-        padding: 3px 5px;
+        padding: 3px 6px;
         border-radius: 3px;
         background-color: #f5f5f5;
-        border: 1px solid #eee;
         font-family: consolas;
     }
     span {
