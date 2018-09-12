@@ -1587,6 +1587,164 @@ commonData.jsLibrary.vue = {
 	··
 	###编译作用域
 	
-	&2018.9.1
+	#单文件组件
+	##介绍
+	通常在项目中使用·Vue.component·来定义全局组件，这在很多中小规模的项目中运作的很好，但当在更复杂的项目中，或者你的前端完全由 JavaScript 驱动的时候，下面这些缺点将变得非常明显：
+	!!
+	全局定义：强制要求每个 component 中的命名不得重复
+	字符串模板：缺乏语法高亮，在 HTML 有多行的时候，需要用到丑陋的·\\·
+	不支持 CSS：意味着当 HTML 和 JavaScript 组件化时，CSS 明显被遗漏
+	没有构建步骤：限制只能使用 HTML 和 ES5 JavaScript, 而不能使用预处理器，如 Pug (formerly Jade) 和 Babel
+	!!
+	而文件扩展名为·.vue·的单文件组件为以上所有问题提供了解决方法，并且还可以使用 webpack 或 Browserify 等构建工具。
+	###写法
+	把 html、css、js 写到一个文件中，从而实现对组件的封装， 一个.vue 文件就是一个单独的组件：
+	··
+	<!-- html 部分，使用 <template> 标签包裹，同样使用一个最大父容器 -->
+	<template>
+		<div class="hello">
+			<h1>{{msg}}</h1>
+		</div>
+	</template>
+	
+	<!-- js 部分，使用 <script> 标签包裹，export default 表示导出该组件，这样在其他页面中用 import 可使用该组件 -->
+	<script>
+		export default {
+			name: 'hello'
+			data() {
+				return {
+					msg: 'hello world!'
+				}
+			}
+		}
+	</script>
+	
+	<!-- css 部分，使用 <style> 标签包裹，scoped 属性表示此样式只用于当前组件内 -->
+	<style scoped>
+		h1 {
+			font-size: 20px;
+		}
+	</style>
+	··
+	###怎么看待关注点分离？
+	一个重要的事情值得注意，关注点分离不等于文件类型分离。
+	在现代 UI 开发中，相比于把代码库分离成三大层次文件（html、css、js），把它们划分为松散耦合的组件再将其组合起来更合理一些。在一个组件里，其模板、逻辑和样式是内部耦合的，使得组件更加内聚且更可维护。
+	即便你不喜欢单文件组件，你仍然可以把 JavaScript、CSS 分离成独立的文件然后做到热重载和预编译。比如：
+	··
+	<template>
+		<div>This will be pre-compiled</div>
+	</template>
+	<script src="./my-component.js"></script>
+	<style src="./my-component.css"></style>
+	··
+	
+	##Vue CLI
+	Vue CLI 是一个基于 Vue.js 进行快速开发的完整系统，提供：交互式、快速、零配置、依赖可升级扩展、丰富的插件、图形界面
+	Vue CLI 分为几个独立的部分：
+	!!
+	CLI：一个全局安装的 npm 包，提供了终端里的 vue 命令，包括 vue create、vue serve、vue ui等
+	CLI 服务：一个开发环境依赖，也是一个 npm 包，局部安装在每个 @vue/cli 创建的项目中，基于 webpack
+	CLI 插件：提供插件，名字以 @vue/cli-plugin- (内建插件) 或 vue-cli-plugin- (社区插件) 开头
+	!!
+	###全局安装
+	··
+	cnpm install -g @vue/cli
+	··
+	安装完成后可以访问·vue·命令，比如·vue -V·
+	###使用命令
+	创建新项目：
+	··
+	vue create hello-world
+	··
+	然后会提示选取一个 preset。直接按回车将选择默认的包含了基本的 Babel + ESLint 设置的 preset，也可以按上下键选“手动选择特性”来选取需要的特性
+	如果安装出现这样的错误：
+	··
+	command failed: npm install --loglevel error --registry=https://registry.npm......
+	··
+	可以试试直接使用·cnpm·初始化：
+	··
+	vue create -r cnpm project-name
+	··
+	###使用图形化界面
+	··
+	vue ui
+	··
+	上述命令会打开一个浏览器窗口，并以图形化界面将你引导至项目创建的流程
+	###运行
+	初始化完毕后可在·package.json·中查看可使用的命令：
+	··
+	{
+		"scripts": {
+			"serve": "vue-cli-service serve",
+			"build": "vue-cli-service build",
+			"lint": "vue-cli-service lint"
+		}
+	}
+	··
+	在初始化的·README.md·中也可以看到，所以运行项目可使用命令：
+	··
+	npm run serve
+	··
+	然后在浏览器中打开
+	··
+	http://localhost:8080/
+	··
+	即可访问初始化的·index.html·
+	
+	##Vue CLI 配置
+	有两种方式可以对项目进行配置：
+	!!
+	vue.config.js：
+	package.json：
+	!!
+	
+	##初始化项目分析
+	默认初始化的项目目录结构是：
+	!!
+	node_modules/：npm 依赖包
+	public/：公共文件
+		favicon.ico：网页标签 icon
+		index.html：入口文件
+	src/：主文件
+		assets/：资源文件
+			logo.png：logo 图片
+		components/：Vue 组件
+			HelloWorld.vue：HelloWorld 组件
+		App.vue：入口组件
+		main.js：入口 js
+	babel.config.js：babel 转换配置
+	package.json：项目配置信息
+	package-lock.json：node_modules/ 的依赖包信息
+	README.md：项目说明文档
+	!!
+	###public/index.html
+	该文件是一个会被 @[html-webpack-plugin|https://github.com/jantimon/html-webpack-plugin] 处理的模板，在构建过程中，对应的资源链接会被自动注入
+	在该文件中可以看到没有任何的 css 和 js 文件的引入，在运行时将
+	因此直接将该文件在浏览器中运行是什么都不会发生的，需运行·npm run dev·指令，在构建开发环境中才可正常访问，或者运行·npm run build·将项目打包成静态文件（默认输出在 /dist 文件中）后再在浏览器中运行
+	^^Tips^^：运行·npm run build·时，如果在 dist 中已有文件会先清空再输出
+	
+	##Vue Router
+	Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌。包含的功能有：
+	!!
+	嵌套的路由/视图表
+	模块化的、基于组件的路由配置
+	路由参数、查询、通配符
+	基于 Vue.js 过渡系统的视图过渡效果
+	细粒度的导航控制
+	带有自动激活的 CSS class 的链接
+	HTML5 历史模式或 hash 模式，在 IE9 中自动降级
+	自定义的滚动条行为
+	!!
+	
+	@@
+	官方文档|https://cn.vuejs.org/v2/guide/
+	Vue CLI|https://cli.vuejs.org/zh/guide/
+	Vue Router|https://router.vuejs.org/zh/
+	Vuex|https://vuex.vuejs.org/zh/
+	Vue SSR|https://ssr.vuejs.org/zh/
+	周边资源|https://github.com/vuejs/awesome-vue
+	@@
+	
+	&2018.9.12
 	`
 }
