@@ -1683,6 +1683,10 @@ commonData.jsLibrary.vue = {
 	··
 	在初始化的·README.md·中也可以看到，所以运行项目可使用命令：
 	··
+	npx vue-cli-service serve
+	··
+	或者：
+	··
 	npm run serve
 	··
 	然后在浏览器中打开
@@ -1692,10 +1696,50 @@ commonData.jsLibrary.vue = {
 	即可访问初始化的·index.html·
 	
 	##Vue CLI 配置
-	有两种方式可以对项目进行配置：
+	有两种方式可以对项目进行配置：vue.config.js 和 package.json
+	vue.config.js 是一个可选的配置文件，没有的话可以自行新建，这个文件应该导出一个包含了选项的对象：
+	··
+	module.exports = {
+		// 选项...
+	}
+	··
+	package.json 中的 vue 字段，也是一个可选的配置选项，没有的话可以自行添加（注意格式）：
+	··
+	"vue": {
+		// 选项...
+	}
+	··
+	当然如果需求比较多的话还是 vue.config.js 更方便，毕竟还可以添加语句，比如对 baseUrl 根据环境进行配置：
+	··
+	module.exports = {
+		baseUrl: process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/'
+	}
+	··
+	可配置的参数有：
 	!!
-	vue.config.js：
-	package.json：
+	baseUrl{String}[/]：运行·npm run build·打包后的引用资源的开头 url 路径
+	outputDir{String}[dist]：运行·npm run build·打包后的输出路径，注意目标目录在构建之前会被清除（构建时传入 --no-clean 可关闭该行为）
+	assetsDir{String}：放置生成的静态资源（js、css、img、fonts）的（相对于 outputDir 的）目录
+	indexPath{String}[index.html]：指定生成的 index.html 的输出路径 (相对于 outputDir)，也可以是一个绝对路径
+	filenameHashing{Boolean}[true]：通过 Vue CLI 生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存，如果不想使用带 hash 的 index.html 可设为 false 关闭
+	pages{Object}：自定义  entry, template, filename, title 和 chunks 的配置
+	lintOnSave{Boolean}[true]：是否在开发环境下通过 eslint-loader 在每次保存时 lint 代码。安装 @vue/cli-plugin-eslint 后生效
+	runtimeCompiler{Boolean}[false]：是否使用包含运行时编译器的 Vue 构建版本
+	transpileDependencies{StringArray/RegExpArray}：默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果想通过 Babel 显式转译某依赖，可以在这个选项中列出来
+	productionSourceMap{Boolean}[true]：如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
+	crossorigin{String}：设置生成的 HTML 中·<link rel="stylesheet">·和·<script>·标签的·crossorigin·属性
+	integrity{Boolean}[false]：如果你构建后的文件是部署在 CDN 上的，启用该选项可在生成的 HTML 中的·<link rel="stylesheet">·和·<script>·标签上启用 Subresource Integrity (SRI)以提供额外的安全性
+	configureWebpack{Object/Function}：webpack 配置方式，参考 @[配合 webpack > 简单的配置方式|https://cli.vuejs.org/zh/guide/webpack.html#%E7%AE%80%E5%8D%95%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F]
+	css：
+		modules{Boolean}[false]：css 模块配置方式，参考 @[配合 CSS > CSS Modules|https://cli.vuejs.org/zh/guide/css.html#css-modules]
+		extract{Boolean/Object}：是否将组件中的 CSS 提取至一个独立的 CSS 文件中，而不是注入到 JavaScript 中的 inline 代码
+		sourceMap{Boolean}[false]：是否为 CSS 开启 source map。设置为 true 之后可能会影响构建的性能
+		loaderOptions{Object}：向 CSS 相关的 loader 传递选项，参考 @[向预处理器 Loader 传递选项|https://cli.vuejs.org/zh/guide/css.html#%E5%90%91%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8-loader-%E4%BC%A0%E9%80%92%E9%80%89%E9%A1%B9]
+	devServer{Object}：所有 webpack-dev-server 的 @[选项|https://webpack.js.org/configuration/dev-server/] 都支持
+		proxy{Object/String}：将任何未知请求 (没有匹配到静态文件的请求) 代理到指定地址
+	parallel{Boolean}：是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建
+	pwa{Object}：向 @[PWA 插件|https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa] 传递选项
+	pluginOptions{Object}：这是一个不进行任何 schema 验证的对象，可传递任何第三方插件选项
 	!!
 	
 	##初始化项目分析
@@ -1718,10 +1762,47 @@ commonData.jsLibrary.vue = {
 	README.md：项目说明文档
 	!!
 	###public/index.html
-	该文件是一个会被 @[html-webpack-plugin|https://github.com/jantimon/html-webpack-plugin] 处理的模板，在构建过程中，对应的资源链接会被自动注入
-	在该文件中可以看到没有任何的 css 和 js 文件的引入，在运行时将
-	因此直接将该文件在浏览器中运行是什么都不会发生的，需运行·npm run dev·指令，在构建开发环境中才可正常访问，或者运行·npm run build·将项目打包成静态文件（默认输出在 /dist 文件中）后再在浏览器中运行
-	^^Tips^^：运行·npm run build·时，如果在 dist 中已有文件会先清空再输出
+	该文件是一个会被 @[html-webpack-plugin|https://github.com/jantimon/html-webpack-plugin] 处理的模板，可以看到没有任何的 css 和 js 文件的引入，因此直接将该文件在浏览器中运行是什么都不会发生的，需运行·npm run dev·指令，在构建过程中对应的资源链接会被自动注入，或者运行·npm run build·将项目打包成静态文件后再在浏览器中运行查看
+	###src/components/HelloWorld.vue
+	该组件的有个 msg 的 props 作为标题，在使用该组件时传入 msg，其余都是静态页面
+	###src/App.vue
+	该组件作为入口组件
+	··
+	<template>
+		<div id="app">
+			<img alt="Vue logo" src="./assets/logo.png">
+			<!-- 使用 HelloWorld 组件，并传入 msg 这个 props 作为标题 -->
+			<HelloWorld msg="Welcome to Your Vue.js App"/>
+		</div>
+	</template>
+
+	<script>
+		// 引入 HelloWorld.vue 这个组件，并用 HelloWorld 这个变量表示它
+		import HelloWorld from './components/HelloWorld.vue'
+	
+		// 导出本 App.vue 组件
+		export default {
+			name: 'app',	// 组件名为 app，该选项在单文件中不那么重要了，反正 import 时会重新命名
+			components: {	// 声明使用的组件
+				HelloWorld
+			}
+		}
+	</script>
+	··
+	###src/main.js
+	··
+	import Vue from 'vue'	// 引入 Vue.js，并用 Vue 这个变量表示它
+	import App from './App.vue'	// 引入 App.vue 这个组件，并用 App 这个变量表示它
+	
+	// 阻止 Vue 在启动时生成生产提示
+	Vue.config.productionTip = false
+	
+	new Vue({
+	  render: h => h(App)	// 渲染 App 这个组件，只包含运行时版只能使用渲染函数或包含编译器的构建，参考@[版本说明|https://cn.vuejs.org/v2/guide/installation.html#%E5%AF%B9%E4%B8%8D%E5%90%8C%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E8%A7%A3%E9%87%8A]
+	}).$mount('#app')	// 挂载 el 为 index.html 中的 #app
+	
+	// 在渲染时 App.vue 中的内容会代替 index.html 中的 <div id="app"></div>
+	··
 	
 	##Vue Router
 	Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌。包含的功能有：
@@ -1745,6 +1826,6 @@ commonData.jsLibrary.vue = {
 	周边资源|https://github.com/vuejs/awesome-vue
 	@@
 	
-	&2018.9.12
+	&2018.9.13
 	`
 }
