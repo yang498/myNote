@@ -25,7 +25,7 @@ let commonData = {
 	},
 	other: {
 		name: '其他',
-		directory: ['interview', 'office', 'article', 'english']
+		directory: ['interview', 'office', 'article', 'english', 'sql']
 	}
 }
 

@@ -57,7 +57,7 @@ const formatHtml = text => {
 					'<i class="head">' + start
 						.replace('{', ' <i class="type">{').replace('}', '}</i>')
 						.replace('[', ' <i class="default">[').replace(/]+/, '$&</i>')
-						.replace('!', ' <b>!</b>')
+						.replace(/!(?!¿)/, ' <b>!</b>')
 					+ '</i>')
 				+ '</li>').replace('\n', '') + '!!')
 
