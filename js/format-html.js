@@ -55,9 +55,9 @@ const formatHtml = text => {
 			.replace(REG.list, item => '!!' + item.slice(2, -2).replace(/^\t/gm, '').replace(REG.multiLine, (res, $1) =>
 				'<li>' + $1.replace(/\t/g, '<i class="attr"></i>').replace(/[^]*(?=：)/, start =>
 					'<i class="head">' + start
-						.replace('{', ' <i class="type">{').replace('}', '}</i>')
-						.replace('[', ' <i class="default">[').replace(/]+/, '$&</i>')
-						.replace(/!(?!¿)/, ' <b>!</b>')
+						.replace(/\{(?!¿)/, ' <i class="type">{').replace(/\}(?!¿)/, '$&</i>')
+						.replace(/\[(?!¿)/, ' <i class="default">[').replace(/\]+(?!¿)/, '$&</i>')
+						.replace(/!(?!¿)/, ' <b>$&</b>')
 					+ '</i>')
 				+ '</li>').replace('\n', '') + '!!')
 
