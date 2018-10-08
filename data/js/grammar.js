@@ -2,14 +2,14 @@ commonData.js.grammar = {
 	name: '语法',
 	content: `
 	#window
-	
+
 	##window
 	window对象指当前的浏览器窗口，也是所有对象的顶层对象，所有其他对象都是它的下属。JavaScript规定，浏览器环境的所有全局变量，都是window对象的属性
-	
+
 	##document
 	document对象是文档的根节点，也就是整个网页，window.document属性就指向这个对象
 	有document.head和document.body，document.documentElement代表html根节点
-	
+
 	3种节点
 	元素：nodeType = 1
 	属性：nodeType = 2
@@ -34,15 +34,15 @@ commonData.js.grammar = {
 	11,DocumentFragment,轻量级的 Document 对象，能够容纳文档的某个部分
 	12,Notation,DTD 中声明的符号
 	%%
-	
+
 	##location
 	window.location返回一个location对象，用于获取窗口当前的URL信息。它等同于document.location对象，在iframe中获取也是如此
 	··
 	window.location === document.location	// true
 	··
-	
+
 	#宽高位置
-	
+
 	##window
 	!!
 	window.innerWidth、window.innerHeight：网页在当前窗口中可见部分的宽高，包括滚动条
@@ -51,7 +51,7 @@ commonData.js.grammar = {
 	window.screen.availWidth、window.screen.availHeight：整个屏幕可利用的宽高，也就是不包括任务栏
 	window.screenTop、window.screenLeft：浏览器窗口距离屏幕顶部和左侧的距离
 	!!
-	
+
 	##element
 	!!
 	el.clientWidth、el.clientHeight：元素可视部分的宽高，包括padding，不包括border和滚动条
@@ -61,21 +61,40 @@ commonData.js.grammar = {
 	el.scrollWidth、el.scrollHeight：元素的滚动内容宽高，包括padding，不包括border和滚动条，如果是获取body的宽高，若其宽高小于浏览器窗口的宽高则还是按浏览器窗口的宽高
 	el.scrollTop、el.scrollLeft：元素被卷去的top和left值，可手动赋值修改
 	!!
-	
+
 	##event待
 	!!
 	clientX / clientY：鼠标位置相对于浏览器内容区域左上角的水平垂直偏移量，该参照点会随着滚动条的移动而移动
 	pageX / pageY：鼠标位置相对于浏览器内容区域左上角的水平垂直偏移量，不会随着滚动条而变动
 	screenX / screenY：鼠标位置相对于屏幕左上角的水平垂直偏移量
 	!!
-	
+
 	##其他
 	两个相同的对象并不相等：
 	··
 	{}=={}	// false
 	[]==[]	// false
 	··
-	
+
+	谜之 js
+	··
+	!![]	// true
+	[] == false	// true
+
+
+	+ []	// 0
+	+ {}	// NaN
+	[] + {}	// "[object Object]"
+	{} + []	// 0
+
+	// 非 0 的数可以转换成 true，但 true 只能转换成 1
+	!!2	// true
+	true == 1	// true
+	true == 2	// false
+
+
+	··
+
 	##this
 	··
 	var a = 'a'
