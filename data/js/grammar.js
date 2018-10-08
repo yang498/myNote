@@ -78,7 +78,7 @@ commonData.js.grammar = {
 
 	谜之 js
 	··
-	!![]	// true
+	!!¿[]	// true
 	[] == false	// true
 
 
