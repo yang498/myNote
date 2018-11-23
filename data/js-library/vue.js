@@ -1,5 +1,4 @@
-commonData.jsLibrary.vue = {
-	content: `
+commonData.jsLibrary.vue.content = `
 	#起步
 	##介绍
 	Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
@@ -9,7 +8,7 @@ commonData.jsLibrary.vue = {
 	npm install --save-dev node-sass		//sass-loader依赖于node-sass
 	npm install --save-dev sass-loader
 	··
-	
+
 	vue-cli目录：
 	config：环境配置文件
 	build：打包构建文件
@@ -34,7 +33,7 @@ commonData.jsLibrary.vue = {
 
 	egret startserver -a
 
-	
+
 	##安装
 	Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性
 	可以在浏览器上安装 @[Vue Devtools|https://github.com/vuejs/vue-devtools#vue-devtools] 以方便审查和调试 Vue 应用
@@ -56,16 +55,16 @@ commonData.jsLibrary.vue = {
 	cnpm install -g vue-cli
 	··
 	安装完成后可以输入 vue 回车，可以看到相应的命令行，比如初始化·vue init·
-	
+
 	#选项
-	
+
 	##DOM
 	###el
 	只在由 new 创建的实例中使用，提供一个在页面上已存在的 DOM 元素作为 Vue 实例的挂载目标。可以是 CSS 选择器，也可以是一个 HTMLElement 实例。
 	在实例挂载之后，元素可以用·vm.$el·访问。
 	如果在实例化时存在这个选项，实例将立即进入编译过程，否则，需要显式调用 vm.$mount() 手动开启编译。
 	注意：所有的挂载元素会被 Vue 生成的 DOM 替换，因此不推荐挂载 root 实例到·<html>·或者·<body>·上。
-	
+
 	##数据
 	!!
 	data：数据对象
@@ -77,18 +76,18 @@ commonData.jsLibrary.vue = {
 	Vue 实例也代理了数据对象上所有的属性，因此访问·vm.a·等价于访问·vm.$data.a·。
 	数据选项的子属性都会被代理到 Vue 实例上，所以可以直接用比如·vm.msg·直接读取
 	以·_·或·$·开头的属性 不会 被 Vue 实例代理，因为它们可能和 Vue 内置的属性、API 方法冲突。可以使用例如·vm.$data._property·的方式访问这些属性。
-	
+
 	###data
 	Vue 实例的数据对象。Vue 将会递归将 data 的属性转换为 getter/setter，从而让 data 的属性能够响应数据变化。
 	实例创建之后，可以通过·vm.$data·或·vm._data·访问原始数据对象。
 	如果需要可以使用·JSON.parse(JSON.stringify(vm.$data))·深拷贝 data 来操作
-	
+
 	###methods
 	方法对象，可以用·v-on·指令监听 DOM 事件
 	注意：不应该使用·=>·来定义函数，因为会改变·this·的指向，方法中的·this·本就绑定为 Vue 实例
 	··
 	<button v-on:click="greet">Greet</button>	// 没有参数可以不用写 ()，即 greet()
-	
+
 	var vm = new Vue({
 		el: 'button',
 		data: {
@@ -111,7 +110,7 @@ commonData.jsLibrary.vue = {
 	··
 	<button v-on:click="warn('msg', $event)">submit</button>
 	··
-	
+
 	###computed
 	计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。
 	注意：如果为一个计算属性使用了箭头函数，则 this 不会指向这个组件的实例，可以将其实例作为函数的第一个参数来访问。
@@ -140,7 +139,7 @@ commonData.jsLibrary.vue = {
 			}
 		}
 	})
-	
+
 	vm.aPlus   // 2
 	vm.aPlus = 3
 	vm.a       // 2
@@ -163,7 +162,7 @@ commonData.jsLibrary.vue = {
 	}
 	··
 	不同的是计算属性是基于它们的依赖进行缓存的，只要依赖的值没改变，多次访问计算属性会立即返回之前的计算结果，而函数总是会执行一遍，也就是说计算属性比方法更减少消耗
-	
+
 	###watch
 	监听数据的变化做出相应的处理，可以监听·data·中的变量或·$route·等，键为观察的对象（为对象路径时需用引号），值为对应的处理，可以为函数、方法名（需用引号）、选项
 	为函数或方法名时有2个参数，第一个为当前的值，第二个为改变前的值
@@ -185,23 +184,23 @@ commonData.jsLibrary.vue = {
 				}
 			}
 		},
-		
+
 		methods: {
 			someMethod: function (val, oldVal) {
 				// do something
 			}
 		},
-		
+
 		// 监听数据，当数据改变时触发
 		watch: {
 			// 为方法时有2个参数，第一个为当前的值，第二个为改变前的值
 			a: function (val, oldVal) {
 				console.log('new: %s, old: %s', val, oldVal)
 			},
-			
+
 			// 方法名，注意需用引号
 			b: 'someMethod',
-			
+
 			// 深度监听，如果没有 deep 是无法监听 c 的变化的
 			c: {
 				handler: function (val, oldVal) {
@@ -209,25 +208,25 @@ commonData.jsLibrary.vue = {
 				},
 				deep: true
 			},
-			
+
 			// 该回调将会在监听开始之后被立即调用
 			a: {
 				handler: 'someMethod',
 				immediate: true
 			},
-			
+
 			// 可以为一个数组，同时执行多个函数或方法
 			b: [
 				function (val, oldVal) { /* ... */ },
 				'someMethod'
 			],
-			
+
 			// 为对象路径时需用引号
 			'c.d.e': function (val, oldVal) { /* ... */ }
 		}
 	})
 	··
-	
+
 	##生命周期
 	每个 Vue 应用都是通过用 Vue 函数创建一个新的 Vue 实例开始的：
 	··
@@ -241,7 +240,7 @@ commonData.jsLibrary.vue = {
 	假设有：
 	··
 	<div id="web">{{message}}</div>
-	
+
 	var vm = new Vue({
 		el: '#web'
 		data: {
@@ -253,7 +252,7 @@ commonData.jsLibrary.vue = {
 	%%
 	生命周期,说明
 	,1
-	beforeCreate,实例刚被创建，在属性创建之前，即 el 和 data 未初始化 
+	beforeCreate,实例刚被创建，在属性创建之前，即 el 和 data 未初始化
 	created,实例创建完成，进行了数据观测、属性和方法的运算、watch/event 事件回调，即有 data ，无 el
 	beforeMount,模板编译/挂载之前，即完成了 el 和 data 的初始化，但未渲染值，即·<div id="web">{{message}}</div>·
 	mounted,模板编译/挂载之后，渲染完毕，el 被新创建的 vm.$el 替换，即·<div id="web">msg</div>·
@@ -266,9 +265,9 @@ commonData.jsLibrary.vue = {
 	errorCaptured,当捕获一个来自子孙组件的错误时被调用
 	%%
 	!./img/js-library/vue01.png,600
-	
+
 	#指令
-	
+
 	##{{ }}
 	数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值：
 	··
@@ -282,7 +281,7 @@ commonData.jsLibrary.vue = {
 	{{ ok ? 'YES' : 'NO' }}
 
 	{{ message.split('').reverse().join('') }}
-	
+
 	{{ change(message) }}	// 在 methods 中定义了 change 方法
 
 	<div :id="'list-' + id"></div>
@@ -293,7 +292,7 @@ commonData.jsLibrary.vue = {
 
 	{{ if (ok) { return message } }}	// 流控制也不会生效，需使用三元表达式
 	··
-	
+
 	##v-text
 	更新元素的值，即改变·textContent·，同·{{}}·
 	··
@@ -301,20 +300,20 @@ commonData.jsLibrary.vue = {
 	// 等同于
 	<span>{{msg}}</span>
 	··
-	
+
 	##v-html
 	更新元素的值，即改变·innerHTML·，插入的内容不会作为 Vue 模板进行编译
 	注意不要渲染未知的 html ，可能会导致 @[XSS 攻击|https://en.wikipedia.org/wiki/Cross-site_scripting]，比如渲染用户提交的内容
 	··
 	<div v-html="html"></div>
 	··
-	
+
 	##v-show
 	若绑定的值为·true·不改变，为·false·则·style·设为·display: none;·
 	··
 	<h1 v-show="ok">Hello!</h1>
 	··
-	
+
 	##v-if/else/else-if
 	^^v-if^^ 根据表达式的值的真假条件渲染元素。在切换时元素及它的数据绑定 / 组件被销毁并重建
 	··
@@ -365,7 +364,7 @@ commonData.jsLibrary.vue = {
 		<input placeholder="Enter your email address" key="email-input">
 	</template>
 	··
-	
+
 	##v-for
 	根据一组数组的选项列表进行渲染，写法有：
 	!!
@@ -457,7 +456,7 @@ commonData.jsLibrary.vue = {
 	有时想要显示一个数组的过滤或排序副本可以使用计算属性：
 	··
 	<li v-for="n in evenNumbers">{{ n }}</li>
-	
+
 	data: {
 		numbers: [ 1, 2, 3, 4, 5 ]
 	},
@@ -476,7 +475,7 @@ commonData.jsLibrary.vue = {
 	··
 	<span v-for="n in 10">{{ n }} </span>	// n 为 1-10
 	··
-	
+
 	##v-on
 	绑定事件监听器，可缩写为·@·，用在普通元素上时，只能监听原生 DOM 事件。用在自定义元素组件上时，也可以监听子组件触发的自定义事件。支持的修饰符有：
 	!!
@@ -496,7 +495,7 @@ commonData.jsLibrary.vue = {
 		.right：右
 		可以通过全局·config.keyCodes·对象自定义按键修饰符别名，比如·Vue.config.keyCodes.f1 = 112·
 		也可以使用任意有效按键名转换为短横线隔开的形式来作为修饰符，比如·@keyup.page-down="onPageDown"·
-		
+
 		系统修饰键：在按下相应按键时才触发相应事件，比如·@click.ctrl·为·Ctrl + Click·，·@keyup.alt.67·为·Alt + C·
 			注意修饰键在于比如·Ctrl·键需要按住再按其他键才会触发，单按·Ctrl·是不会触发的，想要触发就换成keyCode的17
 			.ctrl：控制
@@ -548,7 +547,7 @@ commonData.jsLibrary.vue = {
 
 	<!-- 对象语法 (2.4.0+) -->
 	<button v-on="{ mousedown: doThis, mouseup: doThat }"></button>
-	
+
 	<!-- 在子组件上监听自定义事件 (当子组件触发“my-event”时将调用事件处理器) -->
 	<my-component @my-event="handleThis"></my-component>
 
@@ -563,7 +562,7 @@ commonData.jsLibrary.vue = {
 	扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。
 	纯粹的逻辑，和 DOM 完全解耦，更易于测试。
 	当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何清理它们。
-	
+
 	##v-bind
 	动态地绑定一个或多个特性，或一个组件 prop 到表达式，可以缩写为·:·
 	在绑定 class 和 style 时，如果是包含键值对的对象，字符串的键可以不用引号，但使用了连字符必须要用引号。·v-bind:class·指令也可以与普通的 class 属性共存。style 的键可以使用驼峰式，编译时会自动转换。
@@ -614,11 +613,11 @@ commonData.jsLibrary.vue = {
 
 	<!-- XLink -->
 	<svg><a :xlink:special="foo"></a></svg>
-	
+
 	<!-- .camel 可将属性名称驼峰化，在使用字符串模板或通过 vue-loader/vueify 编译时，无需使用 .camel -->
 	<svg :view-box.camel="viewBox"></svg>
 	··
-	
+
 	##v-model
 	在表单控件或者组件上创建双向绑定，监听输入和输出。适用的组件有：·<input> <select> <textarea> components·
 	在文本框中：
@@ -656,7 +655,7 @@ commonData.jsLibrary.vue = {
 	data: {
     checkedNames: []
 	}
-	
+
 	<!-- 单选 -->
 	<input type="radio" id="one" value="One" v-model="picked">
 	<label for="one">One</label>
@@ -669,7 +668,7 @@ commonData.jsLibrary.vue = {
 	data: {
     picked: ''
 	}
-	
+
 	<!-- 下拉框单选 -->
 	<select v-model="selected">
 		<option disabled value="">请选择</option>
@@ -683,7 +682,7 @@ commonData.jsLibrary.vue = {
     selected: ''
 	}
 	// 如果 v-model 的初始值未能匹配任何选项，在 iOS 中会无法选择第一个选项，所以推荐提供一个值为空的禁用选项
-	
+
 	<!-- 下拉框多选 -->
 	<select v-model="selected" multiple>
 		<option>A</option>
@@ -692,7 +691,7 @@ commonData.jsLibrary.vue = {
 	</select>
 	<br>
 	<span>Selected: {{ selected }}</span>
-	
+
 	data: {
     selected: []
 	}
@@ -700,7 +699,7 @@ commonData.jsLibrary.vue = {
 	###复选框
 	··
 	<input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
-	
+
 	vm.toggle === 'yes'	// 当选中时
 	vm.toggle === 'no'	// 当没有选中时
 	··
@@ -711,13 +710,13 @@ commonData.jsLibrary.vue = {
 
 	vm.pick === vm.a	// 当选中时
 	··
-	
+
 	##v-pre
 	跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。
 	··
 	<span v-pre>{{这个元素将保持现在的样子，不会被编译}}</span>
 	··
-	
+
 	##v-cloak
 	和 CSS 规则如·[v-cloak] { display: none }·一起用，可以隐藏未编译的 Mustache 标签直到实例准备完毕。
 	··
@@ -727,13 +726,13 @@ commonData.jsLibrary.vue = {
 	// 这个元素在 vue 实例准备好后才会显示
 	<div v-cloak>{{ message }}</div>
 	··
-	
+
 	##v-once
 	只渲染元素或组件一次。随后的重新渲染将被视为静态内容并跳过。这可以用于优化更新性能。
 	··
 	<span v-once>This will never change: {{msg}}</span>
 	··
-	
+
 	#过渡动画
 	##概述
 	Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。
@@ -765,7 +764,7 @@ commonData.jsLibrary.vue = {
 	<transition :duration="1000">...</transition>
 	<transition :duration="{ enter: 500, leave: 800 }">...</transition>	// 定制进入和移出的持续时间
 	··
-	
+
 	##类名
 	在进入/离开的过渡中，会有 6 个 class 切换：
 	!!
@@ -784,7 +783,7 @@ commonData.jsLibrary.vue = {
 	<transition name="fade">
 		<p v-if="show">hello</p>
 	</transition>
-	
+
 	.fade-enter-active, .fade-leave-active {
 		transition: opacity .5s;
 	}
@@ -798,7 +797,7 @@ commonData.jsLibrary.vue = {
   <transition name="bounce">
 		<p v-if="show">hello</p>
 	</transition>
-	
+
 	.bounce-enter-active {
 		animation: bounce-in .5s;
 	}
@@ -831,7 +830,7 @@ commonData.jsLibrary.vue = {
 		</transition>
 	</div>
 	··
-	
+
 	##钩子方法
 	可以在属性中声明 JavaScript 钩子，在 methods 中定义对应的方法即可。共有8个：
 	··
@@ -848,13 +847,13 @@ commonData.jsLibrary.vue = {
 	>
 		<!-- ... -->
 	</transition>
-	
+
 	// 在 enter 和 leave 中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。
 	methods: {
 		beforeEnter: function (el) {
 			// ...
 		},
-		
+
 		enter: function (el, done) {
 			// ...
 			done()	// 此回调函数是可选项的设置，与 CSS 结合时使用
@@ -894,7 +893,7 @@ commonData.jsLibrary.vue = {
 			<p v-if="show"> Demo </p>
 		</transition>
 	</div>
-	
+
 	methods: {
 		beforeEnter: function (el) {
 			el.style.opacity = 0
@@ -916,7 +915,7 @@ commonData.jsLibrary.vue = {
 		}
 	}
 	··
-	
+
 	##初始渲染过渡
 	可以通过 appear 特性设置节点在初始渲染的过渡，比如·<transition appear name="fade"></transition>·
 	也可以自定义 CSS 类名：
@@ -942,7 +941,7 @@ commonData.jsLibrary.vue = {
 		<!-- ... -->
 	</transition>
 	··
-	
+
 	##多个元素过渡
 	使用·v-if/v-else-if/v-else·可以用来定义多个元素过渡。最常见的多标签过渡是一个列表和描述这个列表为空消息的元素：
 	··
@@ -984,7 +983,7 @@ commonData.jsLibrary.vue = {
 	<transition>
 		<button @click="change" :key="arr[stateIndex]">{{arr[showIndex]}}</button>
 	</transition>
-	
+
 	data: {
 		stateIndex: 2,
 		arr: ['a', 'b', 'c']
@@ -1003,7 +1002,7 @@ commonData.jsLibrary.vue = {
 	in-out：新元素先进行过渡，完成之后当前元素过渡离开。
 	out-in：当前元素先进行过渡，完成之后新元素过渡进入。
 	!!
-	
+
 	##列表过渡
 	使用·<transition-group>·组件可以实现列表过渡，不同于·<transition>·，它会以一个真实元素呈现，即默认渲染为一个·<span>·。也可以通过·tag·属性更换为其他元素。注意这个组件不能使用过渡模式·in-out·和·out-in·了，内部元素总是需要提供唯一的·key·属性值。
 	··
@@ -1020,13 +1019,13 @@ commonData.jsLibrary.vue = {
 	.fade-enter-active, .fade-leave-active {
 		transition: 0.5s linear;
 	}
-	
+
 	<button @click="add">Add</button>
 	<button @click="remove">Remove</button>
 	<transition-group name="fade" tag="p">
 		<span v-for="item in items" :key="item" class="list-item">{{item}}</span>
 	</transition-group>
-	
+
 	data: {
 		arr: [1, 2, 3, 4, 5],
 		nextNum: 6
@@ -1044,21 +1043,21 @@ commonData.jsLibrary.vue = {
 	}
 	··
 	这个例子有个小问题，当添加和移除元素的时候，周围的元素会瞬间移动到他们的新布局的位置，而不是平滑的过渡，下面会解决这个问题。
-	
+
 	##列表排序过渡
 	定义·v-move·的样式会在元素的改变定位的过程中应用过渡，像之前的类名一样，可以通过·name·属性来自定义前缀。
 	··
 	.flip-list-move {
 		transition: transform 1s;
 	}
-	
+
 	<button @click="shuffle">Shuffle</button>
 	<transition-group name="flip-list" tag="ul">
 		<li v-for="item in items" :key="item">{{ item }}</li>
 	</transition-group>
-	
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
-	
+
 	data: {
 		items: [1,2,3,4,5,6,7,8,9]
 	},
@@ -1088,19 +1087,19 @@ commonData.jsLibrary.vue = {
 	··
 	即可实现周围元素的过渡
 	FLIP 动画不仅可以实现单列过渡，@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
-	
+
 	###列表的交错过渡
-	
+
 	#组件
 	##全局注册
 	·Vue.component(id, [definition])·：注册或获取全局组件，给定的 id 作为组件的名称
 	··
 	// 注册组件，传入一个扩展过的构造器
 	Vue.component('my-component', Vue.extend({ /* ... */ }))
-	
+
 	// 注册组件，传入一个选项对象 (自动调用 Vue.extend)
 	Vue.component('my-component', { /* ... */ })
-	
+
 	// 获取注册的组件 (始终返回构造器)
 	var MyComponent = Vue.component('my-component')
 	··
@@ -1109,14 +1108,14 @@ commonData.jsLibrary.vue = {
 	kebab-case 短横线隔开：Vue.component('my-component-name', { /* ... */ })，在 html 中使用·<my-component-name>·
 	PascalCase 驼峰式：Vue.component('MyComponentName', { /* ... */ })，引用这个元素时都可以使用·<my-component-name>·或·<MyComponentName>·，但在 html 中只能使用·<my-component-name>·
 	!!
-	
+
 	##局部注册
 	如果你使用一个像 webpack 这样的构建系统，全局注册所有的组件会被包含在最终的构建结果中。这造成了用户下载的 JavaScript 的无谓的增加。在这些情况下可以通过一个普通的 JavaScript 对象来定义组件：
 	··
 	var ComponentA = { /* ... */ }
 	var ComponentB = { /* ... */ }
 	var ComponentC = { /* ... */ }
-	
+
 	// 然后在 new Vue 中的 components 选项定义组件
 	// 属性名就是 Vue.component 的 id，属性值就是选项
 	new Vue({
@@ -1151,7 +1150,7 @@ commonData.jsLibrary.vue = {
 	}
 	··
 	现在 ComponentA 和 ComponentC 都可以在 ComponentB 的模板中使用了
-	
+
 	##注册组件
 	··
 	// 定义一个名为 button-counter 的新组件：
@@ -1163,7 +1162,7 @@ commonData.jsLibrary.vue = {
 	    	}
 		}
 	})
-	
+
 	// 直接在 Vue 中使用，可以多次复用
 	<button-counter></button-counter>
 	<button-counter></button-counter>
@@ -1182,18 +1181,18 @@ commonData.jsLibrary.vue = {
 		>{{ tab }}</button>
 		<component :is="currentTabComponent" class="tab" ></component>
 	</div>
-	
+
 	// js
 	Vue.component('tab-home', {
-		template: '<div>Home component</div>' 
+		template: '<div>Home component</div>'
 	})
 	Vue.component('tab-posts', {
-		template: '<div>Posts component</div>' 
+		template: '<div>Posts component</div>'
 	})
 	Vue.component('tab-archive', {
-		template: '<div>Archive component</div>' 
+		template: '<div>Archive component</div>'
 	})
-	
+
 	new Vue({
 		el: '#dynamic-component-demo',
 		data: {
@@ -1232,7 +1231,7 @@ commonData.jsLibrary.vue = {
 	单文件组件 (·.vue·)
 	·<script type="text/x-template">·
 	!!
-	
+
 	##props
 	当要给组件传值的时候需要·props {Array/Object}·，自定义任意属性名即可
 	··
@@ -1240,11 +1239,11 @@ commonData.jsLibrary.vue = {
 		props: ['title'],
 		template: '<h3>{{ title }}</h3>'
 	})
-	
+
 	// 定义的 title 属性即传给组件的值
 	<blog-post title="My journey with Vue"></blog-post>
 	<blog-post title="Blogging with Vue"></blog-post>
-	
+
 	// 和 data 使用
 	<blog-post v-for="post in posts" :key="post.id" :title="post.title"></blog-post>
 	··
@@ -1254,7 +1253,7 @@ commonData.jsLibrary.vue = {
 		props: ['postTitle'],
 		template: '<h3>{{ postTitle }}</h3>'
 	})
-	
+
 	// html 中使用
 	<blog-post post-title="My journey with Vue"></blog-post>
 	··
@@ -1300,7 +1299,7 @@ commonData.jsLibrary.vue = {
 		},
 		template: '<span v-if="isPublished">{{ likes }}</span>'
 	})
-	
+
 	// html
 	<blog-post likes="36" isPublished="false"></blog-post> // 报错，实际都是 String 类型
 	<blog-post :likes="36" :isPublished="false"></blog-post>	// 用 v-bind 告诉 Vue 这是个表达式而非字符串
@@ -1315,7 +1314,7 @@ commonData.jsLibrary.vue = {
 			title: 'My Journey with Vue'
 		}
 	}
-	
+
 	<blog-post v-bind="book"></blog-post>
 	// 等同于
 	<blog-post :id="book.id" :name="book.name" :title="book.title"></blog-post>
@@ -1326,10 +1325,10 @@ commonData.jsLibrary.vue = {
 	Vue.component('blog-post', {
 		template: '<span class="demo" message="hhh">demo</span>'
 	})
-	
+
 	// html
 	<blog-post class="active" message="hello"></blog-post>
-	
+
 	// 在浏览器中，class 和 style 会合并，其他属性会覆盖组件的
 	<blog-post class="demo active" message="hello"></blog-post>
 	··
@@ -1339,10 +1338,10 @@ commonData.jsLibrary.vue = {
 	Vue.component('blog-post', {
 		template: '<span class="demo" weather="cloudy">demo</span>'
 	})
-	
+
 	// html
 	<blog-post class="active" weather="sunny"></blog-post>
-	
+
 	// 浏览器中显示覆盖了组件的 weather 属性
 	<span class="demo active" weather="sunny">demo</span>
 	··
@@ -1352,11 +1351,11 @@ commonData.jsLibrary.vue = {
 		inheritAttrs: false,
 		template: '<span class="demo" weather="cloudy">demo</span>'
 	})
-	
+
 	// html
 	<blog-post class="active" weather="sunny"></blog-post>
-	
-	// 浏览器中显示未覆盖 
+
+	// 浏览器中显示未覆盖
 	<span class="demo active" weather="cloudy">demo</span>
 	··
 	默认不会显示未在组件上声明的元素，通过实例属性·$attrs·则可以让继承特性生效，比如：
@@ -1367,10 +1366,10 @@ commonData.jsLibrary.vue = {
 			console.log(this.$attrs)
 		}
 	})
-	
+
 	// html
 	<blog-post class="active" message="hello"></blog-post>
-	
+
 	// 浏览器中未显示 message 属性，可以在看到控制台打印 {message: 'hello'}，说明接收到了属性但未使用
 	<span class="demo active">demo</span>
 	··
@@ -1379,24 +1378,24 @@ commonData.jsLibrary.vue = {
 	Vue.component('blog-post', {
 		template: '<span class="demo" v-bind="$attrs">demo</span>',
 	})
-	
+
 	// html
 	<blog-post class="active" message="hello"></blog-post>
-	
+
 	// 浏览器中显示了 message 属性
 	<span class="demo active" message="hello">demo</span>
 	··
-	
+
 	##$emit()
 	当组件向外部传值时需通过·$emit()·自定义事件名，相当于模板内将点击事件换个名字：
 	··
 	Vue.component('blog-post', {
 		template: \`<button v-on:click="$emit('welcome')">Click me to be welcomed</button>\`
 	})
-	
+
 	// 使用
 	<blog-post @welcome="hi"></blog-post>
-	
+
 	methods: {
 		hi() {
 			alert('Hi!')
@@ -1408,14 +1407,14 @@ commonData.jsLibrary.vue = {
 	Vue.component('blog-post', {
 		template: \`<button v-on:click="$emit('welcome', 20, 30)">Click me to be welcomed</button>\`
 	})
-	
+
 	// 通过 $event 访问，代表传递的第一个参数 20
 	<div :style="{'font-size': fz + 'px'}">welcome</div>
 	<blog-post @welcome="fz = $event"></blog-post>
 	data: {
 		fz: 16
 	}
-	
+
 	// 如果是一个方法，参数与传入的值一一对应
 	<div :style="{'font-size': fz + 'px'}">welcome</div>
 	<blog-post @welcome="test"></blog-post>
@@ -1445,7 +1444,7 @@ commonData.jsLibrary.vue = {
 			}
 		}
 	})
-	
+
 	// 使用
 	<magic-eight-ball v-on:give-advice="showAdvice"></magic-eight-ball>
 	methods: {
@@ -1466,7 +1465,7 @@ commonData.jsLibrary.vue = {
 		props: ['value'],
 		template: \`<input :value="value" @input="$emit('input', $event.target.value)" />\`
 	})
-	
+
 	// 现在可以使用 v-model 了
 	<custom-input v-model="searchText"></custom-input>
 	data: {
@@ -1485,14 +1484,14 @@ commonData.jsLibrary.vue = {
 	  },
 	  template: \`<input type="checkbox" :checked="checked" @change="$emit('change', $event.target.checked)">\`
 	})
-	
+
 	// html
 	<base-checkbox v-model="lovingVue"></base-checkbox>
 	··
 	这里的 lovingVue 的值将会传入这个名为 checked 的 prop。同时当·<base-checkbox>·触发一个 change 事件并附带一个新的值的时候，这个 lovingVue 的属性将会被更新
 	@[将原生事件绑定到组件|https://cn.vuejs.org/v2/guide/components-custom-events.html#%E5%B0%86%E5%8E%9F%E7%94%9F%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%88%B0%E7%BB%84%E4%BB%B6]
 	@[.sync 修饰符|https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6]
-	
+
 	##slot
 	和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样：
 	··
@@ -1503,10 +1502,10 @@ commonData.jsLibrary.vue = {
 			</div>
 		\`
 	})
-	
+
 	// 添加文本
 	<alert-box>World</alert-box>
-	
+
 	// 浏览器中
 	<div class="demo-alert-box">
 		<strong>Hello </strong>
@@ -1522,10 +1521,10 @@ commonData.jsLibrary.vue = {
 			</div>
 		\`
 	})
-	
+
 	// 添加文本
 	<alert-box>World</alert-box>
-	
+
 	// 浏览器中
 	<div class="demo-alert-box">
 		<strong>Hello </strong>
@@ -1557,10 +1556,10 @@ commonData.jsLibrary.vue = {
 	<blog-post>
 		<h1 slot="header">这里是 header 内部</h1>
 		<h2 slot="header">这里是 header 内部2</h2>
-			
+
 		<p>这里是 main 内部</p>
 		<p>这里是 main 内部2</p>
-  		
+
 		<p slot="footer">这里是 footer 内部</p>
 	</blog-post>
 	··
@@ -1571,10 +1570,10 @@ commonData.jsLibrary.vue = {
 			<h1>这里是 header 内部</h1>
 			<h2>这里是 header 内部2</h2>
 		</template>
-			
+
 		<p>这里是 main 内部</p>
 		<p>这里是 main 内部2</p>
-  		
+
 		<p slot="footer">这里是 footer 内部</p>
 	</blog-post>
 	··
@@ -1586,7 +1585,7 @@ commonData.jsLibrary.vue = {
 	</button>
 	··
 	###编译作用域
-	
+
 	#单文件组件
 	##介绍
 	通常在项目中使用·Vue.component·来定义全局组件，这在很多中小规模的项目中运作的很好，但当在更复杂的项目中，或者你的前端完全由 JavaScript 驱动的时候，下面这些缺点将变得非常明显：
@@ -1606,7 +1605,7 @@ commonData.jsLibrary.vue = {
 			<h1>{{msg}}</h1>
 		</div>
 	</template>
-	
+
 	<!-- js 部分，使用 <script> 标签包裹，export default 表示导出该组件，这样在其他页面中用 import 可使用该组件 -->
 	<script>
 		export default {
@@ -1618,7 +1617,7 @@ commonData.jsLibrary.vue = {
 			}
 		}
 	</script>
-	
+
 	<!-- css 部分，使用 <style> 标签包裹，scoped 属性表示此样式只用于当前组件内 -->
 	<style scoped>
 		h1 {
@@ -1637,7 +1636,7 @@ commonData.jsLibrary.vue = {
 	<script src="./my-component.js"></script>
 	<style src="./my-component.css"></style>
 	··
-	
+
 	##Vue CLI
 	Vue CLI 是一个基于 Vue.js 进行快速开发的完整系统，提供：交互式、快速、零配置、依赖可升级扩展、丰富的插件、图形界面
 	Vue CLI 分为几个独立的部分：
@@ -1694,7 +1693,7 @@ commonData.jsLibrary.vue = {
 	http://localhost:8080/
 	··
 	即可访问初始化的·index.html·
-	
+
 	##Vue CLI 配置
 	有两种方式可以对项目进行配置：vue.config.js 和 package.json
 	vue.config.js 是一个可选的配置文件，没有的话可以自行新建，这个文件应该导出一个包含了选项的对象：
@@ -1741,7 +1740,7 @@ commonData.jsLibrary.vue = {
 	pwa{Object}：向 @[PWA 插件|https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa] 传递选项
 	pluginOptions{Object}：这是一个不进行任何 schema 验证的对象，可传递任何第三方插件选项
 	!!
-	
+
 	##初始化项目分析
 	默认初始化的项目目录结构是：
 	!!
@@ -1779,7 +1778,7 @@ commonData.jsLibrary.vue = {
 	<script>
 		// 引入 HelloWorld.vue 这个组件，并用 HelloWorld 这个变量表示它
 		import HelloWorld from './components/HelloWorld.vue'
-	
+
 		// 导出本 App.vue 组件
 		export default {
 			name: 'app',	// 组件名为 app，该选项在单文件中不那么重要了，反正 import 时会重新命名
@@ -1793,17 +1792,17 @@ commonData.jsLibrary.vue = {
 	··
 	import Vue from 'vue'	// 引入 Vue.js，并用 Vue 这个变量表示它
 	import App from './App.vue'	// 引入 App.vue 这个组件，并用 App 这个变量表示它
-	
+
 	// 阻止 Vue 在启动时生成生产提示
 	Vue.config.productionTip = false
-	
+
 	new Vue({
 	  render: h => h(App)	// 渲染 App 这个组件，只包含运行时版只能使用渲染函数或包含编译器的构建，参考@[版本说明|https://cn.vuejs.org/v2/guide/installation.html#%E5%AF%B9%E4%B8%8D%E5%90%8C%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E8%A7%A3%E9%87%8A]
 	}).$mount('#app')	// 挂载 el 为 index.html 中的 #app
-	
+
 	// 在渲染时 App.vue 中的内容会代替 index.html 中的 <div id="app"></div>
 	··
-	
+
 	##Vue Router
 	Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌。包含的功能有：
 	!!
@@ -1816,7 +1815,7 @@ commonData.jsLibrary.vue = {
 	HTML5 历史模式或 hash 模式，在 IE9 中自动降级
 	自定义的滚动条行为
 	!!
-	
+
 	@@
 	官方文档|https://cn.vuejs.org/v2/guide/
 	Vue CLI|https://cli.vuejs.org/zh/guide/
@@ -1825,7 +1824,6 @@ commonData.jsLibrary.vue = {
 	Vue SSR|https://ssr.vuejs.org/zh/
 	周边资源|https://github.com/vuejs/awesome-vue
 	@@
-	
+
 	&2018.9.13
-	`
-}
+`

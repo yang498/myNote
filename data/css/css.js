@@ -1,5 +1,4 @@
-commonData.css.css = {
-	content: `
+commonData.css.css.content = `
 	#display
 	##flex
 	flex 为弹性布局，IE10+支持，可灵活控制子元素的排列顺序
@@ -55,7 +54,7 @@ commonData.css.css = {
 	flex：flex-grow、flex-shrink 和 flex-basis的简写，默认值为·0 1 auto·，后两个属性可选。
 		两个快捷值：auto (·1 1 auto·) 和 none (·0 0 auto·)
 	!!
-	
+
 	#技巧
 	##超出省略
 	###单行超出省略
@@ -72,5 +71,4 @@ commonData.css.css = {
 	-webkit-box-orient: vertical;	// 设置或检索伸缩盒对象的子元素的排列方式
 	-webkit-line-clamp: 2;	// 只显示2行
 	··
-	`
-}
+`

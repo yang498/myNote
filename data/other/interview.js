@@ -1,6 +1,4 @@
-commonData.other.interview = {
-	name: '面试',
-	content: `
+commonData.other.interview.content = `
 	#浏览器
 	##浏览器内核引擎
 	IE：Trident
@@ -90,5 +88,4 @@ commonData.other.interview = {
 	5XX：服务器错误，不能完成对请求的处理
 
 	&2017.8.1（面试上了，不搞了🛴🙃
-	`
-}
+`

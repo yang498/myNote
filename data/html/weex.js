@@ -1,5 +1,4 @@
-commonData.html.weex = {
-	content: `
+commonData.html.weex.content = `
 	#起步
 
 	##介绍
@@ -663,5 +662,4 @@ commonData.html.weex = {
 	@@
 
 	&2018.7.5
-	`
-}
+`

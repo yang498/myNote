@@ -1,15 +1,13 @@
-commonData.html.wechatApplet = {
-	name: '微信小程序',
-	content: `
+commonData.html.applet.content = `
 	#介绍
-	
+
 	##起步
 	开发小程序的第一步，你需要@[注册|https://mp.weixin.qq.com/wxopen/waregister?action=step1]一个小程序帐号，通过这个帐号你就可以管理你的小程序。
 	一个帐号只能发布一个小程序，同一个主体身份下个人帐户可创建 5 个、企业 50 个的小程序账号
 	登录@[小程序平台|https://mp.weixin.qq.com]，在菜单 “设置”-“开发设置” 看到小程序的·AppID·了 。
 	小程序的·AppID·相当于小程序平台的一个身份证，后续你会在很多地方要用到 AppID (注意这里要区别于服务号或订阅号的 AppID)。
 	有了小程序帐号之后，就需要@[下载微信开发者工具|https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=201861]来开发小程序。
-	
+
 	##用户身份
 	一个团队进行小程序的开发，那么团队成员的身份管理是很有必要的。
 	管理员可在小程序管理后台统一管理项目成员（包括开发者、体验者及其他成员）、设置项目成员的权限，包括：开发者/体验者权限、登录小程序管理后台、开发管理、查看小程序数据分析等。	管理入口位于：用户身份 – 成员管理。权限说明：
@@ -22,14 +20,14 @@ commonData.html.wechatApplet = {
 	开发设置：设置小程序服务器域名、消息推送及扫描普通链接二维码打开小程序
 	暂停服务设置：暂停小程序线上服务
 	!!
-	
+
 	##小程序的版本
 	!!
 	开发版本：使用开发者工具上传的最新版本代码。开发版本可删除，不影响线上版本和审核中版本的代码。
 	审核中版本：只能有一份代码处于审核中。有审核结果后可以发布到线上，也可直接重新提交审核，覆盖原审核版本。
 	线上版本：线上所有用户使用的代码版本，该版本代码在新版本代码发布后被覆盖更新。
 	!!
-	
+
 	##公众号关联小程序
 	公众号关联小程序后，将可在图文消息、自定义菜单、模板消息等功能中使用小程序。
 	关联规则：
@@ -40,7 +38,7 @@ commonData.html.wechatApplet = {
 	公众号一个月可新增关联小程序13次，小程序一个月可新增关联500次。
 	!!
 	关联流程：登录公众号后台-小程序-小程序管理-添加-关联小程序
-	
+
 	##客服
 	用户可使用小程序客服消息功能，与小程序的客服人员进行沟通。
 	客服消息会话入口有两个：
@@ -49,22 +47,21 @@ commonData.html.wechatApplet = {
 	可通过以下两种方式下回复用户的消息：
 	1、调用发送客服消息接口；
 	2、使用公众平台网页版客服工具。
-	
+
 	##小程序二维码
 	在小程序后台可查看下载小程序码
 	也可以自定义配置二维码链接扫码打开
 	进入“设置-开发设置-扫普通链接二维码打开小程序”，开启功能后即可配置二维码规则，注意配置的链接需要校验
 	二维码链接内容会以参数q的形式带给页面，在onLoad事件中提取"q"参数并自行UrlDecode一次，即可获取原二维码的完整内容
-	
+
 	##常见问题
 	!!
 	小程序代码包大小限制为 10M
 	·background-image·不能使用本地图片，可用网络图片，或者 base64，或者使用·<image/>·标签
-	·this.setData·的·key·不用·this.data·，可用中括号·[]·表示变量
-	获取输入框中的内容可以使用·bindblur·失去焦点时触发获取
+	获取输入框中的内容可以使用·bindinput·或·bindblur·事件
 	在Page之外声明的变量并不会在页面返回到上一级之后销毁，也就是不会重置，当然作用域还是在当前页面有效
 	!!
-	
+
 	##相关小程序
 	!!
 	小程序示例：展示官方demo
@@ -73,9 +70,9 @@ commonData.html.wechatApplet = {
 	小游戏数据助手：展示小游戏的流量数据
 	公众平台助手：管理公众号的消息留言通知、流量数据
 	!!
-	
+
 	#框架
-	
+
 	##文件结构
 	小程序包含一个描述整体程序的 app 和多个描述各自页面的 page。
 	一个小程序主体部分由三个文件组成，必须放在项目的根目录，如下：
@@ -92,7 +89,7 @@ commonData.html.wechatApplet = {
 	json：页面配置
 	!!
 	^^注意：为了方便开发者减少配置项，描述页面的四个文件必须具有相同的路径与文件名。^^
-	
+
 	##app.json
 	配置项列表：
 	!!
@@ -102,7 +99,7 @@ commonData.html.wechatApplet = {
 	networkTimeout{Object}：设置网络超时时间
 	debug{Boolean}：设置是否开启 debug 模式，在控制台面板显示调试信息以 info 的形式给出，有Page的注册，页面路由，数据更新，事件触发
 	!!
-	
+
 	###pages
 	接受一个数组，每一项都是字符串，来指定小程序由哪些页面组成。每一项代表对应页面的【路径+文件名】信息，^^数组的第一项代表小程序的初始页面。小程序中新增/减少页面，都需要对 pages 数组进行修改。^^
 	文件名不需要写文件后缀，因为框架会自动去寻找路径下 .json, .js, .wxml, .wxss 四个文件进行整合。
@@ -130,22 +127,22 @@ commonData.html.wechatApplet = {
 	  ]
 	}
 	··
-	
+
 	###window
 	用于设置小程序的状态栏、导航条、标题、窗口背景色。属性说明：
 	!!
-	navigationBarBackgroundColor{HexColor}[#000000]：导航栏背景颜色，如"#000000"	
-	navigationBarTextStyle{String}[white]：导航栏标题颜色，仅支持 black/white	
-	navigationBarTitleText{String}：导航栏标题文字内容	
+	navigationBarBackgroundColor{HexColor}[#000000]：导航栏背景颜色，如"#000000"
+	navigationBarTextStyle{String}[white]：导航栏标题颜色，仅支持 black/white
+	navigationBarTitleText{String}：导航栏标题文字内容
 	navigationStyle{String}[default]：导航栏样式，仅支持 default/custom。custom 模式可自定义导航栏，只保留右上角胶囊状的按钮， 该属性只在 app.json 中生效
-	backgroundColor{HexColor}[#ffffff]：窗口的背景色	
-	backgroundTextStyle{String}[dark]：下拉 loading 的样式，仅支持 dark/light	
+	backgroundColor{HexColor}[#ffffff]：窗口的背景色
+	backgroundTextStyle{String}[dark]：下拉 loading 的样式，仅支持 dark/light
 	backgroundColorTop{String}[#ffffff]：顶部窗口的背景色，仅 iOS 支持
 	backgroundColorBottom{String}[#ffffff]：底部窗口的背景色，仅 iOS 支持
-	enablePullDownRefresh{Boolean}[false]：是否开启下拉刷新，详见页面相关事件处理函数	
+	enablePullDownRefresh{Boolean}[false]：是否开启下拉刷新，详见页面相关事件处理函数
 	onReachBottomDistance{Number}[50]：页面上拉触底事件触发时距页面底部距离，单位为px
 	!!
-	
+
 	###tabBar
 	如果小程序是一个多 tab 应用（客户端窗口的底部或顶部有 tab 栏可以切换页面），可以通过 tabBar 配置项指定 tab 栏的表现，以及 tab 切换时显示的对应页面。	^^注意：当设置 position 为 top 时将不会显示 icon，配置最少2个、最多5个。^^属性说明：
 	!!
@@ -160,7 +157,7 @@ commonData.html.wechatApplet = {
 		selectedIconPath{String}：选中时的图片路径，同 iconPath
 	position{String}[bottom]：可选值 bottom、top
 	!!
-	
+
 	###networkTimeout
 	可以设置各种网络请求的超时时间。
 	!!
@@ -195,7 +192,7 @@ commonData.html.wechatApplet = {
 		"debug": true
 	}
 	··
-	
+
 	###page.json
 	每一个小程序页面也可以使用.json文件来对本页面的窗口表现进行配置。只是设置 app.json 中的 window 配置项的内容，会覆盖 app.json 的 window 中相同的配置项，无需写 window 这个键，如：
 	··
@@ -207,11 +204,11 @@ commonData.html.wechatApplet = {
 	  "backgroundTextStyle": "light"
 	}
 	··
-	
+
 	###示例图片
 	!./img/html/wechat-applet03.jpg,400
 	!./img/html/wechat-applet04.png,500
-	
+
 	##app.js
 	每个页面有独立的作用域，并提供模块化能力。
 	由于框架并非运行在浏览器中，所以 JavaScript 在 web 中一些能力都无法使用，如 document，window 等。
@@ -244,7 +241,7 @@ commonData.html.wechatApplet = {
 	由于Android系统限制，目前还无法获取到按 Home 键退出到桌面，然后从桌面再次进小程序的场景值，对于这种情况，会保留上一次的场景值。
 	生命周期示意图：
 	!./img/html/wechat-applet07.png,600
-	
+
 	###getApp()
 	全局的 getApp() 函数可以用来获取或修改小程序实例
 	··
@@ -252,7 +249,7 @@ commonData.html.wechatApplet = {
 	App({
 		globalData: 'I am global data'
 	})
-	
+
 	// other.js
 	var app = getApp()
 	console.log(app.globalData) // I am global data
@@ -264,7 +261,7 @@ commonData.html.wechatApplet = {
 	不要在定义于 App() 内的函数中调用 getApp() ，使用 this 就可以拿到 app 实例。
 	不要在 onLaunch 的时候调用 getCurrentPages()，此时 page 还没有生成。
 	通过 getApp() 获取实例之后，不要私自调用生命周期函数。
-	
+
 	##Page.js
 	Page() 函数用来注册一个页面。接受一个 object 参数，其指定页面的初始数据、生命周期函数、事件处理函数等。
 	!!
@@ -306,19 +303,38 @@ commonData.html.wechatApplet = {
 	单次设置的数据不能超过1024kB，请尽量避免一次设置过多的数据。
 	请不要把 data 中任何一项的 value 设为 undefined ，否则这一项将不被设置并可能遗留一些潜在问题
 	!!
-	事实上 setData 中的 key 只能以字符串或中括号的形式书写，并且是中括号的形式时就代表这是一个变量，不能有·a.b·的形式而是·'a.b'·或·[a.b]·，·this.data·是不用写也是无效的，示例代码：
+	事实上 setData 中的 key 只能以字符串或中括号的形式书写，并且是中括号的形式时就代表这是一个变量，示例代码：
 	··
 	Page({
 		data: {
-			arr: []
+			array: [],
+			object: {}
 		},
 		onLoad: function (options) {
+			const age = 'age'
+			this.setData({
+				name: 'Tom', // key 为普通字符串，可不用引号
+				'array[0]': 'changed data', // array 和下标表示需要加引号
+				'object.text': 'changed data' // object 的 key 表示需要加引号
+				[age]: 20 // age 是个变量，用 [] 包裹
+		    }, () => {
+		    	const index = 0
+		    	// 当  key 是个链式写法还带变量时，不加引号语法错误，加引号又无法表示变量
+		    	this.setData({ array[index].text: 'new data' })
+		    	this.setData({ 'array[index].text': 'new data' })
+		    	// 所以可以使用先赋值改变再 setData 的方式
+		    	this.data.array[index].text = 'new data'
+		    	this.setData({ array: this.data.array })
+		    })
+
 			// 假如要一次性修改很多数据，如果直接在循环里面直接调用 setData 是很耗性能的，因为它会不停的渲染
-			// 建议先修改 data（并且这能很好的修改变量），再 setData，这样只会渲染一次，大大减少性能消耗
 			for (let i = 0; i < 100; i++) {
-				this.data.arr.push(i)
+				this.data.array.push(i)
+				this.setData({ array: this.data.array })
 			}
-			this.setData({ arr: this.data.arr })
+			// 建议先修改 data（并且这能很好的修改变量），再 setData，这样只会渲染一次，大大减少性能消耗
+			for (let i = 0; i < 100; i++) this.data.array.push(i)
+			this.setData({ array: this.data.array })
 		}
 	})
 	··
@@ -329,7 +345,7 @@ commonData.html.wechatApplet = {
 	<input bindblur="inputValue" data-type="input3"/>
 	<input bindblur="inputValue" data-type="input4"/>
 	<input bindblur="inputValue" data-type="input5"/>
-	
+
 	Page({
 		data: {
 			input1: '',
@@ -346,7 +362,7 @@ commonData.html.wechatApplet = {
 				this.setData({ input2: e.detail.value })
 			}
 			......
-			
+
 			// 而可以直接用变量进行对应赋值，减少书写量
 			this.setData({ [e.currentTarget.dataset.type]: e.detail.value })
 		}
@@ -408,7 +424,7 @@ commonData.html.wechatApplet = {
 	先来补点 js 基础。示例：
 	··
 	// 当 a 是个 object 或 array 才会造成引用，如果是 string、number、boolean、undefined、null 就是独立的
-	
+
 	var a = {name: '张三'}
 	var b = a
 	console.log(a)	// {name: '张三'}
@@ -429,17 +445,17 @@ commonData.html.wechatApplet = {
 	··
 	console.log(module.exports)	// {}
 	console.log(exports)	// {}
-	
+
 	module.exports.sayHello = 'sayHello'	// 同时改变
 	console.log(module.exports)	// {sayHello: 'sayHello'}
 	console.log(exports)	// {sayHello: 'sayHello'}
-	
+
 	module.exports = {sayMina: 'sayMina'}	// 重新赋值后断开了与 exports 的引用
 	console.log(module.exports)	// {sayMina: 'sayMina'}
 	console.log(exports)	// {sayHello: 'sayHello'}
 	··
 	而·require()·返回的是·module.exports·，所以更推荐用·module.exports·，每个 js 的 module 都是独立的，不同 js 对 module.exports 进行赋值都是可以的
-		
+
 	##事件
 	绑定：
 	!!
@@ -448,12 +464,12 @@ commonData.html.wechatApplet = {
 	capture-bind：捕获
 	capture-catch：取消冒泡和中断捕获
 	!!
-	
+
 	类型：
 	!!
 	touchstart：手指触摸动作开始
 	touchmove：手指触摸后移动
-	touchend：手指触摸动作结束	
+	touchend：手指触摸动作结束
 	touchcancel：手指触摸动作被打断，如来电提醒，弹窗
 	tap：手指触摸后马上离开（也就是点击事件）
 	longpress：长按350ms触发，该事件触发后tap事件将不被触发
@@ -464,7 +480,7 @@ commonData.html.wechatApplet = {
 	touchforcechange：在支持 3D Touch 的 iPhone 设备，重按时会触发
 	其他事件属于特定组件，比如submit、input、scroll，且无特殊声明的都是不冒泡事件
 	!!
-	
+
 	事件对象：
 	!!
 	eventName(e) {
@@ -513,7 +529,7 @@ commonData.html.wechatApplet = {
 		}
 	}
 	!!
-	
+
 	写法：·bindtap="eventName"·或·bind:tap="eventName"·
 	传参：在元素上自定义的以·data-·开头的属性，多个单词用-连接，不能大写，有也会转换成小写，在事件回调中·e.currentTarget.dataset·可拿到
 	特殊事件：·<canvas/>·中的触摸事件不可冒泡，所以没有 currentTarget
@@ -525,10 +541,10 @@ commonData.html.wechatApplet = {
 		}
 	})
 	··
-	
+
 	##wxml
 	WXML（WeiXin Markup Language）是框架设计的一套标签语言，结合基础组件、事件系统，可以构建出页面的结构
-	
+
 	###数据绑定
 	动态数据均来自对应 Page 的 data，使用 Mustache 语法（双大括号 {{}}）将变量包起来，比如：
 	··
@@ -540,7 +556,7 @@ commonData.html.wechatApplet = {
 	<template is="objectCombine" data="{{...obj1, ...obj2, e: 5}}"></template>	// 扩展运算符 ... 将对象展开，组成：{a: 1, b: 2, c: 3, d: 4, e: 5}
 	<template is="objectCombine" data="{{...obj3, ...obj4, a, f: 6}}"></template>	// 变量名相同的话后边会覆盖前面：{a: 1, b: 3, f: 6}
 	<template is="objectCombine" data="{{foo, bar}}"></template>	// 对象的 key 和 value 相同可以间接表达
-	
+
 	Page({
 		data: {
 			message: 'Hello MINA!',
@@ -568,25 +584,25 @@ commonData.html.wechatApplet = {
 			bar: 'my-bar'
 		}
 	})
-	
+
 	// boolean关键字无需在data声明，注意不要直接写 checked="false"，这表示字符串，代表真值
 	<checkbox checked="{{false}}"> </checkbox>
-	
+
 	// 花括号和引号之间如果有空格，将最终被解析成为字符串
 	<view wx:for="{{[1,2,3]}} ">{{item}}</view>
 	等同于：
 	<view wx:for="{{[1,2,3] + ' '}}">{{item}}</view>
 	··
-	
+
 	###列表渲染
 	在组件上使用·wx:for·控制属性绑定一个数组，即可使用数组中各项的数据重复渲染该组件
 	··
 	// 默认数组的当前项的下标变量名默认为 index，数组当前项的变量名默认为 item
 	<view wx:for="{{array}}">{{index+1}}、{{item.message}}</view>
-	
+
 	// 使用 wx:for-item 可以指定元素的变量名，使用 wx:for-index 可以指定下标的变量名
 	<view wx:for="{{array}}" wx:for-index="idx" wx:for-item="name">{{idx+1}}、{{name.message}}</view>
-	
+
 	Page({
 		data: {
 			array: [
@@ -595,7 +611,7 @@ commonData.html.wechatApplet = {
 			]
 		}
 	})
-	
+
 	// 循环一个对象，index 代表 key，item 代表 value
 	<view wx:for="{{obj}}">{{index}}：{{item}}</view>
 	Page({
@@ -607,7 +623,7 @@ commonData.html.wechatApplet = {
 			}
 		}
 	})
-	
+
 	// wx:for也可以嵌套，这是一个九九乘法表
 	<view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i">
 		<view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="j">
@@ -616,12 +632,12 @@ commonData.html.wechatApplet = {
 			</text>
 		</view>
 	</view>
-	
+
 	// 当wx:for的值为字符串时，会将字符串解析成字符串数组
 	<view wx:for="array">{{item}}</view>
 	// 等同于
 	<view wx:for="{{['a','r','r','a','y']}}">{{item}}</view>
-	
+
 	//  如果花括号和引号之间如果有空格，将最终被解析成为字符串
 	<view wx:for="{{[1,2,3]}} ">{{item}}</view>
 	// 等同于
@@ -639,10 +655,10 @@ commonData.html.wechatApplet = {
 	··
 	// 这里的 objectArray 中的 id 的值和 unique 的值都是唯一的字符串或数字，所以 wx:key 填 id 或 unique 都可以
 	<switch wx:for="{{objectArray}}" wx:key="unique"> {{item.id}} </switch>
-	
+
 	// 这里的 numberArray 中每一项都是唯一的数字，所以 wx:key 填 *this 就可以
 	<switch wx:for="{{numberArray}}" wx:key="*this"> {{item}} </switch>
-	
+
 	Page({
 		data: {
 			objectArray: [
@@ -657,7 +673,7 @@ commonData.html.wechatApplet = {
 		}
 	})
 	··
-	
+
 	###条件检测
 	使用·wx:if·来判断是否需要渲染该代码块
 	··
@@ -677,7 +693,7 @@ commonData.html.wechatApplet = {
 	·wx:if·是惰性的，如果在初始渲染条件为·false·，框架什么也不做，在条件第一次变成真的时候才开始局部渲染。
 	相比之下，·hidden·就简单的多，组件始终会被渲染，只是简单的控制显示与隐藏。
 	·wx:if·有更高的切换消耗而·hidden·有更高的初始渲染消耗。因此，如果需要频繁切换的情景下，用·hidden·更好，如果在运行时条件不大可能改变则·wx:if·较好。
-	
+
 	###模板
 	在模板中定义代码片段，然后在不同的地方调用，只在当前页面使用。
 	使用 name 属性，作为模板的名字。然后在·<template/>·内定义代码片段，如：
@@ -717,7 +733,7 @@ commonData.html.wechatApplet = {
 	</block>
 	··
 	模板拥有自己的作用域，只能使用 data 传入的数据以及模版定义文件中定义的·<wxs/>·模块
-	
+
 	###引用
 	两种文件引用方式·import·和·include·
 	·import·可以在该文件中使用目标文件定义的·template·，比如在·item.wxml·中定义了一个叫·item·的·template·：
@@ -738,25 +754,25 @@ commonData.html.wechatApplet = {
 	··
 	<!-- header.wxml -->
 	<view> header </view>
-	
+
 	<!-- footer.wxml -->
 	<view> footer </view>
-	
+
 	<!-- index.wxml -->
 	<include src="header.wxml"/>
 	<view> body </view>
 	<include src="footer.wxml"/>
 	··
-	
+
 	##wxss
 	WXSS（WeiXin Style Sheets）是一套样式语言，用于描述 WXML 的组件样式
 	目前支持的选择器有：·.class|#id|element|element, element|::after|::before·。
 	app.wxss为全局样式。在page的wxss文件中为局部样式，只作用在对应的页面，并会覆盖 app.wxss 中相同的选择器。
-	
+
 	与 CSS 相比，WXSS 扩展的特性有：尺寸单位和样式导入
-	
+
 	###尺寸单位
-	单位：·rpx·，根据750rpx屏幕宽度进行自适应。比如：	
+	单位：·rpx·，根据750rpx屏幕宽度进行自适应。比如：
 	iPhone6的屏幕宽度为375px，共有750个物理像素，1rpx=0.5px=1物理像素，1px=2rpx
 	在iPhone5下1rpx=0.42px，1px = 2.34rpx
 	在iPhone6 Plus下1rpx=0.552px，1px = 1.81rpx
@@ -777,7 +793,7 @@ commonData.html.wechatApplet = {
 		padding:15px;
 	}
 	··
-	
+
 	###内联样式
 	框架组件上支持使用 style、class 属性来控制组件的样式。
 	静态的样式统一写到 class 中。style 接收动态的样式，在运行时会进行解析，请尽量避免将静态的样式写进 style 中，以免影响渲染速度。
@@ -785,7 +801,7 @@ commonData.html.wechatApplet = {
 	<view class="normal_view"/>
 	<view style="color:{{color}};"/>
 	··
-	
+
 	##wxs
 	WXS（WeiXin Script）是小程序的一套脚本语言，结合 WXML，可以构建出页面的结构
 	WXS 代码模块可以编写在 wxml 文件中的·<wxs>·标签内，或以·.wxs·为后缀名的文件内。相当于·<script>·标签
@@ -827,7 +843,7 @@ commonData.html.wechatApplet = {
 	^^注意：^^
 	<wxs> 模块只能在定义模块的 WXML 文件中被访问到。使用 <include> 或 <import> 时，<wxs> 模块不会被引入到对应的 WXML 文件中。
 	<template> 标签中，只能使用定义该 <template> 的 WXML 文件中定义的 <wxs> 模块。
-	
+
 	##自定义组件
 	开发者可以将页面内的功能模块抽象成自定义组件，以便在不同的页面中重复使用；也可以将复杂的页面拆分成多个低耦合的模块，有助于代码维护。自定义组件在使用时与基础组件非常相似。
 	###创建自定义组件
@@ -859,6 +875,15 @@ commonData.html.wechatApplet = {
 	</view>
 	··
 	默认情况下，一个组件的wxml中只能有一个slot。需要使用多slot时，可以在组件js中声明启用。
+	··
+	Component({
+		options: {
+			multipleSlots: true // 在组件定义时的选项中启用多slot支持
+		},
+		properties: { /* ... */ },
+		methods: { /* ... */ }
+	})
+	··
 	此时，可以在这个组件的wxml中使用多个slot，以不同的 name 来区分。
 	··
 	<!-- 组件模板 -->
@@ -970,7 +995,7 @@ commonData.html.wechatApplet = {
 	})
 	··
 	在上例中， my-component 组件定义中加入了 my-behavior ，而 my-behavior 中包含有 myBehaviorProperty 属性、 myBehaviorData 数据字段、 myBehaviorMethod 方法和一个 attached 生命周期函数。这将使得 my-component 中也包含了 my-behavior 的属性和方法。当组件触发 attached 生命周期时，会依次触发 my-behavior 中的 attached 生命周期函数和 my-component 中的 attached 生命周期函数。
-	
+
 	###组件间关系
 	有时需要实现这样的组件：
 	··
@@ -1028,7 +1053,7 @@ commonData.html.wechatApplet = {
 	})
 	··
 	注意：必须在两个组件定义中都加入relations定义，否则不会生效。
-	
+
 	###抽象节点
 	有时，自定义组件模版中的一些节点，其对应的自定义组件不是由自定义组件本身确定的，而是自定义组件的调用者确定的。这时可以把这个节点声明为“抽象节点”。
 	例如，我们现在来实现一个“选框组”（selectable-group）组件，它其中可以放置单选框（custom-radio）或者复选框（custom-checkbox）。这个组件的 wxml 可以这样编写：
@@ -1049,14 +1074,14 @@ commonData.html.wechatApplet = {
 		}
 	}
 	··
-	
+
 	##插件
 	插件的开发和使用自小程序基础库版本 1.9.6 开始支持。
 	插件是对一组 js 接口或自定义组件的封装，用于提供给第三方小程序调用。插件必须嵌入在其他小程序中才能被用户使用。
 	插件开发者可以像开发小程序一样编写一个插件并上传代码，在插件发布之后，其他小程序方可调用。小程序平台会托管插件代码，其他小程序调用时，上传的插件代码会随小程序一起下载运行。
 	相对于普通 js 文件或自定义组件，插件拥有更强的独立性，拥有独立的 API 接口、域名列表等，但同时会受到一些限制，如一些 API 无法调用或功能受限。
 	对于插件开发者，请阅读@[开发插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/development.html]章节；对于插件使用者，请阅读@[使用插件|https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/using.html]章节。
-	
+
 	##运行机制
 	小程序启动会有两种情况，一种是「冷启动」，一种是「热启动」。 假如用户已经打开过某小程序，然后在一定时间内再次打开该小程序，此时无需重新启动，只需将后台态的小程序切换到前台，这个过程就是热启动；冷启动指的是用户首次打开或小程序被微信主动销毁后再次打开的情况，此时小程序需要重新加载启动。
 	小程序没有重启的概念，当小程序进入后台，客户端会维持一段时间的运行状态，超过一定时间后（目前是5分钟）会被微信主动销毁，当短时间内（5s）连续收到两次以上收到系统内存告警，会进行小程序的销毁。
@@ -1070,15 +1095,14 @@ commonData.html.wechatApplet = {
 	B,A,清空原来的页面栈，打开首页（相当于执行 wx.reLaunch 到首页）
 	A 或 B,B,清空原来的页面栈，打开指定页面（相当于执行 wx.reLaunch 到指定页）
 	%%
-	
+
 	###更新机制
 	小程序冷启动时如果发现有新版本，将会异步下载新版本的代码包，并同时用客户端本地的包进行启动，即新版本的小程序需要等下一次冷启动才会应用上。 如果需要马上应用最新版本，可以使用 @[wx.getUpdateManager|https://developers.weixin.qq.com/miniprogram/dev/api/getUpdateManager.html] API 进行处理。
-	
+
 	#组件
-	
-	注释·<!-- -->·左右的横杠就是2根，不然会全部注释
+
 	每个页面默认有个·<page></page>·滚动父容器，可以不用添加最大父容器
-	
+
 	##目录
 	!!
 	视图容器
@@ -1129,7 +1153,7 @@ commonData.html.wechatApplet = {
 		<text>{{letter}}</text>	// A,B,C
 		<text wx:for="{{item.name}}">{{item}}</text>	// 每个字母后面有很多名字
 	</block>
-	
+
 	Page({
 		data: {
 			list: [
@@ -1141,18 +1165,18 @@ commonData.html.wechatApplet = {
 		}
 	})
 	··
-	
+
 	##text
 	!!
 	selectable{Boolean}[false]：文本是否可选中
-	space{String}[false]：是否显示连续空格，可选 : 
+	space{String}[false]：是否显示连续空格，可选 :
 		ensp：中文字符空格一半大小
 		emsp：中文字符空格大小
 		nbsp：根据字体设置的空格大小
 	decode{Boolean}[false]：是否解码，可解析的有 : ·&amp;nbsp;· ·&amp;lt;· ·&amp;gt;· ·&amp;amp;· ·&amp;apos;· ·&amp;ensp;· ·&amp;emsp;·
 	!!
 	注意：各个操作系统的空格标准并不一致，<text/> 组件内只支持 <text/> 嵌套，除了文本节点以外的其他节点都无法长按选中
-	
+
 	##image
 	!!
 	src{String}：图片资源地址
@@ -1165,7 +1189,7 @@ commonData.html.wechatApplet = {
 	binderror{HandleEvent}：当错误发生时，发布到 AppService 的事件名，事件对象event.detail = {errMsg: 'something wrong'}
 	bindload{HandleEvent}：当图片载入完毕时，发布到 AppService 的事件名，事件对象event.detail = {height:'图片高度px', width:'图片宽度px'}
 	!!
-	
+
 	##input
 	!!
 	value{String}：输入框的初始内容
@@ -1185,11 +1209,11 @@ commonData.html.wechatApplet = {
 	selection-end{Number}[-1]：光标结束位置，自动聚焦时有效，需与selection-start搭配使用
 	adjust-position{Boolean}[true]：键盘弹起时，是否自动上推页面
 	bindinput{EventHandle}：当键盘输入时触发，event.detail = {value, cursor}，可以 return 一个字符串，将替换输入框的内容
-	bindfocus{EventHandle}：输入框聚焦时触发，event.detail = {value: value}	
+	bindfocus{EventHandle}：输入框聚焦时触发，event.detail = {value: value}
 	bindblur{EventHandle}：输入框失去焦点时触发，event.detail = {value: value}
 	bindconfirm{EventHandle}：点击完成按钮时触发，event.detail = {value: value}
 	!!
-	
+
 	##open-data
 	用于展示微信开放的数据，比如获取用户头像、昵称无需授权
 	!!
@@ -1210,7 +1234,7 @@ commonData.html.wechatApplet = {
 	<open-data type="userAvatarUrl"/>	// 相当于image标签
 	<open-data type="userNickName"/>	// 相当于text标签
 	··
-	
+
 	##button
 	!!
 	size{String}[default]：按钮的大小，可选 default、mini
@@ -1244,7 +1268,7 @@ commonData.html.wechatApplet = {
 	binderror{Handler}：当使用开放能力时，发生错误的回调。当·open-type="launchApp"·时生效
 	bindopensetting{Handler}：在打开授权设置页后回调。当·open-type="openSetting"·时生效
 	!!
-	
+
 	##swiper
 	!!
 	indicator-dots{Boolean}[false]：是否显示指示点
@@ -1268,10 +1292,10 @@ commonData.html.wechatApplet = {
 	!!
 	注意：如果在 bindchange 的事件回调函数中使用 setData 改变 current 值，则有可能导致 setData 被不停地调用，因而通常情况下请在改变 current 值前检测 source 字段来判断是否是由于用户触摸引起
 
-	
+
 	##picker
 	从底部弹起的滚动选择器，现支持五种选择器，通过mode来区分，分别是普通、多列、时间、日期、省市区，默认是普通选择器。选择器的选项>=5个在手机上就会循环展示。
-	
+
 	###普通选择器：mode="selector"（默认可以不填）
 	!!
 	range{Array/Object Array}[[]]：mode为 selector 或 multiSelector 时，range 有效
@@ -1281,7 +1305,7 @@ commonData.html.wechatApplet = {
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
 	!!
-	
+
 	###多列选择器：mode="multiSelector"
 	!!
 	range{二维Array/二维Object Array}[[]]：mode为 selector 或 multiSelector 时，range 有效
@@ -1292,7 +1316,7 @@ commonData.html.wechatApplet = {
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
 	!!
-	
+
 	###时间选择器：mode="time"
 	!!
 	value{String}：选中的时间，格式为"hh:mm"
@@ -1302,7 +1326,7 @@ commonData.html.wechatApplet = {
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
 	!!
-	
+
 	###日期选择器：mode="date"
 	!!
 	value{String}[0]：选中的日期，格式为"YYYY-MM-DD"
@@ -1313,7 +1337,7 @@ commonData.html.wechatApplet = {
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
 	!!
-	
+
 	###省市区选择器：mode="region"
 	!!
 	value{Array}[[]]：选中的省市区，默认选中每一列的第一个值
@@ -1322,7 +1346,7 @@ commonData.html.wechatApplet = {
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
 	!!
-	
+
 	示例：
 	··
 	// 将<picker>标签包围要点击触发的区域即可触发选择器
@@ -1377,9 +1401,9 @@ commonData.html.wechatApplet = {
 		}
 	})
 	··
-	
+
 	#API
-	
+
 	##目录
 	!!
 	^^网络^^
@@ -1525,7 +1549,7 @@ commonData.html.wechatApplet = {
 		wx.reportMonitor：自定义业务数据监控上报接口
 		wx.setEnableDebug：设置是否打开调试开关，此开关对正式版也能生效
 	!!
-	
+
 	##页面导航
 	!!
 	wx.navigateTo({	保留当前页面跳转到非 tabBar 的页面，可返回原页面，目前页面路径最多只能十层
@@ -1541,9 +1565,9 @@ commonData.html.wechatApplet = {
 		delta{Number}[1]：返回的页面数，如果 delta 大于现有页面数，则返回到首页，可通过 getCurrentPages() 获取当前的页面栈决定需要返回几层
 	})
 	!!
-	
+
 	##提示框
-	
+
 	###消息提示框
 	在指定时间 duration 后自动消失
 	!!
@@ -1559,7 +1583,7 @@ commonData.html.wechatApplet = {
 	})
 	wx.hideToast()：主动隐藏消息提示框
 	!!
-	
+
 	###loading提示框
 	需调用 wx.hideLoading() 后才会消失
 	!!
@@ -1572,7 +1596,7 @@ commonData.html.wechatApplet = {
 	})
 	wx.hideLoading()：隐藏loading提示框
 	!!
-	
+
 	###模态弹窗
 	!!
 	wx.showModal({
@@ -1592,7 +1616,7 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调函数
 	})
 	!!
-	
+
 	###操作菜单
 	!!
 	wx.showActionSheet({
@@ -1606,9 +1630,9 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调函数
 	})
 	!!
-	
+
 	##网络请求
-	
+
 	###说明
 	注意在小程序后台配置域名白名单，只支持·https·（request、uploadFile、downloadFile）和·wss·（connectSocket）协议。
 	域名不能使用·IP地址·或·localhost·，不能带端口号，且必须经过·ICP备案·。
@@ -1620,7 +1644,7 @@ commonData.html.wechatApplet = {
 	小程序进入后台运行后（非置顶聊天），如果 5s 内网络请求没有结束，会回调错误信息·fail interrupted·；在回到前台之前，网络请求接口调用都会无法调用。
 	只要服务器有返回东西都会进入 success 回调，最好根据 statusCode 再判断。
 	小程序会自动对 BOM 头进行过滤。
-	
+
 	###发起网络请求
 	!!
 	wx.request({
@@ -1651,10 +1675,10 @@ commonData.html.wechatApplet = {
 			console.log(res.data)
 		}
 	})
-	
+
 	requestTask.abort()	// 取消请求任务
 	··
-	
+
 	###上传文件
 	将本地资源上传到开发者服务器，客户端发起一个·HTTPS POST·请求，其中·content-type·为·multipart/form-data·
 	比如通过·wx.chooseImage·等接口获取到一个本地资源的临时文件路径后上传到服务器
@@ -1700,7 +1724,7 @@ commonData.html.wechatApplet = {
 
 	uploadTask.abort() // 取消上传任务
 	··
-	
+
 	###下载文件
 	下载文件资源到本地，客户端直接发起一个·HTTP GET·请求，返回文件的本地临时路径
 	文件的临时路径，在小程序本次启动期间可以正常使用，如需持久保存，需在主动调用·wx.saveFile·，才能在小程序下次启动时访问得到。
@@ -1719,7 +1743,7 @@ commonData.html.wechatApplet = {
 	})
 	!!
 	返回一个 downloadTask 对象，可通过·onProgressUpdate()·监听下载进度变化事件，参数同 uploadTask，调用·abort()·可取消下载任务
-	
+
 	##图片和文件
 	###图片
 	!!
@@ -1843,9 +1867,9 @@ commonData.html.wechatApplet = {
 			complete{Function}：完成的回调函数
 		})
 	!!
-	
+
 	##常用
-	
+
 	###打电话
 	!!
 	wx.makePhoneCall({
@@ -1855,7 +1879,7 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调
 	})
 	!!
-	
+
 	###设置页面标题
 	!!
 	wx.setNavigationBarTitle({
@@ -1865,7 +1889,7 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调
 	})
 	!!
-	
+
 	###滚动页面
 	!!
 	wx.pageScrollTo({
@@ -1873,7 +1897,7 @@ commonData.html.wechatApplet = {
 		duration{Number}：滚动动画的时长，默认300ms，单位 ms
 	})
 	!!
-	
+
 	###下拉刷新
 	在当前页面的 json 文件中的 window 属性设置·enablePullDownRefresh·为 true
 	在 Page 中定义·onPullDownRefresh·函数，当用户手动下拉的时候就会触发该事件
@@ -1889,7 +1913,7 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调
 	})
 	!!
-	
+
 	###获取位置
 	获取当前位置的经纬度、速度、高度。当用户离开小程序后，此接口无法调用；当用户点击“显示在聊天顶部”时，此接口可继续调用
 	!!
@@ -1910,7 +1934,7 @@ commonData.html.wechatApplet = {
 		complete{Function}：完成的回调
 	})
 	!!
-	
+
 	##转发
 	在 Page 中定义 onShareAppMessage 函数，右上角菜单才会显示“转发”按钮， return 一个 Object 用于自定义转发内容
 	!!
@@ -1921,7 +1945,7 @@ commonData.html.wechatApplet = {
 		}
 		return {
 			title：转发的标题，默认为当前小程序名称
-			path：转发的路径，	当前页面路径 ，必须是以 / 开头的完整路径
+			path：转发的路径，默认为当前页面路径 ，必须是以 / 开头的完整路径
 			imageUrl：图片路径，支持PNG及JPG，默认为当前页面的截图，长宽比是 5:4
 		}
 	}
@@ -1964,7 +1988,7 @@ commonData.html.wechatApplet = {
 			complete{Function}：完成的回调
 		})
 	!!
-	
+
 	##数据缓存
 	大小限制为 10MB，异步接口无阻塞有回调函数，同步接口有阻塞无回调函数但写法简单
 	!!
@@ -2009,7 +2033,7 @@ commonData.html.wechatApplet = {
 		wx.clearStorage()
 		wx.clearStorageSync()
 	!!
-	
+
 	##WXML节点信息
 	·wx.createSelectorQuery()·：返回一个·SelectorQuery·对象实例，调用相关方法以获取相关节点：
 	!!
@@ -2032,7 +2056,7 @@ commonData.html.wechatApplet = {
 		scrollOffset{Boolean}[false]：是否返回节点的 scrollLeft scrollTop ，节点必须是scroll-view或viewport
 		properties{StringArray}[[]]：指定节点属性名列表，以返回对应属性值（ id、class、style 和事件绑定的属性值不可获取）
 	!!
-	
+
 	示例代码：
 	··
 	// 获取某个节点的相关信息
@@ -2041,14 +2065,14 @@ commonData.html.wechatApplet = {
 	ref.boundingClientRect(res => {
 		console.log(res)
 	}).exec()
-	
+
 	// 获取多个节点的相关信息
 	 wx.createSelectorQuery().selectAll('.a-class').boundingClientRect().exec(function(res){
 		res.forEach(item => {
 			console.log(item)
 		})
 	})
-	
+
 	// 获取 fields
 	 wx.createSelectorQuery().select('#id').fields({
 		dataset: true,
@@ -2065,9 +2089,9 @@ commonData.html.wechatApplet = {
 		res.scrollY    // 节点 scroll-y 属性的当前值
 	}).exec()
 	··
-	
+
 	##登录
-	
+
 	###wx.login
 	调用接口·wx.login()·获取临时登录凭证，以换取用户的 openid、session_key、unionid
 	!!
@@ -2108,7 +2132,7 @@ commonData.html.wechatApplet = {
 	前提：@[微信开放平台|https://open.weixin.qq.com/]帐号必须已完成开发者资质认证
 	开发者资质认证流程：登录微信开放平台 – 帐号中心 – 开发者资质认证
 	登录微信开放平台—管理中心—公众帐号—绑定公众帐号
-	
+
 	###wx.getUserInfo
 	获取用户信息，当用户授权过才可以使用该接口，否则会报错，只能使用@[<button>|javascript:;" onclick="$('h1:eq(2)~h2:eq(5)').click()]将·open-type·设为·getUserInfo·引导用户授权，比·wx.login()·的优势在于解密后就能获得·unionid·，而·wx.login()·需要一定的条件
 	!!
@@ -2142,10 +2166,10 @@ commonData.html.wechatApplet = {
 	··
 	// 假设用户的 session-key
 	HyVFkGl5F5OQWJZZaNzBBg==
-	
+
 	// 假设用户的 rawData
 	{"nickName":"Band","gender":1,"language":"zh_CN","city":"Guangzhou","province":"Guangdong","country":"CN","avatarUrl":"avatarUrl"}
-	
+
 	// 加密 sha1( rawData + session_key ) 得到 signature2，用来对比 signature
 	75e81ceda165f4ffa64f4068af58c64b8f54b88c
 	··
@@ -2168,7 +2192,7 @@ commonData.html.wechatApplet = {
 	if (decoded.watermark.appid !== appId) {	// 判断敏感数据归属的 appId 和自己的 appId 是否一致
 		throw new Error('Illegal Buffer')
 	}
-	
+
 	// decoded 即 encryptedData 解密后的数据
 	{
 		"openId": "OPENID",
@@ -2186,7 +2210,7 @@ commonData.html.wechatApplet = {
 		}
 	}
 	··
-	
+
 	###会话密钥session_key有效性
 	开发者如果遇到因为session_key不正确而校验签名失败或解密失败，请关注下面几个与session_key有关的注意事项。
 	!!
@@ -2216,7 +2240,7 @@ commonData.html.wechatApplet = {
 		}
 	})
 	··
-	
+
 	###设计规范
 	当开发者在小程序首页就调用·wx.getUserInfo·时，会造成一进入小程序就出现授权弹窗，然后用户脑海闪过一些哲学问题：
 	你是谁？
@@ -2231,7 +2255,7 @@ commonData.html.wechatApplet = {
 	授权有什么好处？
 	接下来在页面上放置一个明显的登录按钮，建议不要有其他的点击区域，让用户专注登录。
 	用户可能会更改昵称和头像，建议定期使用·wx.getUserInfo·更新信息，如果用户授权后又在设置中关掉了授权或本地删除了小程序，需用·button·组件重新授权
-	
+
 	###wx.getSetting
 	获取用户的当前设置，返回值中只会出现小程序已经向用户请求过的权限
 	!!
@@ -2242,7 +2266,7 @@ commonData.html.wechatApplet = {
 		complete{Function}：结束的回调函数
 	})
 	!!
-	
+
 	###获取用户登录态建议使用场景
 	!!
 	小程序内调用·wx.login()·获取 code 并传给服务器
@@ -2271,14 +2295,14 @@ commonData.html.wechatApplet = {
 		}
 	})
 	··
-	
+
 	###getPhoneNumber
 	获取微信用户绑定的手机号，需先调用login接口，目前该接口针对非个人开发者，且完成了认证的小程序开放
 	将·<button>·组件 open-type 的值设置为 getPhoneNumber，把事件返回的加密数据发送到服务器进行解密再返回来
 	··
 	<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
 	Page({
-    getPhoneNumber: function(res) { 
+    getPhoneNumber: function(res) {
         console.log(res.detail.errMsg)	// 调用结果说明
         console.log(res.detail.iv)	// 加密算法的初始向量
         console.log(res.detail.encryptedData)	// 包括敏感数据在内的完整用户信息的加密数据
@@ -2297,15 +2321,15 @@ commonData.html.wechatApplet = {
 		}
 	}
 	··
-	
+
 	##微信支付
-	
+
 	###在小程序后台开通微信支付
 	!./img/html/wechat-applet01.png,800
-	
+
 	###交互过程示意图
 	!./img/html/wechat-applet02.jpg,800
-	
+
 	###调用的API
 	!!
 	wx.requestPayment({
@@ -2322,7 +2346,7 @@ commonData.html.wechatApplet = {
 	详细说明需查看：@[小程序支付接口文档|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1]
 	所有参数在服务器调用统一下单接口返回：@[小程序支付统一下单接口|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1]
 	登录@[微信商户平台|pay.weixin.qq.com]可设置签名密钥
-	
+
 	###示例代码：
 	··
 	wx.requestPayment({
@@ -2342,9 +2366,9 @@ commonData.html.wechatApplet = {
 		}
 	})
 	··
-	
+
 	#工具
-	
+
 	##介绍
 	开发小程序需使用@[微信开发者工具|https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html]
 	新建项目时需要在小程序后台注册后的 AppID，没有的话也可选择体验模式，但体验模式无法进行代码真机预览和上传等操作，部分 API 无法正常调用，注意登录的微信号需要是该 AppID 的小程序后台绑定过的开发者
@@ -2356,7 +2380,7 @@ commonData.html.wechatApplet = {
 	尽管三端的环境是十分相似的，但是还是有些许区别：
 	wxss 渲染表现不一致。尽管可以通过开启样式补全来规避大部分的问题 ，还是建议开发者需要在 iOS 和 Android 上分别检查小程序的真实表现。
 	在 0.10.101000 以及之后版本的开发工具中，会默认使用 babel 将开发者 ES6 语法代码转换为三端都能很好支持的 ES5 的代码，帮助开发者解决环境不同所带来的开发问题。注意在开启 ES6 转换功能的情况下会启用 javasctipt 严格模式
-	
+
 	##快捷键
 	!!
 	ctrl + X：剪切，如果没有选中文字则剪切当前行
@@ -2376,7 +2400,7 @@ commonData.html.wechatApplet = {
 	shift + home：选中从行首到光标处
 	shift + end：选中从光标处到行尾
 	!!
-	
+
 	##Git 状态展示
 	如果所在的小程序工程目录（project.config.json 所在目录）存在 Git 仓库，编辑器可以展示目前的 Git 状态
 	文件图标状态的含义如下：
@@ -2402,7 +2426,7 @@ commonData.html.wechatApplet = {
 	绿色线条：此处的代码是新增的
 	红色三角箭头：此处有代码被删除
 	!!
-	
+
 	##项目配置文件
 	可以在项目根目录使用·project.config.json·文件对项目进行配置
 	!!
@@ -2427,7 +2451,7 @@ commonData.html.wechatApplet = {
 		beforePreview：预览前预处理命令
 		beforeUpload：上传前预处理命令
 	!!
-	
+
 	##腾讯云
 	开发者可以使用小程序腾讯云支持，开发环境提供免费的主机、https 域名。开发完毕后，还可以三个月内继续使用免费的生产环境。而这一切只需要开发者提供域名。
 	目前服务端支持 NodeJS 和 PHP 两种语言，开发者可以使用微信开发者工具同时进行服务端和小程序的开发。
@@ -2458,9 +2482,9 @@ commonData.html.wechatApplet = {
 	!!
 	注意：此时通过小程序开发者工具查看腾讯云状态并不会显示已开通，已开通状态会在第一次部署开发环境之后才会同步到微信开发者工具上
 	服务端、客户端的 Demo、SDK 的具体文档：@[开发环境和生产环境|https://github.com/tencentyun/wafer2-startup/wiki/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%92%8C%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83]
-	
+
 	#小游戏
-	
+
 	##介绍
 	微信小游戏是小程序的一个类目。用户完成小程序注册后，可选择“游戏”类目并开始开发、调试小游戏
 	需要两个必要文件：
@@ -2469,7 +2493,7 @@ commonData.html.wechatApplet = {
 	game.json：配置文件
 	!!
 	每个小游戏允许上传的代码包总大小为 4MB
-	
+
 	##game.json
 	开发者工具和客户端需要读取这个配置，完成相关界面渲染和属性设置。
 	!!
@@ -2477,7 +2501,7 @@ commonData.html.wechatApplet = {
 	showStatusBar{Boolean}[false]：是否显示状态栏
 	networkTimeout：
 	!!
-	
+
 	@@!
 	小程序官方文档|https://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
 	小程序社区：疑难解答、教程、demo、资源|http://www.wxapp-union.com
@@ -2487,7 +2511,6 @@ commonData.html.wechatApplet = {
 	知乎：「微信小程序」剖析（二）：框架原理 | 在浏览器上运行的猜想|https://zhuanlan.zhihu.com/p/22607204
 	公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析|https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
 	@@
-	
+
 	&2018.6.7
-	`
-}
+`

@@ -1,6 +1,4 @@
-commonData.html.website = {
-	name: '网站',
-	content: `
+commonData.html.website.content = `
 	#建站
 	建立一个网站可分为3个部分：域名、服务器、网页文件
 
@@ -55,5 +53,4 @@ commonData.html.website = {
 	@@
 
 	&2018/4/12
-	`
-}
+`

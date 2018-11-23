@@ -1,5 +1,4 @@
-commonData.tool.git = {
-	content: `
+commonData.tool.git.content = `
 	#安装
 	Windows下安装
 	从 @[Git 官网|https://git-scm.com/downloads] 上下载安装
@@ -94,5 +93,4 @@ commonData.tool.git = {
 	若出现·fatal: Unable to create .git/index.lock': File exists.·错误，在.git文件夹内（这是一个隐藏文件夹，可以在左上角查看：组织>文件夹和搜索选项>显示或不显示隐藏文件夹）删除index.lock即可，或者在git bash here执行删除命令：·rm -f .git/index.lock·
 
 	&2018.4.18
-	`
-}
+`

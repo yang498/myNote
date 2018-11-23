@@ -1,8 +1,6 @@
-commonData.html.html = {
-	content: `
+commonData.html.html.content = `
 	#路径
 	/：根目录，一般用于本地静态服务或网站服务
 	./：当前目录，本来不写默认就是当前目录，常用于书写完整目录
 	../：目录层级回到上一级
-	`
-}
+`

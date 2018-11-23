@@ -1,7 +1,6 @@
-commonData.js.string = {
-	content: `
+commonData.js.string.content = `
 	#string
-	
+
 	##介绍
 	·String·对象是 JavaScript 原生提供的三个包装对象之一，用来生成字符串对象。
 	字符串字面量（通过单引号或双引号定义）和直接调用 String 方法（没有通过 new 生成字符串对象实例）的字符串都是基本字符串。
@@ -51,20 +50,20 @@ commonData.js.string = {
 	long \\
 	long \\
 	string'
-	
+
 	// 使用+连接
 	var longString = 'Long '
 		+ 'long '
 		+ 'long '
 		+ 'string'
-	
+
 	// 使用注释
 	(function () {/*
 		line 1
 		line 2
 		line 3
 	*/}).toString().split('\\n').slice(1, -1).join('')
-	
+
 	// es6的\`
 	var longString = \`Long
 	long
@@ -101,7 +100,7 @@ commonData.js.string = {
 	··
 	'𝌆'.length	// 2
 	··
-	
+
 	##Base64 转码
 	有时，文本里面包含一些不可打印的符号，比如 ASCII 码0到31的符号都无法打印出来，这时可以使用 Base64 编码，将它们转成可以打印的字符。另一个场景是，有时需要以文本格式传递二进制数据，那么也可以使用 Base64 编码。
 	所谓 Base64 就是一种编码方法，可以将任意值转成 0～9、A～Z、a-z、+和/这64个字符组成的可打印字符。使用它的主要目的，不是为了加密，而是为了不出现特殊字符，简化程序的处理。
@@ -119,7 +118,7 @@ commonData.js.string = {
 	btoa(encodeURIComponent('你好'))	// JUU0JUJEJUEwJUU1JUE1JUJE
 	decodeURIComponent(atob('JUU0JUJEJUEwJUU1JUE1JUJE'))	// 你好
 	··
-	
+
 	#方法
 	##String()
 	·String(obj)·：可以将任意类型的值转为字符串，不改变原值
@@ -150,10 +149,9 @@ commonData.js.string = {
 	'a|b|c'.split('|', 4)	// ['a', 'b', 'c']
 	··
 	还可以使用正则表达式作为参数来分隔
-	
+
 	#es6
 	##模板字符串
-	
+
 	&2018.4.15
-	`
-}
+`

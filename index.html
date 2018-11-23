@@ -16,23 +16,21 @@
 				<!-- 左边的目录 -->
 				<ul class="menu">
 					<!-- 一级目录 -->
-					<li @click="directory" :class="index ? 'active' : ''">
-						<img src="img/logo.jpg"/>
-					</li>
-					<!-- key 作为一级目录路径，value 的 name 作为一级目录名 -->
-					<li v-for="(value, key) in commonData" :class="menuParent === key && !index ? 'active' : ''">
-						<span v-cloak>{{value.name}}</span>
+					<li @click="directory" :class="index ? 'active' : ''"><img src="img/logo.jpg"/></li>
+					<li v-for="(parentValue, parentKey) in commonData" :class="menuParent === parentKey ? 'active' : ''">
+						<span v-cloak>{{parentValue.name || parentKey}}</span>
 						<ul>
-							<!-- 二级属性路径除了 name 和 directory 不显示，content.name 或 name 作为二级目录名 -->
-							<li v-for="(content, name) in value"
-								v-if="name !== 'name' && name !== 'directory'"
-								:class="menuChild === name && !index ? 'active' : ''"
-								@click="changePage(key, name)"
-							>{{content.name || name}}</li>
+							<!-- 二级目录，name 作为中文表示所以不显示 -->
+							<li
+								v-for="(childValue, childKey) in parentValue"
+								v-if="childKey !== 'name'"
+								:class="menuChild === childKey ? 'active' : ''"
+								@click="changePage(parentKey, childKey)"
+							>{{childValue.name || childKey}}</li>
 						</ul>
 					</li>
 				</ul>
-				
+
 				<!-- 右边的菜单 -->
 				<div class="option">
 					<!-- 搜索框 -->
@@ -60,21 +58,23 @@
 				</div>
 			</header>
 			<!-- 头部 end -->
-			
+
 			<!-- 目录索引页 start -->
 			<section v-if="index">
 				<ul>
-					<li v-for="(value, key) in commonData">
-						<b v-cloak>{{value.name}}</b>
-						<span v-for="(content, name) in value"
-							v-if="name !== 'name' && name !== 'directory'"
-							@click="changePage(key, name)"
-						v-cloak>{{content.name || name}}</span>
+					<li v-for="(parentValue, parentKey) in commonData">
+						<b v-cloak>{{parentValue.name || parentKey}}</b>
+						<span
+							v-for="(childValue, childKey) in parentValue"
+							v-if="childKey !== 'name'"
+							@click="changePage(parentKey, childKey)"
+							v-cloak
+						>{{childValue.name || childKey}}</span>
 					</li>
 				</ul>
 			</section>
 			<!-- 目录索引页 end -->
-			
+
 			<!-- 文档左边目录 -->
 			<aside v-if="!index" :class="index?'':'active'">
 				<ul class="h1">
@@ -90,7 +90,7 @@
 					v-cloak>{{item}}</li>
 				</ul>
 			</aside>
-			
+
 			<!-- 文档内容 -->
 			<article v-if="!index" v-html="article"></article>
 		</div>

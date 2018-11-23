@@ -1,6 +1,4 @@
-commonData.js.array = {
-	content: `
-	#array
-	##建设中，敬请期待...
-	`
-}
+commonData.js.array.content = `
+	#sort
+	中文排序：.sort((a, b) => a.localeCompare(b, 'zh-Hans-CN'))
+`

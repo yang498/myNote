@@ -1,6 +1,4 @@
-commonData.other.office = {
-	name: '电脑操作',
-	content: `
+commonData.other.office.content = `
 	#常用运行命令
 	快捷键：win+R
 	cmd：命令提示符（也可以在文件夹的目录栏输入cmd回车可直接进入当前文件夹）
@@ -181,5 +179,4 @@ commonData.other.office = {
 	这是电脑可以启动的前提下，如果像系统文件损坏连开机都开不了的话只能用U盘重装了
 
 	&2018/8/11
-	`
-}
+`

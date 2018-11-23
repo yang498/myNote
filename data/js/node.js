@@ -1,5 +1,4 @@
-commonData.js.node = {
-	content: `
+commonData.js.node.content = `
 	#起步
 	##介绍
 	nodejs 让 js 多了一个运行环境，以前 js 只能在浏览器中运行，现在可以在本地运行，可以操作、下载文件等等
@@ -44,5 +43,4 @@ commonData.js.node = {
 	##package.json
 
 	&2018.8.5
-	`
-}
+`

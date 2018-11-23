@@ -1,10 +1,8 @@
-commonData.other.sql = {
-	name: 'SQL',
-	content: `
+commonData.other.sqlServer.content = `
 	#起步
 	大多数数据库使用 SQL 语句，包括：Oracle、Sybase、SQL Server、DB2、Access 等
 	SQL 语句对大小写不敏感，比如 SELECT 等同于 select
-	
+
 	#SQL Server
 	快捷用法：若运行时有光标选中将只运行选中部分的代码
 	快捷键：
@@ -14,7 +12,7 @@ commonData.other.sql = {
 	Ctrl+Shift+U：将选定文本转换为大写
 	Alt+上下键：移动当前行
 	!!
-	
+
 	#create table
 	创建表和表头，语法：
 	··
@@ -35,7 +33,7 @@ commonData.other.sql = {
 		address varchar(255)
 	)
 	··
-	
+
 	#insert into
 	增加数据，语法：
 	第一种不指定列名，需要插入的值和表头一一对应：·insert into tableName values (value1, value2, value3, ...)·
@@ -45,21 +43,21 @@ commonData.other.sql = {
 	values (value1,value2,value3,...)
 	··
 	比如
-	
+
 	#select
-	
+
 	##select
 	查询列，语法：^^select ·columnName· from ·tableName·^^
 	比如：
 	所有列：·select * from table·
 	单列：·select name from table·
 	多列：·select name,age from table·
-	
+
 	##distinct
 	去重，仅对单列有效，语法：^^select distinct ·columnName· from ·tableName·^^
 	比如：
 	单列：·select distinct columnName from tableName·
-	
+
 	##where
 	条件查询，语法：^^select ·columnName· from ·tableName· where ·columnName· ·condition· ·value·^^
 	value 需用单引号标记，数字可省略
@@ -107,7 +105,6 @@ commonData.other.sql = {
 	找 London 和 New York 城市：·select * from Person where city in ('London', 'New York')·
 	找 1975 到 1985 之间的年份，执行：·select * from Persons where City between 1975 and 1985·
 	找包含 n 字母的城市，执行：·select * from Persons where City like %n%·
-	
+
 	&2018.9.30
-	`
-}
+`

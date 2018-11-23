@@ -2,7 +2,6 @@
  * 只对常用和关键部分进行说明，其他带过，考虑到官方文档都有而且都在更新，单纯的复制粘贴也没有意义，注重知识输入输出
  * 待做：
  * 网站的样式可以再调（bulma 还挺小清新），代码块的颜色可以参考 jsfiddle 等
- * 根据当前 hash 值判断，没有路径只加载目录，有 hash 值再加载指定 js 文档
  * 搜索：可参考 Algolia
  * 设置：
  * 		回到上次：
@@ -17,6 +16,7 @@
  * 		以上功能还是要做个小后台才好同步记录
  * 		github 链接
  * 做个移动端适配，可能需要新的 mobile.html、mobile.scss
+ * format-html：能不能再精简为一个return
  */
 
 let h1Active = 0	// 记录 h1 的 active，不必重复调用 asideActive()
@@ -49,14 +49,24 @@ const copyCode = item => {
 	$('.copy-success').eq($(item).index('.copy')).addClass('copy-success-active')	// 复制右边的勾加个动画表示复制成功
 }
 
+const nameChange = name => name.replace(/[A-Z]/g, '-$&').toLowerCase()
+const scriptPath = {}
+
 // 初始化内容
 const initHash = obj => {
 	try {
 		commonData[obj.menuParent][obj.menuChild]	// 若能读取就继续往下执行，否则报错进入 catch 返回首页显示目录
+		// 加载相应的 js 内容，如果之前加载过就不再加载
+		const path = nameChange(obj.menuParent) + '/' + nameChange(obj.menuChild)
+		if (!scriptPath[path]) {
+			scriptPath[path] = true
+			$('#import').after(`<script src="data/${path}.js" type="text/javascript" charset="utf-8"></script>`)
+		}
 		obj.index = false	// 显示文章
 		obj.init()	// 初始化内容
 	} catch {
 		obj.index = true	// 显示目录
+		obj.menuParent = obj.menuChild = '' // 清空路径不显示一级目录的背景 active
 		location.hash && console.warn('hash值：' + location.hash + '不存在！')
 	}
 }
@@ -113,18 +123,18 @@ let vm = new Vue({
 	methods: {
 		// 初始化解析内容
 		init() {
-			this.article = formatHtml(commonData[this.menuParent][this.menuChild].content)	// 初始化内容，运行formatHtml()之后才有标题文字asideH1和asideH2
+			this.article = formatHtml(commonData[this.menuParent][this.menuChild].content)	// 初始化内容
 			this.asideH1 = pageH1	// 初始化h1标题文字
 			this.asideH2 = pageH2	// 初始化h2标题文字
 		},
-		
+
 		// 点击左上 logo 回到目录页
 		directory() {
 			this.index = true	// 显示目录
 			location.hash = ''	// 清空路径
 			$('html').scrollTop(0)	// 回到顶部
 		},
-		
+
 		// 左边菜单 h1 点击事件
 		onAsideH1(index) {
 			this.asideActive = index	// 切换到当前active
@@ -132,14 +142,14 @@ let vm = new Vue({
 			$('article').find('h1').eq(index).click()	// 滚动h1到指定位置
 			asideTime()	// 点击左边菜单不触发asideActive的滚动事件，400ms结束也就是滚动完再恢复
 		},
-		
+
 		// 左边菜单 h2 点击事件
 		onAsideH2(index) {
 			this.asideActive2 = index	// 切换到当前active
 			$asideH2.eq(index).click()	// 滚动到指定位置
 			asideTime()	// 点击左边菜单不触发asideActive的滚动事件，400ms结束也就是滚动完再恢复
 		},
-		
+
 		// 点击顶部菜单和目录菜单切换路径
 		changePage(parent, child) {
 			this.index = false	// 显示文章
@@ -148,7 +158,7 @@ let vm = new Vue({
 			isPageHash = true
 			location.hash = parent + '/' + child	// 手动添加路径，上面设置isPageHash避免触发hashchange事件
 			$('title').text('前端笔记 - ' + (commonData[parent][child].name || child))
-			this.init()	// 初始化解析内容
+			initHash(this)	// 初始化解析内容
 			$('html').scrollTop(0)	// 回到顶部
 		}
 	}

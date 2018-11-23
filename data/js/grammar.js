@@ -1,6 +1,4 @@
-commonData.js.grammar = {
-	name: '语法',
-	content: `
+commonData.js.grammar.content = `
 	#window
 
 	##window
@@ -114,5 +112,4 @@ commonData.js.grammar = {
 	··
 
 	&2018.4.14
-	`
-}
+`

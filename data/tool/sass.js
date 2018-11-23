@@ -1,5 +1,4 @@
-commonData.tool.sass = {
-	content: `
+commonData.tool.sass.content = `
 	#起步
 	##介绍
 	sass 是一种 css 预处理工具，将写好的 sass 文件再编译成 css 文件，相比于非编程语言 css 而言，它更好书写，简单便捷，节省了时间
@@ -132,5 +131,4 @@ commonData.tool.sass = {
 	··
 	#box{width:400px;height:400px;border:1px solid gray}#box h1{font-size:22px;color:red}#box p{font-size:18px;color:green}
 	··
-	`
-}
+`

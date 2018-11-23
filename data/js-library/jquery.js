@@ -1,5 +1,4 @@
-commonData.jsLibrary.jquery = {
-	content: `
+commonData.jsLibrary.jquery.content = `
 	#介绍
 	jQuery 是 javascript 的一个库，把常用的一些功能和兼容性问题进行了封装，方便使用和提高开发效率。
 	引入 jQuery 后，就会提供 2 个全局变量：·jQuery·和相等的简写·$·，即·jQuery === $·，所以·jQuery()·和·$()·是一样的。
@@ -981,5 +980,4 @@ commonData.jsLibrary.jquery = {
 	!!
 
 	&2018.8.26
-	`
-}
+`

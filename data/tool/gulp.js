@@ -1,5 +1,4 @@
-commonData.tool.gulp = {
-	content: `
+commonData.tool.gulp.content = `
 	#起步
 
 	##介绍
@@ -466,7 +465,7 @@ commonData.tool.gulp = {
 	const gulp = require('gulp')
 	const P = require('gulp-load-plugins')()
 	const browserSync = require('browser-sync').create()
-	
+
 	gulp.task('serve', function () {
 		// 开启服务
 		browserSync.init({
@@ -474,7 +473,7 @@ commonData.tool.gulp = {
 				baseDir: "./"
 			}
 		})
-		
+
 		// 监听文件，如果发生改动则刷新浏览器
 		gulp.watch(['index.html', 'css/*.css', 'scss/*.scss', 'js/*.js', 'data/**/*.js']).on('change', browserSync.reload)
 	})
@@ -494,7 +493,7 @@ commonData.tool.gulp = {
 	const gulp = require('gulp')
 	const P = require('gulp-load-plugins')()
 	const browserSync = require('browser-sync').create()
-	
+
 	// 获取 scss 文件，编译，将结果输出到 css 文件中，刷新浏览器并注入流
 	gulp.task('sass', function () {
 		return gulp.src('scss/*.scss')
@@ -502,7 +501,7 @@ commonData.tool.gulp = {
 			.pipe(gulp.dest('css'))
 			.pipe(browserSync.reload({stream: true}))
 	})
-	
+
 	gulp.task('serve', function () {
     // 开启服务
     browserSync.init({
@@ -510,7 +509,7 @@ commonData.tool.gulp = {
             baseDir: "./"
         }
     })
-		
+
     // 监听 scss 文件，如果发生改动则刷新浏览器
 		gulp.watch('scss/*.scss', ['sass'])
     // 监听文件，如果发生改动则刷新浏览器
@@ -528,5 +527,4 @@ commonData.tool.gulp = {
 	@@
 
 	&2018.4.12
-	`
-}
+`
