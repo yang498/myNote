@@ -17,6 +17,8 @@
  * 		github 链接
  * 做个移动端适配，可能需要新的 mobile.html、mobile.scss
  * format-html：能不能再精简为一个return
+ * 读取 word
+ * 直接在网页内编辑修改
  */
 
 let h1Active = 0	// 记录 h1 的 active，不必重复调用 asideActive()
@@ -67,6 +69,7 @@ const initHash = obj => {
 	} catch {
 		obj.index = true	// 显示目录
 		obj.menuParent = obj.menuChild = '' // 清空路径不显示一级目录的背景 active
+		$('title').text('前端笔记')
 		location.hash && console.warn('hash值：' + location.hash + '不存在！')
 	}
 }
@@ -119,6 +122,7 @@ let vm = new Vue({
 	},
 	created() {
 		initHash(this)
+		$('title').text('前端笔记 - ' + (commonData[this.menuParent][this.menuChild].name || this.menuChild))
 	},
 	methods: {
 		// 初始化解析内容

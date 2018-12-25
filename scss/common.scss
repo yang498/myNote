@@ -145,29 +145,45 @@ header {
 }
 
 section {
-    padding: 20px 0;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    padding: 50px 0;
     font-size: 18px;
     text-align: center;
-    li {
-        margin: 40px 0;
+    div {
+        width: 300px;
+        border: 1px solid #999;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 20px;
     }
     b {
-        font-size: 24px;
+        display: block;
+        line-height: 40px;
         font-weight: bold;
-        margin-right: 20px;
+        background-color: #eee;
     }
-    span {
-        margin: 0 10px;
-        line-height: 30px;
-        color: $weex;
-        cursor: pointer;
-        border: 1px solid $weex;
-        border-radius: 3px;
-        padding: 3px 6px;
-        transition-duration:$ti-fast;
-        &:hover {
-            color: #fff;
-            background-color: $weex;
+    ul {
+        display: flex;
+        height: calc(100% - 40px);
+        flex-flow: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0 20px;
+        li {
+            margin: 10px 10px 0;
+            line-height: 30px;
+            color: $weex;
+            cursor: pointer;
+            border: 1px solid $weex;
+            border-radius: 3px;
+            padding: 3px 6px;
+            transition-duration:$ti-fast;
+            &:hover {
+                color: #fff;
+                background-color: $weex;
+            }
         }
     }
 }
@@ -269,9 +285,7 @@ article {
 		}
     }
     ul {
-        width: 100%;
-        max-width: 1000px;
-        margin: 5px 0 10px 2em;
+        margin: 5px 2em 10px 2em;
         padding: 10px 20px;
         border-left: 10px solid #f80;
         border-radius: 10px;
@@ -369,10 +383,8 @@ article {
         padding: 20px 30px;
     }
     .code {
-        width: 100%;
-        max-width: 1000px;
         position: relative;
-        margin-left: 2em;
+        padding: 0 2em;
         .copy {
             font-size: 14px;
             padding: 1px 8px;
@@ -384,7 +396,7 @@ article {
             transition: 0.2s;
             position: absolute;
             top: 0;
-            right: 0;
+            right: 2rem;
 			&:hover {
 				background-color: #fafafa;
 			}
@@ -393,9 +405,9 @@ article {
     .copy-success {
         position: absolute;
         top: 5px;
-        right: -25px;
-        color: #0c0;
+        right: 0;
         opacity: 0;
+        color: #0c0;
         font-size: 18px;
     }
     .copy-success-active {

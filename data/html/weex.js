@@ -12,39 +12,71 @@ commonData.html.weex.content = `
 	Weex 的结构是解耦的，渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架。
 	在开发 Weex 页面就像开发普通网页一样；在渲染 Weex 页面时和渲染原生页面一样。
 
-	##安装开发环境
-	安装 weex-toolkit 脚手架工具
-	使用npm安装：
+	##抢鲜版
+	@[Weex 在线编写代码的平台|http://dotwe.org/vue/]，在线体验单个页面的例子，不需要任何配置。在平台上源代码应该用 Vue.js 的单文件组件 语法来编写，在 Web 平台的渲染结果将显示在一个模拟的手机壳中。手机上体验可下载@[weex playground|http://weex-project.io/cn/tools/playground.html]，扫码预览即可。
+	@[看个简单的例子 Yo|http://dotwe.org/vue/563f025083b735aa75d5fb7e38a0b36e]
+
+	##weex-toolkit
+	Weex 提供了一个命令行工具·weex-toolkit·来帮助开发者使用 Weex。它可以用来快速创建一个空项目、初始化 iOS 和 Android 开发环境、调试、安装插件等操作。目前只支持创建 Vue.js 的项目。创建 Rax 的项目可以使用 rax-cli，参考@[Rax 的官方网站|https://alibaba.github.io/rax/]了解其用法。
+	安装前需要本地有 Node.js，且版本 >=6，安装：
 	··
-	npm install -g weex-toolkit
+	npm install weex-toolkit -g
 	··
-	查看版本号：
+	这条命令会向命令行环境中注册一个 weex 命令，查看版本号：
 	··
 	weex -v
 	··
-	查看是否安装成功：
-	··
-	weex
-	··
 	如果使用·cnpm·安装，可能会出现权限错误（permission error）：
 	!./img/html/weex01.jpg
-	先卸载之前的：
+	Linux 系统使用·sudo·更改权限即可：
 	··
-	cnpm uninstall -g weex-toolkit··
-	然后使用·sudo·关键字进行安装：
+	sudo chmod -R 777 <dirname>
 	··
-	sudo cnpm install -g weex-toolkit
+	windows 是不支持·sudo·，先卸载之前的，卸载完直接用·npm·安装即可：
 	··
-	windows 是不支持·sudo·的，卸载完直接用·npm·安装即可
+	npm uninstall weex-toolkit -g
+	··
 	如果还不行，直接删除 npm 和 npm-cache 目录下与 weex 相关的文件和目录
 
-	##初始化
-	·weex init project-name·
-	或在建好的文件夹下直接·weex init·
-	通过·cnpm install·安装项目依赖
-	如果以后出现·cannot find module ...·这样的错误，可以试试删除node_modules重装依赖·cnpm install·
-
-	##目录
+	##创建项目
+	··
+	weex create project-name
+	··
+	安装后的目录结构：
+	··
+	| —— configs
+	  | —— config.js                  webpack 全局配置文件
+	  | —— helper.js                  辅助方法
+	  | —— logo.png
+	  | —— plugin.js                  编译插件
+	  | —— utils.js                   工具方法
+	  | —— vue-loader.conf.js         weex 的 loader 配置
+	  | —— webpack.common.conf.js     用于公共环境的 webpack 配置
+	  | —— webpack.dev.conf.js        用于开发环境的 webpack 配置
+	  | —— webpack.prod.conf.js       用于生产环境的 webpack 配置
+	  | —— webpack.test.conf.js       用于测试环境的 webpack 配置
+	| —— platforms
+	  | —— platforms.json             平台标签数据
+	| —— plugins
+	  | —— plugins.json               插件数据
+	| —— src
+	  | —— entry.js                   全局入口文件
+	  | —— index.vue                  默认打开页面
+	| —— test
+	  | —— unit
+	    | —— specs                    测试 js
+	    | —— index.js                 源代码和配置测试环境
+	    | —— karma.conf.js            配置项
+	| —— web                          静态资源
+	| —— .babelrc                     babel-loader 配置
+	| —— android.config.json          打包 android 项目的配置
+	| —— ios.config.json              打包 ios 项目的配置
+	| —— npm-shrinkwrap.json          npm 依赖文件
+	| —— package.json                 项目依赖
+	| —— README.md
+	| —— webpack.config.js            webpack 命令的入口文件
+	··
+	旧版目录：
 	!!
 	src/*：编写页面代码
 	dist/*：生成的js文件
@@ -63,17 +95,87 @@ commonData.html.weex.content = `
 	.eslintrc：.babelrc转换标准
 	!!
 
-	##常用命令
+	##命令
+	参考 @[weex-toolkit|http://weex-project.io/cn/tools/toolkit.html]
+	###预览项目
+	如果在创建时选择了非自动安装的选项，先运行·cnpm install·安装依赖
+	··
+	npm start
+	··
+	###查看 weex 可用命令
+	··
+	weex
+	··
+	###预览指定页面
+	··
+	weex preview src/foo.vue
+	··
+	###预览整个文件
+	通过·--entry·指定要预览的文件夹路径以及入口文件
+	··
+	$ weex src --entry src/foo.vue
+	··
+	###编译打包
+	··
+	weex compile [source] [dist]  [options]
+	··
+	比如：·weex compile src dist·，单文件打包：·weex compile src/foo.vue dist·
+	参数：
+	!!
+	-w, --watch：开启 watch 模式，同步文件改动并进行编译
+	-d,--devtool [devtool]：设置 devtool 选项
+	-e,--ext [ext]：设置文件拓展名，默认为 vue
+	-m, --min：压缩 jsbundle 选项
+	!!
+	###调试
+	··
+	weex debug
+	··
+	###升级 weexpack
+	··
+	weex update weexpack
+	或
+	weex update weexpack@latest
+	··
+	###旧版命令
 	!!
 	npm run dev：监听文件改动编译生成js文件，比如改动src/foo.vue后，自动编译到dist/app.web.js，让webpack.config.js 去控制文件的输入和输出，以及如何处理等
 	npm run serve：开启服务查看页面，在http://localhost:8080/index.html可查看
 	npm run build：打包
 	npm run debug：调试模式
-	weex src/foo.vue：预览指定页面
-	weex debug：调试，也可调试单文件weex debug foo.vue
-	weex compile src dist：打包指定目录，src为源文件目录，dist为打包目标目录，可以单文件打包weex compile src/foo.vue dist
-	weex platform add android/ios：用模拟器查看运行效果
 	!!
+
+	##编译运行
+	默认情况下·weex create·命令并不初始化 iOS 和 Android 项目，通过执行·weex platform add·来添加特定平台的项目：
+	··
+	weex platform add ios
+	weex platform add android
+	··
+	移除：
+	··
+	weex platform remove ios
+	weex platform remove android
+	··
+	查看已添加的平台：
+	··
+	weex platform list
+	··
+	为了能在本地机器上打开 Android 和 iOS 项目，应该配置好客户端的开发环境。对于 iOS 应安装并且配置好 @[Xcode|https://developer.apple.com/xcode/]。对于 Android，你应该安装并且配置好 @[Android Studio|https://developer.android.com/studio/index.html]。当开发环境准备就绪后，运行下面的命令，可以在模拟器或真实设备上启动应用：
+	··
+	weex run ios
+	weex run android
+	weex run web
+	··
+
+	##错误
+	###使用·npm start·出现·'webpack-dev-server' 不是内部或外部命令，也不是可运行的程序·
+	原因：使用·weex create project-name·初始化默认安装的 npm 依赖未完全安装，使用·cnpm install·，或者初始化时选择自己安装，然后使用·cnpm install·可避免这个错误
+	###使用·weex preview src/foo.vue·出现·Cannot find module 'babel-core'·
+	原因：babel-core 版本搭配问题，需安装对应搭配的版本，在根目录的 package.json 发现 babel-core 的版本是^^^6.26.0^^，使用
+	··
+	npm install babel-core --save-dev
+	··
+	重新安装，安装后是^^^6.26.3^^（随时间变化有不同版本，仅供参考）（或者是 babel-loader 的问题，@[参考|https://www.cnblogs.com/soyxiaobi/p/9554565.html]）
 
 	#组件
 

@@ -61,17 +61,17 @@
 
 			<!-- 目录索引页 start -->
 			<section v-if="index">
-				<ul>
-					<li v-for="(parentValue, parentKey) in commonData">
-						<b v-cloak>{{parentValue.name || parentKey}}</b>
-						<span
+				<div v-for="(parentValue, parentKey) in commonData">
+					<b v-cloak>{{parentValue.name || parentKey}}</b>
+					<ul>
+						<li
 							v-for="(childValue, childKey) in parentValue"
 							v-if="childKey !== 'name'"
 							@click="changePage(parentKey, childKey)"
 							v-cloak
-						>{{childValue.name || childKey}}</span>
-					</li>
-				</ul>
+						>{{childValue.name || childKey}}</li>
+					</ul>
+				</div>
 			</section>
 			<!-- 目录索引页 end -->
 

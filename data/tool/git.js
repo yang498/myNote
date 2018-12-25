@@ -92,5 +92,13 @@ commonData.tool.git.content = `
 	·git add .·如果半天没反应的话，应该是有大文件，比如node_modules文件，所以需用.gitignore忽略或选择删除
 	若出现·fatal: Unable to create .git/index.lock': File exists.·错误，在.git文件夹内（这是一个隐藏文件夹，可以在左上角查看：组织>文件夹和搜索选项>显示或不显示隐藏文件夹）删除index.lock即可，或者在git bash here执行删除命令：·rm -f .git/index.lock·
 
+	#github
+	github 是一个面向开源及私有软件项目的托管平台，因为只支持 git 作为唯一的版本库格式进行托管，故名 gitHub。
+	全球顶级的科技公司、开源项目、编程大牛基本都能在 github 上找到
+	##搜索项目
+	·awesome + xx·：awesome 是棒极了的意思，表示优质项目，例如：·awesome python·
+	功能 + 网站：使用关键词搜索，如果找不到试试换个关键词或英文单词，例如：爬虫 大众点评
+	接口：比如百度地图普通开发者的 key 调用次数比较少，可以直接搜索调用的 url，就能看到别人分享的 ak 了
+
 	&2018.4.18
 `

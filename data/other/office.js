@@ -26,11 +26,30 @@ commonData.other.office.content = `
 	7、双击打开即可运行
 	此方法来自知乎问题@[电脑上怎么登录几个微信（微信多开）？|https://www.zhihu.com/question/41110715]
 
-	##桌面和文件夹右键
+	##右键问题
 	###右键反应慢
 	删除注册表，运行·regedit·，找到·HKEY_CLASSES_ROOT\\Directory\\Background\\shellex\\ContextMenuHandlers·，删掉·igfx·开头的即可
 	###删除右键菜单
 	在注册表中也可以修改，不过更方便的是在·电脑管家 > 工具箱 > 其他 > 管理右键菜单·中可设置
+
+	##浏览器起始页
+	打开谷歌浏览器的起始页总是xx导航
+	1、在设置中将起始页改成其他网站
+	2、第一种设置了没用的话在网址栏输入·chrome://version·可查看版本信息，在命令行的最后可以看到被篡改的网址，先在浏览器的快捷方式上右键属性，在^^目标^^上面的最后看看有没恶意的网址，有就删除并保存，没有就点击^^打开文件所在的位置^^，将·chrome·这个 exe 文件改成其他名称再打开。改成其他名称之后会发现浏览器的图标没了，可以先发送到桌面快捷方式，在快捷方式上右键属性，点击^^更改图标>浏览>选择文件所在位置的路径>进入浏览器版本号的文件夹>选择 chrome.dll^^然后选择想要的图标就行了
+
+	##开机选择系统
+	1、我的电脑右键-属性-高级系统设置-启动和故障恢复 设置-将系统启动中的两个勾去掉
+	2、Win+R-运行msconfig-引导-将不需要的系统删除，或将超时时间设为0
+
+	#Windows
+	##家庭版没有组策略
+	可以在@[官网查看|https://www.microsoft.com/zh-cn/windows/compare]，家庭版是没有组策略的，但其实不是没有，而是禁用了，新建一个记事本，将一下代码复制进去保存，再将后缀改成·.bat·，然后右键以管理员身份运行。
+	··
+	pushd "%~dp0"
+	dir /¿b C:\\Windows\\servicing\\Packages\\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt
+	dir /¿b C:\\Windows\\servicing\\Packages\\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt
+	for /¿f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"C:\\Windows\\servicing\\Packages\\%%i"
+	··
 
 	#office
 	ctrl+z后退，ctrl+y前进
@@ -47,6 +66,7 @@ commonData.other.office.content = `
 		按住鼠标左键往内拖动：清除内容
 		单元格为非文本类型且包含数字：按住拖动往右或下是累加，往左或上是累减，再按住·ctrl·键可以原样复制
 		拖动时按住·shift·键：插入空白单元格
+		双击左键：往下复制当前单元格，遇到有值或空行的单元格停止
 	鼠标移动到单元格边缘会出现十字箭头![./img/other/office03.jpg,150]
 		按住鼠标左键拖动：移动，如果目标单元格有内容则会提示是否覆盖
 		拖动时按住·ctrl·键：复制，如果目标单元格有内容不会提示是否覆盖
@@ -59,7 +79,7 @@ commonData.other.office.content = `
 	shift+tab：切换到左一个单元格
 	enter：切换到下一个单元格
 	shift+enter：切换到上一个单元格
-	ctrl+D：复制上一个单元格
+	ctrl+D：复制上一个单元格，若选中多个单元格，则选中的第一行单元格复制到其余单元格
 	ctrl+鼠标左键：选择多个单元格
 	ctrl+A：全选，若当前单元格有内容则会全选所有有内容的单元格
 	home：回到当前行首
@@ -78,6 +98,17 @@ commonData.other.office.content = `
 	!./img/other/office06.jpg,auto,400
 	!./img/other/office07.jpg,auto,400
 	繁体转简体：审阅>繁转简
+	按指定字符分割单元格：数据>分列
+	横向排列和竖向排列相互转换：复制要转换方向的单元格，在空白位置右键>在粘贴选项中选择 转置
+	单元格设置为下拉框选择值：先准备好备选值（可以在任意其他表格），选择 数据>数据验证>允许：选择 序列>来源：选中备选值
+	多级联动：比如省市多级联动，先准备好省市，以省名作为表头，市名作为每列对应的值，可使用@[百度地图开发资源|http://lbsyun.baidu.com/index.php?title=open/dev-res]进行转换
+	!!
+	创建省名称：选中所有省名，公式 > 定义名称 > 输入省份
+	创建市名称：·ctrl+G·定位条件，选择常量可选中所有值，公式 > 根据所选内容创建，默认首行确定，然后在名称管理器中可以查看
+	在需要的选择省的单元格上：选择 数据>数据验证>允许：选择 序列>来源：输入 =省
+	在需要的选择市的单元格上：选择 数据>数据验证>允许：选择 序列>来源：点击省单元格，比如第二列的第一个单元格为 =$A$2，将其加上 INDIRECT()，即改为·=INDIRECT($A$2)·
+	注意如果其他地方也要用到省市单元格，直接复制的市单元格还是和第一个省联动的，因为 $A$2 是完全复制，改成 $A2 即可，即·=INDIRECT($A2)·
+	!!
 
 	##打印
 	点击打印或打印预览会出现虚线，这是打印的边界，多出的内容将会换行，调整表格大小再打印，也可以在预览的时候调整大小，或点击分页预览拖动边界线

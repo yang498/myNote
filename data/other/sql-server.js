@@ -42,7 +42,6 @@ commonData.other.sqlServer.content = `
 	insert into tableName (column1, column2, column3, ...)
 	values (value1,value2,value3,...)
 	··
-	比如
 
 	#select
 
@@ -52,11 +51,6 @@ commonData.other.sqlServer.content = `
 	所有列：·select * from table·
 	单列：·select name from table·
 	多列：·select name,age from table·
-
-	##distinct
-	去重，仅对单列有效，语法：^^select distinct ·columnName· from ·tableName·^^
-	比如：
-	单列：·select distinct columnName from tableName·
 
 	##where
 	条件查询，语法：^^select ·columnName· from ·tableName· where ·columnName· ·condition· ·value·^^
@@ -98,13 +92,56 @@ commonData.other.sqlServer.content = `
 	Carter,Thomas,Changan Street,Beijing,1980
 	Gates,Bill,Xuanwumen 10,Beijing,1985
 	%%
-	找姓为 Carter 且名为 Thomas 的人：·select * from Person where FirstName = 'Thomas' and LastName = 'Carter'·
-	找姓为 Carter 或名为 Thomas 的人：·select * from Person where FirstName = 'Thomas' or LastName = 'Carter'·
-	and 和 or：·select * from Person where (FirstName = 'Thomas' or LastName = 'Carter') and LastName = 'Carter'·
-	找非北京城市的人：·select * from Person where not city = 'Beijing'·
-	找 London 和 New York 城市：·select * from Person where city in ('London', 'New York')·
-	找 1975 到 1985 之间的年份，执行：·select * from Persons where City between 1975 and 1985·
-	找包含 n 字母的城市，执行：·select * from Persons where City like %n%·
+	^^and^^：找姓为 Carter 且名为 Thomas 的人：·select * from Person where FirstName = 'Thomas' ^^and^^ LastName = 'Carter'·
+	^^or^^：找姓为 Carter 或名为 Thomas 的人：·select * from Person where FirstName = 'Thomas' ^^or^^ LastName = 'Carter'·
+	^^and or^^：·select * from Person where (FirstName = 'Thomas' ^^or^^ LastName = 'Carter') ^^and^^ LastName = 'Carter'·
+	^^not^^：找非北京城市的人：·select * from Person where ^^not^^ city = 'Beijing'·
+	^^in^^：找 London 和 New York 城市：·select * from Person where city ^^in^^ ('London', 'New York')·
+	^^between and^^：找 1975 到 1985 之间的年份，执行：·select * from Persons where City ^^between^^ 1975 ^^and^^ 1985·
+	^^like^^：找包含 n 字母的城市，执行：·select * from Persons where City ^^like^^ %n%·
+
+	##distinct
+	去重，语法：^^select distinct ·columnName· from ·tableName·^^
+	比如：·select distinct * from tableName·
+
+	##order by
+	对结果进行排序，默认从小到大排序（asc），即 0-9，a-b，如果需要倒序则需要在最后加上·desc·
+	语法：^^select ·columnName· from ·tableName· order by ·columnName· [asc/desc]^^
+	例如：
+	排序：
+		·select Company, OrderNumber from Orders order by Company·
+	每个相同的 Company 中再进行 OrderNumber 排序：
+		·select Company, OrderNumber from Orders order by Company, OrderNumber·
+	倒叙：
+		·select Company, OrderNumber from Orders order by Company desc·
+	每个相同的 Company 中再进行 OrderNumber 正序排序：
+		·select Company, OrderNumber from Orders order by Company desc, OrderNumber asc·
+
+	##top
+	规定要返回多少条数据，语法：select top ·number|percent· ·columnName· from ·tableName·
+	例如：
+	前 10 条数据：·select top 10 * from Persons·
+	前 50% 条数据：·select top 50 percent * from Persons·（总行为单数向上取整 +0.5）
+
+	#update
+	修改数据，语法：^^update ·tableName· set ·columnName· = ·newValue· where ·columnName· = ·value·^^
+	也就是设置 要改的列名 = 新值 再找到对应的行，如果对应的行有多个也会修改多个
+	例如：·update Person set FirstName = 'Fred' where LastName = 'Wilson' ·
+	修改多个：·update Person set Address = 'Zhongshan 23', City = 'Nanjing' WHERE LastName = 'Wilson'·
+
+	#delete
+	删除行，语法：^^delete from ·tableName· where ·columnName· = ·value·^^
+	例如：·delete from Person where LastName = 'Wilson'·
+	删除所有行：·delete from table_name·
+
+	#alias
+	对表或列的查询结果指定别名，不改变原表
+	重命名表：select ·columnName· from ·tableName· as ·newName·
+	重命名列：select ·columnName· as ·newName· from ·tableName·
+
+	@@
+	w3school - SQL 教程|http://www.w3school.com.cn/sql/index.asp
+	@@
 
 	&2018.9.30
 `

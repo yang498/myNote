@@ -4,9 +4,12 @@ let commonData = {
 	html: {
 		html: {},
 		mobile: {},
-		weex: {},
+		optimize: { name: '优化' },
+		website: { name: '网站' },
 		applet: { name: '微信小程序' },
-		website: { name: '网站' }
+		weex: {},
+		flutter: {},
+		electron: {}
 	},
 	css: {
 		css: {},
@@ -29,14 +32,16 @@ let commonData = {
 	jsLibrary: {
 		name: 'js库',
 		jquery: {},
-		vue: {}
+		vue: {},
+		taro: {}
 	},
 	tool: {
 		name: '工具',
 		sass: {},
 		git: {},
 		gulp: {},
-		webpack: {}
+		webpack: {},
+		other: { name: '其他' }
 	},
 	other: {
 		name: '其他',

@@ -53,7 +53,7 @@ const formatHtml = text => {
 
 			// 列表，去掉开头缩进，在每一行中替换，每个缩进换成 css 控制，开头加类型（橙色）、默认值（粉色）、必填加粗
 			.replace(REG.list, item => '!!' + item.slice(2, -2).replace(/^\t/gm, '').replace(REG.multiLine, (res, $1) =>
-				'<li>' + $1.replace(/\t/g, '<i class="attr"></i>').replace(/[^]*(?=：)/, start =>
+				'<li>' + $1.replace(/\t/g, '<i class="attr"></i>').replace(/[^]*?(?=：)/, start =>
 					'<i class="head">' + start
 						.replace(/\{(?!¿)/, ' <i class="type">{').replace(/\}(?!¿)/, '$&</i>')
 						.replace(/\[(?!¿)/, ' <i class="default">[').replace(/\]+(?!¿)/, '$&</i>')

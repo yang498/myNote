@@ -3,13 +3,13 @@
 // 在单词结尾又是在开头的单词，比如 let applet，这个时候就手动加 ¿，再改实在太累了，这种情况也少见
 let REG_UN = {
 	// 开头声明，粉
-	statement: 'var |let |const|void|function|=&gt;|new |class\s|constructor|super|static|import|export |default',
+	statement: 'var |let |const |void|function|=&gt;|new |class\s|constructor|super|static|import|export |default',
 	// 循环分支，紫
-	loopFork: 'for | in |of\s|while|\sdo|if |else | switch|case|break|continue|try\s|catch|finally|with',
+	loopFork: 'for | in |of\s|while|\sdo|if |else | switch|case|break|continue|try\s|catch |finally |with ',
 	// 方法关键字，蓝
 	methodKeyword: 'return|delete|typeof|require\s|throw|eval|instanceof|debugger|this|length',
 	// 类型方法，紫
-	type: 'window|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|Date|RegExp|Error|JSON'
+	type: 'window|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|Date|RegExp|Error| JSON'
 }
 
 // 将 REG 加上 (?!¿)，用来匹配
@@ -36,7 +36,7 @@ REG.str = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g
 REG.comment = /\/\/(?!¿)[^]*?(?=\n)|\/\*(?!¿)[^]*?\*\/(?!¿)|&lt;!--[^]*?--&gt;/g
 // 注释不解析网址：http://、https://、ws://、wss://、git://，和文件路径：*/js/*.js，超出 \w* 的范围就要手动控制下了
 REG.unComment = /http:\/\/|https:\/\/|ws:\/\/|wss:\/\/|[\w\*]\/\*|[\w\*]\*\/|git:\/\//g
-// 标签、关键字、正则加标记不匹配
+// 先用 Un 将标签、关键字、正则加 ¿ 标记防止误匹配
 REG.un = res => res.replace(REG.startUn, '&lt;¿$1')
 	.replace(REG.endUn, '&lt;¿/$1')
 	.replace(REG_UN, '$&¿')

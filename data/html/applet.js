@@ -846,89 +846,13 @@ commonData.html.applet.content = `
 
 	##自定义组件
 	开发者可以将页面内的功能模块抽象成自定义组件，以便在不同的页面中重复使用；也可以将复杂的页面拆分成多个低耦合的模块，有助于代码维护。自定义组件在使用时与基础组件非常相似。
-	###创建自定义组件
-类似于页面，一个自定义组件由 json wxml wxss js 4个文件组成。要编写一个自定义组件，首先需要在 json 文件中进行自定义组件声明（将 component 字段设为 true 可这一组文件设为自定义组件）：
+	和页面一样，一个自定义组件由 json wxml wxss js 4个文件组成。首先需要在 json 文件中声明这是一个自定义组件：
 	··
 	{
 		"component": true
 	}
 	··
-	同时，还要在 wxml 文件中编写组件模版，在 wxss 文件中加入组件样式，它们的写法与页面的写法类似。
-	在组件模板中可以提供一个 <slot> 节点，用于承载组件引用时提供的子节点。
-	代码示例：
-	··
-	<!-- 这是自定义组件的内部WXML结构 -->
-	<view class="inner">{{innerText}}</view>
-	<slot></slot>
-	/* 这里的样式只应用于这个自定义组件 */
-	.inner {
-		color: red;
-	}
-	··
-	··
-	<!-- 引用组件的页面模版 -->
-	<view>
-		<component-tag-name>
-			<!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-			<view>这里是插入到组件slot中的内容</view>
-		</component-tag-name>
-	</view>
-	··
-	默认情况下，一个组件的wxml中只能有一个slot。需要使用多slot时，可以在组件js中声明启用。
-	··
-	Component({
-		options: {
-			multipleSlots: true // 在组件定义时的选项中启用多slot支持
-		},
-		properties: { /* ... */ },
-		methods: { /* ... */ }
-	})
-	··
-	此时，可以在这个组件的wxml中使用多个slot，以不同的 name 来区分。
-	··
-	<!-- 组件模板 -->
-	<view class="wrapper">
-		<slot name="before"></slot>
-		<view>这里是组件的内部细节</view>
-		<slot name="after"></slot>
-	</view>
-	··
-	使用时，用 slot 属性来将节点插入到不同的slot上。
-	··
-	<!-- 引用组件的页面模版 -->
-	<view>
-		<component-tag-name>
-			<!-- 这部分内容将被放置在组件 <slot name="before"> 的位置上 -->
-			<view slot="before">这里是插入到组件slot name="before"中的内容</view>
-			<!-- 这部分内容将被放置在组件 <slot name="after"> 的位置上 -->
-			<view slot="after">这里是插入到组件slot name="after"中的内容</view>
-		</component-tag-name>
-	</view>
-	··
-	^^注意：在组件wxss中不应使用ID选择器、属性选择器和标签名选择器。^^
-	在自定义组件的 js 文件中，需要使用 Component() 来注册组件，并提供组件的属性定义、内部数据和自定义方法。
-	组件的属性值和内部数据将被用于组件 wxml 的渲染，其中，属性值是可由组件外部传入的。
-	代码示例：
-	··
-	Component({
-		properties: {
-			// 这里定义了innerText属性，属性值可以在组件使用时指定
-			innerText: {
-				type: String,
-				value: 'default value',
-			}
-		},
-		data: {
-			// 这里是一些组件内部数据
-			someData: {}
-		},
-		methods: {
-			// 这里是一个自定义方法
-			customMethod: function(){}
-		}
-	})
-	··
-	###使用自定义组件
+	然后 wxml 和 wxss 就和平时写页面一样。区别在于 js，不是 Page() 而是 Component()
 	使用已注册的自定义组件前，首先要在页面的 json 文件中进行引用声明。此时需要提供每个自定义组件的标签名和对应的自定义组件文件路径：
 	··
 	{
@@ -938,63 +862,21 @@ commonData.html.applet.content = `
 	}
 	··
 	这样，在页面的 wxml 中就可以像使用基础组件一样使用自定义组件。节点名即自定义组件的标签名，即组件的文件名，节点属性即传递给组件的属性值。
-	示例代码
 	··
 	<view>
 		<!-- 以下是对一个自定义组件的引用 -->
 		<component-tag-name inner-text="Some text"></component-tag-name>
 	</view>
 	··
-	自定义组件的 wxml 节点结构在与数据结合之后，将被插入到引用位置内。
 	^^注意：^^
-	因为WXML节点标签名只能是小写字母、中划线和下划线的组合，所以自定义组件的标签名也只能包含这些字符。
+	因为 WXML 节点标签名只能是小写字母、中划线和下划线的组合，所以自定义组件的标签名也只能包含这些字符。
 	自定义组件也是可以引用自定义组件的，引用方法类似于页面引用自定义组件的方式（使用 usingComponents 字段）。
 	自定义组件和使用自定义组件的页面所在项目根目录名不能以“wx-”为前缀，否则会报错。
+
 	###behaviors
 	behaviors 是用于组件间代码共享的特性，类似于一些编程语言中的“mixins”或“traits”。
 	每个 behavior 可以包含一组属性、数据、生命周期函数和方法，组件引用它时，它的属性、数据和方法会被合并到组件中，生命周期函数也会在对应时机被调用。每个组件可以引用多个 behavior 。 behavior 也可以引用其他 behavior 。
 	behavior 需要使用 Behavior() 构造器定义。
-	代码示例：
-	··
-	// my-behavior.js
-	module.exports = Behavior({
-		behaviors: [],
-		properties: {
-			myBehaviorProperty: {
-				type: String
-			}
-		},
-		data: {
-			myBehaviorData: {}
-		},
-		attached: function(){},
-		methods: {
-			myBehaviorMethod: function(){}
-		}
-	})
-	··
-	组件引用时，在 behaviors 定义段中将它们逐个列出即可。
-	代码示例：
-	··
-	// my-component.js
-	var myBehavior = require('my-behavior')
-	Component({
-		behaviors: [myBehavior],
-		properties: {
-			myProperty: {
-				type: String
-			}
-		},
-		data: {
-			myData: {}
-		},
-		attached: function(){},
-		methods: {
-			myMethod: function(){}
-		}
-	})
-	··
-	在上例中， my-component 组件定义中加入了 my-behavior ，而 my-behavior 中包含有 myBehaviorProperty 属性、 myBehaviorData 数据字段、 myBehaviorMethod 方法和一个 attached 生命周期函数。这将使得 my-component 中也包含了 my-behavior 的属性和方法。当组件触发 attached 生命周期时，会依次触发 my-behavior 中的 attached 生命周期函数和 my-component 中的 attached 生命周期函数。
 
 	###组件间关系
 	有时需要实现这样的组件：
@@ -1004,76 +886,18 @@ commonData.html.applet.content = `
 		<custom-li> item 2 </custom-li>
 	</custom-ul>
 	··
-	这个例子中， custom-ul 和 custom-li 都是自定义组件，它们有相互间的关系，相互间的通信往往比较复杂。此时在组件定义时加入 relations 定义段，可以解决这样的问题。示例：
-	··
-	// path/to/custom-ul.js
-	Component({
-		relations: {
-			'./custom-li': {
-				type: 'child', // 关联的目标节点应为子节点
-				linked: function(target) {
-					// 每次有custom-li被插入时执行，target是该节点实例对象，触发在该节点attached生命周期之后
-				},
-				linkChanged: function(target) {
-					// 每次有custom-li被移动后执行，target是该节点实例对象，触发在该节点moved生命周期之后
-				},
-				unlinked: function(target) {
-					// 每次有custom-li被移除时执行，target是该节点实例对象，触发在该节点detached生命周期之后
-				}
-			}
-		},
-		methods: {
-			_getAllLi: function(){
-				// 使用getRelationNodes可以获得nodes数组，包含所有已关联的custom-li，且是有序的
-				var nodes = this.getRelationNodes('path/to/custom-li')
-			}
-		},
-		ready: function(){
-			this._getAllLi()
-		}
-	})
-	··
-	··
-	// path/to/custom-li.js
-	Component({
-		relations: {
-			'./custom-ul': {
-				type: 'parent', // 关联的目标节点应为父节点
-				linked: function(target) {
-					// 每次被插入到custom-ul时执行，target是custom-ul节点实例对象，触发在attached生命周期之后
-				},
-				linkChanged: function(target) {
-					// 每次被移动后执行，target是custom-ul节点实例对象，触发在moved生命周期之后
-				},
-				unlinked: function(target) {
-					// 每次被移除时执行，target是custom-ul节点实例对象，触发在detached生命周期之后
-				}
-			}
-		}
-	})
-	··
-	注意：必须在两个组件定义中都加入relations定义，否则不会生效。
+	这个例子中， custom-ul 和 custom-li 都是自定义组件，它们有相互间的关系，相互间的通信往往比较复杂。此时在组件定义时加入 relations 定义段，可以解决这样的问题。注意：必须在两个组件定义中都加入 relations 定义，否则不会生效。
 
 	###抽象节点
-	有时，自定义组件模版中的一些节点，其对应的自定义组件不是由自定义组件本身确定的，而是自定义组件的调用者确定的。这时可以把这个节点声明为“抽象节点”。
-	例如，我们现在来实现一个“选框组”（selectable-group）组件，它其中可以放置单选框（custom-radio）或者复选框（custom-checkbox）。这个组件的 wxml 可以这样编写：
+	有时，自定义组件模版中的一些节点，其对应的自定义组件不是由自定义组件本身确定的，而是自定义组件的调用者确定的。这时可以把这个节点声明为“抽象节点”。相当于将组件名作为值的写法，比如：
 	··
-	<!-- selectable-group.wxml -->
-	<view wx:for="{{labels}}">
-		<label>
-			<selectable disabled="{{false}}"></selectable>
-			{{item}}
-		</label>
-	</view>
+	<selectable-group generic:selectable="custom-checkbox" />
 	··
-	其中，“selectable”不是任何在 json 文件的 usingComponents 字段中声明的组件，而是一个抽象节点。它需要在 componentGenerics 字段中声明：
-	··
-	{
-		"componentGenerics": {
-			"selectable": true
-		}
-	}
-	··
+	selectable-group 是个抽象节点，custom-checkbox 是个组件，注意组件值（custom-checkbox）只能是静态值，不能包含数据绑定。因而抽象节点特性并不适用于动态决定节点名的场景。
+
+	###tips
+	在计时过程中使用·this.setData({ 'menuList.phoneCode.indicate': time + '秒' })·等渲染操作时，由于 menuList 被改变，所以触发视图渲染刷新，导致 picker 这类弹出式组件在渲染时被收起或报错
+	解决：把计时的变量抽离出来，比如改成 slot 插槽，这样就不影响 menuList 本身
 
 	##插件
 	插件的开发和使用自小程序基础库版本 1.9.6 开始支持。
@@ -1342,7 +1166,7 @@ commonData.html.applet.content = `
 	!!
 	value{Array}[[]]：选中的省市区，默认选中每一列的第一个值
 	custom-item{String}：可为每一列的顶部添加一个自定义的项
-	bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = {value: value}
+	bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = {value: value, code: code, postcode: postcode }，其中字段 code 是统计用区划代码，postcode 是邮政编码
 	bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
 	disabled{Boolean}[false]：是否禁用
 	!!
@@ -1477,7 +1301,7 @@ commonData.html.applet.content = `
 			wx.showToast：显示消息提示框，可选 success、loading、none
 			wx.showLoading：显示 loading 提示框, 需主动调用 wx.hideLoading 才能关闭提示框
 			wx.hideToast：隐藏消息提示框
-			wx.hideLoading：隐藏 loading 提示框
+			wx.hideLoading：隐藏 loading 提示框，调用 wx.showToast() 也可覆盖loading 提示框
 			wx.showModal：​显示模态弹窗
 			wx.showActionSheet：显示操作菜单
 		设置导航条
@@ -2094,6 +1918,7 @@ commonData.html.applet.content = `
 
 	###wx.login
 	调用接口·wx.login()·获取临时登录凭证，以换取用户的 openid、session_key、unionid
+	用户向公众号发送消息时，公众号方收到的消息发送者是一个OpenID，是使用用户微信号加密后的结果，每个用户对每个公众号有一个唯一的 OpenID
 	!!
 	wx.login({
 		timeout{Number}：超时时间，单位 ms
@@ -2248,7 +2073,7 @@ commonData.html.applet.content = `
 	我为什么要同意？
 	……
 	这就导致了部分用户点击拒绝授权，如果开发者没有对拒绝的情况做处理，可能会因为不良体验而流失用户。
-	所以微信端做出了调整，以前调用·wx.getUserInfo·接口会进行一次弹窗授权（拒绝之后再次调用不会弹窗，只能在授权设置中开启，设置在：右上角 - 关于 - 右上角 - 设置），并且·wx.getUserInfo·依赖·wx.login·，现改为·wx.getUserInfo·不依赖·wx.login·就能得到数据，并不会调用授权窗口，改用·button·组件来获取用户信息（授权无限制以解决用户再次授权），其实如果只需要获取用户的开放信息（头像、昵称等）用@[<open-data>|javascript:;" onclick="$('h1:eq(2)~h2:eq(4)').click()]组件就行了，还不用弹窗授权
+	所以微信端做出了调整，以前调用·wx.getUserInfo·接口会进行一次弹窗授权（拒绝之后再次调用不会弹窗，只能在授权设置中开启，设置在：右上角 - 关于 - 右上角 - 设置），并且·wx.getUserInfo·依赖·wx.login·，现改为·wx.getUserInfo·不依赖·wx.login·就能得到数据，并不会调用授权窗口，改用·button·组件来获取用户信息（授权无限制以解决用户再次授权），其实如果只需要展示而不获取用户的开放信息（头像、昵称等）用@[<open-data>|javascript:;" onclick="$('h1:eq(2)~h2:eq(4)').click()]组件就行了，还不用弹窗授权
 	一个好的互联网产品，首页应该传递给用户产品理念，在需要展示用户信息的地方才去提示授权，比如未登录的淘宝在浏览完商品后点击购买才要求登录，如果在小程序使用前一定要用户登录或进行到需要用户登录的操作时，可以将·wx.getUserInfo·的·button·组件放置到页面中，并说明：
 	为什么需要授权？
 	需要用户的什么信息？
@@ -2267,7 +2092,7 @@ commonData.html.applet.content = `
 	})
 	!!
 
-	###获取用户登录态建议使用场景
+	###获取用户登录态建议实践
 	!!
 	小程序内调用·wx.login()·获取 code 并传给服务器
 	服务器请求指定接口得到openid、session_key、unionid
@@ -2278,19 +2103,25 @@ commonData.html.applet.content = `
 	定期更新登录态的信息，比如用 session_key 的有效期作为登录态的有效期，用·wx.checkSession()·来检查是否有效，若失效则重新请求并保存 session_key 到服务器
 	!!
 	!./img/html/wechat-applet06.jpg,600
-	用open-data展示用户头像昵称等信息
-	需要使用·wx.getUserInfo·的敏感信息
+	###获取用户信息建议实践
+	尽量使用·<open-data>·展示用户头像昵称等公开信息
+	使用·wx.getSetting·获取用户的授权情况
+	若已授权直接使用·wx.getUserInfo·获取用户最新的信息
+	若未授权则展示获取用户信息的按钮或界面
+	用 button 组件的方式获得用户授权后，调用 wx.getUserInfo 就可以直接获取用户信息。用户有可能会修改昵称头像，最好是定期获取用户信息以更新
+	例如：
 	··
 	wx.getSetting({
+		withCredentials: false,
 		success: res => {
-			// 若已授权直接获取用户信息
 			if (res.authSetting['scope.userInfo']) {
 				wx.getUserInfo({
 					success: res => {
-						// 做相应处理
+						// ...
 					}
 				})
-				// 若未授权用button提示授权
+			} else {
+				wx.navigateTo('/getUserInfo/getUserInfo')
 			}
 		}
 	})
@@ -2324,11 +2155,60 @@ commonData.html.applet.content = `
 
 	##微信支付
 
-	###在小程序后台开通微信支付
+	###在小程序后台开通微信支付（服务号也行）
 	!./img/html/wechat-applet01.png,800
 
 	###交互过程示意图
 	!./img/html/wechat-applet02.jpg,800
+
+	###在微信支付服务后台生成预支付交易单
+	URL地址：·https://api.mch.weixin.qq.com/pay/unifiedorder·
+	请求参数：
+	!!
+	appid{String}!：小程序的 appid
+	mch_id{String}!：微信支付的商户号
+	device_info{String(32)}：自定义参数，可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"
+	nonce_str{String(32)}!：随机字符串，长度要求在 32 位以内。推荐@[随机数生成算法|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3]
+	sign{String(32)}!：通过签名算法计算得出的签名值，详见@[签名生成算法|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3]
+	sign_type{String}[MD5]：签名类型，支持HMAC-SHA256和MD5
+	body{String(128)}!：商品简要描述，比如腾讯充值中心-QQ会员充值，规范详见@[参数规定|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_2]
+	detail{String(6000)}：商品详细描述，规范详见@[单品优惠参数说明|https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_102&index=2]
+	attach{String(127)}：附加数据，在查询 API 和支付通知中原样返回，可作为自定义参数使用
+	out_trade_no{String(32)}!：商户系统内部订单号，自定义生成，要求 32个字符内，在同一个商户号下唯一。详见@[商户订单号|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_2]
+	fee_type{String}[CNY]：标价币种，需符合 ISO 4217 标准的三位字母代码，详见@[货币类型|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_2]
+	total_fee{Int}!：订单总金额，单位为分，详见@[支付金额|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_2]
+	spbill_create_ip{String(16)}!：终端IP，APP 和 H5 支付提交用户端 ip，Native 支付填调用微信支付 API 的机器 IP
+	time_start{String(14)}：订单生成时间，格式为 yyyyMMddHHmmss，如 2018年12月25日9点10分10秒 表示为 20181225091010。详见@[时间规则|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_2]
+	time_expire{String(14)}：订单失效时间，格式同上为 yyyyMMddHHmmss。由于在请求支付的时候有一个必传参数 prepay_id 只有两小时的有效期，所以在重入时间超过 2 小时的时候需要重新请求下单接口获取新的 prepay_id。详见@[时间规则|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_2]，建议最短失效时间间隔大于 1 分钟
+	goods_tag{String(32)}：订单优惠标记，使用代金券或立减优惠功能时需要的参数，说明详见代金券或立减优惠
+	notify_url{String(256)}!：异步接收微信支付结果通知的回调地址，通知 url 必须为外网可访问的 url，不能携带参数
+	trade_type{String(16)}!：交易类型，小程序填 JSAPI，详见@[参数规定|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_2]
+	product_id{String(32)}：trade_type=NATIVE 时，此参数必传。此参数为二维码中包含的商品 ID，商户自行定义。
+	limit_pay{String(32)}：指定支付方式，填 no_credit 可限制用户不能使用信用卡支付
+	openid{String(128)}!：trade_type=JSAPI 时此参数必传，用户在商户 appid 下的唯一标识
+	!!
+	返回值：
+	!!
+	return_code{String(16)}!：返回状态码，SUCCESS 或 FAIL，此字段是通信标识，非交易标识，交易是否成功需要查看 result_code 来判断
+	return_msg{String(128)}：返回信息，如果有值则是错误原因，签名失败 或 参数格式校验错误
+	!!
+	以下字段在·return_code·为 SUCCESS 的时候有返回：
+	!!
+	appid{String(32)}!：调用接口提交的小程序ID
+	mch_id{String(32)}!：调用接口提交的商户号
+	device_info{String(32)}：自定义的参数，请求支付的终端设备号等
+	nonce_str{String(32)}!：微信返回的随机字符串
+	sign{String(32)}!：微信返回的签名值，详见@[签名算法|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3]
+	result_code{String(16)}!：业务结果，SUCCESS/FAIL
+	err_code{String(32)}：详见@[统一下单|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1]
+	err_code_des{String(128)}：错误信息描述
+	!!
+	以下字段在·return_code·和·result_code·都为 SUCCESS 的时候有返回：
+	!!
+	trade_type{String(16)}!：交易类型，取值为：JSAPI，NATIVE，APP等，说明详见参数规定
+	prepay_id{String(64)}!：微信生成的预支付会话标识，用于后续接口调用中使用，该值有效期为2小时
+	code_url{String(64)}：二维码链接，trade_type 为 NATIVE 时有返回，用于生成二维码，展示给用户进行扫码支付
+	!!
 
 	###调用的API
 	!!
@@ -2366,6 +2246,69 @@ commonData.html.applet.content = `
 		}
 	})
 	··
+
+	##模板
+	###getAccessToken
+	首先获取小程序全局唯一后台接口调用凭据（access_token）。调用各后台接口时都需使用 access_token
+	请求地址：·GET https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET·
+	参数说明：
+	!!
+	grant_type{String}!：填写 client_credential
+	appid{String}!：小程序 AppID
+	secret{String}!：小程序 AppSecret
+	!!
+	成功返回：
+	!!
+	access_token{String}：获取到的凭证
+	expires_in{Number}：凭证有效时间，单位:秒。目前是 7200 秒之内的值
+	!!
+	错误返回：
+	!!
+	errcode{Number}：错误码，-1:系统繁忙，0:请求成功，40001:AppSecret 错误，40002:grant_type 错误，40013:AppID 错误
+	errmsg{String}：错误信息
+	!!
+	注意事项：
+	access_token 的存储至少要保留 512 个字符空间；
+	access_token 的有效期目前为 2 个小时，需定时刷新，重复获取将导致上次获取的 access_token 失效
+	建议使用中控服务器统一获取和刷新 access_token，其他业务逻辑服务器所使用的 access_token 均来自于该中控服务器，不应该各自去刷新，否则容易造成冲突，导致 access_token 覆盖而影响业务
+	access_token 的有效期通过返回的 expire_in 来传达，目前是7200秒之内的值，中控服务器需要根据这个有效时间提前去刷新。在刷新过程中，中控服务器可对外继续输出的老 	access_token，此时公众平台后台会保证在5分钟内，新老 access_token 都可用，这保证了第三方业务的平滑过渡
+	access_token 的有效时间可能会在未来有调整，所以中控服务器不仅需要内部定时主动刷新，还需要提供被动刷新 access_token 的接口，这样便于业务服务器在API调用获知 access_token 已超时的情况下，可以触发 access_token 的刷新流程
+	###发送模板消息
+	请求地址：·POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=ACCESS_TOKEN·
+	请求参数：
+	!!
+	access_token{String}!：接口调用凭证
+	touser{String}!：接收者（用户）的 openid
+	template_id{String}!：所需下发的模板消息的id
+	page{String}：点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。
+	form_id{String}!：表单提交场景下，为 submit 事件带上的 formId；支付场景下，为本次支付的 prepay_id
+	data{String}：模板内容，不填则下发空模板
+	emphasis_keyword{String}：模板需要放大的关键词，不填则默认无放大
+	!!
+	data 和 emphasis_keyword 示例：
+	··
+	data: {
+		keyword1: {
+			value: '339208499'
+		},
+		keyword2: {
+			value: '2015年01月05日 12:30'
+		},
+		keyword3: {
+			value: '腾讯微信总部'
+		},
+		keyword4: {
+			value: '广州市海珠区新港中路397号'
+		}
+	},
+	emphasis_keyword: 'keyword1.DATA'
+	··
+	错误返回：
+	!!
+	errcode{Number}：错误码，0:成功，40037:template_id 错误，41028:form_id 错误或过期，41029:form_id 已使用，41030:page 错误，45009:接口调用超过限额（目前默认每个帐号日调用限额为 100 万）
+	errmsg{String}：错误信息
+	!!
+
 
 	#工具
 
