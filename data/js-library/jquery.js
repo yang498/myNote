@@ -1,8 +1,7 @@
 commonData.jsLibrary.jquery.content = `
 	#介绍
-	jQuery 是 javascript 的一个库，把常用的一些功能和兼容性问题进行了封装，方便使用和提高开发效率。
-	引入 jQuery 后，就会提供 2 个全局变量：·jQuery·和相等的简写·$·，即·jQuery === $·，所以·jQuery()·和·$()·是一样的。
-	可以通过各种方式使用：
+	jQuery 是 javascript 的一个库，把一些常用的功能和兼容性问题进行了封装，方便使用和提高开发效率。
+	一些使用方式：
 	··
 	// 官网最新版本，压缩版在 .js 前加上 .min 即可
 	<script src="https://code.jquery.com/jquery-git.js"></script>
@@ -12,57 +11,26 @@ commonData.jsLibrary.jquery.content = `
 
 	// github 克隆
 	git clone git://github.com/jquery/jquery.git
-	// 可以查看并构建特定的版本
-	git checkout 3.2.1
 
 	// npm
 	npm install jquery
-
-	// yarn
-	yarn add jquery
-
-	// bower
-	bower install jquery
 	··
 	更多 CDN：@[CDNJS|https://cdnjs.com/libraries/jquery/]，@[jsDelivr|https://www.jsdelivr.com/package/npm/jquery]，@[Microsoft|https://www.asp.net/ajax/cdn#jQuery_Releases_on_the_CDN_0]，@[Google|https://developers.google.com/speed/libraries/devguide#jquery]
+	引入 jQuery 后，就会提供 2 个全局变量：·jQuery·和相等的简写·$·，即·jQuery === $·，所以·jQuery()·和·$()·是一样的。
 
 	#选择器
-	使用·$()·可以用来选择 DOM 元素
-	jQuery 使用 CSS 语法来选择元素，并且做了些扩展，所以 jQuery 扩展的选择器要比 css 的选择器消耗多一点性能
+	使用·$()·可以用来选择 DOM 元素，基本使用 CSS 语法，并做了些扩展
 	注意 html 中标签和属性名是不区分大小写的，属性值和 css、js 选择器是区分大小写的，比如·<P Class="Demo">·等同于·<p class="Demo">·，·#Demo·和·#demo·是不同的，但是这种大写行为不应该发生，按照 w3c 标准统一都该使用小写，而且代码也易读
 	·$()·选择的元素是 jQuery 对象，所以能使用 jQuery 方法，想要使用原生的元素只需选择对应的下标即可，比如·$('.demo')[0]·
 
 	##基本
 	!!
-	*：所有
-	element：标签名
-	.class：样式名
-	#id：id 名
-	selector, selectorN：多选
-	$.escapeSelector()：转义选择器中的特殊字符·. # , : [ ] = @·
-	html：可以选择一段 html 以使用 jQuery 的方法
+	*：所有元素，比如·$('*')·，包扩 html、head、body 等，·$('#dome *')·表示选择·id="dome"·元素下的所有元素
+	element：元素名，比如·$('div')·表示选择所有·div·元素
+	.class：样式名，比如·$('.demo')·表示选择所有·class="demo"·的元素
+	#id：id 名，比如·$('#demo')·表示选择·id="demo"·的元素，如果有多个相同 id 的元素只返回第一个
+	selector, selectorN：多选以·,·分隔，比如·$("div, #demo, .class")·表示选择所有·<div></div>·、·id="demo"·、·class="text"·的元素
 	!!
-
-	###*
-	选择所有元素
-	比如·$('*')·表示选择当前页面所有元素，包扩 html、head 等，·$('#dome *')·表示选择·id="dome"·元素下的所有元素
-
-	###element
-	选择给定元素名的所有元素
-	比如·$('div')·表示选择所有·div·元素
-
-	###.class
-	选择给定样式类名的所有元素
-	比如·$('.demo')·表示选择所有·class="demo"·的元素
-
-	####id
-	选择给定 id 的元素，如果有多个相同 id 的元素（但应避免这种行为）只返回第一个
-	比如·$('#demo')·表示选择·id="demo"·的元素
-
-	###selector, selectorN
-	选择给定选择器的所有元素
-	比如·$("div, #demo, .class")·表示选择所有·<div></div>·、·id="demo"·、·class="text"·的元素
-
 	###$.escapeSelector(selector)
 	如果定义的选择器包含·. # , : [ ] = @·，需先用该方法转义，否则获取不了或有歧义，当然也不建议这种选择器符号出现在选择器中
 	比如要获取·id="#demo.text"·，则·$('##demo.text')·是无效的，应改成·$('#' + $.escapeSelector('#demo.text'))·
@@ -72,8 +40,9 @@ commonData.jsLibrary.jquery.content = `
 	function jq(selector) {
 		return selector.replace(/[:\\.\\[\\],=@]/g, '\\\\$&')
 	}
+
+	$('#' + jq('#demo.text'))
 	··
-	使用：·$('#' + jq('#demo.text'))·
 
 	###html
 	可以选择一段 html 以使用 jQuery 的方法
@@ -85,86 +54,33 @@ commonData.jsLibrary.jquery.content = `
 
 	##层级
 	!!
-	parent>child：所有子元素
-	ancestor descendant：所有后代元素
-	prev+next：下一个元素
-	prev~siblings：后面的所有元素
+	parent>child：子元素，比如·$('#demo>.text')·，所有子元素：·$('#demo>')·
+	ancestor descendant：后代元素，比如·$('#demo .text')·，所有后代元素：·$('#demo *')·
+	prev+next：下一个元素，比如·$('#demo+.text')·，所有紧邻元素：·$('#demo+')·
+	prev~siblings：后面的元素，比如·$('#demo~.text')·，所有后面的元素：·$('#demo~')·
 	!!
-	###parent>child
-	选择 parent 的子元素中筛选 child 的所有元素
-	比如·$('#demo>.text')·，若 child 为空则选择 parent 的所有子元素：·$('#demo>')·
-	###ancestor descendant
-	选择 ancestor 下所有的 descendant 元素，包括孙元素、曾孙元素等
-	比如·$('#demo .text')·，若 descendant 为 * 则选择 ancestor 的所有子孙元素：·$('#demo *')·
-	###prev+next
-	选择同一层级中所有紧接在 prev 元素后的 next 元素
-	比如·$('#demo+.text')·，若 next 为空则选择所有 prev 的紧邻元素：·$('#demo+')·
-	###prev~siblings
-	选择同一层级中所有在 prev 元素之后的 siblings 元素
-	比如·$('#demo~.text')·，若 siblings 为空则选择所有 prev 之后的所有元素：·$('#demo~')·
 
 	##属性
-	属性值的引号是可选的，也就是·[attr=value]·和·[attr="value"]·是一样的，但是当要表示多个属性值时，就必须用引号了，比如·[attr=val1 val2]·是会报错的，需加上引号·[attr="val1 val2"]·，而且多个属性值的顺序也是不能变的，比如要获取·class="demo active"·需写成·$('[class="demo active"]')·，写成·$('[class="active demo"]')·是获取不了的
+	属性值的引号是可选的，即·[attr=value]·和·[attr="value"]·相等
+	但要表示多个属性值时就必须用引号了，比如·[attr=val1 val2]·会报错，需加上引号·[attr="val1 val2"]·，而且多个属性值的顺序也是不能变的，比如要获取·class="demo active"·需写成·$('[class="demo active"]')·，写成·$('[class="active demo"]')·是获取不了的
 	!!
-	[attr]：属性
-	[attr="value"]：属性 + 值
-	[attr!="value"]：不包括该属性 + 值
-	[attr*="value"]：含有指定字符串的属性
-	[attr~="value"]：含有指定子属性（单词）
-	[attr^="value"]：以指定字符串开头的属性
-	[attr$="value"]：以指定字符串结尾的属性
-	[attr|="value"]：正好是 value 或以 value- 开头的属性
+	[attr]：属性，比如·$('[class]')·
+	[attr="value"]：属性 + 值，比如·$('[class="demo"]')·，·$('[class="demo text"]')·
+	[attr!="value"]：不包括该属性 + 值，比如·$('[class!="demo"]')·
+	[attr*="value"]：含有指定字符串，比如·$('[class*="acti"]')·表示选择含有 acti 字符的类的元素
+	[attr~="value"]：含有指定单词，比如·$('[class*="active"]')·表示选择含有 active 类的元素
+	[attr^="value"]：以指定字符串开头的属性，比如·$('[class^="text-"]')·表示选择以 text- 开头的类的元素
+	[attr$="value"]：以指定字符串结尾的属性，比如·$('[class$="-text"]')·表示选择以 -text 结尾的类的元素
+	[attr|="value"]：正好是 value 或以 value- 开头的属性，比如·$('a[hreflang|="en"]')·表示选择·hreflang="en"·或·hreflang="en-UK"·，不会选择·hreflang="english"·
 	!!
-	###[attr]
-	选择所有含有 attr 属性的元素
-	比如·$('[class]')·
-	###[attr="value"]
-	选择所有含有 attr="value" 指定属性值的元素，注意属性值是全部的属性值
-	比如·$('[class="demo"]')·表示选择·class="demo"·，·$('[class="demo text"]')·表示选择·class="demo text"·
-	###[attr!="value"]
-	选择所有不含有 attr="value" 指定属性值的元素，注意属性值是全部的属性值，等同于·:not([attr="value"])·
-	比如·$('[class!="demo"]')·表示选择不含有·class="demo"·属性的所有元素
-	###[attr*="value"]
-	选择所有含有指定字符串的属性的元素
-	比如·$('[class*="acti"]')·表示选择含有 acti 字符的类的元素
-	###[attr~="value"]
-	选择所有含有指定子属性的元素，可以理解为单词选择器
-	比如·$('[class*="active"]')·表示选择含有 active 类的元素
-	###[attr^="value"]
-	选择所有含有以指定字符串开头的属性的元素
-	比如·$('[class^="text-"]')·表示选择以 text- 开头的类的元素
-	###[attr$="value"]
-	选择所有含有以指定字符串结尾的属性的元素
-	比如·$('[class$="-text"]')·表示选择以 -text 结尾的类的元素
-	###[attr|="value"]
-	选择所有属性值正好是 value 或以 value- 开头的元素，通常用于选择 a 链接中的 hreflang 属性
-	比如·$('a[hreflang|="en"]')·表示选择·hreflang="en"·或·hreflang="en-UK"·，不会选择·hreflang="english"·
 
 	##子元素
 	!!
-	:first-child：所有父级元素下的第一个子元素
-	:last-child：所有父级元素下的最后一个子元素
-	:first-of-type：:first-child 的忽略其他元素版
-	:last-of-type：:last-child 的忽略其他元素版
-	:nth-child()：第几个，顺序从所有同级元素开始算
-	:nth-last-child()：:nth-child() 的倒数版
-	:nth-of-type()：:nth-child() 的忽略其他元素版
-	:nth-last-of-type()：:nth-of-type() 的倒数版
-	:only-child：父元素只包含唯一子元素的那个子元素
-	:only-of-type：:only-child 的忽略其他元素版
+	:first-child：第一个，比如·$('ul :first-child')·选择每个 ul 下的第 1 个子元素，注意·$('li:first-child')·若 li 不是第一个子元素则不会匹配
+	:last-child：最后一个，和·:first-child·相反
+	:first-of-type：第一个，和·:first-child·的区别在于·$('li:first-child')·若 li 不是第一个子元素也可以获取
+	:last-of-type：最后一个，和·:first-of-type·相反
 	!!
-	###:first-child
-	选择所有父级元素下的第一个子元素，若指定的元素之前有其他元素则不会被获取
-	比如·$('li:first-child')·表示如果有多个 ul 将会选择每个 ul 下的第 1 个 li 元素，若第 1 个 li 之前有其他元素则不会被获取
-	###:last-child
-	选择所有父级元素下的最后一个子元素，若指定的元素之后有其他元素则不会被获取
-	比如·$('li:last-child')·表示如果有多个 ul 将会选择每个 ul 下的最后 1 个 li 元素，若最后 1 个 li 之后有其他元素则不会被获取
-	###:first-of-type
-	选择所有父级元素下的第一个子元素，忽略指定的元素之前的其他元素
-	比如·$('li:first-of-type')·表示如果有多个 ul 将会选择每个 ul 下的第 1 个 li 元素，若第 1 个 li 之前有其他元素也不影响
-	###:last-of-type
-	选择所有父级元素下的最后一个子元素，忽略指定的元素之后的其他元素
-	比如·$('li:last-of-type')·表示如果有多个 ul 将会选择每个 ul 下的最后 1 个 li 元素，若最后 1 个 li 之后有其他元素也不影响
 	###:nth-child(index/odd/even/equation)
 	在匹配的集合中选择所有符合索引值为的元素，注意顺序是从所有同级元素开始算的，index 和 css 一样是从 1 开始的，且不能为负数，可以是字符串 odd 奇数或 even 偶数，也可以是个方程式，比如 4n
 	比如：
@@ -209,138 +125,149 @@ commonData.jsLibrary.jquery.content = `
 	和·:only-child·不同的是会忽略其他不同的元素
 	比如·$('button:only-child')·表示选择所有 button 如果其父元素不含其他 button 元素，有其他比如 input 元素不管
 
-	##基本筛选
+	##集合筛选
 	!!
-	:eq()：第几个
-	:first：第一个
-	:last：最后一个
-	:gt()：大于给定 index 的元素
-	:lt()：小于给定 index 的元素
-	:odd：奇数
-	:even：偶数
+	:eq(index)：第 index 个，index 可以为负数表示倒数，比如·$('li:eq(2)')·表示在匹配的 li 元素中选择第 3 个
+	:first：第一个，比如·$('li:first')·
+	:last：最后一个，比如·$('li:last')·
+	:gt(index)：下标大于给定 index 的元素，比如·$('li:gt(2)')·，·$('li:eq(-3)')·表示选择最后 2 个元素，·$('li:eq(-1)')·将不选择任何元素
+	:lt()：下标小于给定 index 的元素，和·:gt(index)·相反
+	:odd：下标为奇数，即 1 3 5 7 9...，比如·$('li:odd')·
+	:even：下标为偶数，即 0 2 4 6 8...，比如·$('li:even')·
 	!!
-	###:eq(index)
-	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
-	比如·$('li:eq(2)')·表示选择第 3 个 li 元素
-	###:first
-	在匹配的集合中选择第一个元素
-	比如·$('li:first')·表示选择第 1 个 li 元素
-	###:last
-	在匹配的集合中选择最后一个元素
-	比如·$('li:last')·表示选择最后 1 个 li 元素
-	###:gt(index)
-	在匹配的集合中选择索引值大于给定 index 的元素，index 可以为负数表示从 -1 即最后一个开始算起
-	比如·$('li:eq(2)')·表示选择第 3 个之后的所有 li 元素，不包括第 3 个，·$('li:eq(-1)')·将不选择任何元素，·$('li:eq(-3)')·表示选择最后 2 个元素，因为 -1 和 -2 大于 -3
-	###:lt(index)
-	·:gt(index)·的小于版
-	###:odd
-	选择索引值为奇数元素，即选择索引值为 1 3 5 7 9... 的元素
-	比如·$('li:odd')·表示选择所有 li 中第 1 3 5 7 9... 个元素
-	###:even
-	选择索引值为偶数元素，即选择索引值为 0 2 4 6 8... 的元素
 
 	##内容筛选
 	!!
-	:not()：除了指定的元素
-	:has()：后代元素中包含指定元素的元素
-	:contains()：后代元素中包含指定文本的元素
-	:empty：没有子元素的元素，有空格也不行，即空标签
-	:parent：和 :empty 相反，即非空标签
-	:hidden：隐藏的元素，即 display:none、type="hidden"，包括隐藏的后代元素
-	:visible：和·:hidden·相反，即未隐藏的元素
+	:not(selector)：除了指定的元素，比如·$('input:not(:checked, :disabled)')·表示选择所有除了已选择和已禁用的 input 元素
+	:has(selector)：后代元素中包含指定元素的元素，根据匹配结果的 length 可判断是否包含某元素，比如·$('.demo:has(.text)')·
+	:contains(text)：后代元素中包含指定文本的元素，text 可选用引号包裹，比如·$('.demo:contains(哈哈)')·
+	:empty：没有子元素的元素，有空格也不行，即空标签，比如·$('.demo:empty')·匹配·<div class="demo"></div>·
+	:parent：非空标签，和·:empty·相反
+	:hidden：隐藏的元素，包括其隐藏的后代元素，即 display:none、type="hidden"、祖先节点符合以上情况、不渲染的标签（head、style、script 等）
+	:visible：未隐藏的元素，和·:hidden·相反
 	!!
-	###:not(selector)
-	在选择的元素中除去给定选择器的元素，selector 可以是任意的选择器
-	比如·$('input:not(:checked, :disabled)')·表示选择所有除了已选择和已禁用的 input 元素
-	###:has(selector)
-	选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器，根据 length 的长度可判断是否包含某元素
-	比如·$('.demo:has(.text)')·表示在所有·class="demo"·的元素中选择后代元素包含了·class="text"·的
-	###:contains(text)
-	选择匹配的元素的任何后代元素中包含指定文本的元素，text 可以是任意字符，区分大小写，可选择用引号包裹，也可以不用
-	比如·$('.demo:contains(哈哈)')·表示在所有·class="demo"·的元素中选择含有“哈哈”文本的
-	###:empty
-	选择所有没有子元素的元素，文本节点包括空格也不行，即匹配空标签
-	比如·$('.demo:empty')·匹配·<div class="demo"></div>·
-	###:parent
-	选择所有含有子元素或者文本的父级元素，和·:empty·相反，即匹配非空标签
-	###:hidden
-	选择所有隐藏的元素，隐藏的标准是：·display:none·，·input type="hidden"·，祖先节点符合以上情况，不会被渲染的标签（head、meta、title、style、script 等）
-	###:visible
-	选择所有显示的元素，和·:hidden·相反
 
 	##其他筛选
 	!!
-	:lang()：指定语言的元素,
-	:animated：jQuery 动画中的元素,
-	:target：id 和当前 hash 值相同的元素,
-	:header：所有标题，即 h1, h2, h3, h4, h4, h6,
-	:root：根元素，即 html
+	:lang(language)：指定语言，比如·$('div:lang(en)')·选择·lang="en"/lang="en-us"·及其后代元素，若后代元素中有非 en 语言将不会被匹配
+	:animated：正在执行 jQuery 动画效果，比如某个元素正在执行·fadeToggle()·动画，就能被·$(':animated')·获取到
+	:target：id 和当前 hash 值相同的元素，比如页面的网址是·http://example.com/#foo·，那么·$("h1:target")·将匹配·<h1 id="foo">·元素
+	:header：所有标题，等同于·$('h1, h2, h3, h4, h4, h6')·
+	:root：根元素，等同于·$('html')·
 	!!
-	###:lang(language)
-	选择指定语言的所有元素
-	比如·$('div:lang(en)')·表示选择·<div lang="en">·和·<div lang="en-us">·及其所有子元素，如果子元素中有其他语言比如·<div lang="fr">·将不会被选择
-	###:animated
-	选择所有正在执行动画效果的元素，这个动画指的是 jQuery 的动画，不包括 css 或其他生成的动画
-	比如某个元素正在执行·fadeToggle()·动画，就能被·$(':animated')·获取到
-	###:target
-	如果页面的网址包含 hash 值，将匹配 ID 和 hash 相匹配的元素
-	比如页面的网址是·http://example.com/#foo·，那么·$( "h1:target" )·将匹配·<h1 id="foo">·元素
-	注意是在页面 DOM 渲染完之后才能获取，比如放在·$(function(){})·中
-	###:header
-	选择所有标题元素，等同于·$('h1, h2, h3, h4, h4, h6')·
-	###:root
-	选择根元素，等同于·$('html')·
 
 	##表单筛选
 	!!
-	:input：表单元素，即 input, textarea, select, button
-	:text：文本类型元素
-	:password：密码类型元素
-	:radio：单选类型元素
-	:checkbox：多选类型元素
-	:file：文件类型元素
-	:image：图片类型元素
-	:button：按钮类型元素，即 button, [type="button"]
-	:submit：提交类型元素
-	:reset：重置类型元素
-	:checked：选中的元素
-	:selected：option 中选中的元素
-	:disabled：禁用的元素
-	:enabled：未禁用的元素
-	:focus：获取焦点的元素
+	:input：表单元素，即·$('input, textarea, select, button')·
+	:text：文本类型元素，即·$('[type="text"]')·，但若·<input/>·无 type 属性（默认为 text）则·$('[type="text"]')·获取不到，·:text·可以
+	:password：密码类型元素，即·$('[type="password"]')·
+	:radio：单选类型元素，即·$('[type="radio"]')·
+	:checkbox：多选类型元素，即·$('[type="checkbox"]')·
+	:file：文件类型元素，即·$('[type="file"]')·
+	:image：图片类型元素，即·$('[type="image"]')·
+	:button：按钮类型元素，即·$('button, [type="button"]')·
+	:submit：提交类型元素，即·$('[type="submit"]')·
+	:reset：重置类型元素，即·$('[type="reset"]')·
+	:checked：选中的元素，适用的元素有：checkbox、radio、option
+	:selected：选中的元素，只适用于·<option>·元素
+	:disabled：禁用的元素，即·$('[disabled]')·
+	:enabled：未禁用的元素，即·$(':not([disabled])')·
+	:focus：已获取焦点的元素，适用于表单元素和 a 标签
 	!!
-	###:input
-	选择所有表单元素，即·$('input, textarea, select, button')·
-	###:text
-	选择所有类型为文本的元素，即·$('[type="text"]')·
-	注意如果只是一个·<input/>·标签而没有 type 属性，虽然默认为·type="text"·，但·$('[type="text"]')·是获取不到的，而·:text·可以，这是他们之间一点小小的区别
-	###:password
-	选择所有类型为密码的元素，即·$('[type="password"]')·
-	###:radio
-	选择所有类型为单选按钮的元素，即·$('[type="radio"]')·，选择单选按钮可以写成·$(':radio[name="gender"]')·
-	###:checkbox
-	选择所有类型为多选按钮的元素，即·$('[type="checkbox"]')·
-	###:file
-	选择所有类型为文件的元素，即·$('[type="file"]')·
-	###:image
-	选择所有类型为图片的元素，即·$('[type="image"]')·
-	###:button
-	选择所有按钮元素和类型为按钮的元素，即·$('button, [type="button"]')·
-	###:submit
-	选择所有类型为提交按钮的元素，即·$('[type="submit"]')·
-	注意如果只是一个·<button>·标签而没有 type 属性也会被获取
-	###:reset
-	选择所有类型为重置按钮的元素，即·$('[type="reset"]')·
-	###:checked
-	匹配所有选中的元素，适用的元素有：checkbox、radio、option
-	###:selected
-	匹配所有选中的元素，只适用于·<option>·元素
-	###:disabled
-	选择所有被禁用的元素，即·$('[disabled]')·
-	###:enabled
-	选择所有没被禁用的元素，即·$(':not([disabled])')·
-	###:focus
-	选择当前获取焦点的元素，适用于表单元素和 a 标签，按 Tab 键也能选择焦点，所以给其他元素添加 tabindex 属性，也能被 :focus 选择
+
+	#方法选择器
+	##筛选
+	在匹配的集合中进行筛选
+	!!
+	.eq(index)：第 index 个，index 可以为负数表示倒数
+	.first()：第一个
+	.last()：最后一个
+	.not(selector/function(index))：除了给定选择器或函数返回值的元素
+	!!
+	###.has(selector)
+	选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器，根据 length 的长度可判断是否包含某元素
+	比如·$('.demo').has('.text')·表示在所有·class="demo"·的元素中选择后代元素包含了·class="text"·的
+	###.filter(selector/function(index))
+	筛选出指定的元素
+	比如：
+	··
+	<ul>
+	  <li>A</li>
+	  <li>B</li>
+	  <li class="mark">C</li>
+	  <li class="mark">D</li>
+	</ul>
+
+	$('li').filter('.mark')	// C, D
+	$('li').filter(':odd')	// B, D
+	$('li').filter(function (index) {	// A, D
+		return index % 3 === 0
+	})
+	··
+	###.slice(start [, end ])
+	根据指定的下标范围，生成新的 jQuery 对象，start 和 end 都是整数，包括 start 不包括 end，可以是负数表示倒数，不填 end 表示直到最后
+	比如·$('li').slice(2, 4)·表示选择下标为第 2 和 第 3 的 li 元素
+
+	##子元素
+	!!
+	.children()：子元素，不包括文字和注释节点
+	.contents()：子元素，包扩文本和注释节点，iframe 也可获取（跨域无法访问），比如·$('iframe').contents().find('.demo')·
+	!!
+
+	##父元素
+	!!
+	.parent()：父元素
+	.parents()：祖先元素
+	.parentsUntil()：祖先元素直到哪里
+	!!
+	###.parent([selector])
+	获取元素的父元素，可以传入一个参数 selector 以筛选获得的父元素
+	比如·('p').parent()·表示获取所有 p 元素的父元素，·('p').parent('.active')·表示获取带有 active 类的父元素
+	###.parents([selector])
+	获取元素的所有祖先元素，可以传入一个参数 selector 以筛选获得的祖先元素
+	###.parentsUntil([selector/element] [, selector])
+	获取元素的所有祖先元素，直到遇到选择器或某元素停止，结果不包含终点元素
+	比如·('p').parentsUntil('body')·表示获取 body 内所有 p 元素的祖先元素
+	可以传入第二个参数 selector 以筛选获得的祖先元素
+	比如·('p').parentsUntil('body', div)·表示获取 body 内所有 p 元素的 div 标签祖先元素
+
+	##兄弟元素
+	!!
+	.prev([selector])：前一个，可以传入一个参数 selector 以筛选获得的兄弟元素
+	.next([selector])：后一个，和·.prev()·相反
+	.prevAll([selector])：前面所有，用法同·.prev()·
+	.nextAll([selector])：后面所有，和·.prevAll()·相反
+	.siblings([selector])：前后所有，即·.prevAll()·和·.nextAll()·加起来
+	.prevUntil([selector/element] [, selector])：前面直到哪里，可以传入第二个参数 selector 以筛选获得的兄弟元素
+	.nextUntil([selector/element] [, selector])：后面直到哪里，和·.prevUntil()·相反
+	!!
+
+	##查找
+	!!
+	.find(selector/element)：往下找，在所有子孙元素中找到匹配的元素
+	!!
+	###.closest(selector/element [, element])
+	从内向外从自己开始在所有祖先元素中找到最先匹配的那个元素，可以传入第二个参数以限定范围（原生元素）
+	比如·$('ul').closest('div', $('.active')[0])·表示找到 ul 的最近祖先元素中的 div 元素，并且属于 .active 类的子孙元素
+
+	##判断
+	###.is(selector/function(index))
+	判断当前元素合中如果至少一个匹配给定的参数，即若能根据后面的选择器在当前元素中至少找到 1 个，则返回 true，否则返回 false
+	可以传入一个函数，返回 Boolean 值作为结果
+	比如：
+	··
+	<ul>
+		<li>AAA</li>
+		<li>BBB <span>bbb</span></li>
+		<li class="mark">CCC</li>
+		<li class="mark">DDD <span>ddd</span></li>
+	</ul>
+
+	$('li').is('.mark')	// true
+	$('ul').on('click', function (event) {
+		$(event.target).is('li') && $(event.target).css('color', 'red')	// 点击 span 不会触发
+	})
+	··
 
 	#DOM 属性
 	##css
@@ -473,16 +400,17 @@ commonData.jsLibrary.jquery.content = `
 	比如：
 	··
 	$('.demo').data('test-a', 'hhhh')	// 存储
-	$('.demo').data()	// 返回 {testA: "hhhh"}
+	$('.demo').data()	// {testA: "hhhh"}
 	··
 	如果元素上有以·data-·开头的属性，那也会被·.data()·方法使用，·data-·之后的字符串就是 key，值就是 value
 	比如：
 	··
 	<div class="demo" data-demo="demo" data-test-a="hh"></div>
 
-	$('.demo').data()	// 返回 {demo: "demo", testA: "hh"}
-	$('.demo').data({'test-a': 'hhhh', 'test-b': 'bbbb'})	// 覆盖存储，不会直接修改元素的 data- 里面的属性值
-	$('.demo').data()	// 返回 {demo: "demo", testA: "hhhh", testB: "bbbb"}
+	$('.demo').data()	// {demo: "demo", testA: "hh"}
+	$('.demo').data('testA')	// "hh"
+	$('.demo').data({'test-a': 'aaa', 'test-b': 'bbbb'})	// 覆盖存储
+	$('.demo').data()	// {demo: "demo", testA: "aaa", testB: "bbbb"}
 	··
 	###.removeData([name/list])
 	在指定的元素上移除用·.data()·绑定的数据，不影响元素上的·data-·属性，需使用·.removeAttr()·来移除·data-·属性
@@ -500,51 +428,32 @@ commonData.jsLibrary.jquery.content = `
 	比如·$.hasData($('.demo')[0])·
 
 	##尺寸
-	!!
-	.width()：获取宽度，不包括 padding 和 border
-	.height()：获取高度，用法同 .width()
-	.innerWidth()：获取宽度，包括 padding，不包括 border，用法同 .width()
-	.innerHeight()：获取高度，用法同 .innerWidth()
-	.outerWidth()：获取宽度，包括 padding 和 border，可传入一个 true 表示包括 margin，用法同 .width()
-	.outerHeight()：获取高度，用法同·.outerWidth()·
-	!!
 	###.width([value/function])
 	为匹配的元素集合中获取第一个元素的当前计算宽度值，返回数字，不包括 padding 和 border，设置了·box-sizing: border-box;·也会减去 padding 和 border
 	·.css(width)·返回的是带单位的字符串，为样式设置的计算宽度
 	可以传入第二个参数以设置宽度，传入数字时单位默认为 px，也可以传入自定义单位的字符串
 	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 width，返回值作为要设置的宽度
-	###.height([value/function])
-	获取高度，用法同·.width()·
-	###.innerWidth([value/function])
-	获取宽度，包括 padding，不包括 border，用法同·.width()·
-	###.innerHeight([value/function])
-	获取高度，用法同·.innerWidth()·
-	###.outerWidth([includeMargin/value/function])
-	获取宽度，包括 padding 和 border，可传入一个·true·表示包括 margin，用法同·.width()·
-	###.outerHeight([includeMargin/value/function])
-	获取高度，用法同·.outerWidth()·
+	!!
+	.width()：获取宽度，不包括 padding 和 border
+	.height()：获取高度，用法同 .width()
+	.innerWidth()：获取宽度，包括 padding，不包括 border，用法同上
+	.innerHeight()：获取高度，用法同上
+	.outerWidth()：获取宽度，包括 padding 和 border，可传入一个 true 表示包括 margin，用法同上
+	.outerHeight()：获取高度，用法同上
+	!!
 
 	##位置
-	!!
-	.offset()：获取或设置相对于文档的 left 和 top 值
-	.offsetParent()：获取离指定元素最近的非 static 定位的祖先元素
-	.position()：获取相对于离指定元素最近的非 static 定位的祖先元素的 left 和 top 值
-	.scrollTop()：获取或设置相对于顶部滚动的距离
-	.scrollLeft()：获取或设置相对于左边滚动的距离
-	!!
 	###.offset([coordinates/function])
 	返回一个对象，包含 left 和 top，坐标相对于文档，即网页左上角
 	可以传入 1 个参数以设置 left 和 top，形式如·{left: 100, top: 100}·，使用后该元素将会添加·relative·定位
 	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 coordinates，返回值作为要设置的宽度
-	###.offsetParent()
-	获取离指定元素最近的非 static 定位的祖先元素
-	###.position()
-	返回一个对象，包含 left 和 top 值，坐标相对于离指定元素最近的非 static 定位的祖先元素
-	###.scrollTop([value])
-	获取或设置相对于顶部滚动的距离，即网页卷去的高度
-	可以传入 1 个数值以设置这个距离，比如设为 0 表示回到顶部
-	###.scrollLeft([value])
-	获取或设置相对于左边滚动的距离，用法同·.scrollTop()·
+	!!
+	.offset()：获取或设置相对于文档的 left 和 top 值
+	.offsetParent()：获取离指定元素最近的非 static 定位的祖先元素
+	.position()：返回一个对象，包含 left 和 top 值，坐标相对于离指定元素最近的非 static 定位的祖先元素
+	.scrollTop([value])：获取或设置相对于顶部滚动的距离，即网页卷去的高度，可以传入 1 个数值以设置这个距离，比如设为 0 表示回到顶部
+	.scrollLeft([value])：获取或设置相对于左边滚动的距离，用法同·.scrollTop()·
+	!!
 
 	#DOM 操作
 	##复制
@@ -561,48 +470,27 @@ commonData.jsLibrary.jquery.content = `
 	复制的元素在插入到文档之前，可以修改该复制的元素
 
 	##内部添加
-	!!
-	.text()：获取或设置文本
-	.html()：获取或设置 html
-	.append()：在元素里面的最后添加
-	.appendTo()：写法和 .append() 相反
-	.prepend()：在元素里面的开头添加
-	.prependTo()：写法和 .prepend() 相反
-	!!
 	###.text([text/function])
 	获取或设置匹配元素集合中每个元素的合并文本，包括所有的后代元素
 	不传入参数表示获取，传入 1 个参数表示设置内容为传入的参数
 	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和文本内容，返回值作为要设置的文本内容
 	比如·$('.demo').text()·
-	###.html([html/function])
-	获取匹配元素集合中第一个元素或设置所有每个元素的 html 内容，包括所有的后代元素，用法同·.text()·
-	###.append(content [, ...content] / function(index, html))
-	在每个匹配元素里面的末尾处添加参数内容，可以接受任何数量的额外的参数，或者传入一个函数，返回值作为要添加的内容
-	比如·$('.demo').append('<i></i>')·，·$('.demo').append($('i'), '<p></p>', document.createElement('div'))·
-	###.appendTo(target)
-	和·.append()·的写法相反，要添加的内容被添加到元素里面的末尾处
-	比如·$('<p></p>').appendTo('.demo')·
-	###.prepend(content [, ...content] / function(index, html))
-	在每个匹配元素里面的开始处添加参数内容，和·.append()·的用法一样
-	###.prependTo(target)
-	和·.prepend()·的写法相反，要添加的内容被添加到元素里面的开始处
+	!!
+	.text([text/function])：获取或设置文本
+	.html([html/function])：获取或设置 html，用法同·.text()·
+	.append(content [, ...content] / function(index, html))：在元素里面的最后添加，比如·$('.demo').append($('i'), '<p></p>')·
+	.appendTo(target)：写法和 .append() 相反，比如·$('<p></p>').appendTo('.demo')·
+	.prepend(content [, ...content] / function(index, html))：在元素里面的开头添加，用法同·.append()·
+	.prependTo(target)：写法和 .prepend() 相反
+	!!
 
 	##外部添加
 	!!
-	.after()：在元素后面添加
-	.before()：在元素前面添加
-	.insertAfter()：写法和 .after() 相反
-	.insertBefore()：写法和 .before() 相反
+	.after(content [, ...content] / function(index, html))：在匹配元素的每个元素后面插入参数的内容，作为兄弟节点，参数用法同·.append()·
+	.before(content [, ...content] / function(index, html))：在元素前面添加，用法同·.after()·
+	.insertAfter(target)：和·.after()·的写法相反，要添加的内容被添加到元素的后面
+	.insertBefore(target)：和·.before()·的写法相反，要添加的内容被添加到元素的前面
 	!!
-	###.after(content [, ...content] / function(index, html))
-	在匹配元素的每个元素后面插入参数的内容，作为兄弟节点，参数用法同·.append()·
-	比如·$('.demo').after('<i></i>')·
-	###.before(content [, ...content] / function(index, html))
-	在匹配元素的每个元素前面插入参数的内容，作为兄弟节点，用法同·.after()·
-	###.insertAfter(target)
-	和·.after()·的写法相反，要添加的内容被添加到元素的后面
-	###.insertBefore(target)
-	和·.before()·的写法相反，要添加的内容被添加到元素的前面
 
 	##外部包裹
 	!!
@@ -802,7 +690,7 @@ commonData.jsLibrary.jquery.content = `
 	$('.demo').find('.first').removeClass('active').end().find('.second').addClass('active')
 	··
 
-	#DOM 遍历
+	#遍历
 	##循环
 	###.each(function(index, item))
 	循环元素并执行函数
@@ -824,137 +712,33 @@ commonData.jsLibrary.jquery.content = `
 	}).get().join(', '))
 	··
 
-	#DOM 选择
-	##筛选
+	#事件
+	##事件绑定
+	###.on(events [, selector] [, data], handler(eventObject))
 	!!
-	.eq()：第几个
-	.first()：第一个
-	.last()：最后一个
-	.not()：除了哪个
-	.has()：包含哪个才可以
-	.filter()：符合条件的
-	.slice()：截取一段
+	events{String}：事件类型，比如·click·点击事件，可选择添加一个或多个命名空间比如·click.demo·、·click.demo.active·，相当于元素的 class，用于指定删除绑定的事件
+	selector{String}：触发事件的元素为指定后代元素，即事件代理，常用于变动的后代元素，可选择不填或 null
+	data{Anything}：事件被触发时传递给事件处理函数的 event.data，若是 String 类型则需要填写 selector 或为 null，否则会被当做 selector
+	handler{Function}：事件触发时执行的函数
 	!!
-	###.eq(index)
-	在匹配的集合中选择索引值为 index 的元素，index 可以为负数表示倒数
-	比如·$('li').eq(2)·表示选择第 3 个 li 元素
-	###.first()
-	在匹配的集合中选择第一个元素
-	比如·$('li').first()·表示选择第 1 个 li 元素
-	###.last()
-	在匹配的集合中选择最后一个元素
-	比如·$('li').last()·表示选择最后 1 个 li 元素
-	###.not(selector/function(index))
-	在选择的元素中除去给定选择器或函数返回值的元素
-	比如·$('.demo').not(':checked, :disabled')·表示选择所有除了已选择和已禁用的 input 元素
-	###.has(selector)
-	选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器，根据 length 的长度可判断是否包含某元素
-	比如·$('.demo').has('.text')·表示在所有·class="demo"·的元素中选择后代元素包含了·class="text"·的
-	###.filter(selector/function(index))
-	筛选出指定的元素
-	比如：
-	··
-	<ul>
-	  <li>A</li>
-	  <li>B</li>
-	  <li class="mark">C</li>
-	  <li class="mark">D</li>
-	</ul>
+	所有以事件名为方法名的方法都是该事件的快捷写法，比如·.click([data,] handler(eventObject))·等同于·.on('click', [data,] handler(eventObject))·
+	快捷写法支持的事件包括：
+	!!
+	表单：
+		blur：失去焦点（事件不支持冒泡）
+		change：
+	!!
 
-	$('li').filter('.mark')	// C, D
-	$('li').filter(':odd')	// B, D
-	$('li').filter(function (index) {	// A, D
-		return index % 3 === 0
-	})
-	··
-	###.slice(start [, end ])
-	根据指定的下标范围，生成新的 jQuery 对象，start 和 end 都是整数，包括 start 不包括 end，可以是负数表示倒数，不填 end 表示直到最后
-	比如·$('li').slice(2, 4)·表示选择下标为第 2 和 第 3 的 li 元素
+	###.trigger()
+	所有以事件名为调用的方法都是该事件的快捷写法，比如·.click()·等同于·.trigger('click')·
 
-	##子元素
+	##浏览器
+	###.resize([eventData,] handler(eventObject))
+	当浏览器窗口的尺寸改变时触发（在某些浏览器如 Opera 只在调整窗口操作结束时被调用），一般用于监听·$(window)·
 	!!
-	.children()：子元素
-	.contents()：包含文本、注释、iframe 的子元素
+	eventData{PlainObject}：一个对象，它包含的数据键值对映射将被传递给事件处理程序。
+	handler(eventObject){Function}：事件触发时执行的函数
 	!!
-	###.children()
-	获得匹配元素的所有子元素，只获取元素，不包括文字和注释节点
-	比如·$('.demo').children()·
-	###.contents()
-	获得匹配元素的所有子元素，和 .children() 不同的是包括文字和注释节点
-	而且还能获取 iframe 的内容（跨域无法访问，iframe 的网址需要和当前页面同域）
-	比如·$('.demo').contents()·，·$('iframe').contents().find('.demo')·
-
-	##父元素
-	!!
-	.parent()：父元素
-	.parents()：祖先元素
-	.parentsUntil()：祖先元素直到哪里
-	!!
-	###.parent([selector])
-	获取元素的父元素，可以传入一个参数 selector 以筛选获得的父元素
-	比如·('p').parent()·表示获取所有 p 元素的父元素，·('p').parent('.active')·表示获取带有 active 类的父元素
-	###.parents([selector])
-	获取元素的所有祖先元素，可以传入一个参数 selector 以筛选获得的祖先元素
-	###.parentsUntil([selector/element] [, selector])
-	获取元素的所有祖先元素，直到遇到选择器或某元素停止，结果不包含终点元素
-	比如·('p').parentsUntil('body')·表示获取 body 内所有 p 元素的祖先元素
-	可以传入第二个参数 selector 以筛选获得的祖先元素
-	比如·('p').parentsUntil('body', div)·表示获取 body 内所有 p 元素的 div 标签祖先元素
-
-	##兄弟元素
-	!!
-	.prev()：前一个
-	.next()：后一个
-	.prevAll()：前面所有
-	.nextAll()：后面所有
-	.siblings()：前后所有
-	.prevUntil()：前面直到哪里
-	.nextUntil()：后面直到哪里
-	!!
-	###.prev([selector])
-	获取元素紧邻的前一个兄弟元素，可以传入一个参数 selector 以筛选获得的兄弟元素
-	###.next([selector])
-	下一个兄弟元素，和·.prev()·相反
-	###.prevAll([selector])
-	前面所有兄弟元素，用法和·.prev()·一样
-	###.nextAll([selector])
-	后面所有兄弟元素，和·.prevAll()·相反
-	###.siblings([selector])
-	前后所有兄弟元素，·.prevAll()·和·.nextAll()·加起来
-	###.prevUntil([selector/element] [, selector])
-	前面所有兄弟元素直到哪里停下，可以传入第二个参数 selector 以筛选获得的兄弟元素
-	###.nextUntil([selector/element] [, selector])
-	后面所有兄弟元素直到哪里停下，和·.prevUntil()·相反
-
-	##查找
-	!!
-	.find()：往下找
-	.closest()：往上找
-	!!
-	###.find(selector/element)
-	在所有子孙元素中找到匹配的元素
-	###.closest(selector/element [, element])
-	从内向外从自己开始在所有祖先元素中找到最先匹配的那个元素，可以传入第二个参数以限定范围
-	比如·$('ul').closest('div', $('.active')[0])·表示找到 ul 的最近祖先元素中的 div 元素，并且属于 .active 类的子孙元素
-
-	##判断
-	###.is(selector/function(index))
-	判断当前元素合中如果至少一个匹配给定的参数，即若能根据后面的选择器在当前元素中至少找到 1 个，则返回 true，否则返回 false
-	可以传入一个函数，返回 Boolean 值作为结果
-	比如：
-	··
-	<ul>
-		<li>AAA</li>
-		<li>BBB <span>bbb</span></li>
-		<li class="mark">CCC</li>
-		<li class="mark">DDD <span>ddd</span></li>
-	</ul>
-
-	$('li').is('.mark')	// true
-	$('ul').on('click', function (event) {
-		$(event.target).is('li') && $(event.target).css('color', 'red')	// 点击 span 不会触发
-	})
-	··
 
 	#过渡动画
 	##.hide()
@@ -963,9 +747,9 @@ commonData.jsLibrary.jquery.content = `
 	!!
 	duration{Number/String}[400/normal]：动画持续时间，单位 ms，默认 normal(400)，可选 fast(200)、slow(600)
 	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear，其他曲线需要使用插件，比如 @[jQuery Easing Plugin|http://gsgd.co.uk/sandbox/jquery/easing/]
-	complete{Function}：在动画完成时要执行的函数
+	complete{Function}：动画完成时执行的函数
 	!!
-	3 个参数都是单独可选的，比如直接传入一个函数将默认启用了·duration 的 400·和·easing 的 swing·
+	3 个参数都是单独可选的，也表示启用其他默认参数，比如传入一个函数将默认启用了·duration 的 400·和·easing 的 swing·
 	动画改变的是：width、height、opacity，直到变成 0，然后设置行内样式·display:none;·
 	在开始动画前会将·display·属性值保存在 jQuery 的数据缓存中，如果再次恢复比如使用·.show()·其·display·可以恢复到其初始值
 	注意如果原来是·display:inline;·将会在动画的过程中暂时变成·display:inline-block;·，因为这样才能对 width 和 height 做出改变
@@ -977,7 +761,16 @@ commonData.jsLibrary.jquery.content = `
 	complete{Function}：在动画完成时要执行的函数
 	queue{Boolean/String}[true]：是否将动画放置在效果队列中，若设为 false 将立即开始动画，若设为一个字符串则表示为该动画队列加上名称，执行时只是加入队列中，动画不会立即启动，执行该队列需调用·.dequeue('queuename')·才会启动
 	specialEasing{Object}：一组一个或多个通过相应的参数和相对简单函数定义的 CSS 属性
+	step
 	!!
+
+	@@
+	jQuery 官方文档|https://jquery.com/
+	jQuery 中文文档|https://www.jquery123.com/
+	css88 jQuery 文档|https://www.css88.com/jqapi-1.9/
+	插件 - jQuery插件库|http://www.jq22.com/
+	插件 - jQuery之家|http://www.htmleaf.com/
+	@@
 
 	&2018.8.26
 `

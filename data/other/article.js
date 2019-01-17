@@ -18,4 +18,5 @@ commonData.other.article.content = `
 	LAN：局域网/内网，即光猫和路由器转换的网络
 	WLAN：无限局域网，一般是大型服务商发出，范围千米以上，常见的有：移动-CMCC、联通-ChinaUnicom、电信-ChinaNet
 	WiFi：小型无限局域网，路由器发出，一般范围几十米，WLAN 包括了 WiFi
+	以太网：外网转内网的技术实现
 `

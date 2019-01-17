@@ -18,7 +18,7 @@ commonData.tool.gulp.content = `
 	##升级
 
 	##package.json
-	package.json是项目必不可少的配置文件，它是存放在项目根目录的普通json文件
+	package.json是项目的配置文件，它是存放在项目根目录的普通json文件
 	创建该文件在根目录下打开cmd执行命令：·npm init·
 	然后按提示依次输入命令回车
 	!!

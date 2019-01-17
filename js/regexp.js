@@ -7,7 +7,7 @@ let REG_UN = {
 	// 循环分支，紫
 	loopFork: 'for | in |of\s|while|\sdo|if |else | switch|case|break|continue|try\s|catch |finally |with ',
 	// 方法关键字，蓝
-	methodKeyword: 'return|delete|typeof|require\s|throw|eval|instanceof|debugger|this|length',
+	methodKeyword: 'return|delete |typeof|require\s|throw|eval|instanceof|debugger|this|length',
 	// 类型方法，紫
 	type: 'window|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|Date|RegExp|Error| JSON'
 }

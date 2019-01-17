@@ -50,6 +50,9 @@ commonData.other.office.content = `
 	dir /¿b C:\\Windows\\servicing\\Packages\\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt
 	for /¿f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"C:\\Windows\\servicing\\Packages\\%%i"
 	··
+	##你的电脑将在一分钟后自动重启
+	一般是系统文件损坏了，运行 cmd 执行命令·netsh winsock reset·，然后重启电脑即可
+	如果卡到连桌面都进不去，【按住 shift 并点击重启】以进入安全模式，选择【疑难解答 > 高级选项 > 查看更多恢复选项 > 启动设置 > 重启】，按 4 或 F4 即可，再运行 cmd 执行命令·netsh winsock reset·并重启电脑
 
 	#office
 	ctrl+z后退，ctrl+y前进

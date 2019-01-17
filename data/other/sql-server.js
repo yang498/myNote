@@ -98,7 +98,7 @@ commonData.other.sqlServer.content = `
 	^^not^^：找非北京城市的人：·select * from Person where ^^not^^ city = 'Beijing'·
 	^^in^^：找 London 和 New York 城市：·select * from Person where city ^^in^^ ('London', 'New York')·
 	^^between and^^：找 1975 到 1985 之间的年份，执行：·select * from Persons where City ^^between^^ 1975 ^^and^^ 1985·
-	^^like^^：找包含 n 字母的城市，执行：·select * from Persons where City ^^like^^ %n%·
+	^^like^^：找包含 n 字母的城市，执行：·select * from Persons where City ^^like^^ '%n%'·
 
 	##distinct
 	去重，语法：^^select distinct ·columnName· from ·tableName·^^

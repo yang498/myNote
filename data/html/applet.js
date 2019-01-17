@@ -1575,8 +1575,8 @@ commonData.html.applet.content = `
 	文件的临时路径在小程序本次启动期间可以正常使用，如需持久保存需在主动调用 wx.saveFile，在小程序下次启动时才能访问得到
 		wx.chooseImage({
 			count{Number}[9]：最多可以选择的图片张数
-			sizeType{String Array}[['original','compressed']]：original-原图，compressed-压缩图，默认都有
-			sourceType{String Array}[['album','camera']]：album-从相册选图，camera-使用相机，默认都有
+			sizeType{Array/String}[['original','compressed']]：original-原图，compressed-压缩图，默认都有
+			sourceType{Array/String}[['album','camera']]：album-从相册选图，camera-使用相机，默认都有
 			success{Function(res)}!：成功的回调函数
 				res：{
 					tempFilePaths{StringArray}：图片的本地文件路径列表
