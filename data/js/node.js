@@ -214,12 +214,11 @@ commonData.js.node.content = `
 	!!
 
 	#global
-	@[global - 全局变量|http://nodejs.cn/api/globals.html]
+	@[global - 全局变量|http://nodejs.cn/api/globals.html]，node 特有且非模块
 	全局对象：
 	!!
 	global：表示 Node 所在的全局环境，类似于浏览器的 window 对象。浏览器中声明·var x = 1·等同于·window.x = 1·，这一行为和 REPL 环境一致，但在 js 文件（模块）中不是，这是因为模块的全局变量都是该模块私有的，其他模块无法取到
 	process：该对象表示 Node 所处的当前进程，允许开发者与该进程互动
-	console：指向 Node 内置的 console 模块，提供命令行环境中的标准输入、标准输出功能
 	!!
 	全局变量（两个下划线开头）：
 	!!
@@ -229,14 +228,16 @@ commonData.js.node.content = `
 	全局函数：
 	!!
 	require()：用于加载模块
-	Buffer()：用于操作二进制数据
 	!!
+
+	#module
 
 	#http
 
 	#url
-	使用全局·URL·对象（新增于 ^^v10.0.0^^）处理与解析 url，无需引入
-	全局·URL·对象采用 WHATWG 标准，下面是旧版标准和新版标准的区别：
+	##URL
+	全局·URL·对象（新增于 ^^v10.0.0^^），处理与解析 url，无需引入
+	全局·URL·对象采用 WHATWG 标准，下面是遗留版本和新版标准的区别（上面是旧版，下面是新版）：
 	··
 	┌────────────────────────────────────────────────────────────────────────────────────────────────┐
 	│                                            old href                                            │
@@ -256,8 +257,6 @@ commonData.js.node.content = `
 	│                                            new href                                            │
 	└────────────────────────────────────────────────────────────────────────────────────────────────┘
 	··
-
-	##URL
 	创建 URL 对象：·new URL(input[, base])·
 	!!
 	input{String}：要解析的输入 URL
@@ -273,7 +272,7 @@ commonData.js.node.content = `
 	new URL('https://你好你好')	// https://xn--6qqa088eba/
 	··
 
-	##url 属性
+	##URL 属性
 	创建·URL·对象后可以获取 URL 对象的属性
 	··
 	const url = new URL('http://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash')
@@ -308,7 +307,7 @@ commonData.js.node.content = `
 	url		// 'http://user:pass@sub.example.com:8080/p/a/t/h?query=string#new'
 	··
 
-	##url.searchParams
+	##URL.searchParams
 	此对象提供的方法有：
 	!!
 	get(name)：返回 name 对应的值，没有给定的 name 则返回 null，如果有多个 name 则返回第一个
@@ -442,8 +441,36 @@ commonData.js.node.content = `
 	const url = require('url')
 	··
 	!!
-	domainToASCII(domain)：
+	domainToASCII(domain)：使用 Punycode 算法将域名 domain 转换为 ASCII，如果 domain 是无效域名将返回空字符串
+	domainToUnicode(domain)：将域名 domain 转换为 Unicode，是·domainToASCII()·的逆运算，如果 domain 是无效域名，将返回空字符串
+	fileURLToPath(url)：对·file://·的路径部分进行转码，通过·new URL('file://')·是不能正确解析的
+	pathToFileURL(path)：路径转·file://·，和·fileURLToPath()·相反
+	format(URL[, options])：URL 对象的 toString() 和 href 属性只返回序列化的字符串，通过此方法可以自定义输出模式
+		URL{Object}：URL 对象
+		options{Object}：
+			auth{Boolean}[true]：是否包含用户名和密码
+			fragment{Boolean}[true]：是否包含哈希值
+			search{Boolean}[true]：是否包含搜索查询
+			unicode{Boolean}[false]：是否转为 unicode 字符
 	!!
+	··
+	const url = require('url')
+
+	url.domainToASCII('中文.com')	// xn--fiq228c.com
+
+	url.domainToUnicode('xn--fiq228c.com')	// 中文.com
+
+	// 这两个方法怎么用不了？？
+	// url.fileURLToPath('file://nas/foo.txt')
+	// url.pathToFileURL(__filename)
+
+	const myURL = new URL('https://a:b@你好你好?abc#foo')
+	myURL.href	// https://a:b@xn--6qqa088eba/?abc#foo
+	url.format(myURL, { auth: false, fragment: false, search: false, unicode: true })	// https://你好你好/
+	··
+
+	#path
+	path > timer > module > global > http > fs > 连接 SQL > 连接 MongoDB
 
 	#querystring
 	解析与格式化 URL 的查询字符串，使用前需先引入：
@@ -515,6 +542,8 @@ commonData.js.node.content = `
 	该方法是提供给·qs.stringify()·使用的，通常不直接使用。 它之所以对外开放，是为了在需要时可以通过给·qs.escape·赋值一个函数来重写编码的实现
 
 	#fs
+
+	#timer
 
 	@@
 	node 官网|https://nodejs.org/en/
