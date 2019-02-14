@@ -1,9 +1,7 @@
-commonData.other.sqlServer.content = `
+commonData.database.sqlServer.content = `
 	#起步
 	大多数数据库使用 SQL 语句，包括：Oracle、Sybase、SQL Server、DB2、Access 等
 	SQL 语句对大小写不敏感，比如 SELECT 等同于 select
-
-	#SQL Server
 	快捷用法：若运行时有光标选中将只运行选中部分的代码
 	快捷键：
 	!!
@@ -135,9 +133,24 @@ commonData.other.sqlServer.content = `
 	删除所有行：·delete from table_name·
 
 	#alias
-	对表或列的查询结果指定别名，不改变原表
+	对表名称或列名称指定别名将更易于阅读和书写
 	重命名表：select ·columnName· from ·tableName· as ·newName·
 	重命名列：select ·columnName· as ·newName· from ·tableName·
+	例如有两个表分别是·Persons·和·Product_Orders·，分别指定别名·p·和·po·
+	··
+	select po.orderId, p.name from Persons as p, Product_Orders as po where p.name = 'Tom'
+	··
+	不使用别名的语句是：
+	··
+	select Product_Orders.orderId, Persons.name from Persons, Product_Orders where Persons.name = 'Tom'
+	··
+
+
+	#date
+	··
+	// 计算时间戳
+	select datediff(s,'1970-01-01 00:00:00', getdate())
+	··
 
 	@@
 	w3school - SQL 教程|http://www.w3school.com.cn/sql/index.asp

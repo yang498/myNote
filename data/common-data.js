@@ -5,7 +5,6 @@ let commonData = {
 		html: {},
 		mobile: {},
 		optimize: { name: '优化' },
-		website: { name: '网站' },
 		applet: { name: '微信小程序' },
 		weex: {},
 		flutter: {},
@@ -43,12 +42,16 @@ let commonData = {
 		webpack: {},
 		other: { name: '其他' }
 	},
+	database: {
+		name: '数据库',
+		sqlServer: { name: 'SQL Server' }
+	},
 	other: {
 		name: '其他',
+		website: { name: '网站' },
 		interview: { name: '面试' },
 		office: { name: '电脑操作' },
 		article: { name: '杂谈' },
-		sqlServer: { name: 'SQL Server' },
 		english: { name: '英语' }
 	}
 }

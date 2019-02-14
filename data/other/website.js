@@ -1,4 +1,4 @@
-commonData.html.website.content = `
+commonData.other.website.content = `
 	#建站
 	建立一个网站可分为3个部分：域名、服务器、网页文件
 
