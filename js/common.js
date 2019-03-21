@@ -1,6 +1,8 @@
 /* start 2017.7.31
  * 只对常用和关键部分进行说明，其他带过，考虑到官方文档都有而且都在更新，单纯的复制粘贴也没有意义，注重知识输入输出
  * 待做：
+ * 初次点击二级标题无反应，dom 未获取
+ * 已结束的在首页加绿底
  * 网站的样式可以再调（bulma 还挺小清新），代码块的颜色可以参考 jsfiddle 等
  * 搜索：可参考 Algolia
  * 设置：
@@ -44,7 +46,7 @@ let isPageHash = false	// 避免重复触发 hashchange 事件，当手动点击
 
 // 复制代码
 const copyCode = item => {
-	$('.web').after('<textarea id="copy-textarea">' + pageCode[$(item).index('.copy')] + '</textarea>')	// 创建一个看不见的文本域，要复制的代码作为 value
+	$('.web').after('<textarea id="copy-textarea">' + pageCode[$(item).index('.copy')] + '</textarea>')	// 创建文本域，要复制的代码作为 value
 	$('#copy-textarea').select()	// 全选 value
 	document.execCommand('copy')	// 执行复制
 	$('#copy-textarea').remove()	// 删除这个文本域
@@ -82,7 +84,7 @@ $(window).on('scroll', function(){
 			scrollTimer = null
 			// 如果是点击左边菜单的滚动不触发，避免重复
 			if(asideClick) {
-				h1Active = asideActive($('h1'), 200)
+				h1Active = asideActive($('h1'), 100)
 				// 当前 h1 改变后再改变：h1 的 active 和 h2 的高度
 				if(vm.asideActive !== h1Active) {
 					vm.asideActive = h1Active
@@ -122,7 +124,7 @@ let vm = new Vue({
 	},
 	created() {
 		initHash(this)
-		$('title').text('前端笔记 - ' + (commonData[this.menuParent][this.menuChild].name || this.menuChild))
+		$('title').text(commonData[this.menuParent][this.menuChild].name || this.menuChild)
 	},
 	methods: {
 		// 初始化解析内容
@@ -130,6 +132,7 @@ let vm = new Vue({
 			this.article = formatHtml(commonData[this.menuParent][this.menuChild].content)	// 初始化内容
 			this.asideH1 = pageH1	// 初始化h1标题文字
 			this.asideH2 = pageH2	// 初始化h2标题文字
+			setTimeout("$asideH2 = $('h1:first').nextUntil('h1').filter('h2')", 1) 	// 初始化 h2
 		},
 
 		// 点击左上 logo 回到目录页

@@ -713,37 +713,141 @@ commonData.jsLibrary.jquery.content = `
 	··
 
 	#事件
-	##事件绑定
-	###.on(events [, selector] [, data], handler(eventObject))
+	##.on()
+	绑定事件：·.on(events [, selector] [, data], handler(eventObject))·
 	!!
-	events{String}：事件类型，比如·click·点击事件，可选择添加一个或多个命名空间比如·click.demo·、·click.demo.active·，相当于元素的 class，用于指定删除绑定的事件
+	events{String}：事件类型，比如·click·点击事件，可选择添加一个或多个命名空间比如·click.demo·、·click.demo.active·，相当于元素的 class
 	selector{String}：触发事件的元素为指定后代元素，即事件代理，常用于变动的后代元素，可选择不填或 null
 	data{Anything}：事件被触发时传递给事件处理函数的 event.data，若是 String 类型则需要填写 selector 或为 null，否则会被当做 selector
 	handler{Function}：事件触发时执行的函数
 	!!
-	所有以事件名为方法名的方法都是该事件的快捷写法，比如·.click([data,] handler(eventObject))·等同于·.on('click', [data,] handler(eventObject))·
+	所有以事件名为方法名的方法都是该事件的快捷写法，注意简写的方式没有事件代理
+	比如·.click([data,] handler(eventObject))·等同于·.on('click', [data,] handler(eventObject))·
 	快捷写法支持的事件包括：
 	!!
+	鼠标：
+		click：左键点击
+		contextmenu：右键点击
+		dblclick：左键双击
+		mousedown：左键或右键按下
+		mouseup：左键或右键松开
+		mouseover：当指针覆盖元素时（冒泡）
+		mouseout：当指针离开元素时（冒泡）
+		mouseenter：当指针覆盖元素时（不冒泡）
+		mouseleave：当指针离开元素时（不冒泡）
+		hover(fn(e), fn(e))：当指针覆盖和离开时，等同于.mouseenter(fn(e)).mouseleave(fn(e))
+	键盘：
+		keydown：按下按键时，如果不抬起来会一直触发（input 和 textarea 元素中）
+		keyup：松开案件时（input 和 textarea 元素中）
+		keypress：按下按键时，不抬起来也只触发一次，且只有字母、数字、符号键和 enter 键按下能触发（input 和 textarea 元素中）
 	表单：
-		blur：失去焦点（事件不支持冒泡）
-		change：
+		focus：获得焦点（不冒泡），设置 tabindex 属性也可获得焦点
+		blur：失去焦点（不冒泡）
+		focusin：获得焦点（冒泡）
+		focusout：失去焦点（冒泡）
+		select：选中完文本时（input 和 textarea 元素中）
+		change：元素的值改变的时（input、 textarea 和 select 元素中）
+	浏览器：
+		resize：当浏览器的尺寸改变（在·$(window)·上绑定 ），不同浏览器略有不同，例如 Chrome 是改变时持续调用，Opera 在改变后调用
+		scroll：页面滚动时触发（在·$(window)·或滚动容器上绑定），鼠标点击或拖动滚动条、按箭头键、或使用鼠标的滚轮都可能触发
+	文档加载：
+		ready：写法·$(fn)·，当文档准备就绪时（其他写法都已弃用，例如·$(document).on('ready', fn)·，实际上·$(document)·什么也没选择）
+		$.holdReady(Boolean)：延迟 ready 事件的触发，在 ready 事件触发前调用，例如先执行·$.holdReady(true)·，即使文档准备就绪也不会触发·$(fn)·，需再执行·$.holdReady(false)·才触发·$(fn)·
+	!!
+	·$.holdReady(Boolean)·例如：
+	··
+	// 延迟就绪事件，直到已加载插件
+	$.holdReady(true)
+	$.getScript('myplugin.js', function () {
+	  $.holdReady(false)
+	})
+	··
+
+	##.off()
+	移除事件：·.off([events] [, selector ] [, handler ])·
+	!!
+	events：一个或多个空格分隔的事件类型和可选的命名空间，或只有命名空间，比如·click.demo·、·click.demo.active·，相当于元素的 class
+	selector：事件代理的元素
+	handler：要移除的事件方法（一个事件可绑定多个方法）
+	!!
+	··
+	$('#demo').off() // 移除所有事件
+
+	$('#demo').off('click') // 移除点击事件
+
+	$('#demo').off('.test') // 移除指定命名空间的所有事件
+
+	$('#demo').off('click', '*') // 移除所有代理事件
+
+	$('#demo').click(f1).click(f2)
+	$('#demo').off('click', f1) // 仅移除 f1，f2 事件仍触发
+	··
+
+	##.one()
+	用法同·.on()·，事件只会触发一次
+
+	##.trigger()
+	手动触发事件：·.trigger(event [, extraParameters])·
+	!!
+	event{String/$.Event}：事件类型的字符串或 jQuery 的事件对象
+	extraParameters{Array/Object}：传递给事件函数的参数
+	!!
+	通过·.on()·或快捷方式绑定的事件可以用·.trigger()·手动触发
+	所有以事件名为调用的方法都是该事件的快捷写法，比如·.click()·等同于·.trigger('click')·，trigger 的快捷写法支持的事件同·on()·的支持
+	··
+	$('#btn1').click(function (e, a, b) {
+		console.log(e, a, b)
+	})
+
+	// 点击 btn2 同时触发 btn1
+	$('#btn2').click(function () {
+		console.log('222')
+		$('#btn1').click(['aaa', 'bbb'])
+	})
+	··
+
+	##.triggerHandler()
+	用法同·.trigger()·，不同之处有：
+	!!
+	triggerHandler 不触发默认事件，例如表单提交 submit
+	triggerHandler 只触发第一个匹配到的元素，trigger 会触发所有匹配的元素
+	triggerHandler 触发的函数不冒泡
 	!!
 
-	###.trigger()
-	所有以事件名为调用的方法都是该事件的快捷写法，比如·.click()·等同于·.trigger('click')·
-
-	##浏览器
-	###.resize([eventData,] handler(eventObject))
-	当浏览器窗口的尺寸改变时触发（在某些浏览器如 Opera 只在调整窗口操作结束时被调用），一般用于监听·$(window)·
+	##事件对象
 	!!
-	eventData{PlainObject}：一个对象，它包含的数据键值对映射将被传递给事件处理程序。
-	handler(eventObject){Function}：事件触发时执行的函数
+	currentTarget：调用事件的对象，一般情况下等同于 this（前提没有使用箭头函数或改变了 this 的指向）
+	target：触发事件的元素，可以是元素本身或子元素冒泡触发的子元素，通常同于和 this 比较是否冒泡了
+	data：传递的参数
+	type：事件的类型
+	namespace：当前事件的命名空间
+	which：键盘和鼠标事件中的键盘码（@[参考对照表|http://www.t086.com/article/4315]）或鼠标码（左键 1，中建 2，右键 3）
+	result：事件处理程序的最后返回值，例如点击事件绑定了 2 个函数，第一个函数中 return 了一个字符串，第二个函数将可以接收到
+	relatedTarget：返回事件涉及的元素，例如 mouseover 事件指向是从哪个元素进来的，mouseout 事件指向是离开到最近的那个元素
+	pageX：鼠标相对于当前文档左侧的距离，包括滚动的距离
+	pageY：鼠标相对于当前文档顶部的距离，包括滚动的距离
+	timeStamp：事件触发时距离 1970/1/1 的毫秒数
+	preventDefault()：阻止默认行为，例如点击 a 标签会跳转到对应的链接，调用此方法后不会跳转
+	stopPropagation()：阻止事件的冒泡行为
+	stopImmediatePropagation()：阻止其它的事件执行和冒泡行为，例如点击事件绑定了 2 个函数，第一个函数中使用此方法后将不触发第二个函数
+	isDefaultPrevented()：返回 Boolean 值，检测·event.preventDefault()·是否被调用过
+	isPropagationStopped()：返回 Boolean 值，检测·event.stopPropagation()·是否被调用过
+	isImmediatePropagationStopped()：返回 Boolean 值，检测·event.stopImmediatePropagation()·是否被调用过
 	!!
 
 	#过渡动画
-	##.hide()
-	###.hide([duration] [, easing] [, complete])
-	隐藏匹配的元素，直接使用·.hide()·没有动画，相当于·.css('display', 'none')·
+	##显示隐藏
+	!!
+	.hide()：隐藏元素
+	.show()：显示元素
+	.toggle()：如果元素显示就隐藏，隐藏就显示
+	!!
+	###.hide()
+	隐藏元素
+	直接使用·.hide()·没有动画，相当于·.css('display', 'none')·
+	注意如果 css 设置了·!important·例如·display: block !important;·将隐藏不了，权重不够
+
+	^^传入多个参数：^^·.hide([duration] [, easing] [, complete])·
 	!!
 	duration{Number/String}[400/normal]：动画持续时间，单位 ms，默认 normal(400)，可选 fast(200)、slow(600)
 	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear，其他曲线需要使用插件，比如 @[jQuery Easing Plugin|http://gsgd.co.uk/sandbox/jquery/easing/]
@@ -753,24 +857,138 @@ commonData.jsLibrary.jquery.content = `
 	动画改变的是：width、height、opacity，直到变成 0，然后设置行内样式·display:none;·
 	在开始动画前会将·display·属性值保存在 jQuery 的数据缓存中，如果再次恢复比如使用·.show()·其·display·可以恢复到其初始值
 	注意如果原来是·display:inline;·将会在动画的过程中暂时变成·display:inline-block;·，因为这样才能对 width 和 height 做出改变
-	###.hide(options)
-	也可以传入一个 object ，支持的选项有：
+
+	^^传入一个 Object：^^·.hide(options)·
 	!!
 	duration{Number/String}[400/normal]：动画持续时间，单位 ms，默认 normal(400)，可选 fast(200)、slow(600)
 	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear，其他曲线需要使用插件，比如 @[jQuery Easing Plugin|http://gsgd.co.uk/sandbox/jquery/easing/]
+	queue{Boolean/String}[true]：是否将动画放置在效果队列中，若设为 false 将立即开始动画，若设为一个字符串则表示为该动画队列加上名称，执行时只是加入队列中，动画不会立即启动，执行该队列需调用·$(selector).dequeue('queuename')·才会启动，例如·$('.demo').animate({width: 200}).hide({queue: true})·表示先改变宽度再隐藏，设为 false 将立即隐藏
+	specialEasing{Object}：分别为属性定义运动曲线，例如·{ width: 'linear', height: 'swing' }·
+	step{Function(now, tween)}：每个动画元素的每个动画属性在每帧调用的函数
+		now{Number}：当前帧的属性值
+		tween{Object}：当前帧的属性
+			easing{String}：当前属性应用的运动曲线
+			elem{Element}：当前动画的元素
+			prop{String}：当前动画的 css 属性名
+			start{Number}：当前动画的起始值
+			end{Number}：当前动画的目标值
+			now{Number}：字面上理解是当前动画的当前值？为何和 end 一样
+			pos{Number}：1 ？为何总是 1
+			unit{String}：属性单位，默认 px
+			options{Object}：其他属性，例如 duration 和 queue
+	progress{Function(animation, progress, remainingMs)}：每帧动画完成后调用的一个函数
+		animation{Object}：当前动画的属性，比如当前动画的元素、duration
+		progress{Number}：当前动画的进度，范围 0~1
+		remainingMs{Number}：当前动画剩余的时间，单位 ms
 	complete{Function}：在动画完成时要执行的函数
-	queue{Boolean/String}[true]：是否将动画放置在效果队列中，若设为 false 将立即开始动画，若设为一个字符串则表示为该动画队列加上名称，执行时只是加入队列中，动画不会立即启动，执行该队列需调用·.dequeue('queuename')·才会启动
-	specialEasing{Object}：一组一个或多个通过相应的参数和相对简单函数定义的 CSS 属性
-	step
+	done{Function(animation, jumpedToEnd)}：在动画完成时要执行的函数（Promise 对象状态已完成）
+	fail{Function(animation, jumpedToEnd)}：动画失败完成时执行的函数（Promise 对象状态未完成）
+	always{Function(animation, jumpedToEnd)}：在动画完成或未完成情况下停止时执行的函数（Promise 对象状态已完成或未完成）
+	!!
+
+	###.show()
+	显示元素，和·.hide()·相反，用法同·.hide()·
+
+	###.toggle()
+	如果元素显示就隐藏，隐藏就显示，用法同·.hide()·，多了一种用法：·.toggle(Boolean)·，传入 true 或 false 来指定显示或隐藏元素
+
+	##淡入淡出
+	!!
+	.fadeOut()：以改变透明度的形式渐渐隐藏元素，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
+	.fadeIn()：以改变透明度的形式渐渐显示元素，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
+	.fadeToggle()：如果元素显示就淡出，隐藏就淡入，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
+	.fadeTo()：仅改变元素的透明度，参数用法如下
+	!!
+	·.fadeTo(duration, opacity [, easing] [, complete])·
+	!!
+	duration{Number/String}：动画持续时间，单位 ms，可选 normal(400)、fast(200)、slow(600)
+	opacity{Number}：目标透明度，范围 0~1
+	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear
+	complete{Function}：在动画完成时要执行的函数
+	!!
+
+	##滑动
+	!!
+	.slideUp()：以改变高度的形式渐渐隐藏元素，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
+	.slideDown()：以改变高度的形式渐渐显示元素，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
+	.slideToggle()：如果元素显示就滑动隐藏，隐藏就滑动显示，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
+	!!
+
+	##.animate()
+	根据设置的 css 属性进行动画，2 种使用方式：
+	·.animate(properties [, duration] [, easing] [, complete])·
+	·.animate(properties, options)·
+	参数·properties{Object}·是要设置的 css 属性和值的键值对，其他参数用法同·.hide()·
+	用于动画的属性必须是数字的，例如 width、left 可以执行动画，background-color 不能，除非使用 @[jQuery.Color|https://github.com/jquery/jquery-color] 插件，设置的值可以只用数字表示，默认加上 px，也可以定义非样式属性：scrollTop 和 scrollLeft
+	可以提供一个以 += 或 -= 开始的字符串值，那么目标值就是以这个属性的当前值加上或者减去给定的数字来计算的
+	··
+	$('.demo').animate({
+		width: 200,
+		height: '+=50',
+		lateX: 400 // 自定义的值将从 0 开始变化，在 step 方法中使用
+	}, {
+		duration: 1000,
+		specialEasing: {
+			width: 'linear',
+			height: 'swing'
+		},
+		step: function (now, tween) {
+			if (tween.prop == 'lateX') {
+				$(this).css('transform', 'translateX(' + now + 'px)')
+			}
+		},
+		progress: function (an, pro, ms) {
+			if (pro > 0.5) {
+				console.log('动画进行了一半')
+			}
+		}
+	})
+	··
+
+	##.stop()
+	停止当前动画：·.stop([queue] [, clearQueue] [, jumpToEnd])·
+	!!
+	queue{String}[false]：指定要停止动画队列的名称
+	clearQueue{Boolean}[false]：是否取消所有列队动画
+	jumpToEnd{Boolean}[false]：是否当前动画立即完成
+	!!
+	··
+	$('.demo').animate({width: 600}, 3000).animate({width: 100}, 2000)
+
+	// 在 $('.demo') 进行第一个宽度变为 600 的动画中时：
+	$('.demo').stop() // 停止当前动画，开始执行下一个动画宽变为 100
+	$('.demo').stop(true) // 停止所有动画，因为把其余等待的动画队列清掉了
+	$('.demo').stop(false, true) // 立即完成当前动画，即宽立即变为 600，开始执行下一个动画宽变为 100
+	$('.demo').stop(true, true) // 立即完成当前动画并停止其他动画，因为把其余等待的动画队列清掉了
+	··
+	停止动画将不触发动画完成时的回调 complete 和 done，同时将触发 fail 回调
+
+	##.delay()
+	延迟动画：·.delay(duration [, queue])·
+
+	##其他
+	!!
+	.finish([queue])：立即完成所有动画
+		queue{String}[fx]：指定要完成动画队列的名称
+	.delay(duration [, queue])：延迟动画
+		duration{Number/String}：动画持续时间，单位 ms，可选 fast(200)、slow(600)
+		queue{String}[fx]：指定要完成动画队列的名称
+	.queue()：已经执行的队列信息
+	.dequeue()：执行队列
+	.clearQueue()：从列队中移除所有未执行的项
+	$.queue()：·.queue()·的另一种写法，元素作为第一个参数
+	$.dequeue()：·.dequeue()·的另一种写法，元素作为第一个参数
+	jQuery.fx.off：全局禁用所有动画
+	jQuery.fx.interval[在 v3.0 中已标记为弃用]：全局设置动画的频率，单位 ms
 	!!
 
 	@@
 	jQuery 官方文档|https://jquery.com/
 	jQuery 中文文档|https://www.jquery123.com/
-	css88 jQuery 文档|https://www.css88.com/jqapi-1.9/
+	HTML 中文网 jQuery 文档|https://www.css88.com/jqapi-1.9/
 	插件 - jQuery插件库|http://www.jq22.com/
 	插件 - jQuery之家|http://www.htmleaf.com/
 	@@
 
-	&2018.8.26
+	&2019.3.14
 `

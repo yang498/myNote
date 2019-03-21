@@ -38,6 +38,7 @@ commonData.other.office.content = `
 	2、第一种设置了没用的话在网址栏输入·chrome://version·可查看版本信息，在命令行的最后可以看到被篡改的网址，先在浏览器的快捷方式上右键属性，在^^目标^^上面的最后看看有没恶意的网址，有就删除并保存，没有就点击^^打开文件所在的位置^^，将·chrome·这个 exe 文件改成其他名称再打开。改成其他名称之后会发现浏览器的图标没了，可以先发送到桌面快捷方式，在快捷方式上右键属性，点击^^更改图标>浏览>选择文件所在位置的路径>进入浏览器版本号的文件夹>选择 chrome.dll^^然后选择想要的图标就行了
 
 	##开机选择系统
+	可以使用2种方法
 	1、我的电脑右键-属性-高级系统设置-启动和故障恢复 设置-将系统启动中的两个勾去掉
 	2、Win+R-运行msconfig-引导-将不需要的系统删除，或将超时时间设为0
 
@@ -50,9 +51,13 @@ commonData.other.office.content = `
 	dir /¿b C:\\Windows\\servicing\\Packages\\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt
 	for /¿f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"C:\\Windows\\servicing\\Packages\\%%i"
 	··
-	##你的电脑将在一分钟后自动重启
-	一般是系统文件损坏了，运行 cmd 执行命令·netsh winsock reset·，然后重启电脑即可
+	##开机后的问题
+	如果开机后出现【你的电脑将在一分钟后自动重启】，或者各软件连不上网并出现【socket init error】的错误类型
+	一般强制关机导致系统文件损坏了，运行 cmd 执行命令·netsh winsock reset·，然后重启电脑即可，如果提示权限不够，在搜索 cmd 时右键以管理员身份运行即可
 	如果卡到连桌面都进不去，【按住 shift 并点击重启】以进入安全模式，选择【疑难解答 > 高级选项 > 查看更多恢复选项 > 启动设置 > 重启】，按 4 或 F4 即可，再运行 cmd 执行命令·netsh winsock reset·并重启电脑
+
+	##系统修复
+	若系统出现不知名的错误，可以试试进入 pe 系统：引导修复-C盘回车-高级-写主引导程序-重写主引导程序-返回重启
 
 	#office
 	ctrl+z 后退，ctrl+y 前进

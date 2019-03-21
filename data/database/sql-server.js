@@ -97,6 +97,11 @@ commonData.database.sqlServer.content = `
 	^^in^^：找 London 和 New York 城市：·select * from Person where city ^^in^^ ('London', 'New York')·
 	^^between and^^：找 1975 到 1985 之间的年份，执行：·select * from Persons where City ^^between^^ 1975 ^^and^^ 1985·
 	^^like^^：找包含 n 字母的城市，执行：·select * from Persons where City ^^like^^ '%n%'·
+	###查询 null 值
+	使用·select * from Persons where City = null·是查不到的
+	应使用 is：·select * from Persons where City is null·
+	在 SQL 中的逻辑值除了 true 和 false 还有 unknown（未知），一般任何值与 null 比较都会返回 unknown，而 unknown 会被当作 false，即·where City = null·无结果
+	但在 check 约束中，unknown 就会被当作 true 来处理，例如设置某个字段的值必须大于等于 0，还是可以插入 null，因为在 check 约束中·null >= 0·返回的 unknown 会被当作 true
 
 	##distinct
 	去重，语法：^^select distinct ·columnName· from ·tableName·^^

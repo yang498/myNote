@@ -1,5 +1,10 @@
 commonData.html.applet.content = `
 	#介绍
+	微信小程序和网页的区别在哪里？
+	页面的样式和功能：文本、图片、事件都差不多，但微信小程序还有更多内置的的功能，例如 tab 配置导航，组件中的 picker、map，API 中的扫码、支付等
+	兼容适配：web 要考虑到多种兼容性，而小程序是统一标准，自适应手机单位 rpx，也省了适配机型
+	数据管理：小程序有微信后台可以查看流量数据、管理和运营
+	体验：小程序旨在用完即走，加上运营规则，避免了大部分的营销、刷流量、广告等违规内容
 
 	##起步
 	开发小程序的第一步，你需要@[注册|https://mp.weixin.qq.com/wxopen/waregister?action=step1]一个小程序帐号，通过这个帐号你就可以管理你的小程序。
@@ -2450,7 +2455,6 @@ commonData.html.applet.content = `
 	小程序社区：疑难解答、教程、demo、资源|http://www.wxapp-union.com
 	小程序club：同上|http://www.wxappclub.com
 	知乎：如何入门微信小程序开发，有哪些学习资料？|https://www.zhihu.com/question/50907897
-	知乎：微信小程序为什么不用HTML5、CSS，自己搞了个WXML、WXSS，很多框架用不了，好处一点不知道？|https://www.zhihu.com/question/51809406
 	知乎：「微信小程序」剖析（二）：框架原理 | 在浏览器上运行的猜想|https://zhuanlan.zhihu.com/p/22607204
 	公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析|https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
 	@@

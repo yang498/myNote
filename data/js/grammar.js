@@ -78,7 +78,7 @@ commonData.js.grammar.content = `
 	··
 	!!¿[]	// true
 	[] == false	// true
-
+	[0] == false // true
 
 	+ []	// 0
 	+ {}	// NaN
@@ -90,7 +90,13 @@ commonData.js.grammar.content = `
 	true == 1	// true
 	true == 2	// false
 
+	// 判断数组是否为空
+	arr.length === 0
+	JSON.stringify(arr) === '[]'
 
+	// 判断对象是否为空
+	Object.keys(obj).length === 0
+	JSON.stringify(obj) === '{}'
 	··
 
 	##this
@@ -110,6 +116,37 @@ commonData.js.grammar.content = `
 		}
 	}
 	··
+
+	#其他
+	##判断数组或对象为空
+	简单的和 false 比较是不准确的
+	··
+	{} == false // Uncaught SyntaxError: Unexpected token ==
+	{} === false // Uncaught SyntaxError: Unexpected token ===
+	!{} // false
+	!{a:1} // false
+
+	[] == false // true
+	[] === false // false
+	[0] == false // true
+	[1] == false // false
+	!¿[] // false
+	!¿[0] // false
+	!¿[1] // false
+	··
+	1、length
+	··
+	arr.length === 0
+	Object.keys(obj).length === 0
+	··
+	2、JSON.stringify
+	··
+	JSON.stringify(arr) === '[]'
+	JSON.stringify(obj) === '{}'
+	··
+
+	##运算符优先级
+	@[参照 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table]
 
 	&2018.4.14
 `
