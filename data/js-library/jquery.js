@@ -30,6 +30,7 @@ commonData.jsLibrary.jquery.content = `
 	.class：样式名，比如·$('.demo')·表示选择所有·class="demo"·的元素
 	#id：id 名，比如·$('#demo')·表示选择·id="demo"·的元素，如果有多个相同 id 的元素只返回第一个
 	selector, selectorN：多选以·,·分隔，比如·$("div, #demo, .class")·表示选择所有·<div></div>·、·id="demo"·、·class="text"·的元素
+	$.escapeSelector(selector)：转义选择器中的关键字·. # , : [ ] = @·
 	!!
 	###$.escapeSelector(selector)
 	如果定义的选择器包含·. # , : [ ] = @·，需先用该方法转义，否则获取不了或有歧义，当然也不建议这种选择器符号出现在选择器中
@@ -42,14 +43,6 @@ commonData.jsLibrary.jquery.content = `
 	}
 
 	$('#' + jq('#demo.text'))
-	··
-
-	###html
-	可以选择一段 html 以使用 jQuery 的方法
-	比如：
-	··
-	var html = '<div class="demo"><i></i></div>'
-	$(html).find('i')	// <i></i>
 	··
 
 	##层级
@@ -80,6 +73,12 @@ commonData.jsLibrary.jquery.content = `
 	:last-child：最后一个，和·:first-child·相反
 	:first-of-type：第一个，和·:first-child·的区别在于·$('li:first-child')·若 li 不是第一个子元素也可以获取
 	:last-of-type：最后一个，和·:first-of-type·相反
+	:nth-child(index/odd/even/equation)：根据条件选择
+	:nth-last-child(index/even/odd/equation)：·:nth-child()·的倒数版
+	:nth-of-type(index/even/odd/equation)：和·:nth-child()·不同的是会忽略其他不同的元素
+	:nth-last-of-type(index/even/odd/equation)：·:nth-of-type()·的倒数版
+	:only-child：如果某个元素是其父元素的唯一子元素，那么它就会被选中
+	:only-of-type：和·:only-child·不同的是会忽略其他不同的元素
 	!!
 	###:nth-child(index/odd/even/equation)
 	在匹配的集合中选择所有符合索引值为的元素，注意顺序是从所有同级元素开始算的，index 和 css 一样是从 1 开始的，且不能为负数，可以是字符串 odd 奇数或 even 偶数，也可以是个方程式，比如 4n
@@ -183,6 +182,9 @@ commonData.jsLibrary.jquery.content = `
 	.first()：第一个
 	.last()：最后一个
 	.not(selector/function(index))：除了给定选择器或函数返回值的元素
+	.has(selector)：选择含有指定 selector 的元素
+	.filter(selector/function(index))：筛选元素
+	.slice(start [, end])：截取元素，包括 start 不包括 end
 	!!
 	###.has(selector)
 	选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器，根据 length 的长度可判断是否包含某元素
@@ -204,7 +206,7 @@ commonData.jsLibrary.jquery.content = `
 		return index % 3 === 0
 	})
 	··
-	###.slice(start [, end ])
+	###.slice(start [, end])
 	根据指定的下标范围，生成新的 jQuery 对象，start 和 end 都是整数，包括 start 不包括 end，可以是负数表示倒数，不填 end 表示直到最后
 	比如·$('li').slice(2, 4)·表示选择下标为第 2 和 第 3 的 li 元素
 
@@ -245,6 +247,7 @@ commonData.jsLibrary.jquery.content = `
 	##查找
 	!!
 	.find(selector/element)：往下找，在所有子孙元素中找到匹配的元素
+	.closest(selector/element [, element])：和·find()·相反，往上找，可以传入第二个参数以限定范围（原生元素）
 	!!
 	###.closest(selector/element [, element])
 	从内向外从自己开始在所有祖先元素中找到最先匹配的那个元素，可以传入第二个参数以限定范围（原生元素）
@@ -428,11 +431,6 @@ commonData.jsLibrary.jquery.content = `
 	比如·$.hasData($('.demo')[0])·
 
 	##尺寸
-	###.width([value/function])
-	为匹配的元素集合中获取第一个元素的当前计算宽度值，返回数字，不包括 padding 和 border，设置了·box-sizing: border-box;·也会减去 padding 和 border
-	·.css(width)·返回的是带单位的字符串，为样式设置的计算宽度
-	可以传入第二个参数以设置宽度，传入数字时单位默认为 px，也可以传入自定义单位的字符串
-	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 width，返回值作为要设置的宽度
 	!!
 	.width()：获取宽度，不包括 padding 和 border
 	.height()：获取高度，用法同 .width()
@@ -441,12 +439,13 @@ commonData.jsLibrary.jquery.content = `
 	.outerWidth()：获取宽度，包括 padding 和 border，可传入一个 true 表示包括 margin，用法同上
 	.outerHeight()：获取高度，用法同上
 	!!
+	###.width([value/function])
+	为匹配的元素集合中获取第一个元素的当前计算宽度值，返回数字，不包括 padding 和 border，设置了·box-sizing: border-box;·也会减去 padding 和 border
+	·.css(width)·返回的是带单位的字符串，为样式设置的计算宽度
+	可以传入第二个参数以设置宽度，传入数字时单位默认为 px，也可以传入自定义单位的字符串
+	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 width，返回值作为要设置的宽度
 
 	##位置
-	###.offset([coordinates/function])
-	返回一个对象，包含 left 和 top，坐标相对于文档，即网页左上角
-	可以传入 1 个参数以设置 left 和 top，形式如·{left: 100, top: 100}·，使用后该元素将会添加·relative·定位
-	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 coordinates，返回值作为要设置的宽度
 	!!
 	.offset()：获取或设置相对于文档的 left 和 top 值
 	.offsetParent()：获取离指定元素最近的非 static 定位的祖先元素
@@ -454,11 +453,25 @@ commonData.jsLibrary.jquery.content = `
 	.scrollTop([value])：获取或设置相对于顶部滚动的距离，即网页卷去的高度，可以传入 1 个数值以设置这个距离，比如设为 0 表示回到顶部
 	.scrollLeft([value])：获取或设置相对于左边滚动的距离，用法同·.scrollTop()·
 	!!
+	###.offset([coordinates/function])
+	返回一个对象，包含 left 和 top，坐标相对于文档，即网页左上角
+	可以传入 1 个参数以设置 left 和 top，形式如·{left: 100, top: 100}·，使用后该元素将会添加·relative·定位
+	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 coordinates，返回值作为要设置的宽度
+
+	##.get()
+	###.get(index)
+	获取元素指定的下标：·.get(index)·
+	!!
+	index{Number}：指定获取的元素下标
+	!!
+	例如·$('li').get(0)·获取第一个原生元素，其实等同于·$('li')[0]·，好处在于 index 可以设置为复数表示倒数
+	###.get()
+	返回一个包含所有匹配元素的原生元素的数组，即把 jQuery 元素转成原生元素
 
 	#DOM 操作
 	##复制
 	###.clone([withDataAndEvents] [, deepWithDataAndEvents])
-	深拷贝指定元素，包括子元素
+	深拷贝指定元素，包括子元素，参数的属性：
 	!!
 	withDataAndEvents{Boolean}[false]：该元素是否复制绑定的事件和·.data()·设置的值
 	deepWithDataAndEvents{Boolean}[withDataAndEvents]：该元素的所有后代元素是否复制绑定的事件和·.data()·设置的值，默认和第一个参数保持一致，即·.clone()·等同于·.clone(false, false)·，·.clone(true)·等同于·.clone(true, true)·
@@ -466,15 +479,9 @@ commonData.jsLibrary.jquery.content = `
 	比如·$('.demo').clone().appendTo('.test')·
 	若元素未经复制就进行添加等操作表示移动该元素
 	比如·$('.demo').appendTo('.test')·表示·$('.demo')·被移动到·$('.test')·里面的末尾处
-	注意元素的动态状态也会复制，比如·<input type="text">·输入的值，选中的复选框，出于性能方面的考虑，·<textarea>·输入的值和·<select>·选中的值不会被复制
-	复制的元素在插入到文档之前，可以修改该复制的元素
+	注意元素的动态状态也会复制，比如·<input type="text">·输入的值，选中的复选框，出于性能方面的考虑，·<textarea>·输入的值和·<select>·选中的值不会被复制，复制的元素在插入到文档之前可修改该元素
 
 	##内部添加
-	###.text([text/function])
-	获取或设置匹配元素集合中每个元素的合并文本，包括所有的后代元素
-	不传入参数表示获取，传入 1 个参数表示设置内容为传入的参数
-	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和文本内容，返回值作为要设置的文本内容
-	比如·$('.demo').text()·
 	!!
 	.text([text/function])：获取或设置文本
 	.html([html/function])：获取或设置 html，用法同·.text()·
@@ -483,6 +490,11 @@ commonData.jsLibrary.jquery.content = `
 	.prepend(content [, ...content] / function(index, html))：在元素里面的开头添加，用法同·.append()·
 	.prependTo(target)：写法和 .prepend() 相反
 	!!
+	###.text([text/function])
+	获取或设置匹配元素集合中每个元素的合并文本，包括所有的后代元素
+	不传入参数表示获取，传入 1 个参数表示设置内容为传入的参数
+	或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和文本内容，返回值作为要设置的文本内容
+	比如·$('.demo').text()·
 
 	##外部添加
 	!!
@@ -690,8 +702,8 @@ commonData.jsLibrary.jquery.content = `
 	$('.demo').find('.first').removeClass('active').end().find('.second').addClass('active')
 	··
 
-	#遍历
-	##循环
+	#DOM 遍历
+	##.each()
 	###.each(function(index, item))
 	循环元素并执行函数
 	接受 2 个参数，index 为当前元素的索引，item 代表当前元素，注意是原生的，也可以用·this·表示当前元素
@@ -702,14 +714,18 @@ commonData.jsLibrary.jquery.content = `
 		console.log($(this).css('color'))
 	})
 	··
-	##循环返回
+	##.map()
 	###.map(callback(index, domElement))
 	通过一个函数匹配当前集合中的每个元素，生成新的 jQuery 对象
 	比如：
 	··
-	$('p').append($('input').map(function(){
-		return $(this).val()
-	}).get().join(', '))
+	const res = $('input')
+		.map(function(){
+			return $(this).val()
+		})
+		.get() // 此时返回的仍是一个 jQuery 包装的数组，用 .get() 可转为原生数组
+		.join(', ')
+	$('p').text(res)
 	··
 
 	#事件
@@ -897,14 +913,11 @@ commonData.jsLibrary.jquery.content = `
 	.fadeOut()：以改变透明度的形式渐渐隐藏元素，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
 	.fadeIn()：以改变透明度的形式渐渐显示元素，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
 	.fadeToggle()：如果元素显示就淡出，隐藏就淡入，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
-	.fadeTo()：仅改变元素的透明度，参数用法如下
-	!!
-	·.fadeTo(duration, opacity [, easing] [, complete])·
-	!!
-	duration{Number/String}：动画持续时间，单位 ms，可选 normal(400)、fast(200)、slow(600)
-	opacity{Number}：目标透明度，范围 0~1
-	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear
-	complete{Function}：在动画完成时要执行的函数
+	.fadeTo(duration, opacity [, easing] [, complete])：仅改变元素的透明度
+		duration{Number/String}：动画持续时间，单位 ms，可选 normal(400)、fast(200)、slow(600)
+		opacity{Number}：目标透明度，范围 0~1
+		easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear
+		complete{Function}：在动画完成时要执行的函数
 	!!
 
 	##滑动
@@ -963,24 +976,338 @@ commonData.jsLibrary.jquery.content = `
 	··
 	停止动画将不触发动画完成时的回调 complete 和 done，同时将触发 fail 回调
 
-	##.delay()
-	延迟动画：·.delay(duration [, queue])·
+	##.queue()
+	显示或操作动画队列
+	###.queue([queueName])
+	!!
+	queueName{String}[fx]：指定要获取的动画队列的名称
+	!!
+	获取动画正在执行时的队列信息，返回一个数组，第一个元素是当前动画·"inprogress"·，其他元素是即将执行的动画函数，通常用来获取还有多少个动画队列
+	###.queue([queueName], newQueue)
+	!!
+	queueName{String}[fx]：指定要获取的动画队列的名称
+	newQueue{Array}：一个替换当前列队内容的函数数组
+	!!
+	替换当前剩余的动画队列
+	··
+	$('.demo').queue([]) // 清除动画队列，即当前动画执行完就停止动画
+	··
+	###.queue([queueName], callback(next))
+	!!
+	queueName{String}[fx]：指定要获取的动画队列的名称
+	callback{Function}：要添加进队列的函数
+	!!
+	在当前动画队列最后执行的函数
+	··
+	$('.demo').queue(function () {
+		console.log(123) // 当前元素的所有动画执行完毕之后打印 123
+		$(this).dequeue() // 继续执行其他队列
+	})
+	··
 
 	##其他
 	!!
 	.finish([queue])：立即完成所有动画
 		queue{String}[fx]：指定要完成动画队列的名称
 	.delay(duration [, queue])：延迟动画
-		duration{Number/String}：动画持续时间，单位 ms，可选 fast(200)、slow(600)
-		queue{String}[fx]：指定要完成动画队列的名称
-	.queue()：已经执行的队列信息
-	.dequeue()：执行队列
-	.clearQueue()：从列队中移除所有未执行的项
+		duration{Number/String}：动画要延迟的时间，单位 ms，可选 fast(200)、slow(600)
+		queue{String}[fx]：指定延迟的动画队列的名称
+	.dequeue([queueName])：执行队列
+		queueName{String}[fx]：指定要执行的动画队列的名称
+	.clearQueue([queueName])：删除所有未执行的动画队列，等同于·.queue([])·
+		queueName{String}[fx]：指定要删除的动画队列的名称
 	$.queue()：·.queue()·的另一种写法，元素作为第一个参数
 	$.dequeue()：·.dequeue()·的另一种写法，元素作为第一个参数
-	jQuery.fx.off：全局禁用所有动画
-	jQuery.fx.interval[在 v3.0 中已标记为弃用]：全局设置动画的频率，单位 ms
+	jQuery.fx.off{Boolean}[false]：全局禁用所有动画，即立即完成动画
+	jQuery.fx.interval{Number}[13]：（在 v3.0 中已标记为弃用）全局设置动画的频率，单位 ms
 	!!
+
+	#Ajax
+	##$.ajax()
+	执行 http 请求：·$.ajax(url [, options])·或·$.ajax([options])·
+	·options {Object}·：请求参数设置，可以使用·$.ajaxSetup()·设置任何默认参数，可设置的属性如下：
+	!!
+	url{String}[当前页面地址]：请求地址
+	async{Boolean}[true]：是否异步
+	method{String}[GET]：请求方法（1.9.0 之前的版本需使用 type）
+	data{Object/Array/String}：携带的数据，会转换成查询字符串（字符串类型不转换），若包含数组如·{a: [1, 2]}·将转换为·a=1&a=2·
+	processData{Boolean}[true]：是否将 data 转换成查询字符串
+	dataType{String}[通过 MIME 类型的响应信息来判断]：指定返回的数据类型，可用的类型有：
+		text：纯文本字符串
+		xml： XML 文档
+		html：HTML 文本
+		script：执行该脚本并将该脚本以文本形式返回
+		json：JSON 格式，如果是不规范的 JSON 格式将报错
+		jsonp：跨域请求 JSON 数据，会在请求的 url 最后添加·&callback=jQuery随机数_TIMESTAMP·，并附加查询字符串变量·&_=[TIMESTAMP]·
+		多个用空格分割的值：例如将 jsonp 以 text 接受并以 xml 解析使用·jsonp text xml·或简写·jsonp xml·
+
+	jsonp{String/Boolean}：在 jsonp 请求中指定·&callback=jQuery随机数_TIMESTAMP·的·callback·为新名称，设为 false 将不添加该 callback
+	jsonpCallback{String/Function}：在 jsonp 请求中指定·&callback=jQuery随机数_TIMESTAMP·的·jQuery随机数_TIMESTAMP·为新名称
+	crossDomain{Boolean}[同域为 false， 跨域为 true]：指定是否跨域
+	contentType{Boolean/String}[application/x-www-form-urlencoded; charset=UTF-8]：声明传递给服务器的数据类型
+	context：指定回调函数的上下文（下方有举例）
+	global{Boolean}[true]：是否触发全局 Ajax 事件处理程序
+	headers{Object}：一个额外的"{键:值}"对映射到请求一起发送，此设置在 beforeSend 函数调用之前被设置
+	scriptCharset{String}：在请求·script·脚本时设置其·charset·属性
+	timeout{Number}：设置请求超时时间，单位毫秒
+
+	converters{Object}：将返回的原始数据转换为 js 对象，每个转换器的值是一个函数，默认为·{"* text": window.String, "text html": true, "text json": jQuery.parseJSON, "text xml": jQuery.parseXML}·
+	accepts{Object}[取决于 dataType]：dataType 的 MIME 类型，可自定义（下方有举例）
+	cache{Boolean}[true(dataType 为 script/jsonp 时为 false)]：是否缓存此页面
+	contents{Object}：一个以"{字符串/正则表达式}"配对的对象，根据给定的内容类型，解析请求的返回结果
+	ifModified{Boolean}[false]：是否忽略 HTTP 包 Last-Modified 头信息判断，只有上次请求响应改变时，才允许请求成功
+	isLocal{Boolean}[取决于当前的位置协议]：是否允许当前环境被认定为本地
+	mimeType{String}：指定一个 MIME 类型来覆盖 XHR 的 MIME 类型
+	username{String}：用于响应 http 访问认证请求的用户名
+	password{String}：用于响应 http 访问认证请求的密码
+	traditional{Boolean}[false]：是否以传统的方式来序列化数据（参考下方 url 序列化中的·$.param()·）
+	xhr{Function}：默认为·XMLHttpRequest·对象，老版本 IE 为·ActiveXObject·
+	xhrFields{Object}：以“文件名-文件值”组成的映射，用于设定原生的 XHR对象，也可在跨域请求时用来设置·withCredentials·为·true·
+
+	dataFilter{Function(data, type)}：处理请求的原始响应数据的函数，data 是 Ajax 返回的原始数据，type 是 dataType 参数
+	beforeSend{Function(jqXHR, settings)}：请求发送前的回调函数，可以用来修改请求发送前的 jqXHR，返回 false 将取消这个请求
+	statusCode{Object}：响应状态码和对应执行的函数（下方有举例）
+	success{Function(data, textStatus, jqXHR)}：请求成功的回调函数，也可以接受函数组成的数组，每个函数将被依次调用
+	error{Function(jqXHR, textStatus, errorThrown)}：请求失败的回调函数，也可以接受函数组成的数组，每个函数将被依次调用
+	complete{Function(jqXHR, textStatus)}：请求完成的回调函数，也可以接受函数组成的数组，每个函数将被依次调用
+	!!
+	··
+	// accepts
+	$.ajax({
+		accepts: {
+			mycustomtype: 'application/x-some-custom-type'
+		},
+		// 补充返回的数据的转换方法
+		converters: {
+			'text mycustomtype': function(result) {
+				// parse code
+				return newresult
+			}
+		},
+		dataType: 'mycustomtype'
+	})
+
+	// context
+	$.ajax({
+		url: 'test.html',
+		context: document.body,
+		success: function () {
+			console.log(this) // body 元素
+		}
+	})
+
+	// statusCode
+	$.ajax({
+		statusCode: {
+			404: function() {
+				alert('page not found')
+			}
+		}
+	})
+	··
+
+	##全局 Ajax
+	!!
+	$.ajaxSetup(options{Object})：配置·$.ajax()·的默认值，参数同·$.ajax()·
+	$(document).ajaxStart(function)：在请求开始时执行的函数，和·ajaxSend·的区别在于当前进行的所有 ajax 请求只触发一次
+	$(document).ajaxSend(function (event, jqXHR, ajaxOptions))：在每次请求发送之前执行的函数
+	$(document).ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions))：在每次请求成功时执行的函数
+	$(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError))：在每次请求失败时执行的函数
+	$(document).ajaxComplete(function (event, XMLHttpRequest, ajaxOptions))：在每次请求完成时执行的函数
+	$(document).ajaxStop(function)：在每次请求完成时执行的函数，和·ajaxComplete·的区别在于当前进行的所有 ajax 请求只触发一次
+	!!
+
+	##快捷方法
+	!!
+	$.get()：get 请求
+	$.getJSON()：获取 json 数据
+	$.getScript()：获取 script 数据
+	$.post()：post 请求
+	.load()：在指定元素中加载 DOM
+	!!
+	###$.get()
+	可使用和·$.ajax()·一样的对象参数，或快捷写法·.get(url [, data] [, success] [, dataType])·，等同于：
+	··
+	$.ajax({
+		url: url,
+		data: data,
+		success: success,
+		dataType: dataType
+	})
+	··
+	###$.getJSON()
+	·$.getJSON(url [, data] [, success(data, textStatus, jqXHR)])·，如果 url 包含字符串·callback=?·将被视为·jsonp·请求，等同于：
+	··
+	$.ajax({
+		dataType: 'json',
+		url: url,
+		data: data,
+		success: success
+	})
+	··
+
+	###$.getScript()
+	·$.getScript(url [, success(script, textStatus, jqXHR)])·，等同于：
+	··
+	$.ajax({
+		dataType: 'script',
+		url: url,
+		success: success
+	})
+	··
+	###$.post()
+	可使用和·$.ajax()·一样的对象参数，或快捷写法·$.post(url [, data] [, success] [, dataType])·，等同于：
+	··
+	$.ajax({
+		method: 'POST',
+		url: url,
+		data: data,
+		success: success,
+		dataType: dataType
+	})
+	··
+	###.load()
+	·.load(url [, data] [, complete(responseText, textStatus, XMLHttpRequest)])·
+	将请求返回的 HTML 数据插入至匹配的元素中，默认使用·GET·，若·data·参数提供一个对象将使用·POST·，且不支持·jsonp·
+	在·url·中以空格隔开选择器可选择只加载返回结果中的指定内容
+	注意若请求的 html 中含有脚本将会被执行，若请求的 url 包含以空格隔开的选择器将不会执行
+	··
+	// 给 result 加载内容，若 $('#result') 未获取到元素将不会触发请求
+	$('#result').load('ajax/test.html')
+
+	// 只插入返回结果中的 #container li 部分
+	$('#result').load('ajax/test.html #container li')
+	··
+
+	##url 序列化
+	!!
+	.serialize()：将表单内的元素序列化成 url 查询字符串，形如·a=1&b=2·
+	.serializeArray()：将表单内的元素序列化成对象数组，形如·[{ name: a, value: 1}, {name: b, value: 2}]·
+	$.param()：将对象、对象数组、表单元素转换成 url 的查询字符串
+	!!
+
+	###.serialize()
+	将表单内的元素序列化成 url 查询字符串，形如·a=1&b=2·，表单元素应包含 name 和 value 属性
+	例如·$('form').serialize()·或·$('input, textarea, select').serialize()·
+
+	###.serializeArray()
+	将表单内的元素序列化成对象数组，形如·[{ name: a, value: 1}, {name: b, value: 2}]·，表单元素应包含 name 和 value 属性
+	例如·$('form').serializeArray()·或·$('input, textarea, select').serializeArray()·
+
+	###$.param()
+	将对象序列化成 url 的查询字符串：·$.param(obj [, traditional])·
+	!!
+	obj{Object/Array/jQuery}：如果是数组应是一个对象数组，形如·[{ name: a, value: 1}, {name: b, value: 2}]·，如果是 jQuery 表单元素如 input 应包含 name 和 value 属性
+	traditional{Boolean}[false]：是否以传统的方式来序列化数据
+	!!
+	注意此方法能力有限，对嵌套的对象或数组可能达不到预期
+	··
+	const obj = {
+		a: {
+			one: 1,
+			two: 2,
+			three: 3
+		},
+		b: [1, 2, 3],
+		c: 'ss'
+	}
+
+	console.log($.param(obj))
+	// a%5Bone%5D=1&a%5Btwo%5D=2&a%5Bthree%5D=3&b%5B%5D=1&b%5B%5D=2&b%5B%5D=3&c=ss
+	// 即 a[one]=1&a[two]=2&a[three]=3&b[]=1&b[]=2&b[]=3&c=ss
+
+	console.log($.param(obj, true))
+	// a=%5Bobject%20Object%5D&b=1&b=2&b=3&c=ss
+	// 即 a=[object Object]&b=1&b=2&b=3&c=ss
+	··
+
+	#全局对象
+	##$()
+	!!
+	$(selector [, content])：选择元素，或使用第二个参数指定范围，例如·$('span', this)·，需要获取原生元素可通过下标获取，例如·$('li')[0]·
+	$(element [, ownerDocument])：创建 DOM 元素，或使用第二个参数在指定 document 内创建，例如·$('<div>123</div><p>456</p>')·
+	$(element [, attributes{Object}])：创建 DOM 元素，并以对象的形式添加属性，例如·$('<div></div>', {class: 'demo'})·
+	$(callback{Function})：当 DOM 完成加载时执行函数，例如·$(function () {})·
+	!!
+
+	##$.noConflict()
+	删除·$·变量：·$.noConflict([removeAll{Boolean}])·，若传入·true·会将·jQuery·变量也删掉，通常用于避免变量冲突
+	·$.noConflict()·返回 jQuery 对象，可重新定义一个变量代替 $
+	··
+	// 用闭包重新使用 $
+	$.noConflict()
+	(function ($) {
+		// code
+	})(jQuery)
+
+	// 用 _ 代替 $ 和 jQuery
+	const _ = $.noConflict(true)
+	··
+
+	##延迟对象
+	即需要等待一定时间才执行的方法，可使用延迟方法，比如 $.ajax()、动画、setTimeout
+	可使用的方法有：
+	!!
+	deferred.done(function (data, textStatus, jqXHR))：等同于 ajax 的 success
+	deferred.fail(function (jqXHR, textStatus, errorThrown))：等同于 ajax 的 error
+	deferred.always(function (data|jqXHR, textStatus, jqXHR|errorThrown))：等同于 ajax 的 complete
+	deferred.then(function (即 jqXHR.done), function(即 jqXHR.fail))：包含·.done()·和·.fail()·方法
+	deferred.catch(function (即 jqXHR.fail))：等同于·deferred.then(null, fn)·
+
+	deferred.progress(progressCallbacks, progressCallbacks)：当 Deferred（延迟）对象生成正在执行中的进度通知时，调用添加处理程序
+		progressCallbacks{Function/Array Function}：当 Deferred（延迟）对象生成正在执行中的进度通知时被调用
+		progressCallbacks{Function/Array Function}：附加的函数
+	deferred.notify(args)：调用 Deferred（延迟）对象上进行中的回调 （progressCallbacks）
+		args{Object}：传递参数给进行中的回调
+	deferred.notifyWith(context [, args])：调用 Deferred（延迟）对象上进行中的回调（progressCallbacks）
+		context{Object}：Context（上下文） 作为 this 对象传递给进行中的回调（progressCallbacks）
+		args{Array}：一个可选的参数数组传递给进行中的回调（progressCallbacks）
+	deferred.resolve(args)：调用成功的回调函数，参数同 notify
+	deferred.resolveWith(context [, args])：调用成功的回调函数，参数同 notifyWith
+	deferred.reject(args)：调用失败的回调函数，参数同 notify
+	deferred.rejectWith(context [, args])：调用失败的回调函数，参数同 notifyWith
+	deferred.state()：返回一个字符串，表示 Deferred（延迟）对象的当前状态，可能的值有 pending、resolved、rejected
+
+	deferred.promise()：返回 Deferred（延迟）的 Promise（承诺）对象
+	.promise([type] [, target])：为 DOM 绑定延迟对象，通常用于动画中
+		type{String}[fx]：需要待观察队列类型
+		target{Object}[fx]：将要绑定 promise 方法的对象
+	$.when()：可让零到多个延迟对象执行延迟方法
+	!!
+	###deferred.promise()
+	··
+	const obj = {
+		hello: function (name) {
+			alert('Hello' + name )
+		}
+	}
+	const defer = $.Deferred() // 创建延时对象
+
+	defer.promise(obj) // 创建 promise
+	defer.resolve('John') // 调用成功
+
+	obj.done(function(name) {
+		obj.hello(name) // 先 John
+	}).hello('Karl') // 后 Karl
+	··
+
+	###.promise()
+	··
+	// 当前所有动画完成后触发 done
+	$('div').each(function(i) {
+		$(this).fadeIn().fadeOut(1000 * (i+1))
+	}).promise().done(function () {
+		console.log('finfsh!')
+	})
+	··
+	###$.when()
+	使用·$.when(deferreds)·可让零到多个延迟对象执行延迟方法
+	当延迟对象都被解决（resolved）将触发成功的回调，任意一个被拒绝（rejected）将触发失败的回调
+	··
+	// 都请求成功触发 successFn，任意一个失败触发 failFn
+	$.when($.ajax('/page1'), $.ajax('/page2'))
+		.then(successFn, failFn)
+	··
 
 	@@
 	jQuery 官方文档|https://jquery.com/
@@ -990,5 +1317,5 @@ commonData.jsLibrary.jquery.content = `
 	插件 - jQuery之家|http://www.htmleaf.com/
 	@@
 
-	&2019.3.14
+	&2019.3.26
 `
