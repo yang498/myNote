@@ -1,6 +1,7 @@
 // js 关键字集合，注意只能再前后加 \s，比如 \sin\s，要考虑到后面的加 (?!¿)
 // 避免容易作为单词的一部分也会被匹配，比如 var going 包含 in，在前后加\s
 // 在单词结尾又是在开头的单词，比如 let applet，这个时候就手动加 ¿，再改实在太累了，这种情况也少见
+// 带有 un 的正则是正常的匹配，可是在注释中又不需要匹配，所以先用 un 匹配好做好 ¿ 标记，这样注释中就不匹配了
 let REG_UN = {
 	// 开头声明，粉
 	statement: 'var |let |const |void|function|=&gt;|new |class\s|constructor|super|static|import|export |default',
