@@ -129,7 +129,7 @@ commonData.jsLibrary.jquery.content = `
 	:eq(index)：第 index 个，index 可以为负数表示倒数，比如·$('li:eq(2)')·表示在匹配的 li 元素中选择第 3 个
 	:first：第一个，比如·$('li:first')·
 	:last：最后一个，比如·$('li:last')·
-	:gt(index)：下标大于给定 index 的元素，比如·$('li:gt(2)')·，·$('li:eq(-3)')·表示选择最后 2 个元素，·$('li:eq(-1)')·将不选择任何元素
+	:gt(index)：下标大于给定 index 的元素，比如·$('li:gt(2)')·
 	:lt()：下标小于给定 index 的元素，和·:gt(index)·相反
 	:odd：下标为奇数，即 1 3 5 7 9...，比如·$('li:odd')·
 	:even：下标为偶数，即 0 2 4 6 8...，比如·$('li:even')·
@@ -183,7 +183,9 @@ commonData.jsLibrary.jquery.content = `
 	.last()：最后一个
 	.not(selector/function(index))：除了给定选择器或函数返回值的元素
 	.has(selector)：选择含有指定 selector 的元素
+	$.contains(parent, child)：返回 Boolean 值，判断一个 DOM 元素是否包含另一个 DOM 元素，必须都是原生元素，不支持文本和注释节点
 	.filter(selector/function(index))：筛选元素
+	$.grep(array, function(item, index) [, invert])：筛选元素或数组，·invert·默认为·false·，若为·true·将返回和筛选条件相反的元素
 	.slice(start [, end])：截取元素，包括 start 不包括 end
 	!!
 	###.has(selector)
@@ -468,6 +470,19 @@ commonData.jsLibrary.jquery.content = `
 	###.get()
 	返回一个包含所有匹配元素的原生元素的数组，即把 jQuery 元素转成原生元素
 
+	###.toArray()
+	将 jQuery 元素转成原生元素，以数组的形式返回，等同于·.get()·
+
+	###$.makeArray()
+	·$.makeArray(obj)·：将 jQuery 元素转成原生元素，以数组的形式返回，等同于·.get()·
+
+	##.index()
+	###.index()
+	查找匹配元素的相对于同级元素的索引值，若匹配元素有多个则取第一个，若没有匹配元素则返回·-1·
+	###.index(element)
+	在匹配的元素中查找参数 element，element 可以是 jQuery 元素或原生元素
+	例如·$('div').index($('.demo'))·表示在所有·div·中查找·div.demo·的索引值，所以索引值以·$('div')·为查找基础，不再是所有同级元素
+
 	#DOM 操作
 	##复制
 	###.clone([withDataAndEvents] [, deepWithDataAndEvents])
@@ -661,6 +676,7 @@ commonData.jsLibrary.jquery.content = `
 	!!
 	.add()：在已选择的元素中追加指定元素
 	.addBack()：在已选择的元素中追加前一个选择的元素
+	.pushStack()：生成新的 jQuery 对象
 	!!
 	###.add(selector/html [, context])
 	在已选择的元素中追加选择指定元素，即·$('.demo').add('p')·等同于·$('.demo, p')·
@@ -679,9 +695,17 @@ commonData.jsLibrary.jquery.content = `
 	··
 	可选择第二个参数筛选要追加的元素
 	比如·$('.demo').add('p', '.box')·表示 p 属于 .box 的后代元素才会被追加，等同于·$('.demo').add('.box p')·
+
 	###.addBack()
 	在已选择的元素中追加前一个选择的元素
 	比如·$('.demo').nextAll().addBack()·表示选择 .demo 和之后所有的兄弟元素
+
+	###.pushStack(elements, name, arguments)
+	生成新的 jQuery 对象，通常用于链式调用中
+	··
+	// .demo 删除 class 之后把 p 元素删除，.demo 再添加 class
+	$('.demo').removeClass('active').pushStack($('p')).remove().end().addClass('active')
+	··
 
 	##回退
 	###.end()
@@ -714,19 +738,26 @@ commonData.jsLibrary.jquery.content = `
 		console.log($(this).css('color'))
 	})
 	··
+
+	##$.each()
+	###$.each(jQueryDOM/array/object, callback(index, item))
+	和·.each()·类似，不同的是还可以遍历数组和对象
+
 	##.map()
 	###.map(callback(index, domElement))
-	通过一个函数匹配当前集合中的每个元素，生成新的 jQuery 对象
+	通过一个函数匹配当前集合中的每个元素，通过返回值生成新的 jQuery 对象
 	比如：
 	··
 	const res = $('input')
-		.map(function(){
-			return $(this).val()
-		})
+		.map((index, item) => $(item).val())
 		.get() // 此时返回的仍是一个 jQuery 包装的数组，用 .get() 可转为原生数组
 		.join(', ')
 	$('p').text(res)
 	··
+
+	##$.map()
+	###$.map(jQueryDOM/array/object, callback(item, index))
+	和·.map()·类似，不同的是还可以遍历数组和对象，注意回调函数的参数位置相反
 
 	#事件
 	##.on()
@@ -1224,11 +1255,116 @@ commonData.jsLibrary.jquery.content = `
 	#全局对象
 	##$()
 	!!
-	$(selector [, content])：选择元素，或使用第二个参数指定范围，例如·$('span', this)·，需要获取原生元素可通过下标获取，例如·$('li')[0]·
+	$(selector [, content])：选择元素，或使用第二个参数指定范围，例如·$('span', this)·
+	$(selector)[index]：获取原生元素，可通过下标获取，和数组一样 index 需·>= 0·，例如·$('li')[0]·
+	$(selector).length：获取匹配元素的数量
 	$(element [, ownerDocument])：创建 DOM 元素，或使用第二个参数在指定 document 内创建，例如·$('<div>123</div><p>456</p>')·
 	$(element [, attributes{Object}])：创建 DOM 元素，并以对象的形式添加属性，例如·$('<div></div>', {class: 'demo'})·
 	$(callback{Function})：当 DOM 完成加载时执行函数，例如·$(function () {})·
 	!!
+
+	##$.extend()
+	###$.extend([deep], target [, object1] [, objectN])
+	将多个对象合并到第一个对象
+	!!
+	deep{Boolean}[false]：是否深拷贝（浅拷贝只拷贝第一维，用于一维数组或对象，深拷贝拷贝所有维，用于多维数组和对象）
+	target{Object}：目标对象
+	objectN：被合并的对象，如果目标对象和被合并对象有相同的属性，被合并对象将会覆盖目标对象的相同属性
+	!!
+	··
+	let obj = {
+		name: 'abc',
+		add: 'xyz'
+	}
+	let newObj = $.extend({}， obj)
+	··
+	###$.extend(object)
+	将自定义对象合并到 jQuery 对象中
+	··
+	$.extend({
+		check: function () {
+			return this.each(function () { this.checked = true })
+		},
+		uncheck: function () {
+			return this.each(function () { this.checked = false })
+		}
+	})
+
+	$('input[type=checkbox]').check()
+	··
+	###$.fn.extend()
+	·$.fn.extend()·是另一种写法，即·$.extend === $.fn.extend·
+	··
+	// jQuery 源码
+	jQuery.extend = jQuery.fn.extend = function() {
+		var options, name, src, copy, copyIsArray, clone,
+			target = arguments[ 0 ] || {},
+			i = 1,
+			length = arguments.length,
+			deep = false;
+
+		// 判断是否需要深拷贝
+		if ( typeof target === "boolean" ) {
+			deep = target;
+
+			// 目标对象改为第二个参数
+			target = arguments[ i ] || {};
+			i++;
+		}
+
+		// 当目标不是个对象或函数时则视为一个空对象
+		if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
+			target = {};
+		}
+
+		// 如果只传递一个参数将目标对象当作 jQuery 本身，即表示这是在 jQuery 上扩展新属性
+		if ( i === length ) {
+			target = this;
+			i--;
+		}
+
+		// 循环被合并的对象
+		for ( ; i < length; i++ ) {
+
+			// options 代表每项，null/undefined 不处理
+			if ( ( options = arguments[ i ] ) != null ) {
+
+				// name 代表每项的每个属性
+				for ( name in options ) {
+					src = target[ name ]; // 目标对象的同属性的属性值
+					copy = options[ name ]; // 被合并对象的当前属性值
+
+					// 防止无限循环，当目标对象和被合并对象的属性值相等 ???
+					if ( target === copy ) {
+						continue;
+					}
+
+					// 如果是深拷贝，并且是个对象或数组则进行递归拷贝，copyIsArray 代表当前是个数组
+					if ( deep && copy && ( jQuery.isPlainObject( copy ) || ( copyIsArray = Array.isArray( copy ) ) ) ) {
+
+						if ( copyIsArray ) {
+							copyIsArray = false;
+							clone = src && Array.isArray( src ) ? src : [];
+							// 当目标对象的当前属性值不是数组或对象时用空数组或空对象代替，因为被合并对象的当前属性值是对象或数组
+						} else {
+							clone = src && jQuery.isPlainObject( src ) ? src : {};
+						}
+
+						// 递归调用自身拷贝子对象或数组
+						target[ name ] = jQuery.extend( deep, clone, copy );
+
+					// 如果是浅拷贝则直接赋值，值为 undefined 时不合并
+					} else if ( copy !== undefined ) {
+						target[ name ] = copy;
+					}
+				}
+			}
+		}
+
+		// 返回改变后的目标对象
+		return target;
+	};
+	··
 
 	##$.noConflict()
 	删除·$·变量：·$.noConflict([removeAll{Boolean}])·，若传入·true·会将·jQuery·变量也删掉，通常用于避免变量冲突
@@ -1244,9 +1380,36 @@ commonData.jsLibrary.jquery.content = `
 	const _ = $.noConflict(true)
 	··
 
+	##工具
+	!!
+	$.isArray(obj)：判断是否是数组
+	$.isPlainObject(obj)：判断是否是对象
+	$.isEmptyObject(obj)：判断是否是空对象
+	$.isFunction(obj)：判断是否是函数
+	$.isNumeric(obj)：判断是否是数字
+	$.isWindow(obj)：判断是否是·window·对象
+	$.isXMLDoc(node)：检查一个 DOM 节点是否在 XML 文档中
+	$.type(obj)：获取参数的数据类型，范围·undefined null boolean number string function array date error symbol regexp object·
+
+	$.uniqueSort(array)：去重并排序一个由原生元素组成的数组
+	$.merge(arr1, arr2)：将第二个数组的内容合并到第一个数组
+	$.inArray(value, array [, fromIndex])：在数组中查找指定值的索引，没有找到则返回·-1·，类似原生的·.indexOf()·
+	$.trim(str)：去掉字符串开头和结尾的空白字符
+	$.parseHTML(data [, context] [, isScripts])：返回一个将字符串解析成原生元素的数组
+	$.parseXML(data)：将符合格式的字符串转换成 XML 格式
+	$.proxy(function, context)：接受一个函数，然后返回一个新函数，并且这个新函数始终保持了特定的上下文语境
+	$.globalEval(code)：执行代码，和·eval·的区别是全局执行（在·<head>·中生成·<script>·执行）
+
+	$.now()：返回当前时间，等同于·Date.now()·
+	$.ready：一个异步对象，当文档准备就绪时，它处于 resolves 状态，例如·$.when($.ready, $.ajax()).done(function () { ... })·
+	$.readyException(error)：定义此方法后，使用·$()·方法抛出错误时，此方法会触发
+	$.error(message)：抛出异常错误，接收一个字符串转为参数，如果不是字符串会默认转换成字符串
+	$.noop()：一个空函数，源码就是·noop: function () {}·，在传递空函数的时候可以用一下
+	.jquery：获取 jQuery 脚本的版本号，返回字符串，例如·'3.2.1'·，使用方式：·$.fn.jquery·或·$().jquery·
+	!!
+
 	##延迟对象
 	即需要等待一定时间才执行的方法，可使用延迟方法，比如 $.ajax()、动画、setTimeout
-	可使用的方法有：
 	!!
 	deferred.done(function (data, textStatus, jqXHR))：等同于 ajax 的 success
 	deferred.fail(function (jqXHR, textStatus, errorThrown))：等同于 ajax 的 error
@@ -1309,6 +1472,43 @@ commonData.jsLibrary.jquery.content = `
 		.then(successFn, failFn)
 	··
 
+	##回调对象
+	管理回调函数列表
+	!!
+	$.Callbacks(flags)：创建回调对象
+		flags：回调对象的配置，以空格隔开的字符串，支持的参数有：
+			once：回调列表只执行第一次，即只执行第一个·fire()·
+			memory：将添加到这个列表的后面的最新的回调立即执行
+			unique：不添加重复的回调
+			stopOnFalse：当一个回调返回·false·时中断调用
+	callbacks.add(callbacks)：添加一个函数或数组函数到回调列表
+	callbacks.fire(arguments)：传入一个参数并调用所有回调函数
+	callbacks.fireWith([context] [, args])：传入一个上下文（·this·）和一个参数并调用所有回调函数
+	callbacks.fired()：返回一个 Boolean 值，判断回调是否至少被调用过一次
+	callbacks.has(callback)：返回一个 Boolean 值，传入一个参数回调，判断回调列表中是否有该回调
+	callbacks.disable()：禁止调用回调
+	callbacks.lock()：锁定回调列表的当前状态，和·disable·的区别在于·memory·状态下会触发新添加的回调，·disable·不会
+	callbacks.locked()：返回一个 Boolean 值，判断回调列表是否已被锁定
+	callbacks.remove(callbacks)：在回调列表中删除一个函数或数组函数
+	callbacks.empty()：删除所有回调
+	!!
+	··
+	const foo = str => console.log(str)
+	const bar = str => foo('bar: ' + str)
+	const callbacks = $.Callbacks() // 创建回调对象
+
+	callbacks.add(foo) // 添加 foo
+	callbacks.fire('foo') // foo
+
+	callbacks.add(bar) // 添加 bar
+	callbacks.fire('foo')
+	// foo
+	// bar: foo
+
+	callbacks.remove(bar)
+	callbacks.fire('foo') // foo
+	··
+
 	@@
 	jQuery 官方文档|https://jquery.com/
 	jQuery 中文文档|https://www.jquery123.com/
@@ -1317,5 +1517,5 @@ commonData.jsLibrary.jquery.content = `
 	插件 - jQuery之家|http://www.htmleaf.com/
 	@@
 
-	&2019.3.26
+	&2019.3.28
 `

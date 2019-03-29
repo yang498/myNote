@@ -59,7 +59,7 @@
 			</header>
 			<!-- 头部 end -->
 
-			<!-- 目录索引页 start -->
+			<!-- 首页/目录索引页 start -->
 			<section v-if="index">
 				<div v-for="(parentValue, parentKey) in commonData">
 					<b v-cloak>{{parentValue.name || parentKey}}</b>
@@ -67,13 +67,14 @@
 						<li
 							v-for="(childValue, childKey) in parentValue"
 							v-if="childKey !== 'name'"
+							:class="childValue.underway?'underway':childValue.complete?'complete':''"
 							@click="changePage(parentKey, childKey)"
 							v-cloak
 						>{{childValue.name || childKey}}</li>
 					</ul>
 				</div>
 			</section>
-			<!-- 目录索引页 end -->
+			<!-- 首页/目录索引页 end -->
 
 			<!-- 文档左边目录 -->
 			<aside v-if="!index" :class="index?'':'active'">

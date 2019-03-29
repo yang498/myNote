@@ -184,6 +184,12 @@ section {
                 color: #fff;
                 background-color: $weex;
             }
+            &.underway {
+                border: 2px solid #f80;
+            }
+            &.complete {
+                border: 2px solid $vue;
+            }
         }
     }
 }

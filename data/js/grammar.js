@@ -144,6 +144,28 @@ commonData.js.grammar.content = `
 	JSON.stringify(arr) === '[]'
 	JSON.stringify(obj) === '{}'
 	··
+	#待
+	··
+	//调用函数只会作用于原来的地方，在这个地方调用，并不是把函数拿过来用
+	var a='a';
+	function fnA(){
+		console.log(a);
+	}
+	function fnB(){
+		var a=66;
+		fnA();
+	}
+	fnB();
+
+	//原生dataset会改变标签里面的data值
+	//jq.data不会改变标签里面的data值
+
+	//时间戳从页面加载开始计时e.timeStamp
+	//offsetX相对于元素左上角边框以内
+	//pageX相对于文档左上角
+	//clientX相对于浏览器左上角
+	//screenX相对于屏幕左上角
+	··
 
 	##运算符优先级
 	@[参照 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table]

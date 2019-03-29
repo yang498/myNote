@@ -1,4 +1,4 @@
-commonData.jsLibrary.taro.content = `
+commonData.tool.taro.content = `
 	#建设中。。。
 
 	@@

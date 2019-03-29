@@ -1,13 +1,13 @@
-// 首页目录循环 commonData，key 作为一级路径，二级 key 除了 name 作为 二级路径，显示的目录名用 key 表示，中文加上 name 表示，注意文件名和 key 的一致
+// 首页目录循环 commonData，key 为一级路径，二级 key 为 二级路径，目录名用 key 表示，中文加上 name 表示，注意文件名和 key 的一致
+// underway 表示进行中，complete 表示已完成，没有就是未开始
 // js 文件命名：html 不区分大小写所以用短横线连接，而对象的 key 中用短横线会当作减法，所以用驼峰命名，所以引用 script 时先驼峰转短横线
 let commonData = {
 	html: {
 		html: {},
 		mobile: {},
 		optimize: { name: '优化' },
-		applet: { name: '微信小程序' },
-		weex: {},
-		flutter: {},
+		applet: { name: '微信小程序', underway: true },
+		weex: { underway: true },
 		electron: {}
 	},
 	css: {
@@ -24,34 +24,34 @@ let commonData = {
 		array: {},
 		string: {},
 		math: {},
-		regexp: {},
+		regexp: { underway: true },
 		es6: {},
-		node: {}
+		node: { underway: true }
 	},
 	jsLibrary: {
 		name: 'js库',
-		jquery: {},
-		vue: {},
-		taro: {}
+		jquery: { complete: true },
+		vue: { underway: true }
 	},
 	tool: {
 		name: '工具',
 		sass: {},
 		git: {},
-		gulp: {},
+		gulp: { underway: true },
 		webpack: {},
+		taro: {},
 		other: { name: '其他' }
 	},
 	database: {
 		name: '数据库',
-		sqlServer: { name: 'SQL Server' }
+		sqlServer: { name: 'SQL Server', underway: true }
 	},
 	other: {
 		name: '其他',
 		website: { name: '网站' },
 		interview: { name: '面试' },
-		office: { name: '电脑操作' },
-		article: { name: '杂谈' },
+		office: { name: '电脑操作', underway: true },
+		article: { name: '杂谈', underway: true },
 		english: { name: '英语' }
 	}
 }
