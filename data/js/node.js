@@ -1,7 +1,7 @@
 commonData.js.node.content = `
 	#起步
 	##介绍
-	Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行，首先，JavaScript 通过 Node 在服务器运行，在这个意义上，Node有点像 JavaScript 虚拟机；其次，Node 提供大量工具库，使得 JavaScript 语言与操作系统互动（比如读写文件、新建子进程），在这个意义上，Node 又是 JavaScript 的工具库。
+	Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行，首先，JavaScript 通过 Node 在服务器运行，在这个意义上，Node 有点像 JavaScript 虚拟机；其次，Node 提供大量工具库，使得 JavaScript 语言与操作系统互动（比如读写文件、新建子进程），在这个意义上，Node 又是 JavaScript 的工具库。
 	Node 内部采用 Google 公司的 V8 引擎，作为 JavaScript 语言解释器；通过自行开发的 libuv 库，调用操作系统资源。
 
 	##安装
@@ -31,7 +31,7 @@ commonData.js.node.content = `
 	##npm
 	npm（node package manager）是 node 的包管理工具，用于 js 代码模块的安装卸载、管理依赖等 ，node 包含了 npm，所以安装了 node 就是安装了 npm
 	为什么需要 npm？在开发时如果需要使用一些库，比如 jQuery、express，然后去对应的官网下载 js 文件移动到当前工作目录，时间久了版本更新了又要重新下载，于是 npm 应运而生：大家都把自己开发的代码模块打包后放到 npm 官网上，如果要使用，直接通过 npm 安装指定版本到指定目录直接使用。更重要的是，如果我们要使用模块 A，而模块 A 又依赖于模块 B，npm 可以根据依赖关系，把所有依赖的包都下载。否则手动管理既麻烦又容易出错。
-	在 @[npm 官网|https://npmjs.com/]可以查找包（package）、设置参数以及管理 npm
+	在 @[npm 官网|https://npmjs.com/] 可以查找包（package）、设置参数以及管理 npm
 	在当前项目的文件夹的路径栏输入 cmd 可快速打开当前路径的命令行，下载 jQuery 试试：
 	··
 	npm install jquery
@@ -42,7 +42,7 @@ commonData.js.node.content = `
 	比如开始一个新的项目，将之前已配置好的 package.json 复制到新项目的根目录，直接使用·npm install·将一次性下载全部的依赖（dependencies 和 devDependencies 中的依赖）
 
 	##cnpm
-	npm 连接的是国外的服务器，所以网速比国内的较差，而国内有 npm 的@[淘宝镜像 cnpm|https://npm.taobao.org/]，每 10 分钟更新一次以保证尽量与 npm 官方服务同步，所以国内可以使用 cnpm 代替 npm
+	npm 连接的是国外的服务器，所以网速比国内的较差，而国内有 npm 的 @[淘宝镜像 cnpm|https://npm.taobao.org/]，每 10 分钟更新一次以保证尽量与 npm 官方服务同步，所以国内可以使用 cnpm 代替 npm
 	安装指令：
 	··
 	npm install -g cnpm --registry=https://registry.npm.taobao.org
@@ -62,10 +62,13 @@ commonData.js.node.content = `
 	npm list // 查看当前项目已安装模块的情况
 	npm <command> -h // 命令说明
 	··
-	###参数说明
-	^^-g^^：全局安装，默认安装在·C:/Users/Administrator/AppData/Roaming/npm·，并且写入系统环境变量； 比如安装 weex-toolkit：·npm install weex-toolkit -g·，或 gulp：·npm install gulp -g·，全局模式安装的包可以供所有的程序使用，因此也能在命令行使用·weex·和·gulp·命令。适用于安装脚手架工具
-	^^--save^^：安装到当前项目，并写入 package.json 的 dependencies 属性，适用于像 express 这种项目运行必备的模块
-	^^--save-dev^^：安装到当前项目，并写入 package.json 的 devDependencies 属性，适用于像 gulp 这种项目开发时使用的模块
+	参数说明
+	!!
+	-g：全局安装，并且写入系统环境变量，全局模式安装的包可以供所有的程序使用，因此也能在命令行使用安装包定义的命令w
+		默认安装在·C:/Users/Administrator/AppData/Roaming/npm·
+	--save：安装到当前项目，并写入 package.json 的 dependencies 属性，适用于像 express 这种项目运行必备的模块
+	--save-dev：安装到当前项目，并写入 package.json 的 devDependencies 属性，适用于像 gulp 这种项目开发时使用的模块
+	!!
 
 	##更新版本
 	###更新 node：
@@ -85,7 +88,79 @@ commonData.js.node.content = `
 	###更新 npm：
 	··
 	npm install npm -g
+
+	npm install npm@6.9.0 -g // 指定版本
 	··
+	更新其他全局包基本同上，换个名字
+
+	##npm-check
+	·npm-check·包可检查更新当前项目的依赖包和全局包
+	安装：
+	··
+	cnpm install npm-check -g
+	··
+	常用命令：
+	··
+	npm-check // 当前项目包版本对比
+
+	npm-check -g // 全局包版本对比
+
+	npm-check -u // 当前项目包选择更新
+
+	npm-check -gu // 全局包选择更新
+	··
+	详细参数说明：
+	··
+	$ npm-check <path> <options>
+
+	Path
+		在哪里检查，默认为当前目录，使用 -g 可全局检查
+
+	Options
+	  -u, --update          交互式更新，space 健选择，enter 键确认更新
+	  -y, --update-all      不进行交互直接更新所有包
+	  -g, --global          查看全局模块
+	  -s, --skip-unused     跳过检查未使用的包
+	  -p, --production      跳过 devDependencies
+	  -d, --dev-only        只查看 devDependencies (跳过 dependencies)
+	  -i, --ignore          跳过指定包的检查
+	  -E, --save-exact      在 package.json 中保存确切的版本(x.y.z)，而不是插入符号(^x.y.z)
+	  --specials            检查未使用的依赖项中的特殊项
+	  --no-color            不显示颜色
+	  --no-emoji            不显示 emoji，在 CI 环境中默认没有表情符号
+	  --debug               显示调试输出
+
+	示例
+	  $ npm-check           # 查看哪些可以更新，哪些没有被使用
+	  $ npm-check ../foo    # 检查另一个路径
+	  $ npm-check -gu       # 选择更新全局安装的模块
+	··
+
+	##npm-check-updates
+	·npm-check-updates·包可检查更新当前项目的依赖包和全局包
+	安装：
+	··
+	cnpm install -g npm-check-updates
+	··
+	常用命令：
+	··
+	nuc // 当前项目包版本对比，红色代表重要更新，青色代表次要更新，绿色代表补丁更新
+
+	ncu -u // 更新所有当前项目包
+
+	ncu -g // 全局包版本对比
+
+	ncu -gu // 更新所有全局包
+	// 若 ncu 不能更新全局包，可复制提示的命令手动运行
+
+	ncu '/^gulp-.*$/' // 使用正则更新以 gulp- 开头的包
+	ncu '/^(?!gulp-).*$/' // 使用正则更新非 gulp- 开头的包
+	··
+	由于此工具只更新·package.json·的版本，所以更新之后需更新已安装的包和·package-lock.json·：
+	··
+	cnpm install
+	··
+	更多详细参数查看 @[npm-check-updates|https://www.npmjs.com/package/npm-check-updates]
 
 	#说明
 	##基本用法
@@ -544,6 +619,27 @@ commonData.js.node.content = `
 	#fs
 
 	#timer
+
+	#package.json
+	package.json是项目的配置文件，它是存放在项目根目录的普通json文件
+	创建该文件在根目录下打开cmd执行命令：·npm init·
+	然后按提示依次输入命令回车
+	!!
+	name[demo]：项目名称
+	version[1.0.0]：版本号
+	description：项目描述
+	entry point：入口文件，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出
+	test command：测试命令
+	git repository：git地址
+	keywords：关键描述
+	author：作者
+	license[ISC]：许可协议
+	!!
+	就会有package.json文件的预览，·Is this ok? (yes)·输入y回车即可
+	如果嫌麻烦的话直接不输入全都回车也行，反正在package.json里面可以再改嘛
+	当然如果之前其他项目有package.json文件的话可以直接复制过来再改也可以
+	所以根目录就生成了一个package.json文件
+	最后说一下package.json不是一定需要，看需求，是为了更方便查看信息和管理
 
 	@@
 	node 官网|https://nodejs.org/en/

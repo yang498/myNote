@@ -1,7 +1,7 @@
 // js 关键字集合，注意只能再前后加 \s，比如 \sin\s，要考虑到后面的加 (?!¿)
 // 避免容易作为单词的一部分也会被匹配，比如 var going 包含 in，在前后加\s
 // 在单词结尾又是在开头的单词，比如 let applet，这个时候就手动加 ¿，再改实在太累了，这种情况也少见
-// 带有 un 的正则是正常的匹配，可是在注释中又不需要匹配，所以先用 un 匹配好做好 ¿ 标记，这样注释中就不匹配了
+// 带有 un 的正则是正常的匹配，因为在注释、字符串中不需要进行匹配，所以先用 un 匹配好做好 ¿ 标记，这样不带 un 的正则就不匹配了
 let REG_UN = {
 	// 开头声明，粉
 	statement: 'var |let |const |void|function|=&gt;|new |class\s|constructor|super|static|import|export |default',
@@ -10,7 +10,7 @@ let REG_UN = {
 	// 方法关键字，蓝
 	methodKeyword: 'return|delete |typeof|require\s|throw|eval|instanceof|debugger|this|length',
 	// 类型方法，紫
-	type: 'window|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|Date|RegExp|Error|JSON'
+	type: 'window|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|(?<!\\w)Date|RegExp|Error|JSON'
 }
 
 // 将 REG 加上 (?!¿)，用来匹配
@@ -27,15 +27,16 @@ REG.start = /&lt;(?!\/|¿)([^!\s'"]+?(?=\s|&gt;))/g
 // html 结束标签，分组处理
 REG.endUn = /&lt;\/([^\s'"]+?(?=&gt;))/g
 REG.end = /&lt;(?!¿)\/([^\s'"]+?(?=&gt;))/g
-// 正则尚且能用，注意\/后面不能接.,;\s，问题在于怎么匹配前面没有 \ 的 /，用\/[^]*?\\{0}\/ 是无效的，因为 \ 还是属于 [^]*? 的范围
-REG.regUn = /([\s\(=:])(\/(?!\/|\*|&gt;)([^]+?\/[gim]{0,3}(?=\.|,|;|\s)))/g
-REG.reg = /([\s\(=:])(\/(?!¿|\/|\*|&gt;)[^]+?\/[gim]{0,3}(?=\.|,|;|\s))/g
+// 正则尚且能用，问题在于怎么匹配前面没有 \ 的 /，用\/[^]*?\\{0}\/ 是无效的，因为 \ 还是属于 [^]*? 的范围
+// 以 \s ( = : 开头，/ 开始后不接 / * (注释) 和 > (结束标签)，正则内容用 [^]+? 表示，/ 结束后接 gimuys，以 . ) , ; \s 结尾
+REG.regUn = /([\s\(=:])(\/(?!\/|\*|&gt;)([^]+?\/[gimuys]{0,6}(?=\.|\)|,|;|\s)))/g
+REG.reg = /([\s\(=:])(\/(?!¿|\/|\*|&gt;)[^]+?\/[gimuys]{0,6}(?=\.|\)|,|;|\s))/g
 // 字符串
 REG.strUn = /'|"|`/g
 REG.str = /'(?!¿)[^]*?'(?!¿)|"(?!¿)[^]*?"(?!¿)|`(?!¿)[^]*?`(?!¿)/g
 // 注释：// /**/ <!-- -->，注释中的注释本来不会被匹配，但注意不要 /**/ 嵌套，这个就木有办法了
 REG.comment = /\/\/(?!¿)[^]*?(?=\n)|\/\*(?!¿)[^]*?\*\/(?!¿)|&lt;!--[^]*?--&gt;/g
-// 注释不解析网址：http://、https://、ws://、wss://、git://，和文件路径：*/js/*.js，超出 \w* 的范围就要手动控制下了
+// 注释不解析网址：http://、https://、ws://、wss://、git://，和文件路径如：*/js/*.js，超出 \w* 的范围就要手动控制下了
 REG.unComment = /http:\/\/|https:\/\/|ws:\/\/|wss:\/\/|file:\/\/|[\w\*]\/\*|[\w\*]\*\/|git:\/\//g
 // 先用 Un 将标签、关键字、正则加 ¿ 标记防止误匹配
 REG.un = res => res.replace(REG.startUn, '&lt;¿$1')

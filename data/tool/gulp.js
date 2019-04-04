@@ -1,64 +1,36 @@
 commonData.tool.gulp.content = `
 	#起步
-
-	##介绍
-	gulp是个前端构建工具，它充分借鉴了unix操作系统的管道（pipe）思想，在操作上要比同类型的grunt简单一点
+	gulp 是个前端构建工具，它充分借鉴了 unix 操作系统的管道（pipe）思想，在操作上要比同类型的 grunt 简单一点
 
 	##安装
-	gulp基于node，关于node安装请转至@[node|#js/node]
-	gulp需要全局安装，打开cmd，执行：
+	gulp 基于 node 环境，所以需先安装 @[node 环境|#js/node]，全局安装 gulp：
 	··
-	cnpm install -g gulp
+	cnpm install gulp  -g
 	··
 	查看版本号，执行：
 	··
 	gulp -v
 	··
-
-	##升级
-
-	##package.json
-	package.json是项目的配置文件，它是存放在项目根目录的普通json文件
-	创建该文件在根目录下打开cmd执行命令：·npm init·
-	然后按提示依次输入命令回车
-	!!
-	name[demo]：项目名称
-	version[1.0.0]：版本号
-	description：项目描述
-	entry point：入口文件，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出
-	test command：测试命令
-	git repository：git地址
-	keywords：关键描述
-	author：作者
-	license[ISC]：许可协议
-	!!
-	就会有package.json文件的预览，·Is this ok? (yes)·输入y回车即可
-	如果嫌麻烦的话直接不输入全都回车也行，反正在package.json里面可以再改嘛
-	当然如果之前其他项目有package.json文件的话可以直接复制过来再改也可以
-	所以根目录就生成了一个package.json文件
-	最后说一下package.json不是一定需要，看需求，是为了更方便查看信息和管理
-
-	##gulpfile.js
-	gulpfile.js 是 gulp 项目的主文件，通常位于项目根目录，在其他文件夹下也可以，所以自行新建
-	在当前项目中安装 gulp 依赖：
+	然后在需要的项目中安装 gulp：
 	··
 	cnpm install gulp
 	··
-	若需要将 gulp 写进项目 package.json 文件的依赖中则可以加上 --save-dev：
+	若需要将 gulp 写进项目 package.json 文件的依赖中则可以加上·--save-dev·：
 	··
-	cnpm install --save-dev gulp
+	cnpm install gulp  --save-dev
 	··
-	然后在 package.json 中的·"devDependencies"·会出现 gulp 的版本号，比如：·"gulp": "^3.9.1"·
-	至于为什么在全局安装 gulp 后，还需要在项目中本地安装一次，有兴趣可以去搜索，大体就是为了版本的灵活性
-	###小试牛刀
-	在 gulpfile.js 中定义任务，比如打印 hello world：
+	在全局安装 gulp 后又需要在项目中安装一次，是为了版本的灵活性和项目的独立性
+
+	##gulpfile.js
+	·gulpfile.js·是 gulp 工具的主文件，通常在项目的根目录，不推荐放置在其他文件夹内，不然路径要多写了
+	创建任务打印 hello world：
 	··
 	var gulp = require('gulp')
 	gulp.task('hello', function () {
 		console.log('hello world')
 	})
 	··
-	再去运行gulp任务，在存放gulpfile.js文件的目录下执行·gulp xxx·命令，后面加上要执行的任务名，例如上面定义的·gulp hello·，如果没有指定任务名，则会执行任务名为·default·的默认任务
+	在存放·gulpfile.js·文件的目录下执行·gulp hello·即可运行这个任务，若不指定任务名即·gulp·，将会执行任务名为·default·的默认任务
 
 	#API
 

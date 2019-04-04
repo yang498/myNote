@@ -83,7 +83,7 @@ aside li { line-height: 30px; padding: 0 10px; cursor: pointer; border-radius: 5
 
 aside .h1 li:hover, aside .h1 li.active { color: #fff; background-color: #00B4FA; }
 
-aside .h2 li:hover, aside .h2 li.active { color: #00B4FA; font-weight: bold; }
+aside .h2 li:hover, aside .h2 li.active { color: #00B4FA; }
 
 article { padding: 10px 60px 0 240px; }
 

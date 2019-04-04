@@ -146,7 +146,7 @@ commonData.css.css.content = `
 	}
 	// 简写
 	.item1 {
-		grid-column: 1 / header-end;
+		grid-column: 1 /¿ header-end;
 		grid-row: span 2;
 	}
 
@@ -155,7 +155,7 @@ commonData.css.css.content = `
 		grid-area: header;
 	}
 	.item1 {
-		grid-area: 1 / 1 / 3 / 3;
+		grid-area: 1 /¿ 1 / 3 /¿ 3;
 	}
 	··
 

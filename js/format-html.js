@@ -14,14 +14,16 @@ const formatHtml = text => {
 				// tab 显得比较长，为了格式美观，所以去掉开头 tab，再把其他的 tab 替换成空格
 				item = item.replace(/^\t/gm, '').replace(/\t/g, '    ')
 				// 去掉首尾标识符和换行再保存代码以准备复制
-				pageCode.push(item.slice(3, -3))
+				pageCode.push(item.slice(3, -3).replace(/¿/g, ''))
 				// 1、网址开头和路径不解析成注释
 				item = item.replace(REG.unComment, '$&¿')
 					// 2、注释中包含的标签、关键字、正则、字符串加标记避免被匹配
 					.replace(REG.comment, res => REG.un(res).replace(REG.strUn, '$&¿'))
 					// 3、字符串中包含的标签、关键字、正则加标记避免被匹配，字符串中的注释比如网址开头和路径已排除
 					.replace(REG.str, res => REG.un(res))
-					// 4、加颜色，从顺序上来说以字符串开始，不然之前有 html 标签的属性也包含引号，就误判了
+					// 4、正则中含后行断言和具名组匹配，对 < > 加标记，对 unComment 中的 */ 去标记
+					.replace(REG.reg, res => res.replace(/&lt;|&gt;/g, '$&¿').replace(/\*\/¿/g, '*/'))
+					// 5、加颜色，从顺序上来说以字符串开始，不然之前有 html 标签的属性也包含引号，就误判了
 					.replace(REG.str, '<span class="color-green">$&</span>')	// 字符串，绿
 					.replace(REG.comment, '<span class="color-gray">$&</span>')	// 注释，灰
 					.replace(REG.statement, '<span class="color-pink">$&</span>')	// 开头声明，粉

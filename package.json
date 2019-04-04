@@ -1,7 +1,7 @@
 {
   "name": "note",
   "version": "1.0.0",
-  "description": "html\r \t\tweex\r \tcss\r \tcss-library\r \tjs\r \t\t类型方法\r \tjs-library\r \ttool\r \tother\r \t\tinterview",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +21,6 @@
     "gulp": "^3.9.1",
     "gulp-livereload": "^3.8.1",
     "gulp-load-plugins": "^1.5.0",
-    "gulp-sass": "^4.0.1",
-    "http-server": "^0.11.1"
+    "gulp-sass": "^4.0.1"
   }
 }

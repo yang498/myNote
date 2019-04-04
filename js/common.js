@@ -164,7 +164,7 @@ let vm = new Vue({
 			this.menuChild = child	// 切换子级路径
 			isPageHash = true
 			location.hash = parent + '/' + child	// 手动添加路径，上面设置isPageHash避免触发hashchange事件
-			$('title').text('前端笔记 - ' + (commonData[parent][child].name || child))
+			$('title').text(commonData[parent][child].name || child)
 			initHash(this)	// 初始化解析内容
 			$('html').scrollTop(0)	// 回到顶部
 		}

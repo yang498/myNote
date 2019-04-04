@@ -23,8 +23,9 @@ let commonData = {
 		object: {},
 		array: {},
 		string: {},
-		math: {},
-		regexp: { underway: true },
+		regexp: { complete: true },
+		math: { complete: true },
+		date: { complete: true },
 		es6: {},
 		node: { underway: true }
 	},
