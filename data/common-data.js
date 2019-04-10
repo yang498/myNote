@@ -38,7 +38,7 @@ let commonData = {
 		name: '工具',
 		sass: {},
 		git: {},
-		gulp: { underway: true },
+		gulp: { complete: true },
 		webpack: {},
 		taro: {},
 		other: { name: '其他' }

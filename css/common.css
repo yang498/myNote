@@ -121,7 +121,7 @@ article ul li::before { content: '●'; color: #f80; margin-right: 10px; }
 
 article ul .attr { padding-left: 2em; }
 
-article ul .head { color: #f00; }
+article ul .head { color: #ff3860; font-family: AutoMono, consolas; }
 
 article ul .type { color: #08f; }
 
