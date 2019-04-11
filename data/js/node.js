@@ -37,9 +37,6 @@ commonData.js.node.content = `
 	npm install jquery
 	··
 	此命令默认下载最新版的 jQuery，下载完之后在当前项目根目录的 node_modules 文件夹中可以看到
-	###package.json
-	package.json 是项目的配置文件，通常放在项目根目录，将项目的说明和依赖的模块写入 package.json 将有助于说明和下载，依赖的模块名和版本号在·dependencies·和开发依赖·devDependencies·中
-	比如开始一个新的项目，将之前已配置好的 package.json 复制到新项目的根目录，直接使用·npm install·将一次性下载全部的依赖（dependencies 和 devDependencies 中的依赖）
 
 	##cnpm
 	npm 连接的是国外的服务器，所以网速比国内的较差，而国内有 npm 的 @[淘宝镜像 cnpm|https://npm.taobao.org/]，每 10 分钟更新一次以保证尽量与 npm 官方服务同步，所以国内可以使用 cnpm 代替 npm
@@ -137,7 +134,7 @@ commonData.js.node.content = `
 	··
 
 	##npm-check-updates
-	·npm-check-updates·包可检查更新当前项目的依赖包和全局包
+	·npm-check-updates·包可检查更新当前项目的依赖包和全局包的
 	安装：
 	··
 	cnpm install -g npm-check-updates
@@ -151,16 +148,64 @@ commonData.js.node.content = `
 	ncu -g // 全局包版本对比
 
 	ncu -gu // 更新所有全局包
-	// 若 ncu 不能更新全局包，可复制提示的命令手动运行
 
 	ncu '/^gulp-.*$/' // 使用正则更新以 gulp- 开头的包
 	ncu '/^(?!gulp-).*$/' // 使用正则更新非 gulp- 开头的包
 	··
-	由于此工具只更新·package.json·的版本，所以更新之后需更新已安装的包和·package-lock.json·：
+	更新项目的依赖包时此工具只更新·package.json·的版本，所以更新之后需更新已安装的包和·package-lock.json·：
 	··
 	cnpm install
 	··
+	更新全局包时会提示更新的命令，可复制提示的命令手动运行
 	更多详细参数查看 @[npm-check-updates|https://www.npmjs.com/package/npm-check-updates]
+
+	#package.json
+	##介绍
+	·package.json·是项目的配置文件，通常放在项目根目录，包含项目说明和依赖等信息
+	例如开始一个新的项目，将已配置好的·package.json·复制过去，运行·cnpm install·将下载好全部的依赖
+	可以自行新建，也可在项目根目录下运行·npm init·按照提示进行新建，然后按提示依次输入命令回车
+	·package.json·也不是一定需要，看需求
+	示例·package.json·：
+	··
+	{
+	  "name": "note",
+	  "version": "1.0.0",
+	  "description": "",
+	  "main": "index.js",
+	  "scripts": {
+	    "start": "node index.js"
+	  },
+	  "repository": {
+	    "type": "git",
+	    "url": "git+https://github.com/yang498/note.git"
+	  },
+	  "author": "yy",
+	  "license": "ISC",
+	  "bugs": {
+	    "url": "https://github.com/yang498/note/issues"
+	  },
+	  "homepage": "https://github.com/yang498/note#readme",
+	  "devDependencies": {
+	    "browser-sync": "^2.24.6",
+	    "gulp": "^3.9.1",
+	    "gulp-livereload": "^3.8.1",
+	    "gulp-load-plugins": "^1.5.0",
+	    "gulp-sass": "^4.0.1"
+	  }
+	}
+	··
+	##字段说明
+	!!
+	name[demo]：项目名称
+	version[1.0.0]：版本号
+	description：项目描述
+	entry point：入口文件，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出
+	test command：测试命令
+	git repository：git地址
+	keywords：关键描述
+	author：作者
+	license[ISC]：许可协议
+	!!
 
 	#说明
 	##基本用法
@@ -619,27 +664,6 @@ commonData.js.node.content = `
 	#fs
 
 	#timer
-
-	#package.json
-	package.json是项目的配置文件，它是存放在项目根目录的普通json文件
-	创建该文件在根目录下打开cmd执行命令：·npm init·
-	然后按提示依次输入命令回车
-	!!
-	name[demo]：项目名称
-	version[1.0.0]：版本号
-	description：项目描述
-	entry point：入口文件，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出
-	test command：测试命令
-	git repository：git地址
-	keywords：关键描述
-	author：作者
-	license[ISC]：许可协议
-	!!
-	就会有package.json文件的预览，·Is this ok? (yes)·输入y回车即可
-	如果嫌麻烦的话直接不输入全都回车也行，反正在package.json里面可以再改嘛
-	当然如果之前其他项目有package.json文件的话可以直接复制过来再改也可以
-	所以根目录就生成了一个package.json文件
-	最后说一下package.json不是一定需要，看需求，是为了更方便查看信息和管理
 
 	@@
 	node 官网|https://nodejs.org/en/

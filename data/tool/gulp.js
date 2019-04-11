@@ -13,8 +13,8 @@ commonData.tool.gulp.content = `
 	!!
 	例如：
 	··
-	const gulp = require('gulp')
-	const {sass} = require('gulp-load-plugins')()
+	const gulp = require('gulp') // 加载 gulp 模块
+	const sass = require('gulp-sass') // 加载 gulp-sass 模块
 
 	// 创建编译 sass 任务：获取 scss 文件，以 compact 模式编译，将结果输出到 css 文件中
 	gulp.task('sass', function () {
@@ -146,6 +146,7 @@ commonData.tool.gulp.content = `
 	'a??' // 能匹配 a.b、abc，不能匹配 ab/，因为 ? 不会匹配路径分隔符
 	'[xyz].js' // 只能匹配 x.js、y.js、z.js
 	'[^xyz].js' // 能匹配所有非 x.js、y.js、z.js 的 js 文件
+	'*.+(js|css)' // 匹配所有后缀名为 js 或 css 的文件
 
 	gulp.src(['*.html', 'css/*.css', 'js/*.js']) // 多种匹配模式使用数组
 	gulp.src(['*.js', '!b*.js']) // 匹配所有不是以 b 开头的 js 文件
@@ -211,7 +212,7 @@ commonData.tool.gulp.content = `
 	#常用插件
 
 	##自动加载
-	说明：·gulp-load-plugins·这个插件能自动加载·package.json·文件里的 gulp 插件
+	说明：·gulp-load-plugins·这个插件能自动加载·package.json·文件里的 gulp 插件，@[参数配置|https://www.npmjs.com/package/gulp-load-plugins#options]
 	安装：
 	··
 	cnpm install gulp-load-plugins --save-dev
@@ -234,8 +235,8 @@ commonData.tool.gulp.content = `
 	例如假设·package.json·文件里的依赖是这样的：
 	··
 	{
-		'devDependencies': {
-			'gulp": "^3.9.1",
+		"devDependencies": {
+			"gulp": "^3.9.1",
 			"gulp-rename": "^1.2.0",
 			"gulp-ruby-sass": "^4.0.1",
 			"gulp-load-plugins": "^1.5.0"
@@ -251,7 +252,7 @@ commonData.tool.gulp.content = `
 	注意：因为是通过·package.json·文件来加载插件的，所以要确定需要的插件已经写入到了·package.json·文件依赖里，并且已经安装好了这些插件
 
 	##重命名
-	用·dest()·输出文件时，文件名使用的是·src()·获取的文件名，·gulp-rename·插件可以改变这个文件名
+	用·dest()·输出文件时，文件名使用的是·src()·获取的文件名，·gulp-rename·插件可以改变这个文件名，@[用法|https://www.npmjs.com/package/gulp-rename#usage]
 	安装：
 	··
 	cnpm install gulp-rename --save-dev
@@ -271,14 +272,14 @@ commonData.tool.gulp.content = `
 	··
 
 	##文件压缩
-	压缩 html 文件：·gulp-htmlmin·
-	压缩 css 文件：·gulp-csso·
-	压缩 js 文件：·gulp-uglify·
-	压缩图片：·gulp-imagemin·
+	压缩 html 文件：·gulp-htmlmin·，@[参数配置|https://github.com/kangax/html-minifier#options-quick-reference]
+	压缩 css 文件：·gulp-clean-css·，@[参数配置|https://github.com/jakubpawlowicz/clean-css#constructor-options]
+	压缩 js 文件：·gulp-uglify·，@[参数配置|https://github.com/mishoo/UglifyJS2#minify-options]
+	压缩图片：·gulp-imagemin·，@[用法|https://www.npmjs.com/package/gulp-imagemin#usage]
 	安装：
 	··
 	cnpm install gulp-htmlmin --save-dev
-	cnpm install gulp-csso --save-dev
+	cnpm install gulp-clean-css --save-dev
 	cnpm install gulp-uglify --save-dev
 	cnpm install gulp-imagemin --save-dev
 	··
@@ -295,7 +296,7 @@ commonData.tool.gulp.content = `
 	··
 
 	##文件合并
-	·gulp-concat·插件可用来把多个文件合并为一个文件，例如合并所有 js 或 css 为一个文件，这样就能减少 http 请求数了
+	·gulp-concat·插件可用来把多个文件合并为一个文件，例如合并所有 js 或 css 为一个文件，这样就能减少 http 请求数了，@[用法|https://www.npmjs.com/package/gulp-concat#usage]
 	安装：
 	··
 	cnpm install --save-dev gulp-concat
@@ -313,6 +314,7 @@ commonData.tool.gulp.content = `
 	··
 
 	##js 代码检查
+	@[参数配置|https://jshint.com/docs/options/]
 	安装：
 	··
 	cnpm install jshint --save-dev
@@ -329,16 +331,13 @@ commonData.tool.gulp.content = `
 	})
 	··
 
-	## 编译 less 和 sass
-	安装 less：
-	··
-	cnpm install gulp-less --save-dev
-	··
-	安装 sass：
+	## 编译 sass
+	@[参数配置|https://www.npmjs.com/package/gulp-sass#options]
+	安装：
 	··
 	cnpm install gulp-sass --save-dev
 	··
-	使用 sass：
+	使用：
 	··
 	const gulp = require('gulp'),
 		sass = require('gulp-sass')
@@ -351,6 +350,7 @@ commonData.tool.gulp.content = `
 	··
 
 	##babel 转 es5
+	@[安装说明|https://www.npmjs.com/package/gulp-babel#install]，@[参数配置|https://babeljs.io/docs/en/options]
 	安装：
 	··
 	cnpm install --save-dev gulp-babel @babel/core @babel/preset-env
@@ -369,9 +369,8 @@ commonData.tool.gulp.content = `
 
 	##浏览器自动刷新
 	·browser-sync·插件能让浏览器在文件改动时自动刷新页面，还可搭建静态服务，同一个 WiFi 中的任何设备都可以方便地访问到
-	默认打开·localhost:3000·，UI 配置页面为端口号 +1，即·localhost:3001·
-	若 3000 端口被占用将打开 3001，UI 配置页面为 3002，依次类推
-	@[可指定端口号和默认打开文件|http://www.browsersync.cn/docs/options]
+	默认打开·localhost:3000·，UI 配置页面为端口号 +1，即·localhost:3001·，若 3000 端口被占用将打开 3001，UI 配置页面为 3002，依次类推
+	@[参数配置|http://www.browsersync.cn/docs/options]
 	安装：
 	··
 	cnpm install browser-sync --save-dev
@@ -391,11 +390,10 @@ commonData.tool.gulp.content = `
 
 	##其他
 	!!
-	gulp-sourcemaps：映射源文件，支持的插件@[说明|https://github.com/gulp-sourcemaps/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support]，sourcemap 参考@[说明|http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html]
-	gulp-replace：文件内的文本替换插件，可使用正则
-	gulp-autoprefixer：给 css 样式补充前缀
-	gulp-clean-css：压缩 css，还可兼容 IE 浏览器
-	gulp-typescript：ts 编译成 js
+	gulp-sourcemaps：映射源文件，支持的插件@[说明|https://github.com/gulp-sourcemaps/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support]，sourcemap @[参考说明|http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html]，@[npm|https://www.npmjs.com/package/gulp-sourcemaps]
+	gulp-replace：文件内的文本替换插件，可使用正则，@[npm|https://www.npmjs.com/package/gulp-replace]
+	gulp-autoprefixer：给 css 样式补充前缀，@[npm|https://www.npmjs.com/package/gulp-autoprefixer]
+	gulp-typescript：ts 编译成 js，@[npm|https://www.npmjs.com/package/gulp-typescript]
 	!!
 
 	#啃得起全家桶
@@ -405,7 +403,7 @@ commonData.tool.gulp.content = `
 	··
 	安装打包插件：
 	··
-	cnpm install --save-dev gulp-htmlmin gulp-csso gulp-uglify gulp-imagemin gulp-babel @babel/core @babel/preset-env
+	cnpm install --save-dev gulp-htmlmin gulp-clean-css gulp-uglify gulp-imagemin gulp-babel @babel/core @babel/preset-env
 	··
 	·gulpfile.js·：
 	··
@@ -438,7 +436,7 @@ commonData.tool.gulp.content = `
 	// 压缩 css
 	gulp.task('mcss', () => {
 		gulp.src('css/*.css')
-	        .pipe(p.csso())
+	        .pipe(p.cleanCss())
 	        .pipe(gulp.dest('dist/css'))
 	})
 
@@ -467,6 +465,7 @@ commonData.tool.gulp.content = `
 	博客园-无双|http://www.cnblogs.com/2050/p/4198792.html
 	npm 搜索 gulp 插件|https://www.npmjs.com/search?q=keywords:gulpplugin
 	Browsersync 中文网|http://www.browsersync.cn
+	gulp 4 升级指南（本文是 3）|https://segmentfault.com/a/1190000005357048
 	@@
 
 	&2019.4.10
