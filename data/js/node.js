@@ -48,6 +48,7 @@ commonData.js.node.content = `
 	··
 	cnpm install <name>
 	··
+	注意用·cnpm·安装的 node_modules 文件夹是以下划线开头并且带有·@版本·，而不带下划线和版本号的是这些文件的快捷方式，不影响使用
 
 	##npm 命令
 	直接在命令行输入·npm·回车可查看能使用的命令列表
@@ -61,11 +62,46 @@ commonData.js.node.content = `
 	··
 	参数说明
 	!!
-	-g：全局安装，并且写入系统环境变量，全局模式安装的包可以供所有的程序使用，因此也能在命令行使用安装包定义的命令w
+	-g：全局安装，并且写入系统环境变量，全局模式安装的包可以供所有的程序使用，因此也能在命令行使用安装包定义的命令
 		默认安装在·C:/Users/Administrator/AppData/Roaming/npm·
-	--save：安装到当前项目，并写入 package.json 的 dependencies 属性，适用于像 express 这种项目运行必备的模块
-	--save-dev：安装到当前项目，并写入 package.json 的 devDependencies 属性，适用于像 gulp 这种项目开发时使用的模块
+	--save：安装到当前项目，并写入·package.json·的·dependencies·属性，适用于像 express 这种项目运行必备的模块
+	--save-dev：安装到当前项目，并写入·package.json·的·devDependencies·属性，适用于像 gulp 这种项目开发时使用的模块
 	!!
+
+	##package.json
+	·package.json·是项目的配置文件，通常放在项目根目录，包含项目说明和依赖等信息
+	例如开始一个新的项目，将已配置好的·package.json·复制过去，运行·cnpm install·将下载好全部的依赖
+	可以自行新建，也可在项目根目录下运行·npm init·按照提示输入进行新建，项目名称（name）和版本（version）必填，其他可选填
+	·package.json·也不是一定需要，看需求
+	字段说明：
+	!!
+	name：项目名称
+	version：版本号，写法为“大版本.次要版本.小版本”
+	author：作者
+	description：项目描述
+	keywords：关键描述，标签
+	license：许可协议
+	scripts：npm 命令行缩写，例如·"scripts": { "start": "node index.js" }·运行·npm run start·即执行·node index.js·
+	bin：指定命令对应的文件的位置，例如·"bin": { "index": "data/index.js" }·，对应简写·"scripts": { "start": "node index" }·
+	dependencies：指定项目运行所依赖的模块
+	devDependencies：指定项目开发所依赖的模块
+		依赖的模块版本说明：
+			指定版本：例如·1.2.3·
+			~指定版本：例如·~1.2.3·，表示安装·1.2.x·的最新版本，即·1.2.3 <= 版本 < 1.3.0·
+			^指定版本：例如·^1.2.3·，表示安装·1.x.x·的最新版本，即·1.2.3 <= 版本 < 2.0.0·
+				注意若大版本号为·0·则等同于·~指定版本·，因为·0·通常代表开发阶段，尽量不进行大改动避免不兼容
+	peerDependencies：比如项目依赖 A 和 B 模块的 1.0 版，而 A 又依赖 B 的 2.0 版。此字段可指定安装依赖的版本
+	main：指定被·require()·的文件，在·node_modules·内可查看示例，默认为模块根目录的·index.js·
+	config：添加命令行的环境变量，例如·"config" : { "port" : "8080" }·，脚本中引用·process.env.npm_package_config_port·
+	browser：指定该模板供浏览器使用的版本，像·Browserify·工具打包时用得到
+	engines：指定该模块的运行平台，例如  Node 的某个版本·{ "engines" : { "node" : ">=0.10.3 <0.12" } }·
+	man：指定当前模块的 man 文档的位置，例如·"man": [ "./doc/calc.1" ]·
+	preferGlobal{Boolean}：当用户不将该模块安装为全局模块时（不 –g），要不要显示警告，表示该模块全局模块
+	style：当模块供浏览器使用时，指定样式文件所在的位置，打包时用得到。例如·"style": [ "./node_modules/tipso/src/tipso.css" ]·
+	其他的看字段名也能看出个大概
+	!!
+	###package-lock.json
+	·npm install·时生成的文件，记录了当下各个·npm·包的具体来源和版本号，以保证其他人在·npm install·时大家的依赖能保证一致
 
 	##更新版本
 	###更新 node：
@@ -159,54 +195,6 @@ commonData.js.node.content = `
 	更新全局包时会提示更新的命令，可复制提示的命令手动运行
 	更多详细参数查看 @[npm-check-updates|https://www.npmjs.com/package/npm-check-updates]
 
-	#package.json
-	##介绍
-	·package.json·是项目的配置文件，通常放在项目根目录，包含项目说明和依赖等信息
-	例如开始一个新的项目，将已配置好的·package.json·复制过去，运行·cnpm install·将下载好全部的依赖
-	可以自行新建，也可在项目根目录下运行·npm init·按照提示进行新建，然后按提示依次输入命令回车
-	·package.json·也不是一定需要，看需求
-	示例·package.json·：
-	··
-	{
-	  "name": "note",
-	  "version": "1.0.0",
-	  "description": "",
-	  "main": "index.js",
-	  "scripts": {
-	    "start": "node index.js"
-	  },
-	  "repository": {
-	    "type": "git",
-	    "url": "git+https://github.com/yang498/note.git"
-	  },
-	  "author": "yy",
-	  "license": "ISC",
-	  "bugs": {
-	    "url": "https://github.com/yang498/note/issues"
-	  },
-	  "homepage": "https://github.com/yang498/note#readme",
-	  "devDependencies": {
-	    "browser-sync": "^2.24.6",
-	    "gulp": "^3.9.1",
-	    "gulp-livereload": "^3.8.1",
-	    "gulp-load-plugins": "^1.5.0",
-	    "gulp-sass": "^4.0.1"
-	  }
-	}
-	··
-	##字段说明
-	!!
-	name[demo]：项目名称
-	version[1.0.0]：版本号
-	description：项目描述
-	entry point：入口文件，当别人安装了你发布的模块时，require你的模块的时候取得的就是你main字段规定的入口文件的输出。例如你写入了 { "main":"XXX.js"}，而他人通过npm install '你的模块名称' . 安装了你的模块后，他通过 var X = require('你的模块名称')取得的就是你在XXX.js的输出
-	test command：测试命令
-	git repository：git地址
-	keywords：关键描述
-	author：作者
-	license[ISC]：许可协议
-	!!
-
 	#说明
 	##基本用法
 	运行 node 程序，就是使用 node 命令读取 JavaScript 脚本
@@ -296,7 +284,7 @@ commonData.js.node.content = `
 	assert：断言，判断表达式符不符合预期，根据条件抛出对应的错误
 	async_hooks[试验]：异步钩子，对异步操作生命周期过程的处理
 	Buffer：处理二进制数据的接口
-	child_process：新建子进程，子进程的运行结果储存在系统缓存中（最大200KB），等子进程运行结束后，主进程再用回调函数读取子进程的运行结果
+	child_process：新建子进程，子进程的运行结果储存在系统缓存中（最大 200KB），运行结束后主进程再用回调函数读取子进程的运行结果
 	cluster：单个 Node.js 实例运行在单个线程中，使用 cluster 启用多个进程以提高效率和负载均衡
 	console：类似于浏览器提供的 JavaScript 控制台
 	crypto：加密，是对 OpenSSL 的哈希、HMAC、加密、解密、签名、以及验证功能的一整套封装
@@ -590,7 +578,94 @@ commonData.js.node.content = `
 	··
 
 	#path
-	path > timer > module > global > http > fs > 连接 SQL > 连接 MongoDB
+	用于处理文件路径和目录路径的实用工具，使用前需先引入：
+	··
+	const path = require('path')
+	··
+	注意·path·在不同的系统上会有不同的表现，·path·的属性方法有：
+	!!
+	path.win32：Windows 系统的特定实现的访问
+	path.posix：POSIX 系统的特定实现的访问
+	path.delimiter：返回系统的路径定界符，Windows 返回·;·，POSIX 返回·:·，例如用此属性分割·process.env.PATH·
+	path.basename(path [, ext])：返回参数·path·的最后一部分，即文件名或目录名，若是目录名则尾部的分隔符将被忽略
+	path.dirname(path)：返回参数·path·除去最后一部分的部分，和·basename()·相反，尾部的分隔符将被忽略
+	path.extname(path)：返回参数·path·的扩展名，即从最后一次出现·.·和后面的字符串部分，若·.·只有一个且作为开头将返回空字符串
+	path.parse(path)：解析参数路径返回一个对象，尾部的目录分隔符将被忽略，返回形如·{ root, dir, base, ext, name}·
+	path.format(pathObject)：解析路径对象返回字符串，和·path.parse()·相反，注意·dir·可覆盖·root·，·base·可覆盖·name·和·ext·
+	path.normalize(path)：解析路径，即解析·.·（当前目录）和·..·（返回上级目录），多个连续的分隔符只保留一个， 尾部的分隔符会保留
+	path.join([...paths])：用路径分隔符连接并解析多个参数路径片段，解析规则同·normalize()·
+	path.resolve([...paths])：将路径或路径片段的序列解析为绝对路径=-=-=-=-=-=
+	path.isAbsolute(path)：返回一个 Boolean，检测参数·path·是否为绝对路径
+	path.relative(from, to)：根据当前工作目录返回·from·到·to·的相对路径。 若·from·和·to·相同则返回空字符串
+	!!
+
+	##basename()
+	·path.basename(path [, ext])·：返回参数·path·最后一部分，即文件名或目录名，若是目录名则尾部的分隔符将被忽略
+	!!
+	path{String}：路径
+	ext{String}：文件扩展名，若路径的最后部分是文件名，表示不返回扩展名部分
+	!!
+	··
+	path.basename('/foo/bar/baz/asdf/quux.html') // quux.html
+	path.basename('/foo/bar/baz/asdf/quux.html', '.html') // quux
+
+	// Windows 风格路径在 POSIX 系统上的结果不同
+	path.basename('C:\\\\temp\\\\myfile.html') // myfile.html（Windows）
+	path.basename('C:\\\\temp\\\\myfile.html') // C:\\temp\\myfile.html（POSIX）
+
+	// 使用 Windows 文件路径时想获得一致的结果需用 path.win32
+	path.win32.basename('C:\\\\temp\\\\myfile.html') // myfile.html
+	// 使用 POSIX 文件路径时想获得一致的结果需用  path.posix
+	path.posix.basename('/tmp/myfile.html') // myfile.html
+	··
+
+	##parse()
+	·path.parse(path)·：解析参数路径返回一个对象，尾部的目录分隔符将被忽略，返回的对象将具有以下属性：
+	!!
+	root：根路径
+	dir：·dirname()·获取的除去最后一部分的部分
+	base：·basename()·获取的最后一部分
+	ext：·extname()·获取的扩展名部分
+	name：获取的最后一部分的除去扩展名的部分
+	!!
+	··
+	// POSIX 系统
+	┌─────────────────────┬────────────┐
+	│          dir        │    base    │
+	├──────┬              ├──────┬─────┤
+	│ root │              │ name │ ext │
+	"  /¿    home/user/dir /¿ file  .txt "
+	└──────┴──────────────┴──────┴─────┘
+
+	// Windows 系统
+	┌─────────────────────┬────────────┐
+	│          dir        │    base    │
+	├──────┬              ├──────┬─────┤
+	│ root │              │ name │ ext │
+	" C:\\      path\\dir   \\ file  .txt "
+	└──────┴──────────────┴──────┴─────┘
+	··
+	··
+	path.parse('C:\\\\path\\\\dir\\\\file.txt')
+	/*
+	返回：{
+		root: 'C:\\',
+		dir: 'C:\\path\\dir',
+		base: 'file.txt',
+		name: 'file',
+		ext: '.txt'
+	}
+	*/
+	··
+
+	##normalize()
+	·path.normalize(path)·：解析路径，即解析·.·（当前目录）和·..·（返回上级目录），多个连续的分隔符只保留一个， 尾部的分隔符会保留
+	··
+	path.normalize('/foo/bar//¿baz/asdf/quux/..') // /¿foo/bar/baz/asdf
+	path.normalize('C:\\\\temp\\\\\\\\foo\\bar\\\\..\\\\') // C:\\temp\\foo\\
+	// Windows \\ 和 /¿ 都支持，所以 /¿ 会替换为首选的 \\
+	path.win32.normalize('C:/¿temp\\\\\\\\/\\\\/\\\\/foo/bar') // C:\\temp\\foo\\bar
+	··
 
 	#querystring
 	解析与格式化 URL 的查询字符串，使用前需先引入：
@@ -664,6 +739,7 @@ commonData.js.node.content = `
 	#fs
 
 	#timer
+	timer > module > global > http > fs > 连接 SQL > 连接 MongoDB
 
 	@@
 	node 官网|https://nodejs.org/en/
@@ -673,5 +749,5 @@ commonData.js.node.content = `
 	cnpm 官网|https://npm.taobao.org/
 	@@
 
-	&2019.1.15
+	&2019/4/13
 `

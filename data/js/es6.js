@@ -214,5 +214,5 @@ commonData.js.es6.content = `
 	ECMAScript 6 入门|http://es6.ruanyifeng.com/
 	@@
 
-	&2018.11.27
+	&2018/11/27
 `

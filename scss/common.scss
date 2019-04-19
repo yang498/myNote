@@ -61,7 +61,7 @@ header {
     i.iconfont {
         font-size: 20px;
     }
-    .menu li:hover, .menu li.active, .search i:not(.active):hover, .set:hover, .set li:hover, .back-top:hover {
+    .menu li:hover, .menu li.active, .search i:not(.active):hover, .option>*:hover {
         background-color: $blue;
     }
     .menu>li, .set {
@@ -132,7 +132,7 @@ header {
 				}
             }
         }
-        .search i, .set, .back-top {
+        .search i, .set, .git, .back-top {
             width: 60px;
             line-height: 40px;
         }

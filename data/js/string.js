@@ -153,5 +153,5 @@ commonData.js.string.content = `
 	#es6
 	##模板字符串
 
-	&2018.4.15
+	&2018/4/15
 `

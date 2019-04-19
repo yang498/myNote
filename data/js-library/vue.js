@@ -1840,5 +1840,5 @@ commonData.jsLibrary.vue.content = `
 	周边资源|https://github.com/vuejs/awesome-vue
 	@@
 
-	&2018.9.13
+	&2018/9/13
 `

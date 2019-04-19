@@ -26,13 +26,15 @@ let commonData = {
 		regexp: { complete: true },
 		math: { complete: true },
 		date: { complete: true },
+		browser: { name: '浏览器', underway: true },
 		es6: {},
 		node: { underway: true }
 	},
 	jsLibrary: {
 		name: 'js库',
 		jquery: { complete: true },
-		vue: { underway: true }
+		vue: { underway: true },
+		jsXlsx: { name: 'js-xlsx', underway: true }
 	},
 	tool: {
 		name: '工具',

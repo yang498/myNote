@@ -176,5 +176,5 @@ commonData.css.css.content = `
 	-webkit-line-clamp: 2;	// 只显示2行
 	··
 
-	&2019.3.29
+	&2019/3/29
 `

@@ -23,7 +23,7 @@ header { width: 100%; text-align: center; color: #fff; background-color: #00B4FA
 
 header i.iconfont { font-size: 20px; }
 
-header .menu li:hover, header .menu li.active, header .search i:not(.active):hover, header .set:hover, header .set li:hover, header .back-top:hover { background-color: #08f; }
+header .menu li:hover, header .menu li.active, header .search i:not(.active):hover, header .option > *:hover { background-color: #08f; }
 
 header .menu > li, header .set { cursor: pointer; position: relative; }
 
@@ -51,7 +51,7 @@ header .option .search input { width: 300px; height: 34px; padding: 0 5px 0 30px
 
 header .option .search input.active { width: 60px; opacity: 0; }
 
-header .option .search i, header .option .set, header .option .back-top { width: 60px; line-height: 40px; }
+header .option .search i, header .option .set, header .option .git, header .option .back-top { width: 60px; line-height: 40px; }
 
 header .option .back-top { display: block; transition: 0.2s ease-out; cursor: pointer; }
 

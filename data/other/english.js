@@ -59,5 +59,5 @@ commonData.other.english.content = `
 	·November·：十一月
 	·December·：十二月
 
-	&2018.07.18
+	&2018/07/18
 `

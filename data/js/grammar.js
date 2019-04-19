@@ -170,5 +170,5 @@ commonData.js.grammar.content = `
 	##运算符优先级
 	@[参照 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table]
 
-	&2018.4.14
+	&2018/4/14
 `

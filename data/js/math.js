@@ -197,5 +197,5 @@ commonData.js.math.content = `
 	a = a ** 3
 	··
 
-	&2019.4.3
+	&2019/4/3
 `

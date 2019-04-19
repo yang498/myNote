@@ -161,5 +161,5 @@ commonData.database.sqlServer.content = `
 	w3school - SQL 教程|http://www.w3school.com.cn/sql/index.asp
 	@@
 
-	&2018.9.30
+	&2018/9/30
 `

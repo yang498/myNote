@@ -456,5 +456,5 @@ commonData.js.regexp.content = `
 	/1[3-9]\d{9}/
 	··
 
-	&2019.4.2
+	&2019/4/2
 `

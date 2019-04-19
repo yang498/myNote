@@ -179,5 +179,5 @@ commonData.js.date.content = `
 	Date.prototype.toLocaleTimeString()：返回日期字符串当地写法的时分秒部分，形如·上午11:41:46·（不同浏览器格式可能不同）
 	!!
 
-	&2019.4.4
+	&2019/4/4
 `

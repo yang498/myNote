@@ -1082,7 +1082,8 @@ commonData.jsLibrary.jquery.content = `
 	scriptCharset{String}：在请求·script·脚本时设置其·charset·属性
 	timeout{Number}：设置请求超时时间，单位毫秒
 
-	converters{Object}：将返回的原始数据转换为 js 对象，每个转换器的值是一个函数，默认为·{"* text": window.String, "text html": true, "text json": jQuery.parseJSON, "text xml": jQuery.parseXML}·
+	converters{Object}：将返回的原始数据转换为 js 对象，每个转换器的值是一个函数
+		默认为·{"* text": window.String, "text html": true, "text json": jQuery.parseJSON, "text xml": jQuery.parseXML}·
 	accepts{Object}[取决于 dataType]：dataType 的 MIME 类型，可自定义（下方有举例）
 	cache{Boolean}[true(dataType 为 script/jsonp 时为 false)]：是否缓存此页面
 	contents{Object}：一个以"{字符串/正则表达式}"配对的对象，根据给定的内容类型，解析请求的返回结果
@@ -1517,5 +1518,5 @@ commonData.jsLibrary.jquery.content = `
 	插件 - jQuery之家|http://www.htmleaf.com/
 	@@
 
-	&2019.3.28
+	&2019/3/28
 `

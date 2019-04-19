@@ -763,5 +763,5 @@ commonData.html.weex.content = `
 	weex封装扩展 - Nat|http://natjs.com/#/zh-cn/
 	@@
 
-	&2018.7.5
+	&2018/7/5
 `

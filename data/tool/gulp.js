@@ -468,5 +468,5 @@ commonData.tool.gulp.content = `
 	gulp 4 升级指南（本文是 3）|https://segmentfault.com/a/1190000005357048
 	@@
 
-	&2019.4.10
+	&2019/4/10
 `

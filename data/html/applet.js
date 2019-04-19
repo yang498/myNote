@@ -2459,5 +2459,5 @@ commonData.html.applet.content = `
 	公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析|https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect
 	@@
 
-	&2018.6.7
+	&2018/6/7
 `
