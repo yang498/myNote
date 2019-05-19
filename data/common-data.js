@@ -34,7 +34,7 @@ let commonData = {
 		name: 'js库',
 		jquery: { complete: true },
 		vue: { underway: true },
-		jsXlsx: { name: 'js-xlsx', underway: true }
+		tool: { name: '工具', underway: true }
 	},
 	tool: {
 		name: '工具',

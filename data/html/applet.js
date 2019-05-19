@@ -2314,6 +2314,22 @@ commonData.html.applet.content = `
 	errmsg{String}：错误信息
 	!!
 
+	##canvas
+	画布，首先需要·canvas·组件，并设置·canvas-id·，若设置重复的 id 则只有第一个生效
+	然后使用·wx.createCanvasContext('canvas-id')·创建 canvas 的绘图上下文
+	··
+	<canvas canvas-id="myCanvas"></canvas>
+
+	const C = wx.createCanvasContext('myCanvas')
+
+	// canvas 内部使用 px 单位，所以数值需手动适配，以 750 为基准
+	const screenW = wx.getSystemInfoSync().windowWidth
+	const rpx = length => Math.floor(screenW / 750 * length)
+	··
+	!!
+	.setFillStyle(color)：设置填充色，默认为黑色
+	.fillRect(x, y, w, h)：矩形
+	!!
 
 	#工具
 

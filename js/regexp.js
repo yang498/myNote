@@ -10,7 +10,7 @@ let REG_UN = {
 	// 方法关键字，蓝
 	methodKeyword: 'return|delete |typeof|require\s|throw|eval|instanceof|debugger|this|length',
 	// 类型方法，紫
-	type: 'window|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|(?<!\\w)Date|RegExp|Error|JSON'
+	type: 'window(?=[\s\.])|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|(?<!\\w)Date|RegExp|Error|JSON'
 }
 
 // 将 REG 加上 (?!¿)，用来匹配
