@@ -3,29 +3,11 @@ commonData.js.node.content = `
 	##介绍
 	Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行，首先，JavaScript 通过 Node 在服务器运行，在这个意义上，Node 有点像 JavaScript 虚拟机；其次，Node 提供大量工具库，使得 JavaScript 语言与操作系统互动（比如读写文件、新建子进程），在这个意义上，Node 又是 JavaScript 的工具库。
 	Node 内部采用 Google 公司的 V8 引擎，作为 JavaScript 语言解释器；通过自行开发的 libuv 库，调用操作系统资源。
-
-	##安装
-	在@[中文官网|http://nodejs.cn/download/]可以下载对应版本的 msi 文件直接安装
+	###安装
+	在@[官网|https://nodejs.org/en/download/]或@[中文官网|http://nodejs.cn/download/]可以下载对应版本的 msi 文件直接安装
 	安装完成后可以查看版本：
 	··
 	node -v
-	··
-
-	##nvm
-	nvm（node version manager）是 node 的版本管理工具，可以下载多个版本的 node，再切换指定的版本，适用于需要同时使用多个版本的 node（如果没这个需要可以不安装），先@[下载安装包|https://github.com/coreybutler/nvm-windows/releases]安装，因为 nvm 包含了 node，所以如果之前已经安装了 node 需要先卸载
-	注意如果想卸载 node，最好在卸载完之后全局搜索·.npmrc·并删除，这个文件是记录了之前 cache 和 prefix 的记录
-	··
-	// 安装最新版本
-	$ nvm install node
-
-	// 安装指定版本
-	$ nvm install 0.12.1
-
-	// 使用已安装的最新版本
-	$ nvm use node
-
-	// 使用指定版本的node
-	$ nvm use 0.12
 	··
 
 	##npm
@@ -38,7 +20,7 @@ commonData.js.node.content = `
 	··
 	此命令默认下载最新版的 jQuery，下载完之后在当前项目根目录的 node_modules 文件夹中可以看到
 
-	##cnpm
+	###cnpm
 	npm 连接的是国外的服务器，所以网速比国内的较差，而国内有 npm 的 @[淘宝镜像 cnpm|https://npm.taobao.org/]，每 10 分钟更新一次以保证尽量与 npm 官方服务同步，所以国内可以使用 cnpm 代替 npm
 	安装指令：
 	··
@@ -50,7 +32,7 @@ commonData.js.node.content = `
 	··
 	注意用·cnpm·安装的 node_modules 文件夹是以下划线开头并且带有·@版本·，而不带下划线和版本号的是这些文件的快捷方式，不影响使用
 
-	##npm 命令
+	###npm 命令
 	直接在命令行输入·npm·回车可查看能使用的命令列表
 	常用的命令有：
 	··
@@ -106,11 +88,20 @@ commonData.js.node.content = `
 	##更新版本
 	###更新 node：
 	1、直接在官网下载最新版，安装路径选择之前安装的，然后新版会覆盖旧版，如果不知道之前的安装路径可在命令行输入·where node·查看
-	2、如果安装了 nvm 则可直接使用：
+	2、使用 nvm（node version manager）更新，nvm 是 node 的版本管理工具，可以下载多个版本的 node，再切换指定的版本，适用于需要同时使用多个版本的 node（如果没这个需要可以不安装），先@[下载安装包|https://github.com/coreybutler/nvm-windows/releases]安装，因为 nvm 包含了 node，所以如果之前已经安装了 node 需要先卸载
+	注意如果想卸载 node，最好在卸载完之后全局搜索·.npmrc·并删除，这个文件是记录了之前 cache 和 prefix 的记录
 	··
-	nvm install node
-	node -v // 查看版本号
-	nvm use x.x.x // 使用最新版
+	// 安装最新版本
+	$ nvm install node
+
+	// 安装指定版本
+	$ nvm install 10.16.0
+
+	// 使用已安装的最新版本
+	$ nvm use node
+
+	// 使用指定版本的node
+	$ nvm use 10.16.0
 	··
 	3、非 windows 系统可直接安装·n·模块（相当于 nvm）管理 node 版本：
 	··
@@ -126,8 +117,8 @@ commonData.js.node.content = `
 	··
 	更新其他全局包基本同上，换个名字
 
-	##npm-check
-	·npm-check·包可检查更新当前项目的依赖包和全局包
+	###使用 npm-check
+	@[npm-check|https://www.npmjs.com/package/npm-check] 包可检查更新当前项目的依赖包和全局包
 	安装：
 	··
 	cnpm install npm-check -g
@@ -169,33 +160,7 @@ commonData.js.node.content = `
 	  $ npm-check -gu       # 选择更新全局安装的模块
 	··
 
-	##npm-check-updates
-	·npm-check-updates·包可检查更新当前项目的依赖包和全局包的
-	安装：
-	··
-	cnpm install -g npm-check-updates
-	··
-	常用命令：
-	··
-	nuc // 当前项目包版本对比，红色代表重要更新，青色代表次要更新，绿色代表补丁更新
-
-	ncu -u // 更新所有当前项目包
-
-	ncu -g // 全局包版本对比
-
-	ncu -gu // 更新所有全局包
-
-	ncu '/^gulp-.*$/' // 使用正则更新以 gulp- 开头的包
-	ncu '/^(?!gulp-).*$/' // 使用正则更新非 gulp- 开头的包
-	··
-	更新项目的依赖包时此工具只更新·package.json·的版本，所以更新之后需更新已安装的包和·package-lock.json·：
-	··
-	cnpm install
-	··
-	更新全局包时会提示更新的命令，可复制提示的命令手动运行
-	更多详细参数查看 @[npm-check-updates|https://www.npmjs.com/package/npm-check-updates]
-
-	#说明
+	#概念
 	##基本用法
 	运行 node 程序，就是使用 node 命令读取 JavaScript 脚本
 	1、新建·demo.js·脚本，写入一行代码·console.log("Hello World")·保存，在命令行输入：
@@ -214,7 +179,7 @@ commonData.js.node.content = `
 	3、在命令行输入 node 直接回车，进入一个 Node.js 的 REPL 环境（Read–eval–print loop，”读取-求值-输出”循环），可以直接运行 JavaScript 命令：
 	··
 	> node
-	> 1+1
+	> 1 + 1
 	2
 	>
 	··
@@ -339,6 +304,8 @@ commonData.js.node.content = `
 	!!
 
 	#module
+	fs > module > global > http > 连接 SQL > 连接 MongoDB
+	后续重捋 #说明
 
 	#http
 
@@ -594,9 +561,11 @@ commonData.js.node.content = `
 	path.format(pathObject)：解析路径对象返回字符串，和·path.parse()·相反，注意·dir·可覆盖·root·，·base·可覆盖·name·和·ext·
 	path.normalize(path)：解析路径，即解析·.·（当前目录）和·..·（返回上级目录），多个连续的分隔符只保留一个， 尾部的分隔符会保留
 	path.join([...paths])：用路径分隔符连接并解析多个参数路径片段，解析规则同·normalize()·
-	path.resolve([...paths])：将路径或路径片段的序列解析为绝对路径=-=-=-=-=-=
+	path.resolve([...paths])：将路径或路径片段的序列解析为绝对路径，例如·path.resolve('/foo', '/bar', 'baz')·返回·/bar/baz·
 	path.isAbsolute(path)：返回一个 Boolean，检测参数·path·是否为绝对路径
 	path.relative(from, to)：根据当前工作目录返回·from·到·to·的相对路径。 若·from·和·to·相同则返回空字符串
+	path.sep：返回平台特定的路径片段分隔符，Windows 为·\\·，POSIX 为·/·
+	path.toNamespacedPath(path)：仅在 Windows 系统上有效，返回给定·path·的等效名称空间前缀路径
 	!!
 
 	##basename()
@@ -737,9 +706,144 @@ commonData.js.node.content = `
 	该方法是提供给·qs.stringify()·使用的，通常不直接使用。 它之所以对外开放，是为了在需要时可以通过给·qs.escape·赋值一个函数来重写编码的实现
 
 	#fs
+	模仿标准 POSIX 函数的方式与文件系统进行交互，使用前需先引入：
+	··
+	const fs = require('fs')
+	··
+	所有文件系统操作都具有同步和异步的形式，异步的形式总是将完成回调作为其最后一个参数
+	异步回调函数的第一个参数如果操作成功为·null·或·undefined·，失败为异常对象，处理同步操作的异常可使用·try/catch·
 
+	##常用
+	!!
+	文件路径：可接受字符串、Buffer、使用·file:·协议的 URL 对象
+	URL 对象的支持：仅支持使用·file:·协议的 WHATWG URL 对象，例如·new URL('file:///tmp/hello')·
+	文件描述符：所有打开的文件都会分配一个数字型的文件描述符，当操作完成时关闭描述符至关重要，否则将导致内存泄漏、应用程序崩溃
+		·fs.open()·用于分配新的文件描述符。分配后文件描述符可用于从文件读取数据、向文件写入数据、或请求关于文件的信息
+	线程池的使用：文件系统 API 除了·fs.FSWatcher()·和那些显式同步的之外，都使用 libuv 的线程池，参考 @[UV_THREADPOOL_SIZE|http://nodejs.cn/s/6DjmgS]
+	
+	fs.Dirent 类：当调用·fs.readdir/Sync()·将·withFileTypes·设为·true·时，生成的数组将填充·fs.Dirent·对象，而不是字符串或 Buffer
+	fs.FSWatcher 类：调用·fs.watch()·时返回，此对象是·EventEmitter·的实例，每当修改指定监视的文件，就会触发·'change'·事件
+	fs.ReadStream 类：成功调用·fs.createReadStream()·将返回一个新的·fs.ReadStream·可读流对象
+	fs.WriteStream 类：·WriteStream·是一个可写流
+	fs.Stats 类：提供有关文件的信息
+
+	fs.access/Sync(path[, mode], callback)：测试用户对·path·指定的文件或目录的权限，mode 参考@[文件可访问性的常量|http://nodejs.cn/s/qZfpqk]
+		不建议在调用打开、读取或写入文件方法之前使用·fs.access()·，其他进程可能会在两个调用之间更改文件的状态而引入竞态条件
+	fs.appendFile/Sync(path, data[, options], callback)：将数据追加到文件，如果文件尚不存在则创建该文件
+		data{s/bu}：要追加的数据
+		options{o/s}：配置，如果是是字符串，则它指定的是字符编码
+			encoding{s/nu}[utf8]：字符编码
+			mode{n}[0o666]：八进制模式
+			flag{s}[a]：参阅@[支持的文件系统标致|http://nodejs.cn/s/JjbY8n]
+	fs.chmod/Sync(path, mode, callback)：更改文件的权限
+		mode{n}：参阅@[文件的模式|http://nodejs.cn/api/fs.html#fs_file_modes]
+	fs.chown/Sync(path, uid, gid, callback)：更改文件的所有者和群组
+	fs.close/Sync(fd, callback)：关闭文件
+	fs.constants：返回包含文件系统操作常用常量的对象，参阅 @[FS 常量|http://nodejs.cn/s/4UdXHr]
+	fs.copyFile/Sync(src, dest[, flags], callback)：将 src 拷贝到 dest。 若 dest 已经存在则覆盖
+		src{s/bu/ur}：要拷贝的源文件
+		dest{s/bu/ur}：拷贝的文件
+		flags{n}[0]：拷贝操作的修饰符，@[参阅|http://nodejs.cn/api/fs.html#fs_fs_copyfile_src_dest_flags_callback]
+	fs.createReadStream(path[, options])：创建可读流
+	fs.createWriteStream(path[, options])：创建可写流
+	fs.existsSync(path)：（异步版本已废弃）如果路径存在则返回 true，否则返回 false
+	!!
+
+	##其他
+	!!
+	fs.fchmod/Sync(fd, mode, callback)：更改文件的权限
+	fs.fchown/Sync(fd, uid, gid, callback)：更改文件的所有者和群组
+	fs.fsync/Sync(fd, callback)：同步文件的内核状态和存储设备，@[参阅|https://blog.csdn.net/xinghuah/article/details/80487525]
+	fs.fdatasync/Sync(fd, callback)：同步文件的内核状态与存储设备
+	fs.fstat/Sync(fd[, options], callback)：获取文件状态
+	fs.ftruncate/Sync(fd[, len], callback)：将文件截短到指定长度
+	fs.futimes/Sync(fd, atime, mtime, callback)：更改文件描述符指向的对象的文件系统时间戳
+	fs.lchmod/Sync(path, mode, callback)：（仅适用于 macOS）更改文件模式
+	fs.lchown/Sync(path, uid, gid, callback)：更改文件的所有权
+	fs.link/Sync(existingPath, newPath, callback)：为文件创建一个新名称
+	fs.lstat/Sync(path[, options], callback)：获取文件状态
+	!!
+	
 	#timer
-	timer > module > global > http > fs > 连接 SQL > 连接 MongoDB
+
+	##方法
+	!!
+	setImmediate(callback[, ...args])：返回一个 Immediate 对象
+	setTimeout(callback, delay[, ...args])：返回一个 Timeout 对象
+	setInterval(callback, delay[, ...args])：返回一个 Timeout 对象
+
+	Immediate 对象
+		immediate.ref()：让 Immediate 对象处于活动状态，多次调用无效，默认是活动的，在调用了·immediate.unref()·之后使用
+		immediate.unref()：让 Immediate 对象不需要 Node.js 事件循环保持活动状态
+	Timeout 对象
+		timeout.ref()：让 Timeout 对象处于活动状态，多次调用无效，默认是活动的，在调用了·timeout.unref()·之后使用
+		timeout.unref()：让 Timeout 对象不需要 Node.js 事件循环保持活动状态
+		timeout.refresh()：刷新重置定时器，将定时器的开始时间设置为当前时间，若对已触发的定时器上使用将重新激活定时器
+
+	clearImmediate(immediate)：传入一个 Immediate 对象以清除定时器
+	clearTimeout(timeout)：传入一个 Timeout 对象以清除定时器
+	clearInterval(timeout)：传入一个 Timeout 对象以清除定时器
+	!!
+
+	##介绍
+	因为定时器函数是全局变量，所以不需要调用·require('timers')·来使用
+	Node.js 中的定时器函数 API 与浏览器类似，但内部实现（基于 @[Node.js 事件循环构建|http://nodejs.cn/s/jRLbrb]）不同
+	@[参考|http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html]
+	!!
+	setTimeout()：执行一次，同浏览器
+	setInterval()：循环执行，同浏览器
+	setImmediate()：执行一次，没有延迟时间参数，顺序大概率次于 0 秒的 setTimeout，也可能在前面，取决于运行环境
+	process.nextTick()：执行一次，本轮循环执行的最快异步任务，Promise 对象的回调函数的执行顺序紧随其后
+	!!
+	异步任务可以分成追加在本轮循环或次轮循环
+	Node 中·process.nextTick·和·Promise·的回调函数追加在本轮循环，即同步任务一旦执行完成，就开始执行它们
+	而·setTimeout、setInterval、setImmediate·的回调函数，追加在次轮循环
+	··
+	// test.js
+	setTimeout(() => console.log(1))
+	setImmediate(() => console.log(2))
+	process.nextTick(() => console.log(3))
+	Promise.resolve().then(() => console.log(4))
+	(() => console.log(5))()
+
+	// 打印
+	5 // 同步任务最早执行
+	3 // 本轮任务最后追加
+	4 // 本轮任务最后追加
+	1 // 次轮循环
+	2 // 次轮循环
+	··
+	##本轮循环
+	·process.nextTick()·总早于·Promise·
+	··
+	process.nextTick(() => console.log(1));
+	Promise.resolve().then(() => console.log(2));
+	process.nextTick(() => console.log(3));
+	Promise.resolve().then(() => console.log(4));
+	// 1
+	// 3
+	// 2
+	// 4
+	··
+	##次轮循环
+	由于·setTimeout·在 timers 阶段执行，而·setImmediate·在 check 阶段执行。所以，·setTimeout·会早于·setImmediate·完成
+	··
+	setTimeout(() => console.log(1))
+	setImmediate(() => console.log(2))
+	··
+	上面代码应该先输出 1，再输出 2，但是实际执行的时候，结果却是不确定，有时还会先输出 2，再输出 1。
+	这是因为 setTimeout 的第二个参数默认为 0。但是实际上，Node 做不到 0 毫秒，最少也需要 1 毫秒
+	根据官方文档，第二个参数的取值范围在 1 毫秒到 2147483647 毫秒之间。也就是说，·setTimeout(f, 0)·等同于·setTimeout(f, 1)·
+	但是，下面的代码一定是先输出 2，再输出 1
+	··
+	const fs = require('fs')
+
+	fs.readFile('test.js', () => {
+		setTimeout(() => console.log(1))
+		setImmediate(() => console.log(2))
+	})
+	··
+	上面代码会先进入 I/O callbacks 阶段，然后是 check 阶段，最后才是 timers 阶段。因此，·setImmediate·才会早于·setTimeout·执行
 
 	@@
 	node 官网|https://nodejs.org/en/
@@ -749,5 +853,5 @@ commonData.js.node.content = `
 	cnpm 官网|https://npm.taobao.org/
 	@@
 
-	&2019/4/13
+	&2019/5/24
 `

@@ -43,6 +43,9 @@ commonData.other.office.content = `
 	2、Win+R-运行msconfig-引导-将不需要的系统删除，或将超时时间设为0
 
 	#Windows
+	##专业版密钥
+	最好还是淘宝买，就 10 块钱，用的也放心，百度的 key 大部分不能用或被用过了，破解软解懒得装或可能有风险
+
 	##家庭版没有组策略
 	可以在@[官网查看|https://www.microsoft.com/zh-cn/windows/compare]，家庭版是没有组策略的，但其实不是没有，而是禁用了，新建一个记事本，将一下代码复制进去保存，再将后缀改成·.bat·，然后右键以管理员身份运行。
 	··

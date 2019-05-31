@@ -9,8 +9,9 @@ commonData.html.weex.content = `
 	在客户端设计一套 JS Bridge，让 native 代码可以和 JavaScript 引擎相互通信
 	Weex 在 iOS 中使用 JSCore ，在 Android 中使用 v8，因此都支持es5
 	![./img/html/weex03.jpg,450]![./img/html/weex04.png,450]
-	Weex 的结构是解耦的，渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架。
-	在开发 Weex 页面就像开发普通网页一样；在渲染 Weex 页面时和渲染原生页面一样。
+	Weex 的结构是解耦的，渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架
+	在开发 Weex 页面就像开发普通网页一样；在渲染 Weex 页面时和渲染原生页面一样
+	推荐使用 @[Weex Studio 编辑器开发|https://weex.apache.org/zh/tools/ide.html]，沉浸式的开发体验，提供项目新建、编码、预览、调试等完整的开发链路，无需依赖 WEEX CLI
 
 	##抢鲜版
 	@[Weex 在线编写代码的平台|http://dotwe.org/vue/]，在线体验单个页面的例子，不需要任何配置。在平台上源代码应该用 Vue.js 的单文件组件 语法来编写，在 Web 平台的渲染结果将显示在一个模拟的手机壳中。手机上体验可下载@[weex playground|http://weex-project.io/cn/tools/playground.html]，扫码预览即可。

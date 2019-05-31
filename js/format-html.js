@@ -53,12 +53,23 @@ const formatHtml = text => {
 			.replace(REG.linkMultiLine, item => '@@学习参考链接：' + item.slice(3, -3).replace(REG.multiLine, (res, $1) =>
 				$1.replace(REG.linkInside, '<a href="$3" target="_blank" class="pd">$2</a>')).replace('\n', '') + '@@')
 
-			// 列表，去掉开头缩进，在每一行中替换，每个缩进换成 css 控制，开头加类型（橙色）、默认值（粉色）、必填加粗
+			// 列表，去掉开头缩进，在每一行中替换，每个缩进换成 css 控制，开头加类型、默认值、必填加粗
 			.replace(REG.list, item => '!!' + item.slice(2, -2).replace(/^\t/gm, '').replace(REG.multiLine, (res, $1) =>
 				'<li>' + $1.replace(/\t/g, '<i class="attr"></i>').replace(/[^]*?(?=：)/, start =>
 					'<i class="head">' + start
-						.replace(/\{(?!¿)/, ' <i class="type">{').replace(/\}(?!¿)/, '$&</i>')
-						.replace(/\[(?!¿)/, ' <i class="default">[').replace(/\]+(?!¿)/, '$&</i>')
+						.replace(/(\{(?!¿))(.+?)(\}(?!¿))/, (r, $1, $2, $3) => {
+							const rType = $2.split('/').map(i => i === 'o' ? 'Object' :
+								i === 'a' ? 'Array' :
+								i === 's' ? 'String' :
+								i === 'n' ? 'Number' :
+								i === 'nu' ? 'Null' :
+								i === 'u' ? 'Undefined' :
+								i === 'ur' ? 'URL' :
+								i === 'b' ? 'Boolean' :
+								i === 'bu' ? 'Buffer' : i).join('/')
+							return ' <i class="type">' + $1 + rType + $3 + '</i>'
+						})
+						.replace(/\[(?!¿)/, ' <i class="default">$&').replace(/\]+(?!¿)/, '$&</i>')
 						.replace(/!(?!¿)/, ' <b>$&</b>')
 					+ '</i>')
 				+ '</li>').replace('\n', '') + '!!')
