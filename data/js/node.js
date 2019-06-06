@@ -1,7 +1,8 @@
 commonData.js.node.content = `
 	#起步
 	##介绍
-	Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行，首先，JavaScript 通过 Node 在服务器运行，在这个意义上，Node 有点像 JavaScript 虚拟机；其次，Node 提供大量工具库，使得 JavaScript 语言与操作系统互动（比如读写文件、新建子进程），在这个意义上，Node 又是 JavaScript 的工具库。
+	Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行
+	Node 提供大量工具库，使得 JavaScript 语言与操作系统互动（比如读写文件、新建子进程）
 	Node 内部采用 Google 公司的 V8 引擎，作为 JavaScript 语言解释器；通过自行开发的 libuv 库，调用操作系统资源。
 	###安装
 	在@[官网|https://nodejs.org/en/download/]或@[中文官网|http://nodejs.cn/download/]可以下载对应版本的 msi 文件直接安装
@@ -242,7 +243,7 @@ commonData.js.node.content = `
 	m('这是自定义模块')
 	··
 
-	##系统模块
+	##核心模块
 	node 的核心模块源码在安装目录的 lib 子目录中，为了提高运行速度，它们安装时都会被编译成二进制文件
 	核心模块总是最优先加载的，比如自定义一个 http 模块，·require('http')·加载的还是核心模块
 	!!
@@ -258,7 +259,7 @@ commonData.js.node.content = `
 	Error：异常错误的处理
 	events：异步操作只有开始和结束两个状态，通过 events 可以解决多状态异步操作的响应问题
 	fs：文件系统，提供本地文件的读写能力，几乎对所有操作提供异步和同步两种操作方式，供开发者选择
-	global：全局变量说明
+	global：罗列出全局变量，可直接查看·console.log(global)·
 	http：搭建 http 服务
 	http2：搭建 http2 服务
 	https：搭建 https 服务
@@ -286,28 +287,155 @@ commonData.js.node.content = `
 	zlib：提供通过 Gzip 和 Deflate/Inflate 实现的压缩功能
 	!!
 
-	#global
-	@[global - 全局变量|http://nodejs.cn/api/globals.html]，node 特有且非模块
-	全局对象：
-	!!
-	global：表示 Node 所在的全局环境，类似于浏览器的 window 对象。浏览器中声明·var x = 1·等同于·window.x = 1·，这一行为和 REPL 环境一致，但在 js 文件（模块）中不是，这是因为模块的全局变量都是该模块私有的，其他模块无法取到
-	process：该对象表示 Node 所处的当前进程，允许开发者与该进程互动
-	!!
-	全局变量（两个下划线开头）：
-	!!
-	__filename：指向当前运行的脚本文件名
-	__dirname：指向当前运行的脚本所在的目录
-	!!
-	全局函数：
-	!!
-	require()：用于加载模块
-	!!
-
 	#module
-	fs > module > global > http > 连接 SQL > 连接 MongoDB
-	后续重捋 #说明
+
+	##模块
+	在 Node.js 模块系统中，每个文件都被视为一个独立的模块，例如有个·foo.js·：
+	··
+	const circle = require('./circle.js')
+	console.log(\`半径为 4 的圆的面积是 \${circle.area(4)}\`)
+	··
+	有个·circle.js·
+	··
+	const { PI } = Math
+
+	exports.area = r => PI * r ** 2
+	exports.circumference = r => 2 * PI * r
+	··
+	·circle.js·就是一个独立的模块，变量·PI·对·circle.js·是私有的，通过·exports·暴露出 2 个方法
+	注意模块名不要和核心模块冲突，核心模块总是最优先加载的，比如自定义一个 http 模块，·require('http')·加载的还是核心模块
+
+	##循环
+	当循环调用·require()·时，一个模块可能在未完成执行时被返回。例如以下情况：
+	·a.js·：
+	··
+	console.log('a 开始')
+	exports.done = false
+	const b = require('./b.js')
+	console.log('在 a 中，b.done = %j', b.done)
+	exports.done = true
+	console.log('a 结束')
+	··
+
+	·b.js·:
+	··
+	console.log('b 开始')
+	exports.done = false
+	const a = require('./a.js')
+	console.log('在 b 中，a.done = %j', a.done)
+	exports.done = true
+	console.log('b 结束')
+	··
+
+	·main.js·:
+	··
+	const a = require('./a.js')
+	const b = require('./b.js')
+	console.log('在 main 中，a.done=%j，b.done=%j', a.done, b.done)
+	··
+	当·main·加载·a·时，·a·又加载·b·，·b·会尝试加载·a·
+	为了防止无限循环会返回一个·a·的·exports·对象的^^未完成的副本^^给·b·
+	然后·b·完成加载，并将·exports·对象提供给·a·
+	··
+	$ node main.js
+	a 开始
+	b 开始
+	在 b 中，a.done = false
+	b 结束
+	在 a 中，b.done = true
+	a 结束
+	在 main 中，a.done=true，b.done=true
+	··
+
+	##文件模块
+	如果按确切的文件名没有找到模块，则 Node.js 会尝试带上·.js·、·.json·或·.node·拓展名再加载
+	以·'/'·为前缀的模块是文件的绝对路径。例如·require('/home/marco/foo.js')·会加载·/home/marco/foo.js·文件。
+	以·'./'·为前缀的模块是相对于调用·require()·的文件。即·circle.js·必须和·foo.js·在同一目录下，·foo.js·才能成功·require('./circle')·
+	当没有以·'/'·、·'./'·或·'../'·开头来表示文件时，这个模块必须是一个核心模块或加载自·node_modules·目录内的模块
+	如果给定的路径不存在，则·require()·会抛出一个·code·属性为·'MODULE_NOT_FOUND'·的 Error
+
+	##模块封装器
+	在执行模块代码之前 Node.js 会使用一个函数将其封装：
+	··
+	(function(exports, require, module, __filename, __dirname) {
+		// 模块的代码实际上在这里
+	})
+	··
+	这样做保持了变量的作用域在模块范围内，而不是全局对象，并且提供看似全局但实际是模块内的变量：
+	!!
+	module：当前模块对象的引用
+	exports：·module.exports·的快速访问
+	require：加载模块方法，即熟知的·require()·
+	__filename：当前模块的绝对路径
+	__dirname：当前模块目录的绝对路径
+	!!
+	###__filename 和 __dirname
+	从硬盘根目录开始的，假设当前有个·q.js·：
+	··
+	console.log(__filename) // D:\\web\\project\\demo\\node\\q.js
+	console.log(__dirname) // D:\\web\\project\\demo\\node
+	··
+	###module 对象
+	在每个模块中，·module·的自由变量是对表示当前模块的对象的引用
+	!!
+	module.exports{o}：导出对象
+	module.children{a}：被该模块引用的模块对象
+	module.filename{s}：模块的完全解析后的文件名
+	module.id{s}：模块的标识符，通常是完全解析后的文件名
+	module.loaded{b}：模块是否已经加载完成，或正在加载中
+	module.parent{o}：最先引用该模块的模块
+	module.paths{s}：模块的搜索路径
+	module.require(id)：已解析的模块的·module.exports·
+	!!
+	###exports 对象
+	·exports·是·module.exports·的快速访问，即它们指向同一个对象，可以理解为：
+	··
+	module.exports = exports = {}
+	··
+	而模块加载是使用·module.exports·，所以注意：
+	··
+	module.exports = newObj // 可以
+	exports = newObj // 不可以，和 module.exports 断开连接
+	··
+	一般的使用情况：
+	··
+	const foo = () => ...
+	const bar = () => ...
+
+	module.exports = { foo, bar }
+	// 或者
+	exports.foo = foo
+	exports.bar = bar
+	··
+
+	##Module 对象
+	为 Module 实例提供通用方法，使用前需先引入：·require('module')·，该模块返回的属性有：
+	!!
+	Module.builtinModules：罗列 Node.js 提供的所有模块名称。可以用来判断模块是否为第三方所维护
+	Module.createRequireFromPath(filename)：加载模块的函数，即简化加载相对路径的·require·
+		filename{s}：用于构造通过相对路径加载模块的函数的文件名
+	!!
+	注意用变量接收该值时不要和导出模块的·module·名称冲突，比如：
+	··
+	const Module = require('module')
+
+	const builtin = require('module').builtinModules
+	const requireUtil = require('module').createRequireFromPath('../src/utils')
+
+	const { builtinModules, createRequireFromPath } = require('module')
+	··
+	·Module.createRequireFromPath(filename)·的 demo：
+	··
+	const { createRequireFromPath } = require('module')
+	const requireUtil = createRequireFromPath('../src/utils')
+
+	// require ../src/utils/some-tool
+	requireUtil('./some-tool')
+	··
 
 	#http
+	global > http > 连接 SQL > 连接 MongoDB
+	后续重捋 #说明
 
 	#url
 	##URL
@@ -713,7 +841,22 @@ commonData.js.node.content = `
 	所有文件系统操作都具有同步和异步的形式，异步的形式总是将完成回调作为其最后一个参数
 	异步回调函数的第一个参数如果操作成功为·null·或·undefined·，失败为异常对象，处理同步操作的异常可使用·try/catch·
 
-	##常用
+	##常用方法
+	!!
+	fs.copyFile/Sync(src, dest[, flags], callback)：将 src 拷贝到 dest。 若 dest 已经存在则覆盖
+	fs.mkdir/Sync(path[, options], callback)：创建目录
+	fs.mkdtemp/Sync(prefix[, options], callback)：创建一个唯一的临时目录
+	fs.readdir/Sync(path[, options], callback)：读取目录
+	fs.readFile/Sync(path[, options], callback)：读取文件
+	fs.writeFile/Sync(file, data[, options], callback)：将数据写入到一个文件，如果文件已存在则覆盖该文件
+	fs.rename/Sync(oldPath, newPath, callback)：重命名文件，如果·newPath·已存在，则会覆盖它
+	fs.rmdir/Sync(path, callback)：删除目录
+	fs.unlink/Sync(path, callback)：删除文件或符号链接
+	fs.stat/Sync(path[, options], callback)：获取文件信息状态
+	fs.watch(filename[, options][, listener])：监听文件或目录的变化，此方法比·fs.watchFile()·和·fs.unwatchFile()·更高效
+	!!
+
+	##不常用方法
 	!!
 	文件路径：可接受字符串、Buffer、使用·file:·协议的 URL 对象
 	URL 对象的支持：仅支持使用·file:·协议的 WHATWG URL 对象，例如·new URL('file:///tmp/hello')·
@@ -726,43 +869,129 @@ commonData.js.node.content = `
 	fs.ReadStream 类：成功调用·fs.createReadStream()·将返回一个新的·fs.ReadStream·可读流对象
 	fs.WriteStream 类：·WriteStream·是一个可写流
 	fs.Stats 类：提供有关文件的信息
-
-	fs.access/Sync(path[, mode], callback)：测试用户对·path·指定的文件或目录的权限，mode 参考@[文件可访问性的常量|http://nodejs.cn/s/qZfpqk]
-		不建议在调用打开、读取或写入文件方法之前使用·fs.access()·，其他进程可能会在两个调用之间更改文件的状态而引入竞态条件
-	fs.appendFile/Sync(path, data[, options], callback)：将数据追加到文件，如果文件尚不存在则创建该文件
-		data{s/bu}：要追加的数据
-		options{o/s}：配置，如果是是字符串，则它指定的是字符编码
-			encoding{s/nu}[utf8]：字符编码
-			mode{n}[0o666]：八进制模式
-			flag{s}[a]：参阅@[支持的文件系统标致|http://nodejs.cn/s/JjbY8n]
-	fs.chmod/Sync(path, mode, callback)：更改文件的权限
-		mode{n}：参阅@[文件的模式|http://nodejs.cn/api/fs.html#fs_file_modes]
-	fs.chown/Sync(path, uid, gid, callback)：更改文件的所有者和群组
-	fs.close/Sync(fd, callback)：关闭文件
+	
 	fs.constants：返回包含文件系统操作常用常量的对象，参阅 @[FS 常量|http://nodejs.cn/s/4UdXHr]
-	fs.copyFile/Sync(src, dest[, flags], callback)：将 src 拷贝到 dest。 若 dest 已经存在则覆盖
-		src{s/bu/ur}：要拷贝的源文件
-		dest{s/bu/ur}：拷贝的文件
-		flags{n}[0]：拷贝操作的修饰符，@[参阅|http://nodejs.cn/api/fs.html#fs_fs_copyfile_src_dest_flags_callback]
+	当需要·flag·选项采用字符串时参考@[文件系统标志|http://nodejs.cn/api/fs.html#fs_file_system_flags]
+
+	fs.appendFile/Sync(path, data[, options], callback)：将数据追加到文件，如果文件尚不存在则创建该文件
 	fs.createReadStream(path[, options])：创建可读流
 	fs.createWriteStream(path[, options])：创建可写流
 	fs.existsSync(path)：（异步版本已废弃）如果路径存在则返回 true，否则返回 false
+	fs.open/Sync(path[, flags[, mode]], callback)：打开文件
+	fs.close/Sync(fd, callback)：关闭文件（^^使用·fs.read·和·fs.write·需使用·fs.open·打开文件和·fs.close·关闭文件^^）
+	fs.read/Sync(fd, buffer, offset, length, position, callback)：读取数据（更底层的操作）
+	fs.write/Sync(fd, buffer[, offset[, length[, position]]], callback)：将·buffer·写入到·fd·指定的文件（更底层的操作）
+	fs.write/Sync(fd, string[, position[, encoding]], callback)：将·string·写入到·fd·指定的文件（更底层的操作）
+	fs.watchFile(filename[, options], listener)：监听文件的变化
+	fs.unwatchFile(filename[, listener])：停止监听文件变化
+
+	fs.access/Sync(path[, mode], callback)：测试用户对·path·指定的文件或目录的权限，mode 参考@[文件可访问性的常量|http://nodejs.cn/s/qZfpqk]
+		不建议在调用打开、读取或写入文件方法之前使用·fs.access()·，其他进程可能会在两个调用之间更改文件的状态而引入竞态条件
+	fs.(f/l)chmod/Sync(path, mode, callback)：更改文件的权限（^^·f·开头表示以文件描述符作为参数，·l·开头表示不解析符号链接^^）
+	fs.(f/l)chown/Sync(path, uid, gid, callback)：更改文件的所有者和群组
+	fs.(f/l)stat/Sync(path[, options], callback)：获取文件信息状态
+	fs.(f)truncate/Sync(fd[, len], callback)：将文件截短到指定长度
+	fs.(f)utimes/Sync(path, atime, mtime, callback)：更改·path·指向的对象的文件系统时间戳
+	fs.f(data)sync/Sync(fd, callback)：同步文件的内核状态和存储设备，@[参阅|https://blog.csdn.net/xinghuah/article/details/80487525]
+	fs.link/Sync(existingPath, newPath, callback)：为文件创建一个新名称
+	fs.symlink/Sync(target, path[, type], callback)：可以跨系统为文件创建一个新名称
+	fs.readlink/Sync(path[, options], callback)：读取符号链接
+	fs.realpath/Sync(path[, options], callback)：通过解析·.·、·..·和符号链接异步地计算规范路径名
+	fs.realpath/Sync.native(path[, options], callback)：在 Linux 上使用时与 musl libc 的链接相关
 	!!
 
-	##其他
-	!!
-	fs.fchmod/Sync(fd, mode, callback)：更改文件的权限
-	fs.fchown/Sync(fd, uid, gid, callback)：更改文件的所有者和群组
-	fs.fsync/Sync(fd, callback)：同步文件的内核状态和存储设备，@[参阅|https://blog.csdn.net/xinghuah/article/details/80487525]
-	fs.fdatasync/Sync(fd, callback)：同步文件的内核状态与存储设备
-	fs.fstat/Sync(fd[, options], callback)：获取文件状态
-	fs.ftruncate/Sync(fd[, len], callback)：将文件截短到指定长度
-	fs.futimes/Sync(fd, atime, mtime, callback)：更改文件描述符指向的对象的文件系统时间戳
-	fs.lchmod/Sync(path, mode, callback)：（仅适用于 macOS）更改文件模式
-	fs.lchown/Sync(path, uid, gid, callback)：更改文件的所有权
-	fs.link/Sync(existingPath, newPath, callback)：为文件创建一个新名称
-	fs.lstat/Sync(path[, options], callback)：获取文件状态
-	!!
+	##文件重命名 demo
+	将文件名的下划线替换成短横线
+	假设有个 demo 文件夹，其中有 img 文件夹和 replace.js，img 文件夹中有若干张名称中包含下划线的图片
+	·replace.js·：
+	··
+	const fs = require('fs')
+	const path = require('path')
+	const src = 'img'
+
+	// 同步读取文件夹，返回值为文件夹内的所有文件名组成的数组
+	fs.readdirSync(src).forEach(filename => {
+		const oldPath = path.join(src, filename)
+		const newPath = oldPath.replace(/_/g, '-')
+		fs.rename(oldPath, newPath, err => console.log(filename + (err ? ' 替换失败！！！' : ' 替换成功:)')))
+	})
+	··
+
+	##文件修改 demo
+	假设有个 demo 文件夹，其中有 header.html、footer.html、index.html、replace.js
+	··
+	// header.html
+	<header>网页的头部</header>
+
+	// footer.html
+	<footer>网页的底部</footer>
+
+	// index.html
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8">
+			<title>index</title>
+			<style type="text/css">
+				body { font-size: 32px; text-align: center; }
+				header { color: #fff; line-height: 100px; background-color: #08f; }
+				header { color: #fff; line-height: 100px; background-color: #666; }
+				section { line-height: 300px; }
+			</style>
+		</head>
+		<body>
+			<!-- import header.html -->
+			<section>网页的内容</section>
+			<!-- import footer.html -->
+		</body>
+	</html>
+	··
+	现在实时将·index.html·文件中的·<!-- import xxx.html -->·部分替换为对应文件的内容，并输出新的文件·new.html·
+	·replace.js·：
+	··
+	const fs = require('fs')
+	const filename = 'index.html'
+	const newfilename = 'new.html'
+	const replaceReg = /<!-- import (.+) -->/gi
+
+	const replaceFile = filename => {
+		// 读取文件，默认返回 buffer，需指定编码方式为 utf8，然后对应替换内容
+		const data = fs.readFileSync(filename, 'utf8').replace(replaceReg, (res, $1) => fs.readFileSync($1, 'utf8'))
+		// 生成新的文件
+		fs.writeFile(newfilename, data, 'utf8', err => console.log(newfilename + (err ? ' 生成失败！！！' : ' 生成成功:)')))
+	}
+
+	// 默认先执行一次
+	replaceFile(filename)
+
+	// 监听文件，变更后重新生成
+	fs.watch(filename, eventType => {
+		if (eventType === 'change') {
+			console.log(filename + '发生了改变，重新生成...')
+			replaceFile(filename)
+		}
+	})
+	··
+
+	##目录索引 demo
+	在项目根目录运行即可打印此项目的所有文件列表
+	··
+	const fs = require('fs')
+	const path = require('path')
+	const noDirReg = /node_modules|\\.git/ // 不查找 node_modules 和 .git 内部的文件
+	let fullpath = ''
+
+	const query = filePath => {
+		fs.readdirSync(filePath).forEach(filename => {
+			const filedir = path.join(filePath, filename)
+			fullpath += '\\n' + filedir
+			if (fs.statSync(filedir).isDirectory() && !noDirReg.test(filename)) query(filedir) // 如果是文件夹则继续循环
+		})
+	}
+
+	query('./') // ./ 为本 js 所在目录，/ 以当前盘符为起点，空字符串报错
+	console.log(fullpath.replace('\\n', ''))
+	··
 	
 	#timer
 
@@ -853,5 +1082,5 @@ commonData.js.node.content = `
 	cnpm 官网|https://npm.taobao.org/
 	@@
 
-	&2019/5/24
+	&2019/6/6
 `

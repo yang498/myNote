@@ -45,13 +45,9 @@ REG.un = res => res.replace(REG.startUn, '&lt;¿$1')
 	.replace(REG.regUn, '$1/¿$3')
 
 // 首尾标识符替换成标签
-REG.tagStartEnd = false
-REG.addTag = tagName => {
-	REG.tagStartEnd = !REG.tagStartEnd
-	return '<' + (REG.tagStartEnd ? '' : '/') + tagName + '>'
-}
+REG.addTag = (tagName, content) => `<${tagName}>${content}</${tagName}>`
 // 行内代码块
-REG.codeInline = /·/g
+REG.codeInline = /·([^]+?)·/g
 // 代码块，用于改变内部标签，因为和行内代码块的标记是一样的，所以最后改成特殊符号
 REG.codeBlock = /··(?=\s)[^]*?··(?=\s)/g
 // 代码块，用于改变外层标签
@@ -59,7 +55,7 @@ REG.codeBlockTag = /^‥|‥$/g
 // 链接，<a>
 REG.a = /@\[([^]+?)\|([^]+?)\](?!¿)/g
 // 加粗，<b>
-REG.b = /\^\^/g
+REG.b = /\^\^([^]+?)\^\^/g
 // h1-3 标题
 REG.h1 = /^#/
 REG.h2 = /^##/

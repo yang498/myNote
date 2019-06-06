@@ -12,24 +12,28 @@ commonData.jsLibrary.tool.content = `
 	引入 js 后将会产生·XLSX·这个全局变量：
 	!!
 	XLSX.read(excel)：读取表格返回表格对象
+		data：表格数据
+		option{Object}：配置
+			type{String}：以什么方式读取，可选·array·(8位无符号数组)、·base64·、·binary·、·buffer·、·string·、·file·(仅 node 环境支持)
+
+	xlsx.write(workBook, option)：转换成表格格式的字符串数据
+
 	XLSX.utils：转换工具
 		XLSX.utils.sheet_to_json(sheet)：生成 json 格式，即数组对象，成员是每一行组成的对象，第一行为 key，第二行开始为 value
 		XLSX.utils.sheet_to_html(sheet)：生成 html 格式，注意是以·<html></html>·作为起始和结束的
 		XLSX.utils.sheet_to_csv(sheet)：生成 csv 格式，以逗号分隔的文本
 		XLSX.utils.sheet_to_txt(sheet)：生成 txt 格式，以 tab 分隔的文本
 
-		XLSX.utils.json_to_sheet：将数组对象转成 sheet
-		XLSX.utils.aoa_to_sheet：将二维数组转成 sheet
-		XLSX.utils.table_to_sheet：将 table 元素转成 sheet
+		XLSX.utils.json_to_sheet(data)：将数组对象转成 sheet
+		XLSX.utils.aoa_to_sheet(data)：将二维数组转成 sheet
+		XLSX.utils.table_to_sheet(data)：将 table 元素转成 sheet
+
+		XLSX.utils.book_new()：创建一个空的工作簿对象
+		XLSX.utils.book_append_sheet(workBook, workSheet, sheetName)：给工作簿添加一个工作表
 	!!
 
 	##XLSX.read()
 	·XLSX.read(data [, options])·：读取表格
-	!!
-	data：表格数据
-	option{Object}：配置
-		type{String}：以什么方式读取，可选·array·(8位无符号数组)、·base64·、·binary·、·buffer·、·string·、·file·(仅 node 环境支持)
-	!!
 	··
 	// html
 	<input id="file" type="file"/>

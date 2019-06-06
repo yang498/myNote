@@ -727,7 +727,7 @@ commonData.html.applet.content = `
 
 	###tips
 	假设·menuList·是传递给组件的数据，若在计时过程中使用·this.setData({ 'menuList.phoneCode.indicate': time + '秒' })·这种一直计时等渲染操作时，由于·menuList·被改变，所以触发视图渲染刷新，导致·picker·这类弹出式组件在渲染时被收起或报错
-	解决：把计时的变量抽离出来，比如改成本页面的数据或改成 slot 插槽，这样就不影响 menuList 本身
+	解决：把计时的变量抽离出来，比如改成使用组件属性传值或改成 slot 插槽，这样就不影响 menuList 本身
 
 	##插件
 	插件的开发和使用自小程序基础库版本 1.9.6 开始支持。

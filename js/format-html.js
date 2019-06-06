@@ -38,11 +38,11 @@ const formatHtml = text => {
 			})
 
 			// 行内代码块，<code>
-			.replace(REG.codeInline, item => REG.addTag('code'))
+			.replace(REG.codeInline, (res, $1) => REG.addTag('code', $1))
 			// 链接，<a>
 			.replace(REG.a, '<a href="$2" target="_blank">$1</a>')
 			// 加粗，<b>
-			.replace(REG.b, item => REG.addTag('b'))
+			.replace(REG.b, (res, $1) => REG.addTag('b', $1))
 			// 行内图片，<img>
 			.replace(REG.imgInline, item => REG.imgFn(item, REG.imgInline, true))
 
@@ -69,7 +69,7 @@ const formatHtml = text => {
 								i === 'bu' ? 'Buffer' : i).join('/')
 							return ' <i class="type">' + $1 + rType + $3 + '</i>'
 						})
-						.replace(/\[(?!¿)/, ' <i class="default">$&').replace(/\]+(?!¿)/, '$&</i>')
+						.replace(/\[(?!¿).*?\]+(?!¿)/g, ' <i class="default">$&</i>')
 						.replace(/!(?!¿)/, ' <b>$&</b>')
 					+ '</i>')
 				+ '</li>').replace('\n', '') + '!!')
