@@ -8,6 +8,7 @@ commonData.database.sqlServer.content = `
 	F5 或 Alt+X 或 Ctrl+E：执行
 	Ctrl+Shift+L：将选定文本转换为小写
 	Ctrl+Shift+U：将选定文本转换为大写
+	Ctrl+R：显示隐藏结果窗格
 	Alt+上下键：移动当前行
 	!!
 
@@ -33,7 +34,7 @@ commonData.database.sqlServer.content = `
 	··
 
 	#insert into
-	增加数据，语法：
+	增加数据（SQL server 中每次插入的条数不能超过 1000），语法：
 	第一种不指定列名，需要插入的值和表头一一对应：·insert into tableName values (value1, value2, value3, ...)·
 	第二种指定列名，值和表头对应即可，若某列未插入值则会以·NULL·代替：
 	··

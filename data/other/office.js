@@ -191,38 +191,64 @@ commonData.other.office.content = `
 	!!
 
 	#重装系统
+	推荐直接：@[官网下载安装 win10|https://www.microsoft.com/zh-cn/software-download/windows10]
+	@[win7|http://www.windows7en.com/jiaocheng/29425.html]
 
 	##名词解释
-	BIOS（Basic Input Output System）：基本输入输出系统，一组固化到计算机内主板上一个 ROM 芯片上的程序，说白了就是系统管理设置
-	Boot：系统引导界面，电脑以哪种模式启动，在 BIOS 中可以设置
-	UEFI（Unified Extensible Firmware Interface）：统一的可扩展固件接口，说白了就是 BIOS 的升级版
-	硬盘/U盘格式：NTFS 格式可以容纳 4G 以上大文件，即系统安装包
+	!!
+	Boot：系统引导界面，即电脑以哪种模式启动，可手动进入引导界面选择启动方式，在 BIOS 中可以设置默认启动方式
+	BIOS（Basic Input Output System）：基本输入输出系统，即系统管理设置，或称之为 Legacy
+	UEFI（Unified Extensible Firmware Interface）：统一的可扩展固件接口，即 BIOS 的升级版
+	Windows PE（Windows Preinstallation Environment）：Windows 预安装环境，也是一个极简版的 Windows
+	U盘启动制作工具：将 Windows PE 安装到 U盘，这样在开机的时候选择以 U盘启动进入 Windows PE 来进行重装
+
+	硬盘/U盘的 FAT32 格式：只可以容纳单个文件 4GB 以下大小
+	硬盘/U盘的 NTFS 格式：可容纳单个文件 2TB 以下大小
+	硬盘/U盘的 exFAT 格式：FAT32 格式的升级版，可容纳单个文件 256GB 以下大小，且跨平台表现好，支持 win 和 mac
+	簇：数据存储在硬盘的单位，使用默认大小即可，好比一栋大楼(硬盘)有多个楼层(分区)，每个楼层又有多个房间(簇)，里面可能住着或没住人(文件)
+
+	MBR（Master Boot Record）分区：主引导记录，一个特殊的启动扇区，包含了操作系统的信息，用来启动系统
+	GUID（Globally Unique Identifier）分区：全局唯一标识符，或称之为 GPT
+	GPT（GUID Partition Table）分区：全局唯一标识磁盘分区表，即 MBR 的升级版
+		win7 一般只支持 MBR，win8/10 以上才支持 GUID/GPT，MBR 模式不能管理 2TB以上的硬盘容量，而 GUID/GPT 无限制
+	分区搭配：适合老式电脑的（BIOS + MBR）或适合现代电脑的（UEFI + GUID/GPT）
+	!!
+
+	##U盘启动制作工具
+	百度“U盘启动制作工具”很容易搜到很多品牌，而且都是傻瓜一键式的
 
 	##步骤
+	!!
 	0、这里以 U盘重装系统为例
 	1、下载好系统安装包，即 iso 或 gho 格式的镜像文件，百度就可以了
 	2、制作 U盘启动，这里以@[通用pe工具箱|http://www.tongyongpe.com/]为例：
 	首先下载安装通用pe工具箱
 	然后插入 U盘，打开软件选择 U盘点击一键制作
 	注意这会格式化 U盘，然后把系统安装包复制到 U盘
-	!./img/other/reinstall01.jpg,auto,350
-	!./img/other/reinstall03.jpg,auto,350
 	3、插好 U盘，重启电脑，在开机画面出来的时候按快捷键打开 Boot 界面，比如联想小米按 F12，不知道可以百度
 	4、按方向键^^↑↓^^选择到 U盘，然后按回车键进入通用pe主菜单界面
-	!./img/other/reinstall02.jpg,400
-	5、进入通用pe主菜单后，选择第一个回车或直接按 1 进入通用pe系统桌面（重装前可以使用分区工具分电脑盘）
+	5、进入通用pe主菜单后，选择第一个回车或直接按 1 进入通用pe系统桌面
+		tips：重装前有需要可以使用分区工具分电脑盘
 	6、默认运行^^通用PE一键装机^^软件，没有的话就手动打开
-	7、选择 U盘的系统安装包，点击开始，注意这会清空电脑的 C盘
-	8、然后就会慢慢解压系统安装包，解压完毕后会提示重启电脑，可以拔出 U盘了
+	7、选择 U盘的系统安装包，点击开始，注意这会清空电脑的 C盘（iso 文件包含 gho 文件）
+	8、然后就会慢慢解压系统安装包（gho 文件），解压完毕后会提示重启电脑，可以拔出 U盘了
+		tips：如果不拔出 U盘电脑重启后可能仍然进入 pe系统，此时则需要重启按 F12 手动选择非 U盘和 DVD盘的启动项
 	9、等系统安装完成，一般 20 分钟左右✌
+	!!
 
 	##问题
 
-	###第 7 步点击开始后如果需要清空 C盘后没有提示重启：
+	###开机进入引导模式时提示 error: legacy boot of uefi media
+	这个电脑只能在 UEFI 模式下才能 boot 引导，因为 U盘是 UEFI 模式的，而电脑是 BIOS 模式的
+	方法一：将 U盘改为 BIOS + MBR 模式
+	方法二：将电脑重启按 F2 （以联想电脑为例）进入 BIOS 系统，选择 Boot 菜单，将 Boot Mode 改为 UEFI
+	然后重新重装
+
+	###选择完系统安装包点击开始后，如果提示需要清空 C盘，并且清空后没有任何操作：
 	!!
-	重启从第 4 步开始再来一遍试试
+	重启再来一遍试试
 	可能是系统安装包不行，换个试试（感觉 gho 格式 比 ios 格式的好点）
-	选择手动安装·Local>Partition>From image·
+	选择手动安装·Local > Partition > From image·
 	!!
 
 	###重启失败
@@ -237,17 +263,14 @@ commonData.other.office.content = `
 		选择 Launch CSM（如果有这个选项），改为 Enabled
 	Exit 菜单：选择 OS Optimized Defaults，改为 OTHER OS，表示修改默认优先系统为其他系统
 	基本上都改为第二个选项就行了，完成后按 F10 保存退出即可
-	从第 4 步开始再次进入 pe 系统桌面，选择快速分区，在左边选择 MBR 类型
-		（GUID 类型主要是针对 win10 和 win8 系统并有 UIFI 引导模式，优势是启动速度较快）
-	再次重启从第 4 步开始再来一遍
+	再次进入 pe 系统，选择快速分区，在左边选择 MBR 类型（win7 一般只支持 MBR，win8/10 以上才支持 GUID/GPT）
 	!!
 
 	###进不了pe系统
 	!!
 	在系统 BIOS 中设置·Devices>ATA Drive Setup>IDE·
-	解压系统安装包，以运行·硬盘安装.exe·的形式重装
-	试试其他的重装系统软件，现在有很多一键的那种，自动下载安装包然后自动解压安装
-	下载·diskgenius·将硬盘重新分区
+	试试其他的一键重装系统软件，在电脑上安装后一键下载系统安装包然后自动解压安装
+	下载·diskgenius·分区工具将硬盘重新分区
 	!!
 
 

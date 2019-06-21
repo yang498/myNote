@@ -33,6 +33,9 @@ commonData.html.applet.content = `
 	小程序代码包大小限制为 2M，如果太大可考虑分包加载，代码包大小的优化应考虑尽量少使用本地图片和类库，改为从网络加载
 	·background-image·不能使用本地图片，可用网络图片或 base64，或改用·<image/>·标签
 	获取输入框中的内容可以使用·bindinput·或·bindblur·事件
+	iOS 上页面最后的元素·margin-bottom·无效，所以在页面底部留白的还是改用空高·<view>·或父容器·padding·
+	自定义弹窗阻止页面滑动：在遮罩和弹窗容器上·catchtouchmove·一个空方法，若弹窗是可滚动的则只在遮罩上使用
+		如果页面是·<srcoll-view>·则可以改成在弹窗出现时将页面·<srcoll-view>·的·scroll-y·设为·false·
 	!!
 
 	##相关小程序

@@ -60,8 +60,10 @@ const formatHtml = text => {
 						.replace(/(\{(?!¿))(.+?)(\}(?!¿))/, (r, $1, $2, $3) => {
 							const rType = $2.split('/').map(i => i === 'o' ? 'Object' :
 								i === 'a' ? 'Array' :
+								i === 'f' ? 'Function' :
 								i === 's' ? 'String' :
 								i === 'n' ? 'Number' :
+								i === 'r' ? 'RegExp' :
 								i === 'nu' ? 'Null' :
 								i === 'u' ? 'Undefined' :
 								i === 'ur' ? 'URL' :

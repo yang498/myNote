@@ -159,6 +159,32 @@ commonData.css.css.content = `
 	}
 	··
 
+	#background
+	·background: color image repeat origin position attachment·：背景色
+	!!
+	background-color：背景颜色
+	background-image：背景图片，比背景颜色层级高，支持·url(imgUrl)·、渐变等，可指定多个背景图片以逗号隔开，层级越后越低
+	background-repeat[repeat]：背景图片的重复方式
+		写法：可写 2 个值以空格隔开分别指定水平和垂直方向，在多个背景图片下可写多个值以逗号隔开分别指定重复方式
+		repeat|repeat-x|repeat-y|no-repeat：分别是·重复|只在水平方向重复|只在垂直方向重复|不重复·
+		space：不裁剪重复，把边上裁剪的部分顶出去，所以图像之间会有些空隙，·background-position·会被忽视
+		round：不裁剪重复，边上裁剪的部分尽可能的顶进来，所以图像会适当的缩小，图像之间没有空隙
+	background-attachment[scroll]：背景图片是否随容器滚动，在多个背景图片下可写多个值以逗号隔开分别指定滚动方式
+		scroll：容器内固定，容器外滚动
+		fixed：绝对固定，不管处于哪个容器都不会滚动
+		local：跟随容器滚动
+	background-origin：背景图片的中心点
+	background-position：
+	!!
+
+	#渐变
+	渐变属于·background-image·
+	##linear-gradient()
+	线性渐变
+	!!
+	linear-gradient()
+	!!
+
 	#小技巧
 	##文字超出省略
 	###单行超出省略

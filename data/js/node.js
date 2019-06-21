@@ -3,8 +3,10 @@ commonData.js.node.content = `
 	##介绍
 	Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行
 	Node 提供大量工具库，使得 JavaScript 语言与操作系统互动（比如读写文件、新建子进程）
-	Node 内部采用 Google 公司的 V8 引擎，作为 JavaScript 语言解释器；通过自行开发的 libuv 库，调用操作系统资源。
-	###安装
+	Node 内部采用 Google 公司的 V8 引擎，作为 JavaScript 语言解释器；通过自行开发的 libuv 库，调用操作系统资源
+	Node 的特点是基于事件驱动和无阻塞（单线程异步回调）
+
+	##安装
 	在@[官网|https://nodejs.org/en/download/]或@[中文官网|http://nodejs.cn/download/]可以下载对应版本的 msi 文件直接安装
 	安装完成后可以查看版本：
 	··
@@ -163,8 +165,8 @@ commonData.js.node.content = `
 
 	#概念
 	##基本用法
-	运行 node 程序，就是使用 node 命令读取 JavaScript 脚本
-	1、新建·demo.js·脚本，写入一行代码·console.log("Hello World")·保存，在命令行输入：
+	###使用 node 运行 js
+	新建·demo.js·脚本，写入一行代码·console.log("Hello World")·保存，在命令行输入：
 	··
 	node demo
 	// 或者
@@ -173,11 +175,18 @@ commonData.js.node.content = `
 	// 输出
 	Hello World
 	··
-	2、使用 -e 参数，可以执行代码字符串：
+	因为 node 在第一次编译之后都是直接访问内存，所以避免重复载入以提高性能
+	但却不利于开发调试，所以每次修改文件都需要·Ctrl+C·终止程序再·node xx·来查看新的结果
+	推荐使用·supervisor·模块，可以实时监听代码的改动自动重启 node，需要全局安装：
+	··
+	cnpm install -g supervisor
+	··
+	然后启动时用·supervisor·代替·node·命令，例如·node demo·改成·supervisor demo·
+	###使用·-e·参数执行代码字符串
 	··
 	node -e 'console.log("Hello World")'
 	··
-	3、在命令行输入 node 直接回车，进入一个 Node.js 的 REPL 环境（Read–eval–print loop，”读取-求值-输出”循环），可以直接运行 JavaScript 命令：
+	###直接输入 node 回车进入 REPL 环境（Read–eval–print loop，”读取-求值-输出”循环），可运行 js 命令：
 	··
 	> node
 	> 1 + 1
@@ -213,39 +222,11 @@ commonData.js.node.content = `
 		console.log(value)
 	}
 	··
-	上面代码中，callback 的第一个参数是 Error 对象，第二个参数才是真正的数据参数。这是因为回调函数主要用于异步操作，当回调函数运行时，前期的操作早结束了，错误的执行栈早就不存在了，传统的错误捕捉机制 try…catch 对于异步操作行不通，所以只能把错误交给回调函数处理。
-	如果没有发生错误，回调函数的第一个参数就传入null。这种写法有一个很大的好处，就是说只要判断回调函数的第一个参数，就知道有没有出错，如果不是null，就肯定出错了。
-
-	##模块化结构
-	Node.js 采用模块化结构，按照 @[CommonJS|http://wiki.commonjs.org/wiki/CommonJS] 规范定义和使用模块。模块与文件是一一对应关系，即加载一个模块，实际上就是加载对应的一个模块文件。
-	require 命令用于指定加载模块，加载时可以省略脚本文件的后缀名：
-	··
-	const circle = require('./circle.js')
-	// 等同于
-	const circle = require('./circle')
-	··
-	模块加载后会被系统缓存，第二次加载会返回缓存中的版本，这意味着模块实际上只会执行一次。如果希望执行多次可以让模块返回一个函数，然后多次调用该函数。
-
-	##自定义模块
-	使用·module.exports·可以输出模块，假定新建一个 foo.js 文件：
-	··
-	// foo.js
-
-	module.exports = function(x) {
-	    console.log(x)
-	}
-	··
-	使用：
-	··
-	// index.js
-	var m = require('./foo')
-
-	m('这是自定义模块')
-	··
+	上面代码中，callback 的第一个参数是·Error·对象，第二个参数才是真正的数据参数。这是因为回调函数主要用于异步操作，当回调函数运行时，前期的操作早结束了，错误的执行栈早就不存在了，传统的错误捕捉机制·try…catch·对于异步操作行不通，所以只能把错误交给回调函数处理
+	如果没有发生错误，回调函数的第一个参数就传入·null·，好处是可以判断回调函数的第一个参数是不是·null·来判断是否出错了
 
 	##核心模块
 	node 的核心模块源码在安装目录的 lib 子目录中，为了提高运行速度，它们安装时都会被编译成二进制文件
-	核心模块总是最优先加载的，比如自定义一个 http 模块，·require('http')·加载的还是核心模块
 	!!
 	assert：断言，判断表达式符不符合预期，根据条件抛出对应的错误
 	async_hooks[试验]：异步钩子，对异步操作生命周期过程的处理
@@ -259,7 +240,7 @@ commonData.js.node.content = `
 	Error：异常错误的处理
 	events：异步操作只有开始和结束两个状态，通过 events 可以解决多状态异步操作的响应问题
 	fs：文件系统，提供本地文件的读写能力，几乎对所有操作提供异步和同步两种操作方式，供开发者选择
-	global：罗列出全局变量，可直接查看·console.log(global)·
+	global：罗列出全局变量，可·console.log(global)·直接查看
 	http：搭建 http 服务
 	http2：搭建 http2 服务
 	https：搭建 https 服务
@@ -409,7 +390,11 @@ commonData.js.node.content = `
 	··
 
 	##Module 对象
-	为 Module 实例提供通用方法，使用前需先引入：·require('module')·，该模块返回的属性有：
+	模块属性方法，使用前需先引入：
+	··
+	const Module =	 require('module')
+	··
+	该模块返回的属性有：
 	!!
 	Module.builtinModules：罗列 Node.js 提供的所有模块名称。可以用来判断模块是否为第三方所维护
 	Module.createRequireFromPath(filename)：加载模块的函数，即简化加载相对路径的·require·
@@ -434,12 +419,328 @@ commonData.js.node.content = `
 	··
 
 	#http
-	global > http > 连接 SQL > 连接 MongoDB
-	后续重捋 #说明
+	HTTP 服务器和客户端，使用前需先引入：
+	··
+	const http = require('http')
+	··
+	提供的方法属性：
+	!!
+	http.createServer()：创建服务
+	http.request()：发出 HTTP 请求
+	http.get()：·http.request()·的快捷·GET·请求方式
+
+	http.IncomingMessage 类：·http.createServer()·回调的第一个参数
+	http.ServerResponse 类：·http.createServer()·回调的第二个参数
+	http.Server 类：·http.createServer()·返回的实例
+	http.ClientRequest 类：·http.request()·返回的实例
+	http.Agent 类：代理，管理 HTTP 客户端的连接持久性和重用
+
+	http.METHODS：返回解析器支持的 HTTP 方法列表组成的字符串数组
+	http.STATUS_CODES：所有标准 HTTP 响应状态码的集合，以及每个状态码的简短描述
+	http.globalAgent：·Agent·的全局实例，作为所有 HTTP 客户端请求的默认值
+	http.maxHeaderSize：只读属性，指定 HTTP 消息头的最大允许大小（单位字节）。默认为 8KB。
+		可使用·--max-http-header-size·命令行选项进行配置
+	!!
+
+	##createServer()
+	·http.createServer([options][, requestlistener])·：创建服务并返回服务实例·http.Server·
+	!!
+	options{o}：
+		IncomingMessage：指定要使用的·http.IncomingMessage·类
+		ServerResponse：指定要使用的·http.ServerResponse·类
+	requestListener{f}：回调函数，可用于访问响应状态、消息头、以及数据
+		request{IncomingMessage}：第一个参数
+		response{ServerResponse}：第二个参数
+	!!
+	###访问·localhost:8080·网页将显示·Hello World·：
+	··
+	const http = require('http')
+
+	http.createServer((request, response) => {
+		response.writeHead(200, {'Content-Type': 'text/plain'}) // 访问网站时发送 http 状态 200(ok) 和内容类型
+		response.end('Hello World')
+	}).listen(8080)
+	
+	console.log('Server running on port 8080.')
+	··
+	###自动打开浏览器：
+	··
+	const http = require('http')
+	const cp = require('child_process')
+	const host = 'localhost'
+	const port = 1000
+
+	http.createServer((request, response) => {
+		response.writeHead(200, {'Content-Type': 'text/plain'}) // 访问网站时发送 http 状态 200(ok) 和内容类型
+		response.end('Hello World')
+	}).listen(port, host, () => {
+		console.log(\`Server running at http://\${host}:\${port}/\`)
+		cp.exec(\`start http://\${host}:\${port}/\`) // 打开浏览器访问
+	})
+	··
+	###返回·html·文件：
+	··
+	const http = require('http')
+	const fs = require('fs')
+
+	http.createServer((request, response) => {
+		response.writeHead(200, {'Content-Type': 'text/html'})
+		response.end(fs.readFileSync('test.html', 'utf8'))
+	}).listen(8080)
+	
+	console.log('Server running on port 8080.')
+	··
+	###根据不同网址的请求显示不同的内容：
+	··
+	const http = require('http')
+
+	http.createServer((req, res) => {
+		if (req.url === '/') {
+			res.writeHead(200, { 'Content-Type': 'text/html' })
+			res.end('Welcome to the homepage!')
+		} else if (req.url === '/about') {
+			res.writeHead(200, { 'Content-Type': 'text/html' })
+			res.end('Welcome to the about page!')
+		} else {
+			res.writeHead(404, { 'Content-Type': 'text/plain' })
+			res.end('404 error! File not found.')
+		}
+	}).listen(8080)
+	
+	console.log('Server running on port 8080.')
+	··
+
+	##request()
+	执行 http 请求：·http.request(options[, callback])·或·http.request(url[, options][, callback])·
+	!!
+	url{s/ur}：请求地址，字符串会使用·url.parse()·解析，URL 对象会转换为普通的 options 对象
+	options {o}：
+		protocol{s}[http:]：协议
+		host{s}[localhost]：域名或 IP 地址
+		hostname{s}：host 的别名，若都指定了 host 和 hostname 则此属性将覆盖 host
+		family{n}：IP 地址族，有效值为·4·或·6·，若没有指定则同时使用 IP v4 和 v6
+		port{n}[80]：远程服务器的端口
+		localAddress{s}：为网络连接绑定的本地接口
+		socketPath{s}：Unix 域套接字，若指定了 host 或 port（它们指定了 TCP 套接字）则不能使用此选项
+		method{s}[GET]：HTTP 请求的方法
+		path{s}[/]：请求的路径，如果有应包括查询字符串，例如·/index.html?page=12·（该字符串不能包含空格）
+		headers{o}：请求头
+		auth{s}：基本的身份验证，即·user:password·，用于计算授权请求头
+		agent{http.Agent/b}[http.globalAgent]：控制 Agent 的行为
+		createConnection{f}：当 agent 选项未被使用时，用来为请求生成套接字或流的函数
+		timeout{n}：指定套接字超时的数值，单位毫秒。这会在套接字被连接之前设置超时
+		setHost{b}[true]：是否自动添加 Host 请求头
+	callback{f}：回调函数，参数是·http.IncomingMessage·的实例
+	!!
+	此方法返回·http.ClientRequest·实例对象
+	··
+	const http = require('http')
+	const qs = require('querystring')
+	const postData = qs.stringify({ 'msg': '你好世界' })
+
+	const options = {
+		hostname: 'nodejs.cn',
+		path: '/upload',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': Buffer.byteLength(postData)
+		}
+	}
+	// options 也可以是个 url 字符串，上面相当于是将 url 拆分写
+	// const options = 'http://abc:xyz@nodejs.cn'
+
+	const req = http.request(options, (res) => {
+		console.log(\`状态码: \${res.statusCode}\`)
+		console.log(\`响应头: \${JSON.stringify(res.headers)}\`)
+		res.setEncoding('utf8')
+		// 请求得到的数据需监听 'data' 事件，不一定是一次完成，该事件可能会触发多次
+		res.on('data', (chunk) => {
+			console.log(\`响应主体: \${chunk}\`)
+		})
+		// 请求完成时触发 'end' 事件
+		res.on('end', () => {
+			console.log('响应中已无数据')
+		})
+	})
+
+	req.on('error', (e) => {
+		console.error(\`请求遇到问题: \${e.message}\`)
+	})
+
+	req.write(postData) // 将数据写入请求主体
+	req.end() // 必须调用此方法结束请求
+	··
+
+	##get()
+	·request()·的·get·快捷方法：·http.get(options[, callback])·或·http.get(url[, options][, callback])·
+	!!
+	url{s|ur}：请求地址
+	options{o}：同·request()·，且·method·始终设置为·GET·
+	callback{f}：回调函数，参数是·http.IncomingMessage·的实例
+	!!
+	此方法返回·http.ClientRequest·实例对象，并自动调用·req.end()·
+	··
+	const http = require('http')
+	const https = require('https') // 若请求的地址是 https 协议需改为此模块
+	const iconv = require('iconv-lite') // node 内置转码模块
+
+	// 获取 json 封装
+	const get = (url, success, fail) => http.get(url, res => {
+		let data = ''
+		res.setEncoding('utf8')
+		res.on('data', dataItem => data += dataItem)
+		res.on('end', () => success(JSON.parse(data).data))
+	}).on('error', fail)
+
+	// 获取网页封装（网页的中文编码方式不同需转码）
+	const getWeb = (url, success, fail) => http.get(url, res => {
+		const data = []
+		res.on('data', dataItem => data.push(dataItem))
+		res.on('end', () => success(iconv.decode(Buffer.concat(data), 'utf8').toString())) // utf8、gbk、gb2312、CP936
+	}).on('error', fail)
+
+	get('http://www.xxx.com/data.json', res => {
+		console.log('请求成功')
+		console.log(res)
+	}, res => {
+		console.error(\`出现错误: \${res.message}\`)
+	})
+	··
+
+	##IncomingMessage
+	·http.createServer()·回调的第一个参数，用于访问响应状态、消息头、以及数据，即对请求的输入
+	!!
+	'aborted' 事件：当请求中止时触发
+	'close' 事件：当底层连接已关闭时触发，每个响应只触发一次
+
+	method{s}：请求的方法
+	url{s}：请求的 URL 字符串，仅对从·http.Server·获取的请求有效
+	statusCode{n}：3 位的 HTTP 响应状态码，仅对从·http.ClientRequest·获取的响应有效
+	statusMessage{s}：HTTP 响应状态消息（原因短语），仅对从·http.ClientRequest·获取的响应有效
+
+	aborted{b}：请求是否已中止
+	complete{b}：是否已收到并成功解析完整的 HTTP 消息
+	httpVersion{s}：服务器请求时为客户端发送的 HTTP 版本，客户端响应时为服务器的 HTTP 版本
+	headers{o}：请求或响应的消息头对象，会合并重复项
+	trailers{o}：请求/响应的尾部消息头对象，仅在·'end'·事件中填充
+	rawHeaders{a}：原始请求头/响应头的列表，即 key 为偶数 value 为奇数，不合并重复项
+	rawTrailers{a}：原始的请求/响应的尾部消息头的键和值，仅在·'end'·事件中填充
+	socket：与连接关联的·net.Socket·对象，HTTPS 可使用·request.socket.getPeerCertificate()·获取客户端的身份验证详细信息
+	
+	destroy([error])：终止连接
+	setTimeout(msecs, callback)：调用·message.connection.setTimeout(msecs, callback)·
+	!!
+
+	##ServerResponse
+	·http.createServer()·回调的第二个参数，对请求做出相关的响应，即对请求的输出
+	!!
+	'close' 事件：表明在调用·response.end()·或能够刷新之前终止了底层连接
+	'finish' 事件：响应发送后触发。即当响应头和主体的最后一段已经切换到操作系统以通过网络传输时，触发该事件，客户端不一定收到信息
+	
+	connection：指向底层的套接字，即·response.socket·
+	finished{b}[false]：响应是否已完成，在·response.end()·执行之后变为·true·
+	headersSent{b}：是否已发送响应头
+	sendDate{b}[true]：是否自动生成并发送 Date 响应头
+	socket：指向底层的套接字
+	statusCode{n}：当使用隐式的响应头时（没有调用·response.writeHead()·），此属性控制在刷新响应头时将发送到客户端的状态码
+	statusMessage{s}：同·statusCode·，此属性控制状态消息
+
+	writeHead(statusCode[, statusMessage][, headers])：向请求发送指定响应头
+	writeContinue()：向客户端发送·HTTP/1.1 100 Continue·消息，表示应发送请求主体
+	writeProcessing()：向客户端发送·HTTP/1.1 102·处理消息，表明可以发送请求主体
+	write(chunk[, encoding][, callback])：要发送的数据
+	end([data][, encoding][, callback])：结束本次响应，如果传了·data·相当于·write(data, encoding)·之后再·end(callback)·
+	
+	addTrailers(headers)：将 HTTP 尾部响应头添加到响应中，HTTP 需要发送·Trailer·响应头才能发出尾部响应头
+	getHeaders()：返回当前传出的响应头的浅拷贝，注意返回的对象不是从 JavaScript·Object·原型继承的，不能使用其原型方法
+	getHeader(name)：读出已排队但未发送到客户端的响应头，·name·不区分大小写，返回值的类型取决于提供给·setHeader()·的参数
+	getHeaderNames()：返回一个数组，其中包含当前传出的响应头的唯一名称。 所有响应头名称都是小写的
+	setHeader(name, value)：为隐式响应头设置单个响应头的值，若待发送的响应头中已存在则覆盖
+	hasHeader(name)：是否在传出的响应头中设置了由·name·标识的响应头
+	removeHeader(name)：移除排队等待中的隐式发送的响应头
+	setTimeout(msecs[, callback])：套接字的超时值
+	!!
+
+	##Server
+	·http.createServer()·返回的实例
+	!!
+	'checkContinue' 事件：每次收到·HTTP Expect: 100-continue·的请求时触发，如果未监听此事件，服务器将自动响应·100 Continue·
+	'checkExpectation' 事件：每次收到带有·HTTP Expect·请求头的请求时触发，其中值不是·100-continue·
+	'clientError' 事件：如果客户端连接触发·'error'·事件，则会在此处转发。 此事件的监听器负责关闭或销毁底层套接字
+	'close' 事件：当服务器关闭时触发
+	'connect' 事件：每次客户端请求·HTTP CONNECT·方法时触发
+	'connection' 事件：每次有请求时都会触发
+	'upgrade' 事件：每次客户端请求 HTTP 升级时发出
+
+	server.close([callback])：停止服务器接受新连接
+	server.listen()：启动 HTTP 服务器监听连接
+	server.listening{b}：服务器是否正在监听连接
+	server.setTimeout([msecs][, callback])：设置套接字的超时值，并在服务器对象上触发 'timeout' 事件
+
+	server.maxHeadersCount[2000]：限制最大传入请求头数。 如果设置为 0，则不会应用任何限制
+	server.headersTimeout[40000]：指定限制解析器等待接收完整 HTTP 请求头的时间
+	server.timeout[120000]：认定套接字超时的不活动毫秒数，即超时时间（单位毫秒）
+	server.keepAliveTimeout：服务器在完成写入最后一个响应之后，在销毁套接字之前需要等待其他传入数据的非活动毫秒数
+	!!
+
+	##ClientRequest
+	·http.request()·返回的实例，表示正在进行的请求
+	!!
+	'abort' 事件：当请求被客户端中止时触发
+	'connect' 事件：使用 CONNECT 方式响应请求时触发。如果未监听此事件，则接收 CONNECT 方法的客户端将关闭其连接
+	'continue' 事件：当服务器发送·100 Continue HTTP·响应时触发，通常是因为客户端发送请求主体的指令包含·Expect: 100-continue·
+	'information' 事件：服务器发送 1xx 响应时触发（不包括 101 Upgrade）。使用包含具有状态码的对象的回调触发此事件
+	'response' 事件：当收到此请求的响应时触发
+	'socket' 事件：将套接字分配给此请求后触发
+	'timeout' 事件：当底层套接字因不活动而超时时触发，这只会通知套接字已空闲，必须手动中止请求
+	'upgrade' 事件：每次服务器响应升级请求时发出
+
+	request.abort()：将请求标记为中止，调用此方法将导致响应中剩余的数据被丢弃并且套接字被销毁
+	request.write(chunk[, encoding][, callback])：发送一个请求主体的数据块
+	request.end([data[, encoding]][, callback])：完成发送请求
+	request.flushHeaders()：刷新请求头
+	request.getHeader(name)：读取请求中的一个请求头
+	request.removeHeader(name)：移除已定义到请求头对象中的请求头
+	request.setHeader(name, value)：为请求头对象设置单个请求头的值
+	request.setNoDelay([noDelay])：一旦将套接字分配给此请求并且连接了套接字，就会调用·socket.setNoDelay()·
+	request.setSocketKeepAlive([enable][, initialdelay])：同上也会调用·socket.setKeepAlive()·
+	request.setTimeout(timeout[, callback])：同上也会调用·socket.setTimeout()·
+
+	request.aborted：如果请求已中止，则此值是请求中止的时间，自 1970 年 1 月 1 日 00:00:00 UTC 以来的毫秒数
+	request.connection：参考·request.socket·
+	request.finished{b}[false]：如果调用了·request.end()·，则此属性将变为·true·
+	request.maxHeadersCount{n}[2000]：限制最大响应头数。设置为 0 则不会应用任何限制
+	request.socket：底层套接字
+	!!
+
+	##Agent
+	负责管理 HTTP 客户端的连接持久性和重用
+	!!
+	new Agent([options])：设置默认的·http.globalAgent·，供·http.request()·使用
+		options{o}：要在代理上设置的可配置选项集，·socket.connect()·中的·options·也受支持
+			keepAlive{b}[false]：对没有未完成的请求保持套接字，可以被用于将来的请求而无需重新建立 TCP 连接
+			keepAliveMsecs{n}[1000]：当设置·keepAlive·为·true·时，指定·TCP Keep-Alive·数据包的初始延迟
+			maxFreeSockets{n}[256]：当设置·keepAlive·为·true·时，在空闲状态下保持打开的套接字的最大数量
+			maxSockets{n}[Infinity]：每个主机允许的套接字的最大数量
+			timeout{n}：套接字的超时时间，单位毫秒
+	
+	agent.createConnection(options[, callback])：生成用于 HTTP 请求的套接字或流
+	agent.keepSocketAlive(socket)：当 socket 与请求分离并且可以由 Agent 保留时调用
+	agent.reuseSocket(socket, request)：由于 keep-alive 选项而在持久化后将 socket 附加到 request 时调用
+	agent.destroy()：销毁代理当前使用的所有套接字，启用了 keepAlive 的代理后不再使用时调用
+	agent.getName(options)：获取一组请求选项的唯一名称，以判定一个连接是否可以被重用
+
+	agent.freeSockets：当启用 keepAlive 时代理正在等待使用的套接字数组，不要修改
+	agent.maxFreeSockets[256]：当启用 keepAlive 时设置在空闲状态下保持打开的最大套接字数
+	agent.maxSockets[Infinity]：决定代理可以为每个来源打开多少并发套接字。来源是·agent.getName()·的返回值
+	agent.requests：包含尚未分配给套接字的请求队列，不要修改
+	agent.sockets：包含当前代理正在使用的套接字数组，不要修改
+	!!
 
 	#url
 	##URL
-	全局·URL·对象（新增于 ^^v10.0.0^^），处理与解析 url，无需引入
+	全局·URL·对象（新增于 ^^v10.0.0^^），处理与解析 url，无需引入模块
 	全局·URL·对象采用 WHATWG 标准，下面是遗留版本和新版标准的区别（上面是旧版，下面是新版）：
 	··
 	┌────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -810,11 +1111,11 @@ commonData.js.node.content = `
 	该方法是提供给·qs.parse()·使用的，通常不直接使用。 它之所以对外开放，是为了在需要时可以通过给·qs.unescape·赋值一个函数来重写解码的实现
 
 	##stringify()
-	将对象生成字符串：qs.stringify(obj[, sep[, eq[, options]]])
+	将对象生成字符串：·qs.stringify(obj[, sep[, eq[, options]]])·
 	!!
-	str{String}：需要生成的对象
-	sep{String}[&]：多个键值对之间的连接符
-	eq{String}[=]：键名与键值之间的连接符
+	obj{o}：需要生成的对象
+	sep{s}[&]：多个键值对之间的连接符
+	eq{s}[=]：键名与键值之间的连接符
 	options{Object}：
 		encodeURIComponent{Function}[qs.escape()]：将对象编码成的字符串的方法
 	!!
@@ -994,8 +1295,7 @@ commonData.js.node.content = `
 	··
 	
 	#timer
-
-	##方法
+	定时器，定时器类的方法属于全局对象，无需引入模块
 	!!
 	setImmediate(callback[, ...args])：返回一个 Immediate 对象
 	setTimeout(callback, delay[, ...args])：返回一个 Timeout 对象
@@ -1016,8 +1316,7 @@ commonData.js.node.content = `
 
 	##介绍
 	因为定时器函数是全局变量，所以不需要调用·require('timers')·来使用
-	Node.js 中的定时器函数 API 与浏览器类似，但内部实现（基于 @[Node.js 事件循环构建|http://nodejs.cn/s/jRLbrb]）不同
-	@[参考|http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html]
+	Node.js 中的定时器函数 API 与浏览器类似，但内部实现（基于 @[Node.js 事件循环构建|http://nodejs.cn/s/jRLbrb]）不同，@[参考博客|http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html]
 	!!
 	setTimeout()：执行一次，同浏览器
 	setInterval()：循环执行，同浏览器
@@ -1074,13 +1373,85 @@ commonData.js.node.content = `
 	··
 	上面代码会先进入 I/O callbacks 阶段，然后是 check 阶段，最后才是 timers 阶段。因此，·setImmediate·才会早于·setTimeout·执行
 
+	#连接数据库
+
+	##SQL Server
+	推荐安装 @[tedious|http://tediousjs.github.io/tedious/]：
+	··
+	cnpm install tedious
+	··
+	使用：
+	··
+	// tedious 主要分为 Connection 连接数据库和 Request 操作数据库
+	const { Connection, Request } = require('tedious')
+
+	// 初始化
+	const connection = new Connection({
+		server: '127.0.0.1', // 服务器 IP 地址或域名
+		authentication: {
+			type: 'default',
+			options: {
+				userName: 'sa', // 用户名
+				password: '******' // 密码
+			}
+		},
+		options: {
+			database: 'test', // 要连接的数据库
+			rowCollectionOnRequestCompletion: true  // 让下面 new Request 回调的第三个参数接收返回的值
+		}
+	})
+
+	// 连接数据库使用 'connect' 事件
+	connection.on('connect', err => {
+		if (err) {
+			console.log({ message: err.message, code: err.code })
+		} else {
+			console.log('登录成功')
+
+			// 查询数据
+			const sql = 'select * from student' // 要执行的语句
+			const request = new Request(sql, (err, rowCount, rows) => {
+				// 此回调在查询完成时调用
+				if (err) {
+					console.log(err)
+				} else {
+					// rows 是由每行组成的数组
+					// 每行又是由每个单元格组成的数组
+					// 每个单元格又是由 value（单元格的值）和 metadata（单元格的属性对象，如列名和类型）组成的对象
+					/* 形如
+						[
+							[ { value: '1', metadata }, { value: '张三', metadata }... ]
+							[ { value: '2', metadata }, { value: '李四', metadata }... ]
+						]
+					*/
+					const data = rows.map(rowItem => {
+						const obj = {}
+						rowItem.forEach(cell => obj[cell.metadata.colName] = cell.value)
+						return obj
+					})
+					console.table(data)
+					console.log(\`\${rowCount} 行\`)
+				}
+				// 关闭连接
+				connection.close()
+			})
+			// 执行 request 操作
+			connection.execSql(request)
+		}
+	})
+
+	// bulkLoad 可执行批量插入，具体参考官方文档
+	··
+
 	@@
 	node 官网|https://nodejs.org/en/
 	node 中文网|http://nodejs.cn/
 	npm 官网|https://www.npmjs.com/
 	npm 中文网|https://www.npmjs.cn/
-	cnpm 官网|https://npm.taobao.org/
+	有效学习 Node.js - 知乎|https://www.zhihu.com/question/19793473
+	系统学习 Node.js - 知乎|https://www.zhihu.com/question/21567720
+	CNode 社区|https://cnodejs.org/
 	@@
 
-	&2019/6/6
+	&2019/6/20
 `

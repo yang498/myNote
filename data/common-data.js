@@ -11,7 +11,7 @@ let commonData = {
 		electron: {}
 	},
 	css: {
-		css: {},
+		css: { underway: true },
 		animation: {}
 	},
 	cssLibrary: {
@@ -22,7 +22,7 @@ let commonData = {
 		grammar: { name: '语法' },
 		object: {},
 		array: {},
-		string: {},
+		string: { underway: true },
 		regexp: { complete: true },
 		math: { complete: true },
 		date: { complete: true },

@@ -4,13 +4,13 @@
 // 带有 un 的正则是正常的匹配，因为在注释、字符串中不需要进行匹配，所以先用 un 匹配好做好 ¿ 标记，这样不带 un 的正则就不匹配了
 let REG_UN = {
 	// 开头声明，粉
-	statement: 'var |let |const |void|function|=&gt;|new |class\s|constructor|super|static|import|export |default',
+	statement: 'var |let |const |void|function|=&gt;|new |class\s|constructor|super\s|static|import|export |default',
 	// 循环分支，紫
 	loopFork: 'for | in |of\s|while|\sdo|if |else | switch|case|break|continue|try\s|catch |finally |with ',
 	// 方法关键字，蓝
 	methodKeyword: 'return|delete |typeof|require\s|throw|eval|instanceof|debugger|this|length',
 	// 类型方法，紫
-	type: 'window(?=[\s\.])|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|(?<!\\w)Date|RegExp|Error|JSON'
+	type: 'window(?=[\s\.])|document|console|true|false|undefined|null| Object| Array| Boolean| String| Number|Math|(?<!\\w)Date|RegExp|Error|JSON\.'
 }
 
 // 将 REG 加上 (?!¿)，用来匹配
