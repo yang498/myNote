@@ -51,6 +51,7 @@ let commonData = {
 	},
 	other: {
 		name: '其他',
+		link: { name: '资源链接', complete: true },
 		website: { name: '网站' },
 		interview: { name: '面试' },
 		office: { name: '电脑操作', underway: true },

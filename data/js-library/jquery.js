@@ -785,7 +785,7 @@ commonData.jsLibrary.jquery.content = `
 		hover(fn(e), fn(e))：当指针覆盖和离开时，等同于.mouseenter(fn(e)).mouseleave(fn(e))
 	键盘：
 		keydown：按下按键时，如果不抬起来会一直触发（input 和 textarea 元素中）
-		keyup：松开案件时（input 和 textarea 元素中）
+		keyup：松开按键时（input 和 textarea 元素中）
 		keypress：按下按键时，不抬起来也只触发一次，且只有字母、数字、符号键和 enter 键按下能触发（input 和 textarea 元素中）
 	表单：
 		focus：获得焦点（不冒泡），设置 tabindex 属性也可获得焦点
