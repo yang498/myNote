@@ -280,7 +280,7 @@ commonData.jsLibrary.jquery.content = `
 	.addClass()：添加 class
 	.removeClass()：删除 class
 	.toggleClass()：切换 class
-	.has()：是否有 class
+	.hasClass()：是否有 class
 	.css()：获取或设置样式
 	$.cssHooks：扩展 .css()
 	$.cssNumber：在用 .css() 设置数值时哪些属性不用加 px
@@ -305,7 +305,7 @@ commonData.jsLibrary.jquery.content = `
 	// 等同于
 	state ? $('.demo').addClass(className/function) : $('.demo').removeClass(className/function)
 	··
-	###.has(className)
+	###.hasClass(className)
 	判断元素是否有指定的类名，返回一个 Boolean 值，多个样式名以空格隔开，可以设为·''·判断有没有类名
 	###.css(className/classNameArr [, value/function])
 	获取或设置样式属性的计算值，2 个单词以上的属性名可以使用连字符或驼峰法，即·background-color·和·backgroundColor·是一样的
