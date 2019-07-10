@@ -1,10 +1,5 @@
 commonData.other.interview.content = `
 	#浏览器
-	##浏览器内核引擎
-	IE：Trident
-	Firefox：Gecko
-	Safari&Chrome：WebKit
-	Opera：Blink
 
 	##w3c规范
 	所有的标签都使用小写字母，成对出现，单标签要自闭合

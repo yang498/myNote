@@ -160,21 +160,47 @@ commonData.css.css.content = `
 	··
 
 	#background
-	·background: color image repeat origin position attachment·：背景色
+	·background: color image repeat position/size origin attachment·：背景样式
 	!!
 	background-color：背景颜色
 	background-image：背景图片，比背景颜色层级高，支持·url(imgUrl)·、渐变等，可指定多个背景图片以逗号隔开，层级越后越低
+		·url()·括号内的引号可省略，当省略时注意若·imgUrl·内包含括号、空格、单双引号需使用·\\·进行转码
 	background-repeat[repeat]：背景图片的重复方式
 		写法：可写 2 个值以空格隔开分别指定水平和垂直方向，在多个背景图片下可写多个值以逗号隔开分别指定重复方式
 		repeat|repeat-x|repeat-y|no-repeat：分别是·重复|只在水平方向重复|只在垂直方向重复|不重复·
 		space：不裁剪重复，把边上裁剪的部分顶出去，所以图像之间会有些空隙，·background-position·会被忽视
 		round：不裁剪重复，边上裁剪的部分尽可能的顶进来，所以图像会适当的缩小，图像之间没有空隙
+	background-position[0% 0%]：背景图片的位置
+		背景图片距离的位置是和容器的相对位置^^重合^^的，例如·0% 50%·表示背景图片的左边界和容器边界重合、中心点和容器的中心点重合
+		写法：可写 2 个值以空格隔开分别指定水平和垂直方向，在多个背景图片下可写多个值以逗号隔开分别指定位置
+		单位：支持 px、百分比等单位，可以是负数
+		top|left|right|bottom|center：放在指定边缘，分别代表·50% 0%|0% 50%|100% 50%|50% 100%|50% 50%·
+		left|right + 距离：定义 x 轴位置，相对于该方位的距离，例如·right 10px·表示 x 轴上距离容器右侧 10px
+		top|bottom + 距离：定义 y 轴位置，相对于该方位的距离，例如·bottom 10px·表示 y 轴上距离容器底部 10px
+			所以可以写 4 个值，例如·right 10px bottom 10px·表示背景图片距离右侧 10px、距离底部 10px
+	background-position-x[left]：单独设置背景图片 x 轴的位置
+	background-position-y[top]：单独设置背景图片 y 轴的位置
+	background-size[auto auto]：背景图片的大小
+		写法：可写 2 个值以空格隔开分别指定宽度和高度，在多个背景图片下可写多个值以逗号隔开分别指定大小
+		单位：支持 px、百分比等单位
+		auto：保持背景图片的原比例
+		cover：保持背景图片的比例完全覆盖背景区域，左右或上下部分可能会被裁剪
+		contain：保持背景图片的比例完全嵌入背景区域，不会被裁剪
 	background-attachment[scroll]：背景图片是否随容器滚动，在多个背景图片下可写多个值以逗号隔开分别指定滚动方式
 		scroll：容器内固定，容器外滚动
 		fixed：绝对固定，不管处于哪个容器都不会滚动
 		local：跟随容器滚动
-	background-origin：背景图片的中心点
-	background-position：
+	background-origin[padding-box]：背景图片的显示区域起点，当·background-attachment·设为·fixed·时会忽略此属性
+		padding-box：以 padding 区域为起点
+		border-box：以 border 区域为起点
+		content-box：以原始内容区域为起点，即不包括 padding 和 border
+	background-clip[border-box]：背景图片或颜色的裁剪范围
+		border-box：在 border 区域内显示
+		padding-box：在 padding 区域内显示
+		content-box：在原始内容区域内显示，即不包括 padding 和 border
+		text：在文字区域内显示，注意如果要显示背景图片需把文字颜色去掉，即·color: transparent;·
+			·text·属性兼容性不太好，若不支持需加上·-webkit-·前缀，即·-webkit-background-clip: text;·
+	background-blend-mode：多个背景图片下定义混合模式，例如高亮、柔光、减淡等，参考 @[MDN 中文|https://developer.mozilla.org/zh-CN/docs/Web/CSS/blend-mode] 和 @[MDN 英文|https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode]
 	!!
 
 	#渐变
@@ -186,21 +212,198 @@ commonData.css.css.content = `
 	!!
 
 	#小技巧
+
+	##水平垂直居中定宽高
+	@[参考|https://segmentfault.com/a/1190000016389031]，此部分代码为公共部分：
+	··
+	<div class="box">
+		<div class="item size">居中</div>
+	</div>
+
+	.box {
+		border: 2px solid #000;
+		width: 300px;
+		height: 300px;
+	}
+	.item {
+		color: #fff;
+		background: #f08;
+		font-weight: bold;
+	}
+	.size {
+		width: 100px;
+		height: 100px;
+		line-height: 100px;
+		text-align: center;
+	}
+	··
+	·absolute + 负 margin·：
+	··
+	.box {
+		position: relative;
+	}
+	.item {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -50px;
+		margin-top: -50px;
+	}
+	··
+	·absolute + margin auto·：
+	··
+	.box {
+		position: relative;
+	}
+	.item {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+	}
+	··
+	·absolute + calc·：
+	··
+	.box {
+		position: relative;
+	}
+	.item {
+		position: absolute;
+		top: calc(50% - 50px);
+		left: calc(50% - 50px);
+	}
+	··
+	##水平垂直居中不定宽高
+	此部分代码为公共部分，和上面一样，只去掉了·size·样式名，即宽高：
+	··
+	<div class="box">
+		<div class="item">居中</div>
+	</div>
+	··
+	·absolute + transform·：
+	··
+	.box {
+		position: relative;
+	}
+	.item {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	··
+	·flex·：
+	··
+	.box {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	··
+	·grid·：
+	··
+	.box {
+		display: grid;
+		justify-items: center;
+		align-items: center;
+	}
+	··
+	·子元素设为 inline-block·：
+	··
+	.box {
+		line-height: 300px;
+		text-align: center;
+	}
+	.item {
+		display: inline-block;
+		line-height: initial;
+	}
+	··
+	·父元素设置 display: table-cell·（table 布局特性）：
+	··
+	.box {
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.item {
+		display: inline-block;
+	}
+	··
+	·writing-mode·（让文字以垂直方向排列，同时改变 css 方向，例如 text-align）：
+	··
+	<div class="box">
+		<div class="box-inner">
+			<div class="item">居中</div>
+		</div>
+	</div>
+
+	.box {
+		writing-mode: vertical-lr; /* 子元素垂直居中 */
+		text-align: center;
+	}
+	.box-inner {
+		writing-mode: horizontal-tb; /* 子元素水平居中 */
+		display: inline-block;
+		width: 100%;
+	}
+	.item {
+		display: inline-block;
+	}
+	··
+
 	##文字超出省略
 	###单行超出省略
 	··
-	white-space: nowrap;	// 能保证文字是一行可省略，比如不包含中文
-	overflow: hidden;	// 超出隐藏
-	text-overflow: ellipsis;	// 超出部分显示...
+	overflow: hidden;  // 超出隐藏
+	white-space: nowrap;  // 文字不换行
+	text-overflow: ellipsis;  // 超出部分显示...
 	··
 
-	###多行超出省略，该方法适用于WebKit内核浏览器及移动端
+	###多行超出省略，WebKit 扩展属性，该方法适用于 WebKit 内核浏览器（Chrome 和 Safari）和移动端
+	·display: -webkit-box;·是老式的·flex·布局，已慢慢淘汰，语法@[参考|https://www.cnblogs.com/whiteMu/p/5378747.html]
 	··
-	overflow: hidden;	// 超出隐藏
-	display: -webkit-box;	// 将对象作为弹性伸缩盒子模型显示
-	-webkit-box-orient: vertical;	// 设置或检索伸缩盒对象的子元素的排列方式
-	-webkit-line-clamp: 2;	// 只显示2行
+	overflow: hidden;  // 超出隐藏
+	display: -webkit-box;  // 设为弹性伸缩盒子模型
+	-webkit-box-orient: vertical;  // 子元素垂直排列
+	-webkit-line-clamp: 2;  // 控制显示行数，例如只显示 2 行，超出部分显示...
 	··
 
-	&2019/3/29
+	##超出行数的显示隐藏
+	仿微信朋友圈，每段文字最多展示 5 行，若有多出的文字则显示“全文”按钮，点击可查看全文
+	全文按钮只在文字超过 5 行时显示，所以要先判断文字是否超出了 5 行，即判断高度
+	注意由于 js 的执行晚于 dom 渲染，如果直接判断会造成超出的文字出现一下又消失，所以超出的文字开始是隐藏的
+	··
+	<div class="text">
+		<p>明月几时有，把酒问青天。不知天上宫阙，今夕是何年。我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间。</p>
+	</div>
+
+	.text {
+		width: 150px;
+		max-height: 100px;
+		overflow: hidden;
+	}
+	.text.active {
+		max-height: none;
+	}
+	p {
+		width: 150px;
+		line-height: 20px; /* 父容器的高是行高的 5 倍 */
+		margin: 0;
+	}
+	a {
+		color: #08f;
+		cursor: pointer;
+	}
+
+	// 这里使用了 jQuery
+	if ($('p').height() > 100) $('.text').after('<a>全文</a>')
+	$('a').click(function () {
+		$('.text').toggleClass('active').hasClass('active') ? $(this).text('收起') : $(this).text('全文')
+	})
+	··
+
+	&2019/7/10
 `

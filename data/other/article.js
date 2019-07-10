@@ -33,6 +33,20 @@ commonData.other.article.content = `
 	百度【IP 地址】的本地 IP：当前外网的分配的 IP 地址，用于连接互联网时的请求网络的 IP 地址
 	!!
 
+	##浏览器
+	主流浏览器：IE、Firefox、Google Chrome、Safari、Opera
+	浏览器最重要的部分是内核，分为渲染引擎用来解析 html、css 等，和 js 引擎用来解析 js（例如 Chrome V8）
+	常见浏览器内核：
+	!!
+	Chrome：以前是 Webkit，现在是 Blink
+	IE：Trident，目前最新的 Edge 已采用 Chromium 引擎
+	Firefox：Gecko
+	Safari：WebKit
+	Opera：跟随 Chrome
+	360、猎豹：IE + Chrome 双内核
+	QQ、搜狗：Trident（兼容模式） + Webkit（高速模式）
+	!!
+
 	##一句话
 	!!
 	宽带和网速：宽带网络的单位是·bit·，计算机的单位是·Byte·，·1Byte=8bit·，即·100·兆宽带的网速在·12.5MB/s·左右
