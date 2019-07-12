@@ -1,4 +1,4 @@
-commonData.js.browser.content = `
+commonData.javascript.browser.content = `
 	#URL
 	·URL·对象是浏览器的原生对象，可以用来构造、解析和编码·url·
 	·<a>·元素和·<area>·元素都部署了这个接口。即它们的 DOM 节点对象可以使用 URL 的实例属性和方法

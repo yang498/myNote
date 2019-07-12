@@ -14,24 +14,23 @@ let commonData = {
 		css: { underway: true },
 		animation: {}
 	},
-	cssLibrary: {
-		name: 'css库',
-		bootstrap: {}
-	},
-	js: {
+	javascript: {
 		grammar: { name: '语法' },
+		browser: { name: '浏览器', underway: true },
+		node: { underway: true }
+	},
+	jsApi: {
+		name: 'js 标准库',
 		object: {},
 		array: {},
 		string: { underway: true },
 		regexp: { complete: true },
 		math: { complete: true },
 		date: { complete: true },
-		browser: { name: '浏览器', underway: true },
-		es6: {},
-		node: { underway: true }
+		es6: {}
 	},
 	jsLibrary: {
-		name: 'js库',
+		name: 'js 框架',
 		jquery: { complete: true },
 		vue: { underway: true },
 		tool: { name: '工具', underway: true }

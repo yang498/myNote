@@ -1,4 +1,4 @@
-commonData.js.math.content = `
+commonData.jsApi.math.content = `
 	#概述
 	·Math·是 JavaScript 的原生对象，提供各种数学功能。该对象不是构造函数，不能生成实例，所有的属性和方法都必须在·Math·对象上调用
 

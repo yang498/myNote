@@ -159,8 +159,32 @@ commonData.css.css.content = `
 	}
 	··
 
-	#background
-	·background: color image repeat position/size origin attachment·：背景样式
+	#复合系列
+	##font
+	字体样式：·font: style variant weight size/line-height family·，若要简写则·font-size font-family·是必填的
+	!!
+	font-style[normal]：字体样式
+		normal：常规
+		italic：斜体，若当前字体不支持则会尝试用 oblique 代替
+		oblique：倾斜体，在纤细的字体中比 italic 要粗一点点，若当前字体不支持则会尝试用 italic 代替
+	font-weight[normal]：字体粗细，一些字体只提供·normal·和·bold·两种值
+		<number>：粗细程度，范围·1~1000·，通常写成整百的形式
+		normal：常规，相当于·400·
+		bold：粗体，相当于·700·
+		lighter：细体，相当于·100·
+		bolder：粗体，和·bold·差不多
+	font-size：字体大小
+	line-height[normal]：字体行高，可使用长度单位
+		normal：约为·1.2·，取决于·font-family·
+		<数字或百分比>：·font-size·的倍数
+	font-family：字体，可以指定多个字体以逗号隔开，优先采用第一个，若用户计算机中没有或不支持则依次采用下一个
+		引号：若字体名不包含空格或者属于通用字体族名可以省略，否则需要加上
+		常用字体名：微软雅黑·Microsoft YaHei·，思源黑体·Source Han Sans·，英文等宽·Consolas·，黑体·SimHei·，宋体·SimSun·
+	font-variant：字体变形，复合属性，例如设置字体为小型大写字母
+	其他不常用属性参考 @[MDN|https://developer.mozilla.org/zh-CN/docs/Web/CSS/font]
+	!!
+	##background
+	背景样式：·background: color image repeat position/size origin attachment·
 	!!
 	background-color：背景颜色
 	background-image：背景图片，比背景颜色层级高，支持·url(imgUrl)·、渐变等，可指定多个背景图片以逗号隔开，层级越后越低
@@ -199,17 +223,115 @@ commonData.css.css.content = `
 		padding-box：在 padding 区域内显示
 		content-box：在原始内容区域内显示，即不包括 padding 和 border
 		text：在文字区域内显示，注意如果要显示背景图片需把文字颜色去掉，即·color: transparent;·
-			·text·属性兼容性不太好，若不支持需加上·-webkit-·前缀，即·-webkit-background-clip: text;·
+			·text·属性的兼容性不太好，若不支持需加上·-webkit-·前缀，即·-webkit-background-clip: text;·
 	background-blend-mode：多个背景图片下定义混合模式，例如高亮、柔光、减淡等，参考 @[MDN 中文|https://developer.mozilla.org/zh-CN/docs/Web/CSS/blend-mode] 和 @[MDN 英文|https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode]
 	!!
 
 	#渐变
-	渐变属于·background-image·
+	应用于·background-image·的属性
+
 	##linear-gradient()
-	线性渐变
+	线性渐变：·linear-gradient([angle], color [start]*, [color [start]*]+)·
+	例如：最基本·linear-gradient(#f00, #08f)·，属性都写·linear-gradient(90deg, #f00 50%, #08f 50%)·
 	!!
-	linear-gradient()
+	<angle>[to bottom/180deg]：渐变角度，支持角度单位例如·deg·，或·to top/left/right/bottom·，或 2 个方位词例如·to right bottom·
+		角度：和时钟一样，·0deg·相当于 12 点，·90deg·相当于 3 点，这个角度代表渐变终点，例如·0deg·表示从元素的中心点到顶部的渐变
+	<start>：渐变起始点，注意每 2 个颜色的渐变方向是相对的，例如：
+		·linear-gradient(90deg, #f00 50%, #08f)·：元素左半边是纯红，从一半宽度开始才由红渐变到蓝
+		·linear-gradient(90deg, #f00, #08f 50%)·：元素左半边进行了由红到蓝的渐变，右半边是纯蓝
+		·linear-gradient(90deg, #f00 50%, #08f 50%)·：元素左半边是纯红，右半边是纯蓝
+		·linear-gradient(90deg, #f00 33%, #0c0 33% 66%, #08f 66%)·：红绿蓝界限分明，注意绿色是两个起始点对应前后界限
+		·linear-gradient(90deg, #f00 100%, #08f 50%)·：整个元素都是纯红，即第一个颜色的优先级最高，越往后越低
 	!!
+	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-linear-gradient.html
+	bootstrap 进度条 demo：
+	··
+	<div class="progress"></div>
+
+	.progress {
+		width: 320px;
+		height: 16px;
+		border-radius: 5px;
+		background-color: #08f;
+		background-image: linear-gradient(45deg,
+			transparent 25%, rgba(255, 255, 255, 0.2) 25% 50%,
+			transparent 50% 75%, rgba(255, 255, 255, 0.2) 75%
+		);
+		background-size: 16px; /* size 和 height 相等，缩小后由 background-repeat 填满 */
+		animation: progress 1s linear infinite;
+	}
+	@keyframes progress {
+		to {
+			background-position-x: 16px; /* 位移一个 background-size 距离作为一个周期 */
+		}
+	}
+	··
+
+	##radial-gradient()
+	径向渐变：·radial-gradient([shape [extent-keyword] [at position]], color [start]*, [color [start]*]+)·
+	例如：最基本·radial-gradient(#f00, #08f)·，属性都写·radial-gradient(circle farthest-side at top left, #f00, #08f)·
+	!!
+	<shape>[ellipse]：渐变的形状
+		ellipse：以元素轴对称的椭圆，所以若元素的宽高相等则是个正圆
+		circle：始终是正圆
+	<extent-keyword>[farthest-corner]：渐变边缘轮廓的具体位置，差异程度取决于渐变的中心点
+		farthest-corner：渐变的边缘轮廓和元素最近的角相切
+		farthest-side：渐变的边缘轮廓和元素最近的边相切
+		closest-corner：渐变的边缘轮廓和元素最远的角相切，若渐变的中心点处于中间则和·farthest-corner·效果一样
+		closest-side：渐变的边缘轮廓和元素最远的边相切，若渐变的中心点处于中间则和·farthest-side·效果一样
+	<position>[center]：渐变的中心点，写法参考·background-position·
+	<start>：渐变起始点，写法参考·linear-gradient()·
+	!!
+	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-radial-gradient.html
+	环形进度条 demo：灰色背景打底，白色径向渐变剪切成环形，2 层不同角度的蓝色渐变覆盖
+	用 js 动态改变旋转角度即可，注意超过 50% 进度之前灰色和蓝色调换
+	··
+	<div class="progress">70%</div>
+
+	.progress {
+		width: 200px;
+		height: 200px;
+		font-size: 24px;
+		font-weight: bold;
+		line-height: 200px;
+		text-align: center;
+		border-radius: 50%;
+		background-color: #ccc;
+		background-image: radial-gradient(#fff 90px, transparent 90px),
+							linear-gradient(90deg, #08f 50%, transparent 50%),
+							linear-gradient(30deg, #08f 50%, transparent 50%);
+	}
+	··
+
+	##重复渐变
+	重复多次渐变图案直到填满元素
+	!!
+	repeating-linear-gradient()：线性重复渐变，参数和·linear-gradient()·一样
+	repeating-radial-gradient()：径向重复渐变，参数和·radial-gradient()·一样
+	!!
+	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-linear-gradient.html
+	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-radial-gradient.html
+	衬衫格子 demo：
+	··
+	<div class="grid"></div>
+
+	.grid {
+		width: 220px;
+		height: 220px;
+		background-color: rgba(200, 0, 0, 0.7);
+	}
+
+	/* .repeating-linear 和 .linear 效果相同 */
+	.repeating-linear {
+		background-image: repeating-linear-gradient(transparent 0 20px, rgba(255, 255, 255, 0.5) 20px 40px),
+							repeating-linear-gradient(90deg, transparent 0 20px, rgba(255, 255, 255, 0.5) 20px 40px);
+	}
+	.linear {
+		background-image: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.5) 50%),
+							linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.5) 50%);
+		background-size: 40px 40px;
+	}
+	··
 
 	#小技巧
 
@@ -405,5 +527,5 @@ commonData.css.css.content = `
 	})
 	··
 
-	&2019/7/10
+	&2019/7/11
 `

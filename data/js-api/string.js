@@ -1,4 +1,4 @@
-commonData.js.string.content = `
+commonData.jsApi.string.content = `
 	#介绍
 
 	##语法

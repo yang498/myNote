@@ -1,4 +1,4 @@
-commonData.js.grammar.content = `
+commonData.javascript.grammar.content = `
 	#window
 
 	##window

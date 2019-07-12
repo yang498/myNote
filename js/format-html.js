@@ -138,6 +138,11 @@ const formatHtml = text => {
 							<i class="iconfont icon-dui2 copy-success" onanimationend="this.classList.remove('copy-success-active')"></i>
 						</div>`
 			}
+			// iframe
+			else if (REG.iframe.test(item)) {
+				const res = item.slice(2).split('|')
+				return `<div class="iframe"><iframe style="${res[0]}" src="${res[1]}"></iframe></div>`
+			}
 			// 底部链接
 			else if (REG.link.test(item)) {
 				return `<div class="link">${item.replace(REG.link, '')}</div>`

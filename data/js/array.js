@@ -1,2 +1,0 @@
-commonData.js.array.content = `
-`

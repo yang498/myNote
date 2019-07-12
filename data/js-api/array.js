@@ -1,0 +1,2 @@
+commonData.jsApi.array.content = `
+`

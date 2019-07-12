@@ -1,4 +1,4 @@
-commonData.js.node.content = `
+commonData.javascript.node.content = `
 	#起步
 	##介绍
 	Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行

@@ -1,4 +1,4 @@
-commonData.js.regexp.content = `
+commonData.jsApi.regexp.content = `
 	#介绍
 	正则表达式（regular expression）是一种表达文本模式（即字符串结构）的方法，有点像字符串的模板，常常用来按照“给定模式”匹配文本
 	比如正则表达式给出一个 Email 地址的模式，用它来确定一个字符串是否为 Email 地址。JavaScript 的正则表达式体系是参照 Perl 5 建立的
@@ -453,7 +453,7 @@ commonData.js.regexp.content = `
 	/[\\u4e00-\\u9fa5]/
 
 	// 手机号
-	/1[3-9]\d{9}/
+	/1[3-9]\\d{9}/
 	··
 
 	&2019/4/2
