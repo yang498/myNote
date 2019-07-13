@@ -186,6 +186,67 @@ commonData.jsApi.date.content = `
 
 	// 判断月份的天数，1 3 5 7 8 10 12 返回 31，4 6 9 11 返回 30，2 如果是闰年返回 29，否则 28
 	const monthDay = (m, y) => /^1$|3|5|7|8|10|12/.test(m) ? 31 : /4|6|9|11/.test(m) ? 30 : leapYear(y) ? 29 : 28
+
+	// 时间只有 1 位就在前面加 0
+	const add0 = n => n > 9 ? n : '0' + n
+
+	// 时间戳格式化：倒计时时分秒
+	const formatTime = timeDiff => {
+		const day = Math.floor(timeDiff /¿ 1000 /¿ 60 /¿ 60 /¿ 24)
+		const hour = Math.floor(timeDiff /¿ 1000 /¿ 60 /¿ 60 % 24)
+		const minute = Math.floor(timeDiff /¿ 1000 /¿ 60 % 60)
+		const second = Math.floor(timeDiff /¿ 1000 % 60)
+		return [day * 24 + hour, minute, second].map(add0).join(' : ')
+	}
+
+	// 时间戳格式化：年月日 时分秒
+	const formatDate = (time, format) => {
+		const date = new Date(time - 0)
+		const aWeek = '日一二三四五六'
+
+		const year = date.getFullYear()
+		const month = date.getMonth() + 1
+		const day = date.getDate()
+		const week = '周' + aWeek[date.getDay()]
+		const hour = date.getHours()
+		const minute = date.getMinutes()
+		const second = date.getSeconds()
+
+		const ymd = [year, month, day].map(add0).join('/')
+		const hms = [hour, minute, second].map(add0).join(':')
+
+		return format === 'ymd' ? ymd : format === 'hms' ? hms : [ymd, week, hms].join(' ')
+	}
+
+	// 时间戳格式化：年月日 时分，判断显示昨天、前天、月日、年月日
+	const formatDateNow = (time, nowTime, join = ' ') => {
+		// 指定的时间
+		const date = new Date(time - 0)
+
+		const year = date.getFullYear()
+		const month = date.getMonth() + 1
+		const day = date.getDate()
+		const hour = date.getHours()
+		const minute = date.getMinutes()
+
+		let md = [month, day].map(add0).join('/')
+		const hm = [hour, minute].map(add0).join(':')
+
+		// 现在的年份
+		const nowDate = new Date(nowTime)
+		const nowYear = nowDate.getFullYear()
+		const today0 = new Date(nowDate.toDateString()) // 以当天 0 点作为分隔
+
+		// 判断两个日子之差
+		const dayDiff = Math.floor((today0 - time - 1) /¿ 1000 /¿ 60 /¿ 60 /¿ 24)
+		if (dayDiff < 2) {
+			md = dayDiff < 0 ? '' : dayDiff === 0 ? '昨天' : '前天'
+		} else {
+			md = (nowYear === year ? '' : year + '/') + md
+		}
+
+		return md + (md && join) + hm
+	}
 	··
 
 	&2019/4/4

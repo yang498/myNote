@@ -116,9 +116,9 @@ commonData.jsApi.string.content = `
 	String.prototype.length：字符串的长度
 
 	^^实例方法^^（以下方法前面省略·String.prototype.·）
-	slice(begin, end)：指定范围提取字符串某一段，若 begin 大于 end 则返回空字符串
+	slice(begin, end)：指定范围提取字符串某一段，参数可以是负数表示倒数，若·begin·大于·end·则返回空字符串
 		begin{n}[0]：开始位置
-		end{n}[字符串的长度]：结束位置（不含该位置），可以是负数
+		end{n}[字符串的长度]：结束位置（不含该位置）
 	substring(begin, end)：和·slice()·相似，区别在于：若任一参数小于 0 就会当作 0，并且若·begin·大于·end·则参数位置互换
 		此方法太违反直觉，建议优先使用·slice()·
 	substr(begin, length)：和·slice()·相似，区别在于第二个参数是长度
@@ -176,11 +176,25 @@ commonData.jsApi.string.content = `
 	##属性方法
 	!!
 	^^静态方法^^（即定义在对象本身，而不是定义在对象实例的方法）
-	String.fromCodePoint(...Unicode)：·fromCharCode()·的升级版，能识别码点大于·0xFFFF·的字符
+	String.fromCodePoint(...Unicode)：·fromCharCode()·的升级版，能识别码点大于·0xFFFF·的字符，返回由 Unicode 码点组成的字符串
 	String.raw(str)：返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串，往往用于模板字符串的处理方法
 
 	^^实例方法^^（以下方法前面省略·String.prototype.·）
-	codePointAt()：
+	includes(str, start)：返回布尔值，表示是否在原字符串中找到了参数字符串，可传入第二个数字参数表示起始搜索的位置
+	startsWith(str, start)：返回布尔值，表示参数字符串是否在原字符串的头部，可传入第二个数字参数表示起始搜索的位置
+	endsWith(str, n)：返回布尔值，表示参数字符串是否在原字符串的尾部，可传入第二个数字参数表示在前·n·个字符中匹配
+	repeat(n)：返回一个新字符串，表示将原字符串重复·n·次，参数如果是小数，会被向下取整，支持数字字符串参数
+	padStart(length, str)：在原字符串前面补全为新的长度，即第一个参数·length·，一般用来补全位数或格式
+		若·length·大于原字符串的长度则使用第二个参数·str·补全，不够则会一直重复第二个参数·str·直到达到指定长度
+		若·length·小于等于原字符串的长度则无效，返回原字符串
+		如果省略第二个参数，默认使用空格补全长度
+	padEnd(length, str)：在原字符串后面补全为新的长度，用法和·padStart()·一样
+	trimStart()：消除字符串头部的空格，浏览器还部署了额外的别名方法·trimLeft()·
+	trimEnd()：消除字符串尾部的空格，浏览器还部署了额外的别名方法·trimRight()·
+	matchAll()：返回一个正则表达式在当前字符串的所有匹配，详见《regexp》
+
+	codePointAt(index)：·charCodeAt()·的升级版，能正确处理 4 字节字符，返回字符串指定位置的 Unicode 码点（十进制表示）
+	normalize()：一些带有语调和重音符号的语言的字符串，和对应的合成符号是不相等的，此方法可分别将其标准化使其相等
 	!!
 
 	##Unicode 表示法
@@ -277,5 +291,5 @@ commonData.jsApi.string.content = `
 	··
 	相当于对字符串模板进行·split()·分割，参数就是·\${}·，再依次把·\${}·中计算的结果作为后面的参数
 
-	&2019/6/25
+	&2019/7/13
 `

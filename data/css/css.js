@@ -332,6 +332,19 @@ commonData.css.css.content = `
 		background-size: 40px 40px;
 	}
 	··
+	小圆点重复 demo：
+	··
+	<div class="dot"></div>
+
+	.dot {
+		width: 220px;
+		height: 220px;
+		background-color: rgba(200, 0, 0, 0.7);
+		background-image: radial-gradient(rgba(255, 255, 255, 0.8) 30%, transparent 30%);
+		background-size: 40px 40px;
+		background-repeat: round;
+	}
+	··
 
 	#小技巧
 
@@ -527,5 +540,5 @@ commonData.css.css.content = `
 	})
 	··
 
-	&2019/7/11
+	&2019/7/12
 `
