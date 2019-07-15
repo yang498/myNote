@@ -5,13 +5,13 @@ commonData.css.css.content = `
 	注意：设为 flex 布局以后，子元素的·float·、·clear·和·vertical-align·属性将失效
 	··
 	.box{
-	  display: flex;
+		display: flex;
 	}
 	··
 	行内元素也可以使用 flex 布局
 	··
 	.box{
-	  display: inline-flex;
+		display: inline-flex;
 	}
 	··
 	###容器的属性
@@ -160,6 +160,7 @@ commonData.css.css.content = `
 	··
 
 	#复合系列
+
 	##font
 	字体样式：·font: style variant weight size/line-height family·，若要简写则·font-size font-family·是必填的
 	!!
@@ -183,6 +184,7 @@ commonData.css.css.content = `
 	font-variant：字体变形，复合属性，例如设置字体为小型大写字母
 	其他不常用属性参考 @[MDN|https://developer.mozilla.org/zh-CN/docs/Web/CSS/font]
 	!!
+
 	##background
 	背景样式：·background: color image repeat position/size origin attachment·
 	!!
@@ -227,7 +229,31 @@ commonData.css.css.content = `
 	background-blend-mode：多个背景图片下定义混合模式，例如高亮、柔光、减淡等，参考 @[MDN 中文|https://developer.mozilla.org/zh-CN/docs/Web/CSS/blend-mode] 和 @[MDN 英文|https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode]
 	!!
 
-	#渐变
+	##transition
+	过渡效果：·transition: property duration timing-function delay·
+	!!
+	transition-property[all]：指定应用过渡属性的名称，可被动画的属性详见 @[MDN|https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties]
+		all：所有可被动画的属性都过渡
+		none：没有过渡动画
+		<property>：指定可被动画的属性
+	transition-duration[0s]：过渡动画所需的时间，单位秒/s
+	transition-timing-function[ease]：过渡动画的加速度曲线
+		ease：快慢快
+		linear：匀速
+		ease-in：先慢后快
+		ease-out：先快后慢
+		ease-in-out：快慢快，慢的阶段比·ease·更匀速
+		step-start：试验，一开始就结束了，·steps(1, start)·的快捷写法
+		step-end：试验，一直不变，直到·duration·的最后结束，·steps(1, end)·的快捷写法
+		cubic-bezier()：贝塞尔曲线，可使用 @[预览调试工具|http://cubic-bezier.com/#.17,.67,.83,.67]
+		steps(steps, direction)：等距阶梯函数
+			steps：分几步，应传入整数
+			direction：左连续还是右连续
+				start：左连续，因此第一步发生在动画开始时
+				end：右连续，因此最后一步发生在动画结束时
+	!!
+
+	#渐变系列
 	应用于·background-image·的属性
 
 	##linear-gradient()
@@ -311,7 +337,9 @@ commonData.css.css.content = `
 	!!
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-linear-gradient.html
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-radial-gradient.html
-	衬衫格子 demo：
+
+	##demo
+	###衬衫格子
 	··
 	<div class="grid"></div>
 
@@ -332,7 +360,7 @@ commonData.css.css.content = `
 		background-size: 40px 40px;
 	}
 	··
-	小圆点重复 demo：
+	###小圆点重复
 	··
 	<div class="dot"></div>
 
@@ -343,6 +371,136 @@ commonData.css.css.content = `
 		background-image: radial-gradient(rgba(255, 255, 255, 0.8) 30%, transparent 30%);
 		background-size: 40px 40px;
 		background-repeat: round;
+	}
+	··
+
+	#transform 系列
+	##transform
+	位移、旋转、缩放或倾斜元素。这是通过修改 CSS 视觉格式化模型的坐标空间来实现的
+	!!
+	none：不应用任何变换
+
+	translate(x, y)：位移
+	translate3d(x, y, z)：3D 位移
+	translateX(x)：水平位移
+	translateY(y)：垂直位移
+	translateZ(z)：3D 空间的 z 轴位移
+
+	rotate(a)：旋转
+	rotate3d(x, y, z, a)：3D 旋转，·x y z·分别表示该轴的矢量，没有单位的数字，通常取·[-1~1]·
+	rotateX(a)：绕 x 轴旋转
+	rotateY(a)：绕 y 轴旋转
+	rotateZ(a)：绕 z 轴旋转
+
+	scale(x, y)：缩放，·x y·默认都为·1·，若·y·不存在则默认和·x·相同，设为负数表示镜像缩放
+	scale3d(x, y, z)：3D 缩放
+	scaleX(x)：水平缩放
+	scaleY(y)：垂直缩放
+	scaleZ(z)：3D 空间的 z 轴缩放
+
+	skew(ax, ay)：角度倾斜
+	skewX(ax)：水平倾斜
+	skewY(ay)：垂直倾斜
+
+	matrix(a, b, c, d, x, y)：矩阵，集合所有 2D 变换
+	matrix3d(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, a4, b4, c4, d4)：3D 矩阵，集合所有 3D 变换
+
+	perspective(l)：·z=0·平面与观察者（屏幕）之间的距离，注意，此属性只应用于自身，不会被子元素继承
+	!!
+	~~height: 375px;|https://interactive-examples.mdn.mozilla.net/pages/css/transform.html
+	~~height: 375px;|https://interactive-examples.mdn.mozilla.net/pages/css/rotate3d.html
+
+	##perspective
+	·z=0·平面与观察者（屏幕）之间的距离，注意，此属性不应用于自身，而是为子元素提供透视基准点
+
+	##perspective-origin
+	观察者（屏幕）的位置，支持长度、百分比或·top left right bottom center·中的关键字
+	可以设置 2 个以内的值分别表示·x y·轴的位置偏移量
+	注意，此属性只和·perspective·相关，与·transform: perspective(l)·无关
+
+	##transform-style
+	设置元素的子元素是位于 3D 空间中还是平面中，默认为平面
+	!!
+	flat：平面
+	preserve-3d：3D
+	!!
+
+	##transform-origin
+	transform 的原点，支持长度、百分比或·top left right bottom center·中的关键字
+	可以设置 3 个以内的值分别表示·x y z·轴的原点偏移量，其中·z·轴只支持长度单位，不支持百分比和关键字
+
+	##backface-visibility
+	当元素背面朝向观察者（屏幕）时是否可见，默认可见。当元素出现背面时通常是绕 x 或 y 轴旋转时出现
+	!!
+	visible：可见
+	hidden：不可见
+	!!
+
+	##demo
+	###立方体
+	··
+	<div class="background">
+		<div class="cube">
+			<div class="face front">1</div>
+			<div class="face right">2</div>
+			<div class="face back">3</div>
+			<div class="face left">4</div>
+			<div class="face top">5</div>
+			<div class="face bottom">6</div>
+		</div>
+	</div>
+
+	.background {
+		width: 300px;
+		height: 300px;
+		background-image: linear-gradient(to right, #ff6e7f, #bfe9ff);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.cube {
+		width: 100px;
+		height: 100px;
+		position: relative;
+		transform-style: preserve-3d;
+		transform: rotate3d(-1, -1, 0, 45deg);
+	}
+	.face {
+		width: 100%;
+		height: 100%;
+		color: #fff;
+		font-size: 24px;
+		font-weight: bold;
+		line-height: 100px;
+		text-align: center;
+		position: absolute;
+		background-color: rgba(200, 0, 0, 0.7);
+		background-image: repeating-linear-gradient(transparent 0 28px, rgba(255, 255, 255, 0.5) 28px 36px),
+			repeating-linear-gradient(90deg, transparent 0 28px, rgba(255, 255, 255, 0.5) 28px 36px);
+	}
+	.front {
+		background-color: #f00;
+		transform: translateZ(50px);
+	}
+	.right {
+		background-color: #f80;
+		transform: rotateY(90deg) translateZ(50px);
+	}
+	.back {
+		background-color: #0c0;
+		transform: rotateY(180deg) translateZ(50px);
+	}
+	.left {
+		background-color: #08f;
+		transform: rotateY(-90deg) translateZ(50px);
+	}
+	.top {
+		background-color: #c0c;
+		transform: rotateX(90deg) translateZ(50px);
+	}
+	.bottom {
+		background-color: #f08;
+		transform: rotateX(-90deg) translateZ(50px);
 	}
 	··
 

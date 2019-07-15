@@ -1,7 +1,7 @@
 // 首页目录循环 commonData，key 为一级路径，二级 key 为 二级路径，目录名用 key 表示，中文加上 name 表示，注意文件名和 key 的一致
 // underway 表示进行中，complete 表示已完成，没有就是未开始
 // js 文件命名：html 不区分大小写所以用短横线连接，而对象的 key 中用短横线会当作减法，所以用驼峰命名，所以引用 script 时先驼峰转短横线
-// plane：array > transform > object > animation > function > @media（和适配方法） > es6 > canvas > console > 数据类型和重要语法
+// plane：transition > object > animation > function > @media（和适配方法） > es6 > canvas > console > 数据类型和重要语法
 let commonData = {
 	html: {
 		html: {},
@@ -23,8 +23,8 @@ let commonData = {
 	},
 	jsApi: {
 		name: 'js 标准库',
-		object: {},
-		array: { underway: true },
+		object: { underway: true },
+		array: { complete: true },
 		string: { complete: true },
 		regexp: { complete: true },
 		math: { complete: true },
