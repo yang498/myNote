@@ -142,7 +142,12 @@ let vm = new Vue({
 			this.index = true	// 显示目录
 			location.hash = ''	// 清空路径
 			$('html').scrollTop(0)	// 回到顶部
-		},
+        },
+        
+        // 移动设备上收缩右侧菜单
+        hideOption() {
+            if (this.optionToggle) this.optionToggle = false
+        },
 
 		// 左边菜单 h1 点击事件
 		onAsideH1(index) {
