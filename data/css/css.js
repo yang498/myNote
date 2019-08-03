@@ -162,7 +162,7 @@ commonData.css.css.content = `
 	#复合系列
 
 	##font
-	字体样式：·font: style variant weight size/line-height family·，若要简写则·font-size font-family·是必填的
+	字体样式：·font: style variant weight size/line-height family;·，若要简写则·font-size font-family·是必填的
 	!!
 	font-style[normal]：字体样式
 		normal：常规
@@ -186,7 +186,7 @@ commonData.css.css.content = `
 	!!
 
 	##background
-	背景样式：·background: color image repeat position/size origin attachment·
+	背景样式：·background: color image repeat position/size origin attachment;·
 	!!
 	background-color：背景颜色
 	background-image：背景图片，比背景颜色层级高，支持·url(imgUrl)·、渐变等，可指定多个背景图片以逗号隔开，层级越后越低
@@ -230,27 +230,29 @@ commonData.css.css.content = `
 	!!
 
 	##transition
-	过渡效果：·transition: property duration timing-function delay·
+	过渡效果：·transition: property duration timing-function delay;·
+	可以分别设置多个属性的过渡动画以逗号隔开，例如：·transition: opacity 0.5s ease-out, transform 0s 0.5s;·
 	!!
 	transition-property[all]：指定应用过渡属性的名称，可被动画的属性详见 @[MDN|https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties]
 		all：所有可被动画的属性都过渡
 		none：没有过渡动画
 		<property>：指定可被动画的属性
-	transition-duration[0s]：过渡动画所需的时间，单位秒/s
+	transition-duration[0s]：过渡动画所需的时间，单位秒(s)或毫秒(ms)
 	transition-timing-function[ease]：过渡动画的加速度曲线
 		ease：快慢快
 		linear：匀速
 		ease-in：先慢后快
 		ease-out：先快后慢
 		ease-in-out：快慢快，慢的阶段比·ease·更匀速
-		step-start：试验，一开始就结束了，·steps(1, start)·的快捷写法
-		step-end：试验，一直不变，直到·duration·的最后结束，·steps(1, end)·的快捷写法
-		cubic-bezier()：贝塞尔曲线，可使用 @[预览调试工具|http://cubic-bezier.com/#.17,.67,.83,.67]
+		step-start：一开始就结束了，·steps(1, start)·的快捷写法
+		step-end：开始不变，直到·duration·的最后结束，·steps(1, end)·的快捷写法
+		cubic-bezier(x1, y1, x2, y2)：贝塞尔曲线函数，可使用 @[预览调试工具|http://cubic-bezier.com/#.17,.67,.83,.67]
 		steps(steps, direction)：等距阶梯函数
 			steps：分几步，应传入整数
 			direction：左连续还是右连续
 				start：左连续，因此第一步发生在动画开始时
 				end：右连续，因此最后一步发生在动画结束时
+	transition-delay：过渡动画开始前的等待时间，单位秒(s)或毫秒(ms)
 	!!
 
 	#渐变系列
@@ -310,7 +312,7 @@ commonData.css.css.content = `
 	!!
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-radial-gradient.html
 	环形进度条 demo：灰色背景打底，白色径向渐变剪切成环形，2 层不同角度的蓝色渐变覆盖
-	用 js 动态改变旋转角度即可，注意超过 50% 进度之前灰色和蓝色调换
+	用 js 动态改变旋转角度即可，注意 50% 进度之前灰色和蓝色调换
 	··
 	<div class="progress">70%</div>
 
@@ -338,7 +340,8 @@ commonData.css.css.content = `
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-linear-gradient.html
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-radial-gradient.html
 
-	##demo
+    ##demo
+    @[更多精彩案例|https://leaverou.github.io/css3patterns/]，@[结合背景混合模式|https://codepen.io/bennettfeely/pen/wJbtk]
 	###衬衫格子
 	··
 	<div class="grid"></div>
@@ -698,5 +701,5 @@ commonData.css.css.content = `
 	})
 	··
 
-	&2019/7/12
+	&2019/7/16
 `

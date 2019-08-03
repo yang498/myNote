@@ -1,4 +1,169 @@
 commonData.javascript.grammar.content = `
+	#包装对象
+
+	##介绍
+	数值、字符串、布尔值通过构造函数生成的对象即为包装对象
+	设计目的是使得“对象”这种类型可以覆盖 JavaScript 所有的值，整门语言有一个通用的数据模型，其次是使得原始类型的值也有办法调用自己的方法
+	三种包装对象各自提供了许多实例方法，而它们共同具有、从·Object·对象继承的方法是·valueOf()·和·toString()·
+	·valueOf()·返回包装对象实例的原始类型的值
+	··
+	new Number(123).valueOf()  // 123
+	new String('abc').valueOf() // "abc"
+	new Boolean(true).valueOf() // true
+	··
+	·toString()·返回对应的字符串形式
+	··
+	new Number(123).toString() // "123"
+	new String('abc').toString() // "abc"
+	new Boolean(true).toString() // "true"
+	··
+
+	##原始类型的自动转换
+	当原始类型的值调用包装对象才有的属性或方法时，会自动转为包装对象实例，并在使用后立刻销毁实例
+	··
+	'abc'.length // 3
+	// abc 本身是字符串而不是对象，不能调用 length 属性
+	// 但使用时自动将其转为包装对象，在这个对象上调用 length 属性。调用结束后，这个临时对象就会被销毁
+	··
+	调用结束后，包装对象实例会自动销毁
+	这意味着，下一次调用字符串的属性时，实际是调用一个新生成的对象，而不是上一次调用时生成的那个对象，所以取不到赋值在上一个对象的属性
+	如果要为字符串添加属性，只有在它的原型对象·String.prototype·上定义
+	··
+	var s = 'Hello World'
+	s.x = 123
+	s.x // undefined
+	··
+
+	#数据类型转换
+
+	##介绍
+	JavaScript 是一种动态类型语言，变量没有类型限制，可以随时赋予任意值
+	虽然变量的数据类型是不确定的，但是数据运算是有要求的。若与预期不符就会自动转换类型
+	例如减法运算符预期左右两侧的运算子应该是数值，如果不是，就会自动将它们转为数值
+	··
+	'4' - '3' // 1
+	··
+	强制转换：主要指使用·Number() String() Boolean()·手动转换成数字、字符串或者布尔值
+
+	##Number()
+	··
+	// 数值：不变
+	Number(324) // 324
+
+	// 字符串：如果可以解析为数值则转换为相应的数值，否则返回 NaN，空字符串转为 0
+	// Number 和 parseInt 都会自动过滤字符串前后的空格类型字符
+	Number('324') // 324
+	Number('324abc') // NaN
+	parseInt('324abc') // 324（类似的 parseInt）
+	Number('') // 0
+
+	// 布尔值：true 转成 1，false 转成 0
+	Number(true) // 1
+	Number(false) // 0
+
+	// undefined：转成 NaN
+	Number(undefined) // NaN
+
+	// null：转成 0
+	Number(null) // 0
+	
+	// 对象：返回 NaN，除非是包含单个数值的数组（先后调用了对象的 valueOf() 和 toString() 再使用 Number()）
+	Number({a: 1}) // NaN
+	Number([1, 2, 3]) // NaN
+	Number([5]) // 5
+	··
+
+	##String()
+	··
+	// 原始类型值
+	String(123) // "123"
+	String('abc') // "abc"
+	String(true) // "true"
+	String(undefined) // "undefined"
+	String(null) // "null"
+	
+	// 对象
+	/*
+	先调用了对象的 toString()
+		若返回原始类型值则直接使用 String()
+		若返回对象则继续使用 valueOf()，
+			若返回原始类型值则直接使用 String()
+			若返回对象则报错（自定义 valueOf() 和 String() 返回对象的情况）
+	*/
+	String({a: 1}) // "[object Object]"
+	String([1, 2, 3]) // "1,2,3"
+	··
+
+	##Boolean()
+	··
+	// 原始类型值
+	Boolean(true) // true
+	Boolean(false) // false
+	// 以下五个值为 false，其他都为 true
+	Boolean(undefined) // false
+	Boolean(null) // false
+	Boolean(0) // false（包扩 -0 和 +0）
+	Boolean(NaN) // false
+	Boolean('') // false
+
+	// 对象始终为 true
+	Boolean({}) // true
+	Boolean([]) // true
+	Boolean(new Boolean(false)) // true
+	··
+
+	##自动转换为布尔值
+	对非布尔值类型的数据求布尔值，自动使用·Boolean()·转换
+	注意对于对象会先用·String()·再使用·Boolean()·转换比较
+	··
+	if ('abc') {
+		console.log('hello')
+	}
+	// "hello"
+
+	[] == false // true（相当于 '' == false）
+	({}) == false // false（相当于 '[object object] == false'）（注意行首是大括号则作为代码块执行了，加圆括号解释为对象）
+	({valueOf: function () { return false }}) == false // true
+	··
+
+	##自动转换为字符串
+	只在加法·+·的情况下，运算符两边有值且任意一边是字符串就转为字符串：
+	··
+	'5' + 1 // '51'
+	1 + '5' // '15'
+	'5' + true // "5true"
+	'5' + false // "5false"
+	'5' + {} // "5[object Object]"
+	'5' + [] // "5"
+	'5' + function () {} // "5function () {}"
+	'5' + undefined // "5undefined"
+	'5' + null // "5null"
+	··
+
+	##自动转换为数值
+	加法·+·两边都不是字符串 或 非加法·+·运算符 或 一元运算符（即·+·和·-·） 的情况下，对于非数值调用·Number()·自动转换：
+	··
+	null + 1 // 1
+	undefined + 1 // NaN
+
+	'5' - '2' // 3
+	'5' * '2' // 10
+	true - 1  // 0
+	false - 1 // -1
+	'1' - 1   // 0
+	'5' * []    // 0
+	false /¿ '5' // 0
+	'abc' - 1   // NaN
+
+	+ 'abc' // NaN
+	- 'abc' // NaN
+	+ true // 1
+	- false // 0
+	+ {foo: 'bar'} // NaN
+	- [1, 2, 3] // NaN
+	+ [] // 0
+	··
+
 	#window
 
 	##window
@@ -170,5 +335,5 @@ commonData.javascript.grammar.content = `
 	##运算符优先级
 	@[参照 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table]
 
-	&2018/4/14
+	&2019/8/1
 `
