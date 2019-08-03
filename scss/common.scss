@@ -11,7 +11,7 @@ $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
 
 @font-face {
     font-family: consola;
-    src: ("../font/consola.ttf");
+    src: url("../font/consola.ttf");
 }
 
 .color-red {
