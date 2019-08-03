@@ -119,7 +119,9 @@ let vm = new Vue({
 		asideH1: [],	// h1的标题文字
 		asideH2: [],	// h2的标题文字
 		asideActive: 0,	// h1的active
-		asideActive2: 0,	// h2的active
+        asideActive2: 0,	// h2的active
+        asideToggle: false, // aside 切换
+        optionToggle: false, // 顶部右侧菜单切换
 		article: ''	// 文档内容
 	},
 	created() {
@@ -147,14 +149,16 @@ let vm = new Vue({
 			this.asideActive = index	// 切换到当前active
 			this.asideActive2 = 0	// h2的元素改变了，所以active归0
 			$('article').find('h1').eq(index).click()	// 滚动h1到指定位置
-			asideTime()	// 点击左边菜单不触发asideActive的滚动事件，400ms结束也就是滚动完再恢复
+            asideTime()	// 点击左边菜单不触发asideActive的滚动事件，400ms结束也就是滚动完再恢复
+            if (this.asideToggle) this.asideToggle = false // 移动设备上收缩菜单
 		},
 
 		// 左边菜单 h2 点击事件
 		onAsideH2(index) {
 			this.asideActive2 = index	// 切换到当前active
 			$asideH2.eq(index).click()	// 滚动到指定位置
-			asideTime()	// 点击左边菜单不触发asideActive的滚动事件，400ms结束也就是滚动完再恢复
+            asideTime()	// 点击左边菜单不触发asideActive的滚动事件，400ms结束也就是滚动完再恢复
+            if (this.asideToggle) this.asideToggle = false // 移动设备上收缩菜单
 		},
 
 		// 点击顶部菜单和目录菜单切换路径

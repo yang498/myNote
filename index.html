@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>前端笔记</title>
 		<link rel="shortcut icon" href="favicon.png" />
 		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_390347_bm5xnqeii4u.css" />
@@ -13,6 +14,13 @@
 		<div class="web">
 			<!-- 头部 start -->
 			<header>
+                <!-- aside 收缩菜单触发按钮 -->
+                <div :class="['icon-toggle', asideToggle ? 'active' : '']" @click="asideToggle = !asideToggle">
+                    <span class="icon-top"></span>
+                    <span class="icon-middle"></span>
+                    <span class="icon-bottom"></span>
+                </div>
+
 				<!-- 左边的目录 -->
 				<ul class="menu">
 					<!-- 一级目录 -->
@@ -29,17 +37,10 @@
 							>{{childValue.name || childKey}}</li>
 						</ul>
 					</li>
-				</ul>
+                </ul>
 
 				<!-- 右边的菜单 -->
-				<div class="option">
-					<!-- 搜索框 -->
-					<div class="search">
-						<i :class="['iconfont icon-search',isSearch?'active':'']" @click="isSearch=!isSearch"></i>
-						<transition enter-class="active" leave-to-class="active">
-							<input type="text" placeholder="搜索建设中" v-if="isSearch"/>
-						</transition>
-					</div>
+				<div :class="['option', optionToggle?'active':'']">
 					<!-- 设置 -->
 					<div class="set hover">
 						<i class="iconfont icon-shezhi"></i>
@@ -51,15 +52,29 @@
 								<i class="iconfont icon-skin-fill"></i>
 							</li>
 						</ul>
-					</div>
-					<!-- 设置 -->
+                    </div>
+                    <!-- 搜索框 -->
+					<div class="search">
+                        <i :class="['iconfont icon-search',isSearch?'active':'']" @click="isSearch=!isSearch"></i>
+                        <transition enter-class="active" leave-to-class="active">
+                            <input type="text" placeholder="搜索建设中" v-if="isSearch"/>
+                        </transition>
+                    </div>
+					<!-- github -->
 					<a class="git" href="https://github.com/yang498/note" target="_blank">
 						<i class="iconfont icon-git"></i>
 					</a>
 					<!-- 回到顶部/底部 -->
 					<i class="iconfont icon-arrowhead-bottom back-top" onclick="scrollToTop(document.body.scrollHeight)"></i>
 					<i class="iconfont icon-arrowhead-top back-top" onclick="scrollToTop(0)"></i>
-				</div>
+                </div>
+                
+                <!-- 右边的菜单收缩触发按钮 -->
+                <div :class="['icon-toggle', optionToggle ? 'active' : '']" @click="optionToggle = !optionToggle">
+                    <span class="icon-top"></span>
+                    <span class="icon-middle"></span>
+                    <span class="icon-bottom"></span>
+                </div>
 			</header>
 			<!-- 头部 end -->
 
@@ -81,7 +96,7 @@
 			<!-- 首页/目录索引页 end -->
 
 			<!-- 文档左边目录 -->
-			<aside v-if="!index" :class="index?'':'active'">
+			<aside v-if="!index" :class="asideToggle?'active':''">
 				<ul class="h1">
 					<li v-for="(item, index) of asideH1"
 						:class="index === asideActive ? 'active' : ''"
@@ -94,7 +109,10 @@
 						@click="onAsideH2(index)"
 					v-cloak>{{item}}</li>
 				</ul>
-			</aside>
+            </aside>
+            
+            <!-- aside 移动设备收缩菜单 -->
+            <div class="aside"></div>
 
 			<!-- 文档内容 -->
 			<article v-if="!index" v-html="article"></article>

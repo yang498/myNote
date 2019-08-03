@@ -44,7 +44,6 @@ $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
 }
 
 .web {
-    min-width: 1200px;
     min-height: 100%;
     padding-top: 40px;
     overflow: hidden;
@@ -66,7 +65,7 @@ header {
     i.iconfont {
         font-size: 20px;
     }
-    .menu li:hover, .menu li.active, .search i:not(.active):hover, .option>*:hover {
+    .menu li:hover, .menu li.active, .search i:not(.active):hover, .option>*:hover, .icon-toggle:hover {
         background-color: $blue;
     }
     .menu>li, .set {
@@ -90,6 +89,36 @@ header {
             li {
                 line-height: 40px;
                 transition: $ti-fast ease-out;
+            }
+        }
+    }
+    .icon-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 40px;
+        cursor: pointer;
+        transition: $ti-fast ease-out;
+        span {
+            width: 22px;
+            height: 2px;
+            margin: 2px 0;
+            background-color: #fff;
+            border-radius: 1px;
+            transition: $ti-fast ease-out;
+            transform-origin: 12% 50%;
+        }
+        &.active {
+            .icon-top {
+                transform: rotate(45deg);
+            }
+            .icon-middle {
+                opacity: 0;
+            }
+            .icon-bottom {
+                transform: rotate(-45deg);
             }
         }
     }
@@ -206,13 +235,14 @@ aside {
     position: fixed;
     top: 40px;
     left: 0;
-    &.active {
-        border-right: 1px solid #ccc;
-        .h1 {
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ccc;
-        }
+    z-index: 1;
+    transition: $ti-fast ease-out;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+    .h1 {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
     }
     .h2 {
         height: 100%;
@@ -463,9 +493,37 @@ article {
     }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 767px) {
+    header {
+        .menu li:not(:first-child) {
+            display: none;
+        }
+        .icon-toggle {
+            display: flex;
+        }
+        .option {
+            position: fixed;
+            top: 40px;
+            right: 0;
+            height: auto;
+            background-color: $weex;
+            flex-direction: column-reverse;
+            border-bottom-left-radius: 10px;
+            transition: $ti-fast ease-out;
+            transform: translateX(100%);
+            &.active {
+                transform: translateX(0);
+            }
+            .search * {
+                border: 1px solid $weex;
+            }
+        }
+    }
     aside {
-        display: none;
+        transform: translateX(-100%);
+        &.active {
+            transform: translateX(0);
+        }
     }
     article {
         padding: 10px 20px 0 20px;
