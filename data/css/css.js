@@ -505,7 +505,16 @@ commonData.css.css.content = `
 		background-color: #f08;
 		transform: rotateX(-90deg) translateZ(50px);
 	}
-	··
+    ··
+    
+    #animation 系列
+
+    ##animation
+    动画：·animation: name duration timing-function delay iteration-count direction fill-mode play-state;·
+    !!
+    animation-name：
+    !!
+    ~~height: 375px;|https://interactive-examples.mdn.mozilla.net/pages/css/animation.html
 
 	#小技巧
 

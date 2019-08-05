@@ -349,6 +349,7 @@ article {
         .head {
             color: #f80;
             font-family: consolas;
+            word-break: break-all;
         }
         .type {
             color: #08f;
@@ -528,5 +529,15 @@ article {
     }
     article {
         padding: 10px 20px 0 20px;
+        ul {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .code {
+            padding: 0;
+            .copy {
+                right: 0;
+            }
+        }
     }
 }

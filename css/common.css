@@ -133,7 +133,7 @@ article ul li::before { content: '●'; color: #f80; margin-right: 10px; }
 
 article ul .attr { padding-left: 2em; }
 
-article ul .head { color: #f80; font-family: consolas; }
+article ul .head { color: #f80; font-family: consolas; word-break: break-all; }
 
 article ul .type { color: #08f; font-family: consolas; }
 
@@ -199,4 +199,7 @@ article .iframe iframe { width: 100%; padding: 10px; background-color: #f5f9fa; 
   header .option .search * { border: 1px solid #00B4FA; }
   aside { transform: translateX(-100%); }
   aside.active { transform: translateX(0); }
-  article { padding: 10px 20px 0 20px; } }
+  article { padding: 10px 20px 0 20px; }
+  article ul { margin-left: 0; margin-right: 0; }
+  article .code { padding: 0; }
+  article .code .copy { right: 0; } }
