@@ -1,7 +1,7 @@
 // 首页目录循环 commonData，key 为一级路径，二级 key 为 二级路径，目录名用 key 表示，中文加上 name 表示，注意文件名和 key 的一致
 // underway 表示进行中，complete 表示已完成，没有就是未开始
 // js 文件命名：html 不区分大小写所以用短横线连接，而对象的 key 中用短横线会当作减法，所以用驼峰命名，所以引用 script 时先驼峰转短横线
-// plan：JSON > animation > number > function > @media（和适配方法） > node 表单提交，基本 API 调用 > es6 > canvas > 面向对象 > dom > 浏览器 > vue > console > 数据类型和重要语法
+// plan：JSON > @KF, clip-path, 动画彩色圆环 demo > number > function > @media（和适配方法） > node 表单提交，基本 API 调用 > es6 > canvas > 面向对象 > dom > 浏览器 > vue > console > 数据类型和重要语法
 let commonData = {
 	html: {
 		html: {},

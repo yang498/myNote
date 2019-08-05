@@ -25,35 +25,34 @@ commonData.css.css.content = `
 		nowrap[默认值]：不换行
 		wrap：换行
 		wrap-reverse：换行，每行顺序倒置，也就是第 1 行在最下面，最后一行在最上面
-	flex-flow：flex-direction 和 flex-wrap 的简写
-	justify-content：子元素在水平方向的对齐方式
-		flex-start[默认值]：左对齐
+	flex-flow：·flex-direction flex-wrap·的简写
+	justify-content[flex-start]：子元素在水平方向的对齐方式
+		flex-start：左对齐
 		flex-end：右对齐
 		center：居中
 		space-between：两端对齐，间隔相等
 		space-around：每个子元素两侧产生的间隔相等
 		space-evenly：每个子元素之间的间隔相等
-	align-items：子元素在垂直方向的对齐方式
-		stretch[默认值]：如果子元素未设置高度或设为 auto，将占满整个容器的高度
+	align-items[stretch]：子元素在垂直方向的对齐方式
+		stretch：如果子元素未设置高度或设为 auto，将占满整个容器的高度
 		flex-start：顶对齐
 		flex-end：底对齐
 		center：居中
 		baseline：以子元素的第一行文字的基线对齐
-	align-content：多行对齐方式，如果子元素只有一行该属性不起作用，
-		stretch[默认值]：每行垂直方向平均占满
-		其余属性和 justify-content 属性相同
+	align-content[stretch]：多行对齐方式，如果子元素只有一行该属性不起作用，
+		stretch：每行垂直方向平均占满
+		其余属性和·justify-content·属性相同
 	!!
 	###子元素的属性
 	!!
-	align-self：设置单个子元素的对齐方式，可覆盖 align-items 属性，如果没有父元素，则等同于 stretch
-		auto[默认值]：继承父元素的 align-items 的属性
-		其余属性和 align-items 属性相同
-	order：定义子元素的排列顺序，数值越小，排列顺序越靠前，默认为 0，可以为负数
-	flex-grow：定义子元素的放大比例，默认为 0，即不放大，可以是小数，负数无效，单独 1 个子元素设为 1 就会占满剩余空间
-	flex-shrink：定义子元素的缩小比例，默认为 1，即如果空间不足该子元素将缩小，可以是小数，负数无效，设为 0 将不缩小
-	flex-basis：定义子元素在水平方向占据的空间，即设置宽度，默认值为 auto，即子元素的本来大小。可以使用各种单位。
-	flex：flex-grow、flex-shrink 和 flex-basis 的简写，默认值为·0 1 auto·，后两个属性可选。
-		两个快捷值：·auto·(1 1 auto) 和·none·(0 0 auto)
+	align-self：设置单个子元素的对齐方式，可覆盖·align-items·属性，如果没有父元素，则等同于·stretch·
+		auto[默认值]：继承父元素的·align-items·的属性
+		其余属性和·align-items·属性相同
+	order[0]：定义子元素的排列顺序，数值越小，排列顺序越靠前，可以为负数
+	flex-grow[0]：定义子元素的放大比例，·0·表示不放大，可以是小数，负数无效，单独 1 个子元素设为·1·就会占满剩余空间
+	flex-shrink[1]：定义子元素的缩小比例，·1·表示如果空间不足该子元素将缩小，可以是小数，负数无效，设为·0·将不缩小
+	flex-basis[auto]：定义子元素在水平方向占据的空间，即设置宽度，·auto·表示子元素的本来大小。可以使用各种单位
+	flex：·flex-grow flex-shrink flex-basis·的简写，支持两个快捷值：·auto·(代表·1 1 auto·) 和·none·(代表·0 0 auto·)
 	!!
 
 	##grid
@@ -77,16 +76,29 @@ commonData.css.css.content = `
 	grid-template-areas：指定单元格名，不用的区域用·.·表示，则每个区域的水平垂直线的起始线命名为·区域名-start·，终止线为·区域名-end·
 	grid-template：·grid-template-columns grid-template-rows grid-template-areas·的简写
 
-	grid-auto-columns 和 grid-auto-rows：假设定义了 3*3 但实际有 10 个单元格，此属性可控制多出单元格的列宽和行高，属性同·grid-template-columns·，注意多出的单元格处于第 4 列或行才是多出的列或行，若不指定这两个属性多出的单元格将处于最小列宽和行高
-	grid-auto-flow[row]：指定排列方向，·row·先行后列、·column·先列后行、·row dense·横向紧密填满、·column dense·竖向紧密填满
+	·grid-auto-columns·列宽、·grid-auto-rows·行高：
+		假设定义了 3*3 但实际有 10 个单元格，此属性可控制多出单元格的列宽和行高，属性同·grid-template-columns·
+		注意多出的单元格处于第 4 列或行才是多出的列或行，若不指定这两个属性多出的单元格将处于最小列宽和行高
+	grid-auto-flow[row]：排列方向
+		row：先行后列
+		column：先列后行
+		row dense：横向紧密填满
+		column dense：竖向紧密填满
 	grid：·grid-template-rows grid-template-columns grid-template-areas  grid-auto-rows grid-auto-columns grid-auto-flow·的简写
 
-	justify-items[stretch]：定义单元格的水平位置，·start·起始、·end·结束、·center·居中、·stretch·拉伸
+	justify-items[stretch]：定义单元格的水平位置
+		stretch：拉伸
+		start：起始
+		end：结束
+		center：居中
 	align-items[stretch]：定义单元格的垂直位置，属性同·justify-items·
 	place-items：定义垂直水平位置的简写，·<align-items> <justify-items>·，若不写第二个值则第二个值和第一个值相等
 
-	justify-content[start]：定义列的水平位置，·start·起始、·end·结束、·center·居中、·stretch·拉伸、
-		·space-around·每列的两侧间隔相等、·space-between·两端对齐且间隔相等、·space-evenly·每列的间隔相等
+	justify-content[start]：定义列的水平位置
+		space-around：每列的两侧间隔相等
+		space-between：两端对齐且间隔相等
+		space-evenly：每列的间隔相等
+		其余属性和·justify-items·相同
 	align-content[start]：定义行的垂直位置，属性同·justify-content·
 	place-content：定义垂直水平位置的简写，·<align-content> <justify-content>·，若不写第二个值则第二个值和第一个值相等
 
@@ -174,28 +186,32 @@ commonData.css.css.content = `
 		bold：粗体，相当于·700·
 		lighter：细体，相当于·100·
 		bolder：粗体，和·bold·差不多
-	font-size：字体大小
+	font-size[medium]：字体大小，浏览器默认·medium·代表·16px·
+		<绝对大小关键字>：·xx-small, x-small, small, medium, large, x-large, xx-large·（以·medium·作为对比）
+		<相对大小关键字>：·larger, smaller·（比父元素的字体大或小）
+		<length>：字体大小，参考 @[<length>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/length]
+		<percentage>：以父元素为基准的百分比，参考 @[<percentage>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/percentage]
 	line-height[normal]：字体行高，可使用长度单位
 		normal：约为·1.2·，取决于·font-family·
 		<数字或百分比>：·font-size·的倍数
 	font-family：字体，可以指定多个字体以逗号隔开，优先采用第一个，若用户计算机中没有或不支持则依次采用下一个
 		引号：若字体名不包含空格或者属于通用字体族名可以省略，否则需要加上
 		常用字体名：微软雅黑·Microsoft YaHei·，思源黑体·Source Han Sans·，英文等宽·Consolas·，黑体·SimHei·，宋体·SimSun·
-	font-variant：字体变形，复合属性，例如设置字体为小型大写字母
-	其他不常用属性参考 @[MDN|https://developer.mozilla.org/zh-CN/docs/Web/CSS/font]
+	font-variant[normal]：字体变形，复合属性，例如设置字体为小型大写字母
+	其他不常用属性参考 @[MDN <font>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/font]
 	!!
 
 	##background
 	背景样式：·background: color image repeat position/size origin attachment;·
 	!!
-	background-color：背景颜色
-	background-image：背景图片，比背景颜色层级高，支持·url(imgUrl)·、渐变等，可指定多个背景图片以逗号隔开，层级越后越低
+	background-color[transparent]：背景颜色
+	background-image[none]：背景图片，比背景颜色层级高，支持·url(imgUrl)·、渐变等，可指定多个背景图片以逗号隔开，层级越后越低
 		·url()·括号内的引号可省略，当省略时注意若·imgUrl·内包含括号、空格、单双引号需使用·\\·进行转码
 	background-repeat[repeat]：背景图片的重复方式
 		写法：可写 2 个值以空格隔开分别指定水平和垂直方向，在多个背景图片下可写多个值以逗号隔开分别指定重复方式
 		repeat|repeat-x|repeat-y|no-repeat：分别是·重复|只在水平方向重复|只在垂直方向重复|不重复·
-		space：不裁剪重复，把边上裁剪的部分顶出去，所以图像之间会有些空隙，·background-position·会被忽视
-		round：不裁剪重复，边上裁剪的部分尽可能的顶进来，所以图像会适当的缩小，图像之间没有空隙
+		space：不裁剪重复，把边上裁剪的部分挤出去，所以图像之间会有些空隙，·background-position·会被忽视
+		round：不裁剪重复，让边上裁剪的部分尽可能的挤进来，所以图像会适当的缩小，图像之间没有空隙
 	background-position[0% 0%]：背景图片的位置
 		背景图片距离的位置是和容器的相对位置^^重合^^的，例如·0% 50%·表示背景图片的左边界和容器边界重合、中心点和容器的中心点重合
 		写法：可写 2 个值以空格隔开分别指定水平和垂直方向，在多个背景图片下可写多个值以逗号隔开分别指定位置
@@ -220,13 +236,13 @@ commonData.css.css.content = `
 		padding-box：以 padding 区域为起点
 		border-box：以 border 区域为起点
 		content-box：以原始内容区域为起点，即不包括 padding 和 border
-	background-clip[border-box]：背景图片或颜色的裁剪范围
+	background-clip[border-box]：背景图片或颜色的裁剪范围，和·background-origin·的区别在于不改变背景图片的位置而只裁剪
 		border-box：在 border 区域内显示
 		padding-box：在 padding 区域内显示
 		content-box：在原始内容区域内显示，即不包括 padding 和 border
 		text：在文字区域内显示，注意如果要显示背景图片需把文字颜色去掉，即·color: transparent;·
 			·text·属性的兼容性不太好，若不支持需加上·-webkit-·前缀，即·-webkit-background-clip: text;·
-	background-blend-mode：多个背景图片下定义混合模式，例如高亮、柔光、减淡等，参考 @[MDN 中文|https://developer.mozilla.org/zh-CN/docs/Web/CSS/blend-mode] 和 @[MDN 英文|https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode]
+	background-blend-mode[normal]：多个背景图片下定义混合模式，例如高亮、柔光、减淡等，参考 @[MDN 中文|https://developer.mozilla.org/zh-CN/docs/Web/CSS/blend-mode] 和 @[MDN 英文|https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode]
 	!!
 
 	##transition
@@ -252,11 +268,37 @@ commonData.css.css.content = `
 			direction：左连续还是右连续
 				start：左连续，因此第一步发生在动画开始时
 				end：右连续，因此最后一步发生在动画结束时
-	transition-delay：过渡动画开始前的等待时间，单位秒(s)或毫秒(ms)
+	transition-delay[0s]：过渡动画开始前的等待时间，单位秒(s)或毫秒(ms)
+	!!
+
+	##mask
+	用遮罩图片的透明部分把元素遮住（变透明），只影响元素本身而不会遮挡底部元素
+	所以不透明的 jpg 图片和非透明渐变是没有效果的
+	考虑兼容性应加上·-webkit-·前缀
+	遮罩：·mask: image mode repeat position clip origin size type composite;·
+	可以分别设置多个属性以逗号隔开，例如：·mask: url(...), radial-gradient(...);·
+	!!
+	mask-image[none]：遮罩图片，参考·background-image·
+	mask-mode[match-source]：遮罩模式
+		match-source：自适应，即根据图片类型自动采用·alpha·和·luminance·
+		alpha：基于透明度遮罩
+		luminance：基于亮度遮罩（整体比·alpha·偏透明一点）
+	mask-repeat[repeat]：重复方式，参考·background-repeat·
+	mask-position[0% 0%]：遮罩的位置，参考·background-position·
+	mask-clip[border-box]：遮罩的裁剪范围，参考·background-clip·，并多出以下属性：
+		margin-box：在 margin 区域内裁剪
+		fill-box：在 SVG 边界内裁剪
+		stroke-box：在 SVG 绘制的边框内裁剪
+		view-box：在 SVG 区域内裁剪
+		no-clip：不裁剪
+	mask-origin[border-box]：遮罩的范围起点，参考·background-origin·，多出的属性参考·mask-clip·
+	mask-size[auto]：遮罩的大小，参考·background-size·
+	mask-type[luminance]：专用于 SVG 元素的·mask-mode·，注意不支持·match-source·属性
+	mask-composite[source-over]：多个遮罩下的混合模式，参考 Canvas 的·globalCompositeOperation·
 	!!
 
 	#渐变系列
-	应用于·background-image·的属性
+	应用于·background-image·和·mask-image·
 
 	##linear-gradient()
 	线性渐变：·linear-gradient([angle], color [start]*, [color [start]*]+)·
@@ -264,7 +306,7 @@ commonData.css.css.content = `
 	!!
 	<angle>[to bottom/180deg]：渐变角度，支持角度单位例如·deg·，或·to top/left/right/bottom·，或 2 个方位词例如·to right bottom·
 		角度：和时钟一样，·0deg·相当于 12 点，·90deg·相当于 3 点，这个角度代表渐变终点，例如·0deg·表示从元素的中心点到顶部的渐变
-	<start>：渐变起始点，注意每 2 个颜色的渐变方向是相对的，例如：
+	<start>：渐变起始点，可使用长度单位或百分比，注意每 2 个颜色的渐变方向是相对的，例如：
 		·linear-gradient(90deg, #f00 50%, #08f)·：元素左半边是纯红，从一半宽度开始才由红渐变到蓝
 		·linear-gradient(90deg, #f00, #08f 50%)·：元素左半边进行了由红到蓝的渐变，右半边是纯蓝
 		·linear-gradient(90deg, #f00 50%, #08f 50%)·：元素左半边是纯红，右半边是纯蓝
@@ -297,7 +339,7 @@ commonData.css.css.content = `
 
 	##radial-gradient()
 	径向渐变：·radial-gradient([shape [extent-keyword] [at position]], color [start]*, [color [start]*]+)·
-	例如：最基本·radial-gradient(#f00, #08f)·，属性都写·radial-gradient(circle farthest-side at top left, #f00, #08f)·
+	例如：最基本·radial-gradient(#f00, #08f)·，属性都写·radial-gradient(circle farthest-side at top left, #f00 50%, #08f 50%)·
 	!!
 	<shape>[ellipse]：渐变的形状
 		ellipse：以元素轴对称的椭圆，所以若元素的宽高相等则是个正圆
@@ -307,7 +349,7 @@ commonData.css.css.content = `
 		farthest-side：渐变的边缘轮廓和元素最近的边相切
 		closest-corner：渐变的边缘轮廓和元素最远的角相切，若渐变的中心点处于中间则和·farthest-corner·效果一样
 		closest-side：渐变的边缘轮廓和元素最远的边相切，若渐变的中心点处于中间则和·farthest-side·效果一样
-	<position>[center]：渐变的中心点，写法参考·background-position·
+	at <position>[center]：渐变的中心点，写法参考·background-position·
 	<start>：渐变起始点，写法参考·linear-gradient()·
 	!!
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-radial-gradient.html
@@ -331,7 +373,7 @@ commonData.css.css.content = `
 	}
 	··
 
-	##重复渐变
+	##重复线性径向渐变
 	重复多次渐变图案直到填满元素
 	!!
 	repeating-linear-gradient()：线性重复渐变，参数和·linear-gradient()·一样
@@ -340,8 +382,18 @@ commonData.css.css.content = `
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-linear-gradient.html
 	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-repeating-radial-gradient.html
 
-    ##demo
-    @[更多精彩案例|https://leaverou.github.io/css3patterns/]，@[结合背景混合模式|https://codepen.io/bennettfeely/pen/wJbtk]
+	##conic-gradient()
+	锥形渐变：·conic-gradient([from angle] [at position], color [angle]*, [color [angle]*]+)·
+	例如：最基本·conic-gradient(#f00, #08f)·，属性都写·conic-gradient(from 90deg at 30% 30%, #f00 120deg, #08f 120deg)·
+	!!
+	from <angle>：渐变起始角度
+	at <position>：渐变中心点，写法参考·background-position·
+	<angle>：每个渐变起始角度，作用参考·linear-gradient()·
+	!!
+	~~height:375px;|https://interactive-examples.mdn.mozilla.net/pages/css/function-conic-gradient.html
+
+	##demo
+	@[更多精彩案例|https://leaverou.github.io/css3patterns/]，@[结合背景混合模式|https://codepen.io/bennettfeely/pen/wJbtk]
 	###衬衫格子
 	··
 	<div class="grid"></div>
@@ -376,6 +428,10 @@ commonData.css.css.content = `
 		background-repeat: round;
 	}
 	··
+
+	#图像系列
+
+	##clip-path
 
 	#transform 系列
 	##transform
@@ -505,16 +561,52 @@ commonData.css.css.content = `
 		background-color: #f08;
 		transform: rotateX(-90deg) translateZ(50px);
 	}
-    ··
-    
-    #animation 系列
+	··
+	
+	#animation 系列
 
-    ##animation
-    动画：·animation: name duration timing-function delay iteration-count direction fill-mode play-state;·
-    !!
-    animation-name：
-    !!
-    ~~height: 375px;|https://interactive-examples.mdn.mozilla.net/pages/css/animation.html
+	##animation
+	动画：·animation: name duration timing-function delay iteration-count direction fill-mode play-state;·
+	可以同时设置多个动画以逗号隔开，例如：·animation: move 1s ease-out, down 2s linear;·
+	!!
+	animation-name[none]：自定义动画名称，然后由·@keyframes·定义动画序列
+		书写规范：由·a-z A-Z 0-9 _ -·组成，不能以数字或双横线开头，大小写敏感
+	animation-duration[0s]：动画时长，单位秒(s)或毫秒(ms)
+	animation-timing-function[ease]：动画的加速度曲线，参考·transition·
+	animation-delay[0s]：动画开始前的等待时间，单位秒(s)或毫秒(ms)
+	animation-iteration-count[1]：动画执行次数，可以是小数表示最后一次动画进行的百分比，可填关键字·infinite·无限
+	animation-direction[normal]：动画方向
+		normal：从起点开始到终点
+		reverse：从终点开始到起点
+		alternate：从起点开始交替反向运行
+		alternate-reverse：从终点开始交替反向运行
+	animation-fill-mode[none]：动画执行前后元素应用的样式
+		none：不应用样式
+		forwards：元素的样式停留在动画的最后一帧
+		backwards：元素的样式在一开始就应用动画的第一帧，设置了·animation-delay·比较明显
+		both：同时使用·forwards·和·backwards·
+	animation-play-state[running]：运行或暂停动画，一般由 js 动态设置，若动画已结束则设置无效
+		running：运行
+		paused：暂停
+	!!
+	~~height: 375px;|https://interactive-examples.mdn.mozilla.net/pages/css/animation.html
+
+	##@keyframes
+	定义动画关键帧的样式：
+	··
+	@keyframes <animation-name> {
+		<0%/from> {
+			/* 样式 */
+		}
+		<100%/to> {
+			/* 样式 */
+		}
+	}
+	··
+	!!
+	开始状态：0%/from
+	结束状态：100%/to
+	!!
 
 	#小技巧
 
@@ -710,5 +802,5 @@ commonData.css.css.content = `
 	})
 	··
 
-	&2019/7/16
+	&2019/8/5
 `
