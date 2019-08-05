@@ -192,7 +192,7 @@ article .iframe { padding: 10px 2em; }
 
 article .iframe iframe { width: 100%; padding: 10px; background-color: #f5f9fa; border: 1px solid #eaf2f4; }
 
-@media screen and (max-width: 767px) { header .menu li:not(:first-child) { display: none; }
+@media screen and (max-width: 991px) { header .menu li:not(:first-child) { display: none; }
   header .icon-toggle { display: flex; }
   header .option { position: fixed; top: 40px; right: 0; height: auto; background-color: #00B4FA; flex-direction: column-reverse; border-bottom-left-radius: 10px; transition: 0.2s ease-out; transform: translateX(100%); }
   header .option.active { transform: translateX(0); }
