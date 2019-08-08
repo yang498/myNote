@@ -1,8 +1,8 @@
 commonData.tool.other.content = `
-	#GraphQL
-	#REST
-	#APIJSON
-	#gRPC-Web
-	#Redux
-	#Koala
+#GraphQL
+#REST
+#APIJSON
+#gRPC-Web
+#Redux
+#Koala
 `

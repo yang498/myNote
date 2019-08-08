@@ -21,7 +21,7 @@
 
 .web { min-height: 100%; padding-top: 40px; overflow: hidden; background: no-repeat center/cover fixed; }
 
-header { width: 100%; text-align: center; color: #fff; background-color: #00B4FA; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 1; }
+header { width: 100%; text-align: center; color: #fff; background-color: #00B4FA; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 2; }
 
 header i.iconfont { font-size: 20px; }
 

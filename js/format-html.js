@@ -12,7 +12,7 @@ const formatHtml = text => {
 			// 匹配多行代码块，里面匹配加颜色，最后合并成单行
 			.replace(REG.codeBlock, item => {
 				// tab 显得比较长，为了格式美观，所以去掉开头 tab，再把其他的 tab 替换成空格
-				item = item.replace(/^\t/gm, '').replace(/\t/g, '    ')
+				item = item.replace(/\t/g, '    ')
 				// 去掉首尾标识符和换行再保存代码以准备复制
 				pageCode.push(item.slice(3, -3).replace(/¿/g, ''))
 				// 1、网址开头和路径不解析成注释
@@ -53,9 +53,9 @@ const formatHtml = text => {
 			.replace(REG.linkMultiLine, item => '@@学习参考链接：' + item.slice(3, -3).replace(REG.multiLine, (res, $1) =>
 				$1.replace(REG.linkInside, '<a href="$3" target="_blank" class="pd">$2</a>')).replace('\n', '') + '@@')
 
-			// 列表，去掉开头缩进，在每一行中替换，每个缩进换成 css 控制，开头加类型、默认值、必填加粗
-			.replace(REG.list, item => '!!' + item.slice(2, -2).replace(/^\t/gm, '').replace(REG.multiLine, (res, $1) =>
-				'<li>' + $1.replace(/\t|    /g, '<i class="attr"></i>').replace(/[^]*?(?=：)/, start =>
+			// 列表，在每一行中替换，每个缩进换成 css 控制，开头加类型、默认值、必填加粗
+			.replace(REG.list, item => '!!' + item.slice(2, -2).replace(REG.multiLine, (res, $1) =>
+				'<li>' + $1.replace(/\t/g, '<i class="attr"></i>').replace(/[^]*?(?=：)/, start =>
 					'<i class="head">' + start
 						.replace(/(\{(?!¿))(.+?)(\}(?!¿))/, (r, $1, $2, $3) => {
 							const rType = $2.split('/').map(i => i === 'o' ? 'Object' :
@@ -78,7 +78,7 @@ const formatHtml = text => {
 
 			// 表格，按每行分隔，第二行作为对齐方式，第二行最后有数字代表表格宽度，第一行作为表头，第三行之后作为内容
 			.replace(REG.table, item => {
-				item = item.slice(3, -4).replace(/^\t/gm, '').split('\n')
+				item = item.slice(3, -4).split('\n')
 				const align = item[1].split(',')
 				const widthIndex = align.length - 1 > item[0].match(/,/g).length ? align.length - 1 : false
 				item = item.map((tr, index) => {

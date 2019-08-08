@@ -1,1844 +1,1844 @@
 commonData.jsLibrary.vue.content = `
-	#学习路线
+#学习路线
 
-	##基本概念
-	###核心功能
-	从根本上说，Vue 用于同步网页和 JavaScript。实现这一目标的关键特性是反应式（reactive）数据，以及指令和插值等模板功能，了解 Vue 实例的生命周期。这些东西在一开始就要学习。
- 	###组件
-	Vue 组件是独立的可重用 UI 元素。需要了解如何声明组件，以及如何通过 prop 和 event 在它们之间发生交互。
-	了解如何组合组件也很重要，因为这对使用 Vue 构建健壮、可伸缩的应用程序来说至关重要。
- 单页面应用程序
+##基本概念
+###核心功能
+从根本上说，Vue 用于同步网页和 JavaScript。实现这一目标的关键特性是反应式（reactive）数据，以及指令和插值等模板功能，了解 Vue 实例的生命周期。这些东西在一开始就要学习。
+###组件
+Vue 组件是独立的可重用 UI 元素。需要了解如何声明组件，以及如何通过 prop 和 event 在它们之间发生交互。
+了解如何组合组件也很重要，因为这对使用 Vue 构建健壮、可伸缩的应用程序来说至关重要。
+单页面应用程序
 单页面应用程序（SPA）架构通过单个网页实现传统多页面网站一样的功能，而且不会在每次用户触发导航时重新加载和重建页面。
 在将“页面”构建为 Vue 组件之后，就可以使用 Vue Router 将每个“页面”映射到一个唯一的路径，Vue Router 是一个用于构建 SPA 的工具，由 Vue 团队维护。
- 状态管理
+状态管理
 随着应用程序变得越来越大，SPA 页面中会有很多组件，管理全局状态变得很困难，而且随着 prop 和 event 监听器的增加，组件变得越来越臃肿。
 一种称为“Flux”的特殊模式可以将数据保存在可预测且稳定的中央存储中。由 Vue 团队维护的 Vuex 库可以帮助你在 Vue.js 应用程序中实现 Flux。
 
-	#起步
-	##介绍
-	Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
-	一种轻量级的mvvm框架，它同时吸收了angular和react的优点，因为是国人开发的，所以对中文的支持是非常好的，方便学习，特点：数据驱动视图，响应式。
-	使用scss需安装sass-loader：
-	··
-	npm install --save-dev node-sass		//sass-loader依赖于node-sass
-	npm install --save-dev sass-loader
-	··
+#起步
+##介绍
+Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
+一种轻量级的mvvm框架，它同时吸收了angular和react的优点，因为是国人开发的，所以对中文的支持是非常好的，方便学习，特点：数据驱动视图，响应式。
+使用scss需安装sass-loader：
+··
+npm install --save-dev node-sass		//sass-loader依赖于node-sass
+npm install --save-dev sass-loader
+··
 
-	vue-cli目录：
-	config：环境配置文件
-	build：打包构建文件
-	static：放置静态文件，比如公共样式、js、图片、字体
-	index.html：入口文件，npm run dev开启服务
-	src：vue文件
-	assets：资源文件
-	components：vue组件
-	router.js：路由器
-	main.js：主js文件，实例化vue
-	App.vue：主vue文件，首页
+vue-cli目录：
+config：环境配置文件
+build：打包构建文件
+static：放置静态文件，比如公共样式、js、图片、字体
+index.html：入口文件，npm run dev开启服务
+src：vue文件
+assets：资源文件
+components：vue组件
+router.js：路由器
+main.js：主js文件，实例化vue
+App.vue：主vue文件，首页
 
-	Package.json说明
-	private：私有
-	scripts：npm脚本指令，npm run 自定义指令
-	dependencies：依赖，上线不必用到
-	devDependencies：开发依赖，一直用到
-	engines：node和npm的要求版本
-	browserslist（数组）：浏览器版本
+Package.json说明
+private：私有
+scripts：npm脚本指令，npm run 自定义指令
+dependencies：依赖，上线不必用到
+devDependencies：开发依赖，一直用到
+engines：node和npm的要求版本
+browserslist（数组）：浏览器版本
 
-	app.vue引入组件不能用@
+app.vue引入组件不能用@
 
-	egret startserver -a
+egret startserver -a
 
 
-	##安装
-	Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性
-	可以在浏览器上安装 @[Vue Devtools|https://github.com/vuejs/vue-devtools#vue-devtools] 以方便审查和调试 Vue 应用
-	###直接用·<script>·引入
-	@[开发版本：未压缩，包含完整的警告和调试模式|https://vuejs.org/js/vue.js]
-	@[生产版本：压缩版，删除了警告|https://vuejs.org/js/vue.min.js]
-	也可以使用 CDN 手动引入指定的版本号，和指定·vue.js·或·vue.min.js·
-	··
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-	··
-	###NPM
-	在用 Vue 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用。同时 Vue 也提供配套工具来开发单文件组件。默认安装最新稳定版：
-	··
-	cnpm install vue
-	··
-	###命令行工具 (CLI)
-	Vue 提供了一个官方的 CLI，为单页面应用快速搭建 (SPA) 繁杂的脚手架。它为现代前端工作流提供了 batteries-included 的构建设置。只需要几分钟的时间就可以运行起来并带有热重载、保存时 lint 校验，以及生产环境可用的构建版本。全局安装：
-	··
-	cnpm install -g vue-cli
-	··
-	安装完成后可以输入 vue 回车，可以看到相应的命令行，比如初始化·vue init·
+##安装
+Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性
+可以在浏览器上安装 @[Vue Devtools|https://github.com/vuejs/vue-devtools#vue-devtools] 以方便审查和调试 Vue 应用
+###直接用·<script>·引入
+@[开发版本：未压缩，包含完整的警告和调试模式|https://vuejs.org/js/vue.js]
+@[生产版本：压缩版，删除了警告|https://vuejs.org/js/vue.min.js]
+也可以使用 CDN 手动引入指定的版本号，和指定·vue.js·或·vue.min.js·
+··
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+··
+###NPM
+在用 Vue 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用。同时 Vue 也提供配套工具来开发单文件组件。默认安装最新稳定版：
+··
+cnpm install vue
+··
+###命令行工具 (CLI)
+Vue 提供了一个官方的 CLI，为单页面应用快速搭建 (SPA) 繁杂的脚手架。它为现代前端工作流提供了 batteries-included 的构建设置。只需要几分钟的时间就可以运行起来并带有热重载、保存时 lint 校验，以及生产环境可用的构建版本。全局安装：
+··
+cnpm install -g vue-cli
+··
+安装完成后可以输入 vue 回车，可以看到相应的命令行，比如初始化·vue init·
 
-	#选项
+#选项
 
-	##DOM
-	###el
-	只在由 new 创建的实例中使用，提供一个在页面上已存在的 DOM 元素作为 Vue 实例的挂载目标。可以是 CSS 选择器，也可以是一个 HTMLElement 实例。
-	在实例挂载之后，元素可以用·vm.$el·访问。
-	如果在实例化时存在这个选项，实例将立即进入编译过程，否则，需要显式调用 vm.$mount() 手动开启编译。
-	注意：所有的挂载元素会被 Vue 生成的 DOM 替换，因此不推荐挂载 root 实例到·<html>·或者·<body>·上。
+##DOM
+###el
+只在由 new 创建的实例中使用，提供一个在页面上已存在的 DOM 元素作为 Vue 实例的挂载目标。可以是 CSS 选择器，也可以是一个 HTMLElement 实例。
+在实例挂载之后，元素可以用·vm.$el·访问。
+如果在实例化时存在这个选项，实例将立即进入编译过程，否则，需要显式调用 vm.$mount() 手动开启编译。
+注意：所有的挂载元素会被 Vue 生成的 DOM 替换，因此不推荐挂载 root 实例到·<html>·或者·<body>·上。
 
-	##数据
-	!!
-	data：数据对象
-	methods：方法对象
-	computed：计算属性
-	watch：监听属性
-	!!
-	data、methods、computed 是定义数据，watch 是监听数据
-	Vue 实例也代理了数据对象上所有的属性，因此访问·vm.a·等价于访问·vm.$data.a·。
-	数据选项的子属性都会被代理到 Vue 实例上，所以可以直接用比如·vm.msg·直接读取
-	以·_·或·$·开头的属性 不会 被 Vue 实例代理，因为它们可能和 Vue 内置的属性、API 方法冲突。可以使用例如·vm.$data._property·的方式访问这些属性。
+##数据
+!!
+data：数据对象
+methods：方法对象
+computed：计算属性
+watch：监听属性
+!!
+data、methods、computed 是定义数据，watch 是监听数据
+Vue 实例也代理了数据对象上所有的属性，因此访问·vm.a·等价于访问·vm.$data.a·。
+数据选项的子属性都会被代理到 Vue 实例上，所以可以直接用比如·vm.msg·直接读取
+以·_·或·$·开头的属性 不会 被 Vue 实例代理，因为它们可能和 Vue 内置的属性、API 方法冲突。可以使用例如·vm.$data._property·的方式访问这些属性。
 
-	###data
-	Vue 实例的数据对象。Vue 将会递归将 data 的属性转换为 getter/setter，从而让 data 的属性能够响应数据变化。
-	实例创建之后，可以通过·vm.$data·或·vm._data·访问原始数据对象。
-	如果需要可以使用·JSON.parse(JSON.stringify(vm.$data))·深拷贝 data 来操作
+###data
+Vue 实例的数据对象。Vue 将会递归将 data 的属性转换为 getter/setter，从而让 data 的属性能够响应数据变化。
+实例创建之后，可以通过·vm.$data·或·vm._data·访问原始数据对象。
+如果需要可以使用·JSON.parse(JSON.stringify(vm.$data))·深拷贝 data 来操作
 
-	###methods
-	方法对象，可以用·v-on·指令监听 DOM 事件
-	注意：不应该使用·=>·来定义函数，因为会改变·this·的指向，方法中的·this·本就绑定为 Vue 实例
-	··
-	<button v-on:click="greet">Greet</button>	// 没有参数可以不用写 ()，即 greet()
+###methods
+方法对象，可以用·v-on·指令监听 DOM 事件
+注意：不应该使用·=>·来定义函数，因为会改变·this·的指向，方法中的·this·本就绑定为 Vue 实例
+··
+<button v-on:click="greet">Greet</button>	// 没有参数可以不用写 ()，即 greet()
 
-	var vm = new Vue({
-		el: 'button',
-		data: {
-			name: 'Vue.js'
-		},
-		// 在 methods 对象中定义方法
-		methods: {
-			greet: function (e) {
-				alert('Hello ' + this.name + '!')
-				alert(e.target.tagName)	// e 是原生 DOM 事件
-			}
-		}
-	})
-
-	// 也可以用 JavaScript 直接调用方法
-	vm.greet() // 'Hello Vue.js!'
-	··
-	如果不传参数比如上面的·v-on:click="greet"·，在方法中默认第一个参数即为事件对象
-	注意如果加了括号或参数即·v-on:click="greet()"·或·v-on:click="greet('msg')"·，是没有事件对象的，此时可以用特殊变量·$event·作为事件对象参数，且不限参数位置
-	··
-	<button v-on:click="warn('msg', $event)">submit</button>
-	··
-
-	###computed
-	计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。
-	注意：如果为一个计算属性使用了箭头函数，则 this 不会指向这个组件的实例，可以将其实例作为函数的第一个参数来访问。
-	··
-	computed: {
-		aDouble: vm => vm.a * 2
-	}
-	··
-	计算属性的结果是依赖的响应式属性变化而重新计算的，如果依赖的是非响应式属性则不会更新。
-	··
-	var vm = new Vue({
-		data: { a: 1 },
-		computed: {
-			// 仅读取
-			aDouble: function () {
-				return this.a * 2
-			},
-			// 读取和设置
-			aPlus: {
-				get: function () {
-					return this.a + 1
-				},
-				set: function (v) {
-					this.a = v - 1
-				}
-			}
-		}
-	})
-
-	vm.aPlus   // 2
-	vm.aPlus = 3
-	vm.a       // 2
-	vm.aDouble // 4
-	··
-	虽然方法和计算属性的结果是一样的
-	··
-	computed: {
-    reversedMessage: function () {
-      return this.message.split('').reverse().join('')
+var vm = new Vue({
+    el: 'button',
+    data: {
+        name: 'Vue.js'
+    },
+    // 在 methods 对象中定义方法
+    methods: {
+        greet: function (e) {
+            alert('Hello ' + this.name + '!')
+            alert(e.target.tagName)	// e 是原生 DOM 事件
+        }
     }
-  }
-	··
-	等同于
-	··
-	methods: {
-		reversedMessage: function () {
-			return this.message.split('').reverse().join('')
-		}
-	}
-	··
-	不同的是计算属性是基于它们的依赖进行缓存的，只要依赖的值没改变，多次访问计算属性会立即返回之前的计算结果，而函数总是会执行一遍，也就是说计算属性比方法更减少消耗
-
-	###watch
-	监听数据的变化做出相应的处理，可以监听·data·中的变量或·$route·等，键为观察的对象（为对象路径时需用引号），值为对应的处理，可以为函数、方法名（需用引号）、选项
-	为函数或方法名时有2个参数，第一个为当前的值，第二个为改变前的值
-	选项可以是一个数组，每个元素为函数或方法名，也可以是一个对象，属性如下：
-	!!
-	handler{Function/String}：函数或方法名（需用引号）
-	deep{Boolean}：是否深度监听（不能监听到对象属性值的变化，数组的值变化可以，若数组包含对象请参考前一句话）
-	immediate{Boolean}：是否在监听开始之后被立即调用
-	!!
-	注意：不应该使用·=>·来定义函数，因为会改变·this·的指向，方法中的·this·本就绑定为 Vue 实例
-	··
-	var vm = new Vue({
-		data: {
-			a: 1,
-			b: 2,
-			c: {
-				d: {
-					e: 5
-				}
-			}
-		},
-
-		methods: {
-			someMethod: function (val, oldVal) {
-				// do something
-			}
-		},
-
-		// 监听数据，当数据改变时触发
-		watch: {
-			// 为方法时有2个参数，第一个为当前的值，第二个为改变前的值
-			a: function (val, oldVal) {
-				console.log('new: %s, old: %s', val, oldVal)
-			},
-
-			// 方法名，注意需用引号
-			b: 'someMethod',
-
-			// 深度监听，如果没有 deep 是无法监听 c 的变化的
-			c: {
-				handler: function (val, oldVal) {
-					console.log(val, oldVal)
-				},
-				deep: true
-			},
-
-			// 该回调将会在监听开始之后被立即调用
-			a: {
-				handler: 'someMethod',
-				immediate: true
-			},
-
-			// 可以为一个数组，同时执行多个函数或方法
-			b: [
-				function (val, oldVal) { /* ... */ },
-				'someMethod'
-			],
-
-			// 为对象路径时需用引号
-			'c.d.e': function (val, oldVal) { /* ... */ }
-		}
-	})
-	··
-
-	##生命周期
-	每个 Vue 应用都是通过用 Vue 函数创建一个新的 Vue 实例开始的：
-	··
-	var vm = new Vue({
-	  // 选项
-	})
-	··
-	虽然没有完全遵循 MVVM 模型，但是 Vue 的设计也受到了它的启发。因此在文档中经常会使用 vm (ViewModel 的缩写) 这个变量名表示 Vue 实例。
-	每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。
-	注意：不要在选项属性或回调上使用箭头函数，比如·created: () => console.log(this.a)·或·vm.$watch('a', newValue => this.myMethod())·。因为箭头函数是和父级上下文·this·绑定在一起的。
-	假设有：
-	··
-	<div id="web">{{message}}</div>
-
-	var vm = new Vue({
-		el: '#web'
-		data: {
-			message: 'msg'
-		}
-	})
-	··
-	在控制台打印·vm.$el·为·<div id="web">msg</div>·
-	%%
-	生命周期,说明
-	,1
-	beforeCreate,实例刚被创建，在属性创建之前，即 el 和 data 未初始化
-	created,实例创建完成，进行了数据观测、属性和方法的运算、watch/event 事件回调，即有 data ，无 el
-	beforeMount,模板编译/挂载之前，即完成了 el 和 data 的初始化，但未渲染值，即·<div id="web">{{message}}</div>·
-	mounted,模板编译/挂载之后，渲染完毕，el 被新创建的 vm.$el 替换，即·<div id="web">msg</div>·
-	beforeUpdate,组件更新之前，即执行·vm.message = 'change'·后、虚拟 DOM 重新渲染前触发
-	updated,组件更新之后，即执行·vm.message = 'change'·后、虚拟 DOM 重新渲染后触发触发
-	activated,·<keep-alive>·组件激活时
-	deactivated,·<keep-alive>·组件移除时
-	beforeDestroy,实例销毁前，即执行·vm.$destroy()·后、真正销毁前触发，销毁后就不能再用 vue 控制挂载的元素了
-	destroyed,实例销毁后，即执行·vm.$destroy()·后、真正销毁后触发，销毁后就不能再用 vue 控制挂载的元素了
-	errorCaptured,当捕获一个来自子孙组件的错误时被调用
-	%%
-	!./img/js-library/vue01.png,600
-
-	#指令
-
-	##{{ }}
-	数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值：
-	··
-	<span>Message: {{msg}}</span>
-	··
-	Mustache 标签将会被替代为对应数据对象上 msg 属性的值。无论何时，绑定的数据对象上 msg 属性发生了改变，插值处的内容都会更新
-	对于所有的数据绑定都提供了完全的 JavaScript 表达式支持
-	··
-	{{ number + 1 }}
-
-	{{ ok ? 'YES' : 'NO' }}
-
-	{{ message.split('').reverse().join('') }}
-
-	{{ change(message) }}	// 在 methods 中定义了 change 方法
-
-	<div :id="'list-' + id"></div>
-	··
-	以下情况不会生效
-	··
-	{{ var a = 1 }}	// 这是语句，不是表达式
-
-	{{ if (ok) { return message } }}	// 流控制也不会生效，需使用三元表达式
-	··
-
-	##v-text
-	更新元素的值，即改变·textContent·，同·{{}}·
-	··
-	<span v-text="msg"></span>
-	// 等同于
-	<span>{{msg}}</span>
-	··
-
-	##v-html
-	更新元素的值，即改变·innerHTML·，插入的内容不会作为 Vue 模板进行编译
-	注意不要渲染未知的 html ，可能会导致 @[XSS 攻击|https://en.wikipedia.org/wiki/Cross-site_scripting]，比如渲染用户提交的内容
-	··
-	<div v-html="html"></div>
-	··
-
-	##v-show
-	若绑定的值为·true·不改变，为·false·则·style·设为·display: none;·
-	··
-	<h1 v-show="ok">Hello!</h1>
-	··
-
-	##v-if/else/else-if
-	^^v-if^^ 根据表达式的值的真假条件渲染元素。在切换时元素及它的数据绑定 / 组件被销毁并重建
-	··
-	<h1 v-if="ok">Yes</h1>
-	··
-	想同时切换多个元素可以使用·<template>·元素来包裹，·<template>·元素是不会渲染的
-	··
-	<template v-if="ok">
-	  <h1>Title</h1>
-	  <p>Paragraph 1</p>
-	  <p>Paragraph 2</p>
-	</template>
-	··
-	^^v-else^^ 元素必须紧跟在带·v-if·或者·v-else-if·的元素的后面，否则它将不会被识别
-	··
-	<div v-if="Math.random() > 0.5">Now you see me</div>
-	<div v-else>Now you don't</div>
-	··
-	^^v-else-if^^ 类似于·v-else·，也必须紧跟在带·v-if·或者·v-else-if·的元素之后
-	··
-	<div v-if="type === 'A'"> A </div>
-	<div v-else-if="type === 'B'"> B </div>
-	<div v-else-if="type === 'C'"> C </div>
-	<div v-else> Not A/B/C </div>
-	··
-	^^v-show VS v-if：^^·v-if·有更高的切换开销，而·v-show·有更高的初始渲染开销。所以频繁地切换用·v-show·较好，否则用·v-if·
-	###用 key 管理可复用的元素
-	Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。
-	··
-	<template v-if="loginType === 'username'">
-		<label>Username</label>
-		<input placeholder="Enter your username">
-	</template>
-	<template v-else>
-		<label>Email</label>
-		<input placeholder="Enter your email address">
-	</template>
-	··
-	在上面的代码中切换 loginType 将会保留已输入的内容。因为两个模板使用了相同的元素，<input> 仅仅是替换了它的 placeholder。
-	所以添加一个具有唯一值的·key·属性可以表明元素是独立的，无需复用，即每次切换都会清空输入的值
-	··
-	<template v-if="loginType === 'username'">
-		<label>Username</label>
-		<input placeholder="Enter your username" key="username-input">
-	</template>
-	<template v-else>
-		<label>Email</label>
-		<input placeholder="Enter your email address" key="email-input">
-	</template>
-	··
-
-	##v-for
-	根据一组数组的选项列表进行渲染，写法有：
-	!!
-	item in array：array 为源数据，item 代表源数据的每一项
-	item of array：同上，另一种写法
-	(item, index) in array：index 为当前项的索引
-	(value, key, index) in object：当循环对象时 item 作为键值，index 作为键名，第 3 个为当前项的索引
-		注意在遍历对象时，是按·Object.keys()·的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的
-	!!
-	··
-	<div v-for="item in array"></div>
-	<div v-for="item of array"></div>
-	<div v-for="(item, index) in array"></div>
-	<div v-for="(value, key, index) in object"></div>
-	··
-	###key
-	为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 key 属性。理想的 key 值是每项都有的且唯一的 id。说白了就是更高效，如果遍历输出的 DOM 内容比较简单或者就是要高性能不加也行
-	··
-	<div v-for="item in items" :key="item.id">{{item.name}}</div>
-	··
-	###组件的 v-for
-	当在组件中使用 v-for 时，key 现在是必须的。
-	循环的数据不会被自动传递到组件里，因为组件有自己独立的作用域，这更有利于组件的重复使用，所以需要用·props·：
-	··
-	<my-component v-for="(item, index) in items" :item="item" :index="index" :key="item.id" ></my-component>
-	··
-	###v-for with v-if
-	当它们处于同一节点，v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中。
-	··
-	<li v-for="todo in todos" v-if="!todo.isComplete">{{ todo }}</li>
-	··
-	如果是有条件地跳过循环的执行，那么可以将 v-if 置于外层元素 (或 <template>)上。如：
-	··
-	<ul v-if="todos.length">
-		<li v-for="todo in todos">{{ todo }}</li>
-	</ul>
-	<p v-else>No todos left!</p>
-	··
-	###数组更新检测
-	能改变原数组触发视图更新的方法有7个：·push()·、·pop()·、·shift()·、·unshift()·、·splice()·、·sort()·、·reverse()·
-	比如：·vm.arr.push({message: 'msg'})·
-	当用返回新数组的方法时，比如·slice()·、·filter()·等，可以用新数组替换旧数组
-	比如：·vm.arr = vm.arr.filter(item => item.message.match(/Foo/))·
-	重新替换数组并不会丢弃现有 DOM 重新渲染整个列表，Vue 仍会高效的重用，请放心食用
-	###js限制
-	由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
-	!!
-	利用索引直接设置一个项时，例如：vm.items[1] = 'x'
-	修改数组的长度时，例如：vm.items.length = 2
-	!!
-	第一类问题可以用·splice()·方法代替：·vm.items.splice(index, 1, newValue)·
-	也可以用·Vue.set·：·Vue.set(vm.items, index, newValue)·
-	或·vm.$set·：·vm.$set(vm.items, index, newValue)·
-	还有 Vue 不能检测对象属性的添加或删除：
-	··
-	var vm = new Vue({
-		data: {
-			userInfo: {
-				name: 'a'
-			}
-		}
-	})
-	vm.userInfo.age = 22 // 不是响应式的
-	··
-	也需要用·Vue.set·：·Vue.set(vm.userInfo, 'age', 22)·
-	或·vm.$set·：·vm.$set(vm.userInfo, 'age', 22)·
-	需要添加多个对象可以用·Object.assign()·方法，注意这样写是无效的：
-	··
-	Object.assign(vm.userInfo, {
-		age: 27,
-		favoriteColor: 'Vue Green'
-	})
-	··
-	这是浅拷贝，所以应该这样：
-	··
-	vm.userInfo = Object.assign({}, vm.userInfo, {
-		age: 27,
-		favoriteColor: 'Vue Green'
-	})
-	··
-	即给·vm.userInfo·赋值一个新对象，或者深拷贝赋值：
-	··
-	var obj = JSON.parse(JSON.stringify(vm.userInfo))
-	obj.age = 27,
-	obj.favoriteColor = 'Vue Green'
-	vm.userInfo = obj
-	··
-	###显示过滤/排序结果
-	有时想要显示一个数组的过滤或排序副本可以使用计算属性：
-	··
-	<li v-for="n in evenNumbers">{{ n }}</li>
-
-	data: {
-		numbers: [ 1, 2, 3, 4, 5 ]
-	},
-	computed: {
-		evenNumbers: vm => vm.numbers.filter(number => number % 2 === 0)
-	}
-	··
-	在计算属性不适用的情况下 (例如，在嵌套 v-for 循环中) 可以使用 method 方法：
-	··
-	<li v-for="n in even(numbers)">{{ n }}</li>
-	methods: {
-		even: arr => arr.filter(number => number % 2 === 0)
-	}
-	··
-	###一段取值范围的 v-for
-	··
-	<span v-for="n in 10">{{ n }} </span>	// n 为 1-10
-	··
-
-	##v-on
-	绑定事件监听器，可缩写为·@·，用在普通元素上时，只能监听原生 DOM 事件。用在自定义元素组件上时，也可以监听子组件触发的自定义事件。支持的修饰符有：
-	!!
-	.stop：阻止冒泡，调用 event.stopPropagation()
-	.prevent：阻止默认行为，调用 event.preventDefault()
-	.capture：添加事件侦听器时使用 capture 捕获模式
-	.self：事件是从侦听器绑定的元素本身触发时才触发回调
-	.keyCode/keyAlias：事件是从特定键触发时才触发回调，比如13代表enter键，可以查看@[keyCode对照表|http://www.t086.com/article/4315]，这通常是比较难记的，所以最常用的按键提供了别名:
-		.enter：回车
-		.tab：制表
-		.delete：删除和退格
-		.esc：退出
-		.space：空格
-		.up：上
-		.down：下
-		.left：左
-		.right：右
-		可以通过全局·config.keyCodes·对象自定义按键修饰符别名，比如·Vue.config.keyCodes.f1 = 112·
-		也可以使用任意有效按键名转换为短横线隔开的形式来作为修饰符，比如·@keyup.page-down="onPageDown"·
-
-		系统修饰键：在按下相应按键时才触发相应事件，比如·@click.ctrl·为·Ctrl + Click·，·@keyup.alt.67·为·Alt + C·
-			注意修饰键在于比如·Ctrl·键需要按住再按其他键才会触发，单按·Ctrl·是不会触发的，想要触发就换成keyCode的17
-			.ctrl：控制
-			.alt：alt
-			.shift：shift
-			.meta：windows对应⊞，mac对应⌘
-		特殊修饰符·.exact·：控制由精确的系统修饰符组合触发的事件，比如:
-			@click.ctrl：即使 Alt 或 Shift 被一同按下时也会触发
-			@click.ctrl.exact：有且只有 Ctrl 被按下的时候才触发
-			@click.exact：没有任何系统修饰符被按下的时候才触发
-	.native：监听组件根元素的原生事件
-	.once：该事件只触发一次
-	.left：点击鼠标左键时触发
-	.right：点击鼠标右键时触发
-	.middle：点击鼠标中键时触发
-	.passive：以 { passive: true } 模式添加侦听器，此模式会忽略 event.preventDefault() 行为
-	!!
-	注意使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用·v-on:click.prevent.self·会阻止所有的点击，而·v-on:click.self.prevent·只会阻止对元素自身的点击。
-	··
-	<!-- 方法处理器 -->
-	<button v-on:click="doThis"></button>
-
-	<!-- 内联语句 -->
-	<button v-on:click="doThat('hello', $event)"></button>
-
-	<!-- 缩写 -->
-	<button @click="doThis"></button>
-
-	<!-- 停止冒泡 -->
-	<button @click.stop="doThis"></button>
-
-	<!-- 阻止默认行为 -->
-	<button @click.prevent="doThis"></button>
-
-	<!-- 阻止默认行为，没有表达式 -->
-	<form @submit.prevent></form>
-
-	<!--  串联修饰符 -->
-	<button @click.stop.prevent="doThis"></button>
-
-	<!-- 键修饰符，键别名 -->
-	<input @keyup.enter="onEnter">
-
-	<!-- 键修饰符，键代码 -->
-	<input @keyup.13="onEnter">
-
-	<!-- 点击回调只会触发一次 -->
-	<button v-on:click.once="doThis"></button>
-
-	<!-- 对象语法 (2.4.0+) -->
-	<button v-on="{ mousedown: doThis, mouseup: doThat }"></button>
-
-	<!-- 在子组件上监听自定义事件 (当子组件触发“my-event”时将调用事件处理器) -->
-	<my-component @my-event="handleThis"></my-component>
-
-	<!-- 内联语句 -->
-	<my-component @my-event="handleThis(123, $event)"></my-component>
-
-	<!-- 组件中的原生事件 -->
-	<my-component @click.native="onClick"></my-component>
-	··
-	###为什么在 HTML 中监听事件?
-	Vue 的事件处理都严格绑定在当前视图的 ViewModel 上，它不会导致任何维护上的困难。
-	扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。
-	纯粹的逻辑，和 DOM 完全解耦，更易于测试。
-	当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何清理它们。
-
-	##v-bind
-	动态地绑定一个或多个特性，或一个组件 prop 到表达式，可以缩写为·:·
-	在绑定 class 和 style 时，如果是包含键值对的对象，字符串的键可以不用引号，但使用了连字符必须要用引号。·v-bind:class·指令也可以与普通的 class 属性共存。style 的键可以使用驼峰式，编译时会自动转换。
-	当·v-bind:style·使用需要添加浏览器引擎前缀的 CSS 属性时，如 transform，Vue.js 会自动侦测并添加相应的前缀。
-	style 还可以绑定多重值，通常用于前缀中，这样只会渲染数组中最后一个被浏览器支持的值。
-	··
-	<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
-	··
-	在绑定 prop 时，prop 必须在子组件中声明。
-	没有参数时，可以绑定到一个包含键值对的对象。注意此时 class 和 style 绑定不支持数组和对象。
-	支持的修饰符有：
-	!!
-	.prop：被用于绑定 DOM 属性 (property)
-	.camel：将用短横线连接的特性名转换为驼峰式
-	.sync：语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器
-	!!
-	··
-	<!-- 绑定一个属性 -->
-	<img v-bind:src="imageSrc">
-
-	<!-- 缩写 -->
-	<img :src="imageSrc">
-
-	<!-- 内联字符串拼接 -->
-	<img :src="'/path/to/images/' + fileName">
-
-	<!-- class绑定 -->
-	<div :class="{ red: isRed }"></div>	// red 是否存在取决于 isRed 的真假
-	<div :class="{ red: isRed }" class="blue"></div>	// 共存
-	<div :class="[classA, classB]"></div>
-	<div :class="[classA, { classB: isB, classC: isC }]">
-
-	<!-- style绑定 -->
-	<div :style="{ fontSize: size + 'px' }"></div>
-	<div :style="[styleObjectA, styleObjectB]"></div>
-
-	<!-- 绑定一个有属性的对象 -->
-	<div v-bind="{ id: someProp, 'other-attr': otherProp }"></div>
-
-	<!-- 通过 prop 修饰符绑定 DOM 属性 -->
-	<div v-bind:text-content.prop="text"></div>
-
-	<!-- prop 绑定。“prop”必须在 my-component 中声明。-->
-	<my-component :prop="someThing"></my-component>
-
-	<!-- 通过 $props 将父组件的 props 一起传给子组件 -->
-	<child-component v-bind="$props"></child-component>
-
-	<!-- XLink -->
-	<svg><a :xlink:special="foo"></a></svg>
-
-	<!-- .camel 可将属性名称驼峰化，在使用字符串模板或通过 vue-loader/vueify 编译时，无需使用 .camel -->
-	<svg :view-box.camel="viewBox"></svg>
-	··
-
-	##v-model
-	在表单控件或者组件上创建双向绑定，监听输入和输出。适用的组件有：·<input> <select> <textarea> components·
-	在文本框中：
-	··
-	<input type="text" v-model="searchText"/>
-	// 等同于
-	<input :value="searchText" @input="searchText=$event.target.value"/>
-	··
-	在多选框中：
-	··
-	<input type="text" v-model="searchText"/>
-	// 等同于
-	<input type="checkbox" :checked="checked" @change="$event.target.checked"/>
-	··
-	其它元素依次类推
-	支持的修饰符有：
-	!!
-	.lazy：取代 input 改为 change 事件
-	.number：输入字符串转为数字类型，因为即使·type="number"·也是返回字符串
-	.trim：输入首尾空格过滤
-	!!
-	注意·v-model·会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源。应在 data 选项中声明初始值。
-	·v-model·不会更新需要拼写语言的过程，如果需要就用·input·事件
-	··
-	<!-- 多个复选框，绑定到同一个数组 -->
-	<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-	<label for="jack">Jack</label>
-	<input type="checkbox" id="john" value="John" v-model="checkedNames">
-	<label for="john">John</label>
-	<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-	<label for="mike">Mike</label>
-	<br>
-	<span>Checked names: {{ checkedNames }}</span>
-	// 只要该复选框被选中，它的value就会出现在 checkedNames 中，否则会自动删除
-	data: {
-    checkedNames: []
-	}
-
-	<!-- 单选 -->
-	<input type="radio" id="one" value="One" v-model="picked">
-	<label for="one">One</label>
-	<br>
-	<input type="radio" id="two" value="Two" v-model="picked">
-	<label for="two">Two</label>
-	<br>
-	<span>Picked: {{ picked }}</span>
-	// picked 为选择的值
-	data: {
-    picked: ''
-	}
-
-	<!-- 下拉框单选 -->
-	<select v-model="selected">
-		<option disabled value="">请选择</option>
-		<option>A</option>
-		<option>B</option>
-		<option>C</option>
-	</select>
-	<span>Selected: {{ selected }}</span>
-	// selected 为选择的 option 值，如果 option 有 value 就取 value 的值，没有就取选项文本的值
-	data: {
-    selected: ''
-	}
-	// 如果 v-model 的初始值未能匹配任何选项，在 iOS 中会无法选择第一个选项，所以推荐提供一个值为空的禁用选项
-
-	<!-- 下拉框多选 -->
-	<select v-model="selected" multiple>
-		<option>A</option>
-		<option>B</option>
-		<option>C</option>
-	</select>
-	<br>
-	<span>Selected: {{ selected }}</span>
-
-	data: {
-    selected: []
-	}
-	··
-	###复选框
-	··
-	<input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
-
-	vm.toggle === 'yes'	// 当选中时
-	vm.toggle === 'no'	// 当没有选中时
-	··
-	这里的·true-value·和·false-value·特性并不会影响输入控件的 value 特性，因为浏览器在提交表单时并不会包含未被选中的复选框。如果要确保表单中这两个值中的一个能够被提交，(比如“yes”或“no”)，请换用单选按钮。
-	###单选框
-	··
-	<input type="radio" v-model="pick" v-bind:value="a">
-
-	vm.pick === vm.a	// 当选中时
-	··
-
-	##v-pre
-	跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。
-	··
-	<span v-pre>{{这个元素将保持现在的样子，不会被编译}}</span>
-	··
-
-	##v-cloak
-	和 CSS 规则如·[v-cloak] { display: none }·一起用，可以隐藏未编译的 Mustache 标签直到实例准备完毕。
-	··
-	[v-cloak] {
-		display: none;
-	}
-	// 这个元素在 vue 实例准备好后才会显示
-	<div v-cloak>{{ message }}</div>
-	··
-
-	##v-once
-	只渲染元素或组件一次。随后的重新渲染将被视为静态内容并跳过。这可以用于优化更新性能。
-	··
-	<span v-once>This will never change: {{msg}}</span>
-	··
-
-	#过渡动画
-	##概述
-	Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。
-	包括以下工具：
-	!!
-	在 CSS 过渡和动画中自动应用 class
-	可以配合使用第三方 CSS 动画库，如 Animate.css
-	在过渡钩子函数中使用 JavaScript 直接操作 DOM
-	可以配合使用第三方 JavaScript 动画库，如 Velocity.js
-	!!
-	在下列情形中可以使用·<transition>·元素定义过渡动画，注意只能包含一个根元素
-	!!
-	条件渲染：使用 v-if
-	条件展示：使用 v-show
-	动态组件
-	组件根节点
-	!!
-	当插入或删除包含在 transition 组件中的元素时，Vue 将会做以下处理：
-	!!
-	自动嗅探目标元素是否应用了 CSS 过渡或动画，如果是，在恰当的时机添加/删除 CSS 类名。
-	如果过渡组件提供了 JavaScript 钩子函数，这些钩子函数将在恰当的时机被调用。
-	如果没有找到 JavaScript 钩子并且也没有检测到 CSS 过渡/动画，DOM 操作 (插入/删除) 在下一帧中立即执行。(注意此指浏览器逐帧动画机制，和 Vue 的 nextTick 概念不同)
-	!!
-	###同时使用过渡动画
-	在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 animation 很快的被触发并完成了，而 transition 效果还没结束。在这种情况中，你就需要使用 type 特性并设置 animation 或 transition 来明确声明你需要 Vue 监听的类型。
-	###显性的过度动画持续时间
-	当嵌套的内部元素比根元素有延迟的或更长的过渡效果。可以使用 duration 属性定制一个显性的过渡持续时间 (以毫秒计)：
-	··
-	<transition :duration="1000">...</transition>
-	<transition :duration="{ enter: 500, leave: 800 }">...</transition>	// 定制进入和移出的持续时间
-	··
-
-	##类名
-	在进入/离开的过渡中，会有 6 个 class 切换：
-	!!
-	v-enter：定义进入过渡的开始状态。在元素被插入之前生效，被插入之后的下一帧移除。
-	v-enter-active：定义进入过渡生效时的状态。在过渡/动画完成之后移除，用来定义进入过渡的过程时间，延迟和曲线函数。
-	v-enter-to：定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。
-	v-leave：定义离开过渡的开始状态。下一帧被移除。
-	v-leave-active：定义离开过渡生效时的状态。在过渡/动画完成之后移除。用来定义离开过渡的过程时间，延迟和曲线函数。
-	v-leave-to：定义离开过渡的结束状态。在过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。
-	!!
-	!./img/js-library/vue02.png,600
-	这些是默认的类名，即以·v·开头，可以给·<transition>·自定义一个 name 属性以更换开头，比如·<transition name="fade">·代表·v-enter·就会被替换为·fade-enter·
-	比如 v-if 的过渡
-	··
-	<button v-on:click="show = !show"> Toggle </button>
-	<transition name="fade">
-		<p v-if="show">hello</p>
-	</transition>
-
-	.fade-enter-active, .fade-leave-active {
-		transition: opacity .5s;
-	}
-	.fade-enter, .fade-leave-to {
-		opacity: 0;
-	}
-	··
-	v-if 的动画，一般只定义 active，在 keyframes 中定义起始和结束的运动状态
-	··
-	<button @click="show = !show">Toggle show</button>
-  <transition name="bounce">
-		<p v-if="show">hello</p>
-	</transition>
-
-	.bounce-enter-active {
-		animation: bounce-in .5s;
-	}
-	.bounce-leave-active {
-		animation: bounce-in .5s reverse;
-	}
-	@keyframes bounce-in {
-		0% {
-			transform: scale(0);
-		}
-		50% {
-			transform: scale(1.5);
-		}
-		100% {
-			transform: scale(1);
-		}
-	}
-	··
-	###自定义类名
-	通常通过自定义类名可以结合第三方 CSS 动画库使用，只需定义对应的属性·enter-class·、·enter-active-class·、·enter-to-class·、·leave-class·、·leave-active-class·、·leave-to-class·
-	··
-	<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
-
-	<div id="example-3">
-		<button @click="show = !show">
-			Toggle render
-		</button>
-		<transition enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
-			<p v-if="show">hello</p>
-		</transition>
-	</div>
-	··
-
-	##钩子方法
-	可以在属性中声明 JavaScript 钩子，在 methods 中定义对应的方法即可。共有8个：
-	··
-	<transition
-		v-on:before-enter="beforeEnter"
-		v-on:enter="enter"
-		v-on:after-enter="afterEnter"
-		v-on:enter-cancelled="enterCancelled"
-
-		v-on:before-leave="beforeLeave"
-		v-on:leave="leave"
-		v-on:after-leave="afterLeave"
-		v-on:leave-cancelled="leaveCancelled"
-	>
-		<!-- ... -->
-	</transition>
-
-	// 在 enter 和 leave 中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。
-	methods: {
-		beforeEnter: function (el) {
-			// ...
-		},
-
-		enter: function (el, done) {
-			// ...
-			done()	// 此回调函数是可选项的设置，与 CSS 结合时使用
-		},
-		afterEnter: function (el) {
-			// ...
-		},
-		enterCancelled: function (el) {
-			// ...
-		},
-
-		beforeLeave: function (el) {
-			// ...
-		},
-		leave: function (el, done) {
-			// ...
-			done()	// 此回调函数是可选项的设置，与 CSS 结合时使用
-		},
-		afterLeave: function (el) {
-			// ...
-		},
-		// leaveCancelled 只用于 v-show 中
-		leaveCancelled: function (el) {
-			// ...
-		}
-	}
-	··
-	推荐对于仅使用 JavaScript 过渡的元素添加·v-bind:css="false"·，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。
-	一个使用 Velocity.js 的简单例子：
-	··
-	<!-- Velocity 和 jQuery.animate 的工作方式类似，也是用来实现 JavaScript 动画的一个很棒的选择 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
-
-	<div id="example-4">
-		<button @click="show = !show"> Toggle </button>
-		<transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
-			<p v-if="show"> Demo </p>
-		</transition>
-	</div>
-
-	methods: {
-		beforeEnter: function (el) {
-			el.style.opacity = 0
-			el.style.transformOrigin = 'left'
-		},
-		enter: function (el, done) {
-			Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
-			Velocity(el, { fontSize: '1em' }, { complete: done })
-		},
-		leave: function (el, done) {
-			Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
-			Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
-			Velocity(el, {
-				rotateZ: '45deg',
-				translateY: '30px',
-				translateX: '30px',
-				opacity: 0
-			}, { complete: done })
-		}
-	}
-	··
-
-	##初始渲染过渡
-	可以通过 appear 特性设置节点在初始渲染的过渡，比如·<transition appear name="fade"></transition>·
-	也可以自定义 CSS 类名：
-	··
-	<transition
-		appear
-		appear-class="custom-appear-class"
-		appear-to-class="custom-appear-to-class"
-		appear-active-class="custom-appear-active-class"
-	>
-		<!-- ... -->
-	</transition>
-	··
-	自定义 JavaScript 钩子：
-	··
-	<transition
-		appear
-		v-on:before-appear="customBeforeAppearHook"
-		v-on:appear="customAppearHook"
-		v-on:after-appear="customAfterAppearHook"
-		v-on:appear-cancelled="customAppearCancelledHook"
-	>
-		<!-- ... -->
-	</transition>
-	··
-
-	##多个元素过渡
-	使用·v-if/v-else-if/v-else·可以用来定义多个元素过渡。最常见的多标签过渡是一个列表和描述这个列表为空消息的元素：
-	··
-	<transition>
-		<table v-if="items.length > 0">
-			<!-- ... -->
-		</table>
-		<p v-else>Sorry, no items found.</p>
-	</transition>
-	··
-	注意如果是相同的元素之间切换是没有过渡的：
-	··
-	<transition name="fade">
-		<button @click="show=!show" v-if="show">on</button>
-		<button @click="show=!show" v-else>off</button>
-	</transition>
-	··
-	因为 Vue 会高效渲染而复用相同的组件，即上面的·<button>·没有消失过，所以这时需要加上·key·来保持独立性：
-	··
-	<transition name="fade">
-		<button @click="show=!show" v-if="show" key="on">on</button>
-		<button @click="show=!show" v-else key="off">off</button>
-	</transition>
-	··
-	还可以给同一个元素的·key·设置不同的状态来代替·v-if·和·v-else·：
-	··
-	<button @click="show=!show" :key="show">{{show ? 'on' : 'off'}}</button>
-	··
-	使用多个 v-if 的多个元素的过渡可以重写为绑定了动态属性的单个元素过渡。例如：
-	··
-	<transition name="fade">
-		<button @click="show='b'" v-if="show==='a'" key="a">a</button>
-		<button @click="show='c'" v-else-if="show==='b'" key="b">b</button>
-		<button @click="show='a'" v-else key="c">c</button>
-	</transition>
-	··
-	所以也可以重写为：
-	··
-	<transition>
-		<button @click="change" :key="arr[stateIndex]">{{arr[showIndex]}}</button>
-	</transition>
-
-	data: {
-		stateIndex: 2,
-		arr: ['a', 'b', 'c']
-	},
-	computed: {
-		showIndex: vm => vm.stateIndex + 1 === 3 ? 0 : vm.stateIndex + 1
-	},
-	methods: {
-		change() {
-			this.stateIndex = this.stateIndex===2 ? 0 : this.stateIndex + 1
-		}
-	}
-	··
-	同时生效的进入和离开的过渡不能满足所有要求，所以 Vue 提供了过渡模式：
-	!!
-	in-out：新元素先进行过渡，完成之后当前元素过渡离开。
-	out-in：当前元素先进行过渡，完成之后新元素过渡进入。
-	!!
-
-	##列表过渡
-	使用·<transition-group>·组件可以实现列表过渡，不同于·<transition>·，它会以一个真实元素呈现，即默认渲染为一个·<span>·。也可以通过·tag·属性更换为其他元素。注意这个组件不能使用过渡模式·in-out·和·out-in·了，内部元素总是需要提供唯一的·key·属性值。
-	··
-	.list {
-		display: flex;
-	}
-	.list-item {
-		margin-right: 10px;
-	}
-	.fade-enter, .fade-leave-to {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	.fade-enter-active, .fade-leave-active {
-		transition: 0.5s linear;
-	}
-
-	<button @click="add">Add</button>
-	<button @click="remove">Remove</button>
-	<transition-group name="fade" tag="p">
-		<span v-for="item in items" :key="item" class="list-item">{{item}}</span>
-	</transition-group>
-
-	data: {
-		arr: [1, 2, 3, 4, 5],
-		nextNum: 6
-	},
-	methods: {
-		randomIndex() {
-			return Math.floor(Math.random() * this.arr.length)
-		},
-		add() {
-			this.arr.splice(this.randomIndex(), 0, this.nextNum++)
-		},
-		remove() {
-			this.arr.splice(this.randomIndex(), 1)
-		}
-	}
-	··
-	这个例子有个小问题，当添加和移除元素的时候，周围的元素会瞬间移动到他们的新布局的位置，而不是平滑的过渡，下面会解决这个问题。
-
-	##列表排序过渡
-	定义·v-move·的样式会在元素的改变定位的过程中应用过渡，像之前的类名一样，可以通过·name·属性来自定义前缀。
-	··
-	.flip-list-move {
-		transition: transform 1s;
-	}
-
-	<button @click="shuffle">Shuffle</button>
-	<transition-group name="flip-list" tag="ul">
-		<li v-for="item in items" :key="item">{{ item }}</li>
-	</transition-group>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
-
-	data: {
-		items: [1,2,3,4,5,6,7,8,9]
-	},
-	methods: {
-		shuffle: function () {
-			this.items = _.shuffle(this.items)
-		}
-	}
-	··
-	内部的实现是 Vue 使用了一个叫 @[FLIP|https://aerotwist.com/blog/flip-your-animations/] 简单的动画队列，使用 transforms 将元素从之前的位置平滑过渡新的位置。
-	@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
-	需要注意的是使用 FLIP 过渡的元素不能设置为·display: inline·。作为替代方案，可以设置为·display: inline-block·或者放置于 flex 中
-	所以上面的加减数字的 css 改成
-	··
-	.list-item {
-		display: inline-block;
-		transition: 0.5s;
-		margin-right: 10px;
-	}
-	.fade-enter, .fade-leave-to {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	.fade-leave-active {
-		position: absolute;
-	}
-	··
-	即可实现周围元素的过渡
-	FLIP 动画不仅可以实现单列过渡，@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
-
-	###列表的交错过渡
-
-	#组件
-	##全局注册
-	·Vue.component(id, [definition])·：注册或获取全局组件，给定的 id 作为组件的名称
-	··
-	// 注册组件，传入一个扩展过的构造器
-	Vue.component('my-component', Vue.extend({ /* ... */ }))
-
-	// 注册组件，传入一个选项对象 (自动调用 Vue.extend)
-	Vue.component('my-component', { /* ... */ })
-
-	// 获取注册的组件 (始终返回构造器)
-	var MyComponent = Vue.component('my-component')
-	··
-	###命名方式
-	!!
-	kebab-case 短横线隔开：Vue.component('my-component-name', { /* ... */ })，在 html 中使用·<my-component-name>·
-	PascalCase 驼峰式：Vue.component('MyComponentName', { /* ... */ })，引用这个元素时都可以使用·<my-component-name>·或·<MyComponentName>·，但在 html 中只能使用·<my-component-name>·
-	!!
-
-	##局部注册
-	如果你使用一个像 webpack 这样的构建系统，全局注册所有的组件会被包含在最终的构建结果中。这造成了用户下载的 JavaScript 的无谓的增加。在这些情况下可以通过一个普通的 JavaScript 对象来定义组件：
-	··
-	var ComponentA = { /* ... */ }
-	var ComponentB = { /* ... */ }
-	var ComponentC = { /* ... */ }
-
-	// 然后在 new Vue 中的 components 选项定义组件
-	// 属性名就是 Vue.component 的 id，属性值就是选项
-	new Vue({
-		el: '#app'
-		components: {
-			'component-a': ComponentA,
-			'component-b': ComponentB,
-			'component-c': ComponentC
-		}
-	})
-	··
-	^^注意^^局部注册的组件在其子组件中不可用
-	可以在其组件的子属性中再次声明，例如 ComponentA 在 ComponentB 中使用：
-	··
-	var ComponentA = { /* ... */ }
-	var ComponentB = {
-		components: {
-			'component-a': ComponentA
-		}
-	}
-	··
-	也可以在模块系统中局部注册，例如在 ComponentB.js 或 ComponentB.vue 文件中：
-	··
-	import ComponentA from './ComponentA'
-	import ComponentC from './ComponentC'
-
-	export default {
-		components: {
-			ComponentA,
-			ComponentC
-		},
-	}
-	··
-	现在 ComponentA 和 ComponentC 都可以在 ComponentB 的模板中使用了
-
-	##注册组件
-	··
-	// 定义一个名为 button-counter 的新组件：
-	Vue.component('button-counter', {
-		template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
-		data: function () {
-	    	return {
-	    		count: 0
-	    	}
-		}
-	})
-
-	// 直接在 Vue 中使用，可以多次复用
-	<button-counter></button-counter>
-	<button-counter></button-counter>
-	··
-	参数和·new Vue·时基本相同，不同的是·el·选项换成·template·模板，组件模板同样只能有一个根元素，且·data·是个函数
-	^^一个组件的 data 选项必须是一个函数^^，多次复用时数据才是独立的，如果只是一个对象，那么多个同样的组件之间数据是共用的
-	###动态切换组件
-	通过 Vue 的·<component>·元素和·is·属性可以切换组件，相当于·if·：
-	··
-	<div id="dynamic-component-demo" class="demo">
-		<button
-			v-for="tab in tabs"
-			:key="tab"
-			:class="{active: currentTab === tab}"
-			@click="currentTab = tab"
-		>{{ tab }}</button>
-		<component :is="currentTabComponent" class="tab" ></component>
-	</div>
-
-	// js
-	Vue.component('tab-home', {
-		template: '<div>Home component</div>'
-	})
-	Vue.component('tab-posts', {
-		template: '<div>Posts component</div>'
-	})
-	Vue.component('tab-archive', {
-		template: '<div>Archive component</div>'
-	})
-
-	new Vue({
-		el: '#dynamic-component-demo',
-		data: {
-			currentTab: 'Home',
-			tabs: ['Home', 'Posts', 'Archive']
-		},
-		computed: {
-			currentTabComponent: function () {
-				return 'tab-' + this.currentTab.toLowerCase()
-			}
-		}
-	})
-	··
-	###解析 DOM 模板时的注意事项
-	有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。比如：
-	··
-	<table>
-		<blog-post-row></blog-post-row>
-	</table>
-	··
-	·<blog-post-row>·会被作为无效的内容提升到外部，即等同于：
-	··
-	<blog-post-row></blog-post-row>
-	<table>
-	</table>
-	··
-	此时需要使用·is·属性来代替才会正常渲染：
-	··
-	<table>
-		<tr is="blog-post-row"></tr>
-	</table>
-	··
-	需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：
-	!!
-	字符串 (例如·template: '...'·)
-	单文件组件 (·.vue·)
-	·<script type="text/x-template">·
-	!!
-
-	##props
-	当要给组件传值的时候需要·props {Array/Object}·，自定义任意属性名即可
-	··
-	Vue.component('blog-post', {
-		props: ['title'],
-		template: '<h3>{{ title }}</h3>'
-	})
-
-	// 定义的 title 属性即传给组件的值
-	<blog-post title="My journey with Vue"></blog-post>
-	<blog-post title="Blogging with Vue"></blog-post>
-
-	// 和 data 使用
-	<blog-post v-for="post in posts" :key="post.id" :title="post.title"></blog-post>
-	··
-	^^注意^^ html 中是不区分大小写的，所以·postTitle·需改成·post-title·，当然在·template·中使用时没有这个限制，即：
-	··
-	Vue.component('blog-post', {
-		props: ['postTitle'],
-		template: '<h3>{{ postTitle }}</h3>'
-	})
-
-	// html 中使用
-	<blog-post post-title="My journey with Vue"></blog-post>
-	··
-	###类型
-	一般以字符串数组的方式列出 prop：
-	··
-	props: ['title', 'likes', 'isPublished', 'commentIds', 'author']
-	··
-	也可以用对象的形式指定值类型，key 作为 prop 的名称，value 作为类型，当未按照指定类型传值时 Vue 会在控制台发出警告：
-	可选·String/Number/Boolean/Array/Object/Date/Function/Symbol/null·
-	··
-	props: {
-		title: String,	// 字符串
-		likes: Number,	// 数字
-		isPublished: Boolean,	// 布尔值
-		commentIds: null,	// 任意类型
-		author: [Array, Object], // 用数组表示多类型
-		content: {	// 用对象指定属性
-			type: String,	// 类型为字符串
-			required: true,	// 是否必填
-			default: '空'	// 默认值
-		},
-		content2: {
-			type: [Object, Array],	// 类型为对象或字符串时
-			default: function () {	// 默认值必须通过函数返回，否则会造成共用
-				return { message: 'hello' }
-			}
-		},
-		content3: {
-			validator: function (value) {	// 自定义验证函数
-				// 这个值必须匹配下列字符串中的一个，否则 Vue 将会产生一个控制台的警告（开发环境）
-				return ['success', 'warning', 'danger'].indexOf(value) !== -1
-			}
-		}
-	}
-	··
-	而使用的指定类型的方式就需要注意^^没有通过·v-bind·绑定的属性都是字符串类型^^，所以记得加上·v-bind·，比如：
-	··
-	Vue.component('blog-post', {
-		props: {
-			likes: Number,
-			isPublished: Boolean
-		},
-		template: '<span v-if="isPublished">{{ likes }}</span>'
-	})
-
-	// html
-	<blog-post likes="36" isPublished="false"></blog-post> // 报错，实际都是 String 类型
-	<blog-post :likes="36" :isPublished="false"></blog-post>	// 用 v-bind 告诉 Vue 这是个表达式而非字符串
-	··
-	###传入一个对象的所有属性
-	直接使用不带参数的·v-bind·可传入一个对象（注意此时不能使用简写·:·）：
-	··
-	data: {
-		book: {
-			id: 1,
-			name: 'vue',
-			title: 'My Journey with Vue'
-		}
-	}
-
-	<blog-post v-bind="book"></blog-post>
-	// 等同于
-	<blog-post :id="book.id" :name="book.name" :title="book.title"></blog-post>
-	··
-	###替换/合并已有的特性
-	比如：
-	··
-	Vue.component('blog-post', {
-		template: '<span class="demo" message="hhh">demo</span>'
-	})
-
-	// html
-	<blog-post class="active" message="hello"></blog-post>
-
-	// 在浏览器中，class 和 style 会合并，其他属性会覆盖组件的
-	<blog-post class="demo active" message="hello"></blog-post>
-	··
-	###禁用继承
-	如果不希望组件的根元素继承特性，可以在组件的选项中设置·inheritAttrs: false·，注意这个选项对 class 和 style 绑定不影响，	比如：
-	··
-	Vue.component('blog-post', {
-		template: '<span class="demo" weather="cloudy">demo</span>'
-	})
-
-	// html
-	<blog-post class="active" weather="sunny"></blog-post>
-
-	// 浏览器中显示覆盖了组件的 weather 属性
-	<span class="demo active" weather="sunny">demo</span>
-	··
-	若加上了·inheritAttrs: false·：
-	··
-	Vue.component('blog-post', {
-		inheritAttrs: false,
-		template: '<span class="demo" weather="cloudy">demo</span>'
-	})
-
-	// html
-	<blog-post class="active" weather="sunny"></blog-post>
-
-	// 浏览器中显示未覆盖
-	<span class="demo active" weather="cloudy">demo</span>
-	··
-	默认不会显示未在组件上声明的元素，通过实例属性·$attrs·则可以让继承特性生效，比如：
-	··
-	Vue.component('blog-post', {
-		template: '<span class="demo">demo</span>',
-		created() {
-			console.log(this.$attrs)
-		}
-	})
-
-	// html
-	<blog-post class="active" message="hello"></blog-post>
-
-	// 浏览器中未显示 message 属性，可以在看到控制台打印 {message: 'hello'}，说明接收到了属性但未使用
-	<span class="demo active">demo</span>
-	··
-	需要在元素上显示时可以加上·v-bind="$attrs"·：
-	··
-	Vue.component('blog-post', {
-		template: '<span class="demo" v-bind="$attrs">demo</span>',
-	})
-
-	// html
-	<blog-post class="active" message="hello"></blog-post>
-
-	// 浏览器中显示了 message 属性
-	<span class="demo active" message="hello">demo</span>
-	··
-
-	##$emit()
-	当组件向外部传值时需通过·$emit()·自定义事件名，相当于模板内将点击事件换个名字：
-	··
-	Vue.component('blog-post', {
-		template: \`<button v-on:click="$emit('welcome')">Click me to be welcomed</button>\`
-	})
-
-	// 使用
-	<blog-post @welcome="hi"></blog-post>
-
-	methods: {
-		hi() {
-			alert('Hi!')
-		}
-	}
-	··
-	第二个之后的参数代表传递的参数：
-	··
-	Vue.component('blog-post', {
-		template: \`<button v-on:click="$emit('welcome', 20, 30)">Click me to be welcomed</button>\`
-	})
-
-	// 通过 $event 访问，代表传递的第一个参数 20
-	<div :style="{'font-size': fz + 'px'}">welcome</div>
-	<blog-post @welcome="fz = $event"></blog-post>
-	data: {
-		fz: 16
-	}
-
-	// 如果是一个方法，参数与传入的值一一对应
-	<div :style="{'font-size': fz + 'px'}">welcome</div>
-	<blog-post @welcome="test"></blog-post>
-	data: {
-		fz: 16
-	},
-	methods: {
-		test(res1, res2) {
-			this.fz = res1	// 20
-			console.log(res2)	// 30
-		}
-	}
-	··
-	也可以在 methods 里面通过·this.$emit·调用：
-	··
-	Vue.component('magic-eight-ball', {
-		template: '<button v-on:click="giveAdvice">Click me for advice</button>',
-		data: function () {
-			return {
-				possibleAdvice: ['Yes', 'No', 'Maybe']
-			}
-		},
-		methods: {
-			giveAdvice: function () {
-				var randomAdviceIndex = Math.floor(Math.random() * this.possibleAdvice.length)
-				this.$emit('give-advice', this.possibleAdvice[randomAdviceIndex])
-			}
-		}
-	})
-
-	// 使用
-	<magic-eight-ball v-on:give-advice="showAdvice"></magic-eight-ball>
-	methods: {
-		showAdvice: function (advice) {
-			alert(advice)
-		}
-	}
-	··
-	^^注意大小写^^，如果定义·this.$emit('myEvent')·，在 html 中使用时需改成小写：·@myevent=""·
-	###在组件上使用 v-model
-	因为·v-model·的原理是：
-	··
-	<input :value="searchText" @input="searchText = $event.target.value">
-	··
-	所以在组件上就是同时完成外部向组件内传值、组件向外部传值，由于·$event·在组件内的含义不同，需要改写成：
-	··
-	Vue.component('custom-input', {
-		props: ['value'],
-		template: \`<input :value="value" @input="$emit('input', $event.target.value)" />\`
-	})
-
-	// 现在可以使用 v-model 了
-	<custom-input v-model="searchText"></custom-input>
-	data: {
-		searchText: ''
-	}
-	··
-	一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件可能会将 value 特性用于不同的目的。·model·选项可以用来避免这样的冲突：
-	··
-	Vue.component('base-checkbox', {
-	  model: {
-	    prop: 'checked',
-	    event: 'change'
-	  },
-	  props: {
-	    checked: Boolean
-	  },
-	  template: \`<input type="checkbox" :checked="checked" @change="$emit('change', $event.target.checked)">\`
-	})
-
-	// html
-	<base-checkbox v-model="lovingVue"></base-checkbox>
-	··
-	这里的 lovingVue 的值将会传入这个名为 checked 的 prop。同时当·<base-checkbox>·触发一个 change 事件并附带一个新的值的时候，这个 lovingVue 的属性将会被更新
-	@[将原生事件绑定到组件|https://cn.vuejs.org/v2/guide/components-custom-events.html#%E5%B0%86%E5%8E%9F%E7%94%9F%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%88%B0%E7%BB%84%E4%BB%B6]
-	@[.sync 修饰符|https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6]
-
-	##slot
-	和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样：
-	··
-	Vue.component('alert-box', {
-		template: \`
-			<div class="demo-alert-box">
-				<strong>Hello </strong>
-			</div>
-		\`
-	})
-
-	// 添加文本
-	<alert-box>World</alert-box>
-
-	// 浏览器中
-	<div class="demo-alert-box">
-		<strong>Hello </strong>
-	</div>
-	··
-	直接添加内容是无效的，需要使用 slot 在需要的地方加入：
-	··
-	Vue.component('alert-box', {
-		template: \`
-			<div class="demo-alert-box">
-				<strong>Hello </strong>
-				<slot></slot>
-			</div>
-		\`
-	})
-
-	// 添加文本
-	<alert-box>World</alert-box>
-
-	// 浏览器中
-	<div class="demo-alert-box">
-		<strong>Hello </strong>
-		World
-	</div>
-	··
-	插槽内可以包含任何模板代码，包括 HTML 和其他组件
-	###多个插槽
-	通过·<slot>·的·name·属性定义名称来使用，可以保留一个未命名插槽作为默认插槽，未定义名称的都会在其中输出，比如：
-	··
-	Vue.component('blog-post', {
-		template: \`
-			<div class="container">
-				<header>
-					<slot name="header"></slot>
-				</header>
-				<main>
-					<slot></slot>
-				</main>
-				<footer>
-					<slot name="footer"></slot>
-				</footer>
-			</div>
-		\`
-	})
-	··
-	在 html 中使用：
-	··
-	<blog-post>
-		<h1 slot="header">这里是 header 内部</h1>
-		<h2 slot="header">这里是 header 内部2</h2>
-
-		<p>这里是 main 内部</p>
-		<p>这里是 main 内部2</p>
-
-		<p slot="footer">这里是 footer 内部</p>
-	</blog-post>
-	··
-	多个相同的插槽可以使用·<template>·包裹：
-	··
-	<blog-post>
-	 	<template slot="header">
-			<h1>这里是 header 内部</h1>
-			<h2>这里是 header 内部2</h2>
-		</template>
-
-		<p>这里是 main 内部</p>
-		<p>这里是 main 内部2</p>
-
-		<p slot="footer">这里是 footer 内部</p>
-	</blog-post>
-	··
-	###插槽的默认内容
-	在·<slot>·元素内添加内容可作为默认内容，如果在使用这个插件时提供了内容将会覆盖默认的，否则就显示默认的：
-	··
-	<button type="submit">
-		<slot>Submit</slot>
-	</button>
-	··
-	###编译作用域
-
-	#单文件组件
-	##介绍
-	通常在项目中使用·Vue.component·来定义全局组件，这在很多中小规模的项目中运作的很好，但当在更复杂的项目中，或者你的前端完全由 JavaScript 驱动的时候，下面这些缺点将变得非常明显：
-	!!
-	全局定义：强制要求每个 component 中的命名不得重复
-	字符串模板：缺乏语法高亮，在 HTML 有多行的时候，需要用到丑陋的·\\·
-	不支持 CSS：意味着当 HTML 和 JavaScript 组件化时，CSS 明显被遗漏
-	没有构建步骤：限制只能使用 HTML 和 ES5 JavaScript, 而不能使用预处理器，如 Pug (formerly Jade) 和 Babel
-	!!
-	而文件扩展名为·.vue·的单文件组件为以上所有问题提供了解决方法，并且还可以使用 webpack 或 Browserify 等构建工具。
-	###写法
-	把 html、css、js 写到一个文件中，从而实现对组件的封装， 一个.vue 文件就是一个单独的组件：
-	··
-	<!-- html 部分，使用 <template> 标签包裹，同样使用一个最大父容器 -->
-	<template>
-		<div class="hello">
-			<h1>{{msg}}</h1>
-		</div>
-	</template>
-
-	<!-- js 部分，使用 <script> 标签包裹，export default 表示导出该组件，这样在其他页面中用 import 可使用该组件 -->
-	<script>
-		export default {
-			name: 'hello'
-			data() {
-				return {
-					msg: 'hello world!'
-				}
-			}
-		}
-	</script>
-
-	<!-- css 部分，使用 <style> 标签包裹，scoped 属性表示此样式只用于当前组件内 -->
-	<style scoped>
-		h1 {
-			font-size: 20px;
-		}
-	</style>
-	··
-	###怎么看待关注点分离？
-	一个重要的事情值得注意，关注点分离不等于文件类型分离。
-	在现代 UI 开发中，相比于把代码库分离成三大层次文件（html、css、js），把它们划分为松散耦合的组件再将其组合起来更合理一些。在一个组件里，其模板、逻辑和样式是内部耦合的，使得组件更加内聚且更可维护。
-	即便你不喜欢单文件组件，你仍然可以把 JavaScript、CSS 分离成独立的文件然后做到热重载和预编译。比如：
-	··
-	<template>
-		<div>This will be pre-compiled</div>
-	</template>
-	<script src="./my-component.js"></script>
-	<style src="./my-component.css"></style>
-	··
-
-	##Vue CLI
-	Vue CLI 是一个基于 Vue.js 进行快速开发的完整系统，提供：交互式、快速、零配置、依赖可升级扩展、丰富的插件、图形界面
-	Vue CLI 分为几个独立的部分：
-	!!
-	CLI：一个全局安装的 npm 包，提供了终端里的 vue 命令，包括 vue create、vue serve、vue ui等
-	CLI 服务：一个开发环境依赖，也是一个 npm 包，局部安装在每个 @vue/cli 创建的项目中，基于 webpack
-	CLI 插件：提供插件，名字以 @vue/cli-plugin- (内建插件) 或 vue-cli-plugin- (社区插件) 开头
-	!!
-	###全局安装
-	··
-	cnpm install -g @vue/cli
-	··
-	安装完成后可以访问·vue·命令，比如·vue -V·
-	###使用命令
-	创建新项目：
-	··
-	vue create hello-world
-	··
-	然后会提示选取一个 preset。直接按回车将选择默认的包含了基本的 Babel + ESLint 设置的 preset，也可以按上下键选“手动选择特性”来选取需要的特性
-	如果安装出现这样的错误：
-	··
-	command failed: npm install --loglevel error --registry=https://registry.npm......
-	··
-	可以试试直接使用·cnpm·初始化：
-	··
-	vue create -r cnpm project-name
-	··
-	###使用图形化界面
-	··
-	vue ui
-	··
-	上述命令会打开一个浏览器窗口，并以图形化界面将你引导至项目创建的流程
-	###运行
-	初始化完毕后可在·package.json·中查看可使用的命令：
-	··
-	{
-		"scripts": {
-			"serve": "vue-cli-service serve",
-			"build": "vue-cli-service build",
-			"lint": "vue-cli-service lint"
-		}
-	}
-	··
-	在初始化的·README.md·中也可以看到，所以运行项目可使用命令：
-	··
-	npx vue-cli-service serve
-	··
-	或者：
-	··
-	npm run serve
-	··
-	然后在浏览器中打开
-	··
-	http://localhost:8080/
-	··
-	即可访问初始化的·index.html·
-
-	##Vue CLI 配置
-	有两种方式可以对项目进行配置：vue.config.js 和 package.json
-	vue.config.js 是一个可选的配置文件，没有的话可以自行新建，这个文件应该导出一个包含了选项的对象：
-	··
-	module.exports = {
-		// 选项...
-	}
-	··
-	package.json 中的 vue 字段，也是一个可选的配置选项，没有的话可以自行添加（注意格式）：
-	··
-	"vue": {
-		// 选项...
-	}
-	··
-	当然如果需求比较多的话还是 vue.config.js 更方便，毕竟还可以添加语句，比如对 baseUrl 根据环境进行配置：
-	··
-	module.exports = {
-		baseUrl: process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/'
-	}
-	··
-	可配置的参数有：
-	!!
-	baseUrl{String}[/]：运行·npm run build·打包后的引用资源的开头 url 路径
-	outputDir{String}[dist]：运行·npm run build·打包后的输出路径，注意目标目录在构建之前会被清除（构建时传入 --no-clean 可关闭该行为）
-	assetsDir{String}：放置生成的静态资源（js、css、img、fonts）的（相对于 outputDir 的）目录
-	indexPath{String}[index.html]：指定生成的 index.html 的输出路径 (相对于 outputDir)，也可以是一个绝对路径
-	filenameHashing{Boolean}[true]：通过 Vue CLI 生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存，如果不想使用带 hash 的 index.html 可设为 false 关闭
-	pages{Object}：自定义  entry, template, filename, title 和 chunks 的配置
-	lintOnSave{Boolean}[true]：是否在开发环境下通过 eslint-loader 在每次保存时 lint 代码。安装 @vue/cli-plugin-eslint 后生效
-	runtimeCompiler{Boolean}[false]：是否使用包含运行时编译器的 Vue 构建版本
-	transpileDependencies{StringArray/RegExpArray}：默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果想通过 Babel 显式转译某依赖，可以在这个选项中列出来
-	productionSourceMap{Boolean}[true]：如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
-	crossorigin{String}：设置生成的 HTML 中·<link rel="stylesheet">·和·<script>·标签的·crossorigin·属性
-	integrity{Boolean}[false]：如果你构建后的文件是部署在 CDN 上的，启用该选项可在生成的 HTML 中的·<link rel="stylesheet">·和·<script>·标签上启用 Subresource Integrity (SRI)以提供额外的安全性
-	configureWebpack{Object/Function}：webpack 配置方式，参考 @[配合 webpack > 简单的配置方式|https://cli.vuejs.org/zh/guide/webpack.html#%E7%AE%80%E5%8D%95%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F]
-	css：
-		modules{Boolean}[false]：css 模块配置方式，参考 @[配合 CSS > CSS Modules|https://cli.vuejs.org/zh/guide/css.html#css-modules]
-		extract{Boolean/Object}：是否将组件中的 CSS 提取至一个独立的 CSS 文件中，而不是注入到 JavaScript 中的 inline 代码
-		sourceMap{Boolean}[false]：是否为 CSS 开启 source map。设置为 true 之后可能会影响构建的性能
-		loaderOptions{Object}：向 CSS 相关的 loader 传递选项，参考 @[向预处理器 Loader 传递选项|https://cli.vuejs.org/zh/guide/css.html#%E5%90%91%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8-loader-%E4%BC%A0%E9%80%92%E9%80%89%E9%A1%B9]
-	devServer{Object}：所有 webpack-dev-server 的 @[选项|https://webpack.js.org/configuration/dev-server/] 都支持
-		proxy{Object/String}：将任何未知请求 (没有匹配到静态文件的请求) 代理到指定地址
-	parallel{Boolean}：是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建
-	pwa{Object}：向 @[PWA 插件|https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa] 传递选项
-	pluginOptions{Object}：这是一个不进行任何 schema 验证的对象，可传递任何第三方插件选项
-	!!
-
-	##初始化项目分析
-	默认初始化的项目目录结构是：
-	!!
-	node_modules/：npm 依赖包
-	public/：公共文件
-		favicon.ico：网页标签 icon
-		index.html：入口文件
-	src/：主文件
-		assets/：资源文件
-			logo.png：logo 图片
-		components/：Vue 组件
-			HelloWorld.vue：HelloWorld 组件
-		App.vue：入口组件
-		main.js：入口 js
-	babel.config.js：babel 转换配置
-	package.json：项目配置信息
-	package-lock.json：node_modules/ 的依赖包信息
-	README.md：项目说明文档
-	!!
-	###public/index.html
-	该文件是一个会被 @[html-webpack-plugin|https://github.com/jantimon/html-webpack-plugin] 处理的模板，可以看到没有任何的 css 和 js 文件的引入，因此直接将该文件在浏览器中运行是什么都不会发生的，需运行·npm run dev·指令，在构建过程中对应的资源链接会被自动注入，或者运行·npm run build·将项目打包成静态文件后再在浏览器中运行查看
-	###src/components/HelloWorld.vue
-	该组件的有个 msg 的 props 作为标题，在使用该组件时传入 msg，其余都是静态页面
-	###src/App.vue
-	该组件作为入口组件
-	··
-	<template>
-		<div id="app">
-			<img alt="Vue logo" src="./assets/logo.png">
-			<!-- 使用 HelloWorld 组件，并传入 msg 这个 props 作为标题 -->
-			<HelloWorld msg="Welcome to Your Vue.js App"/>
-		</div>
-	</template>
-
-	<script>
-		// 引入 HelloWorld.vue 这个组件，并用 HelloWorld 这个变量表示它
-		import HelloWorld from './components/HelloWorld.vue'
-
-		// 导出本 App.vue 组件
-		export default {
-			name: 'app',	// 组件名为 app，该选项在单文件中不那么重要了，反正 import 时会重新命名
-			components: {	// 声明使用的组件
-				HelloWorld
-			}
-		}
-	</script>
-	··
-	###src/main.js
-	··
-	import Vue from 'vue'	// 引入 Vue.js，并用 Vue 这个变量表示它
-	import App from './App.vue'	// 引入 App.vue 这个组件，并用 App 这个变量表示它
-
-	// 阻止 Vue 在启动时生成生产提示
-	Vue.config.productionTip = false
-
-	new Vue({
-	  render: h => h(App)	// 渲染 App 这个组件，只包含运行时版只能使用渲染函数或包含编译器的构建，参考@[版本说明|https://cn.vuejs.org/v2/guide/installation.html#%E5%AF%B9%E4%B8%8D%E5%90%8C%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E8%A7%A3%E9%87%8A]
-	}).$mount('#app')	// 挂载 el 为 index.html 中的 #app
-
-	// 在渲染时 App.vue 中的内容会代替 index.html 中的 <div id="app"></div>
-	··
-
-	##Vue Router
-	Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌。包含的功能有：
-	!!
-	嵌套的路由/视图表
-	模块化的、基于组件的路由配置
-	路由参数、查询、通配符
-	基于 Vue.js 过渡系统的视图过渡效果
-	细粒度的导航控制
-	带有自动激活的 CSS class 的链接
-	HTML5 历史模式或 hash 模式，在 IE9 中自动降级
-	自定义的滚动条行为
-	!!
-
-	@@
-	官方文档|https://cn.vuejs.org/v2/guide/
-	Vue CLI|https://cli.vuejs.org/zh/guide/
-	Vue Router|https://router.vuejs.org/zh/
-	Vuex|https://vuex.vuejs.org/zh/
-	Vue SSR|https://ssr.vuejs.org/zh/
-	周边资源|https://github.com/vuejs/awesome-vue
-	@@
-
-	&2018/9/13
+})
+
+// 也可以用 JavaScript 直接调用方法
+vm.greet() // 'Hello Vue.js!'
+··
+如果不传参数比如上面的·v-on:click="greet"·，在方法中默认第一个参数即为事件对象
+注意如果加了括号或参数即·v-on:click="greet()"·或·v-on:click="greet('msg')"·，是没有事件对象的，此时可以用特殊变量·$event·作为事件对象参数，且不限参数位置
+··
+<button v-on:click="warn('msg', $event)">submit</button>
+··
+
+###computed
+计算属性将被混入到 Vue 实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。
+注意：如果为一个计算属性使用了箭头函数，则 this 不会指向这个组件的实例，可以将其实例作为函数的第一个参数来访问。
+··
+computed: {
+    aDouble: vm => vm.a * 2
+}
+··
+计算属性的结果是依赖的响应式属性变化而重新计算的，如果依赖的是非响应式属性则不会更新。
+··
+var vm = new Vue({
+    data: { a: 1 },
+    computed: {
+        // 仅读取
+        aDouble: function () {
+            return this.a * 2
+        },
+        // 读取和设置
+        aPlus: {
+            get: function () {
+                return this.a + 1
+            },
+            set: function (v) {
+                this.a = v - 1
+            }
+        }
+    }
+})
+
+vm.aPlus   // 2
+vm.aPlus = 3
+vm.a       // 2
+vm.aDouble // 4
+··
+虽然方法和计算属性的结果是一样的
+··
+computed: {
+reversedMessage: function () {
+    return this.message.split('').reverse().join('')
+}
+}
+··
+等同于
+··
+methods: {
+    reversedMessage: function () {
+        return this.message.split('').reverse().join('')
+    }
+}
+··
+不同的是计算属性是基于它们的依赖进行缓存的，只要依赖的值没改变，多次访问计算属性会立即返回之前的计算结果，而函数总是会执行一遍，也就是说计算属性比方法更减少消耗
+
+###watch
+监听数据的变化做出相应的处理，可以监听·data·中的变量或·$route·等，键为观察的对象（为对象路径时需用引号），值为对应的处理，可以为函数、方法名（需用引号）、选项
+为函数或方法名时有2个参数，第一个为当前的值，第二个为改变前的值
+选项可以是一个数组，每个元素为函数或方法名，也可以是一个对象，属性如下：
+!!
+handler{Function/String}：函数或方法名（需用引号）
+deep{Boolean}：是否深度监听（不能监听到对象属性值的变化，数组的值变化可以，若数组包含对象请参考前一句话）
+immediate{Boolean}：是否在监听开始之后被立即调用
+!!
+注意：不应该使用·=>·来定义函数，因为会改变·this·的指向，方法中的·this·本就绑定为 Vue 实例
+··
+var vm = new Vue({
+    data: {
+        a: 1,
+        b: 2,
+        c: {
+            d: {
+                e: 5
+            }
+        }
+    },
+
+    methods: {
+        someMethod: function (val, oldVal) {
+            // do something
+        }
+    },
+
+    // 监听数据，当数据改变时触发
+    watch: {
+        // 为方法时有2个参数，第一个为当前的值，第二个为改变前的值
+        a: function (val, oldVal) {
+            console.log('new: %s, old: %s', val, oldVal)
+        },
+
+        // 方法名，注意需用引号
+        b: 'someMethod',
+
+        // 深度监听，如果没有 deep 是无法监听 c 的变化的
+        c: {
+            handler: function (val, oldVal) {
+                console.log(val, oldVal)
+            },
+            deep: true
+        },
+
+        // 该回调将会在监听开始之后被立即调用
+        a: {
+            handler: 'someMethod',
+            immediate: true
+        },
+
+        // 可以为一个数组，同时执行多个函数或方法
+        b: [
+            function (val, oldVal) { /* ... */ },
+            'someMethod'
+        ],
+
+        // 为对象路径时需用引号
+        'c.d.e': function (val, oldVal) { /* ... */ }
+    }
+})
+··
+
+##生命周期
+每个 Vue 应用都是通过用 Vue 函数创建一个新的 Vue 实例开始的：
+··
+var vm = new Vue({
+    // 选项
+})
+··
+虽然没有完全遵循 MVVM 模型，但是 Vue 的设计也受到了它的启发。因此在文档中经常会使用 vm (ViewModel 的缩写) 这个变量名表示 Vue 实例。
+每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。
+注意：不要在选项属性或回调上使用箭头函数，比如·created: () => console.log(this.a)·或·vm.$watch('a', newValue => this.myMethod())·。因为箭头函数是和父级上下文·this·绑定在一起的。
+假设有：
+··
+<div id="web">{{message}}</div>
+
+var vm = new Vue({
+    el: '#web'
+    data: {
+        message: 'msg'
+    }
+})
+··
+在控制台打印·vm.$el·为·<div id="web">msg</div>·
+%%
+生命周期,说明
+,1
+beforeCreate,实例刚被创建，在属性创建之前，即 el 和 data 未初始化
+created,实例创建完成，进行了数据观测、属性和方法的运算、watch/event 事件回调，即有 data ，无 el
+beforeMount,模板编译/挂载之前，即完成了 el 和 data 的初始化，但未渲染值，即·<div id="web">{{message}}</div>·
+mounted,模板编译/挂载之后，渲染完毕，el 被新创建的 vm.$el 替换，即·<div id="web">msg</div>·
+beforeUpdate,组件更新之前，即执行·vm.message = 'change'·后、虚拟 DOM 重新渲染前触发
+updated,组件更新之后，即执行·vm.message = 'change'·后、虚拟 DOM 重新渲染后触发触发
+activated,·<keep-alive>·组件激活时
+deactivated,·<keep-alive>·组件移除时
+beforeDestroy,实例销毁前，即执行·vm.$destroy()·后、真正销毁前触发，销毁后就不能再用 vue 控制挂载的元素了
+destroyed,实例销毁后，即执行·vm.$destroy()·后、真正销毁后触发，销毁后就不能再用 vue 控制挂载的元素了
+errorCaptured,当捕获一个来自子孙组件的错误时被调用
+%%
+!./img/js-library/vue01.png,600
+
+#指令
+
+##{{ }}
+数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值：
+··
+<span>Message: {{msg}}</span>
+··
+Mustache 标签将会被替代为对应数据对象上 msg 属性的值。无论何时，绑定的数据对象上 msg 属性发生了改变，插值处的内容都会更新
+对于所有的数据绑定都提供了完全的 JavaScript 表达式支持
+··
+{{ number + 1 }}
+
+{{ ok ? 'YES' : 'NO' }}
+
+{{ message.split('').reverse().join('') }}
+
+{{ change(message) }}	// 在 methods 中定义了 change 方法
+
+<div :id="'list-' + id"></div>
+··
+以下情况不会生效
+··
+{{ var a = 1 }}	// 这是语句，不是表达式
+
+{{ if (ok) { return message } }}	// 流控制也不会生效，需使用三元表达式
+··
+
+##v-text
+更新元素的值，即改变·textContent·，同·{{}}·
+··
+<span v-text="msg"></span>
+// 等同于
+<span>{{msg}}</span>
+··
+
+##v-html
+更新元素的值，即改变·innerHTML·，插入的内容不会作为 Vue 模板进行编译
+注意不要渲染未知的 html ，可能会导致 @[XSS 攻击|https://en.wikipedia.org/wiki/Cross-site_scripting]，比如渲染用户提交的内容
+··
+<div v-html="html"></div>
+··
+
+##v-show
+若绑定的值为·true·不改变，为·false·则·style·设为·display: none;·
+··
+<h1 v-show="ok">Hello!</h1>
+··
+
+##v-if/else/else-if
+^^v-if^^ 根据表达式的值的真假条件渲染元素。在切换时元素及它的数据绑定 / 组件被销毁并重建
+··
+<h1 v-if="ok">Yes</h1>
+··
+想同时切换多个元素可以使用·<template>·元素来包裹，·<template>·元素是不会渲染的
+··
+<template v-if="ok">
+    <h1>Title</h1>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+</template>
+··
+^^v-else^^ 元素必须紧跟在带·v-if·或者·v-else-if·的元素的后面，否则它将不会被识别
+··
+<div v-if="Math.random() > 0.5">Now you see me</div>
+<div v-else>Now you don't</div>
+··
+^^v-else-if^^ 类似于·v-else·，也必须紧跟在带·v-if·或者·v-else-if·的元素之后
+··
+<div v-if="type === 'A'"> A </div>
+<div v-else-if="type === 'B'"> B </div>
+<div v-else-if="type === 'C'"> C </div>
+<div v-else> Not A/B/C </div>
+··
+^^v-show VS v-if：^^·v-if·有更高的切换开销，而·v-show·有更高的初始渲染开销。所以频繁地切换用·v-show·较好，否则用·v-if·
+###用 key 管理可复用的元素
+Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。
+··
+<template v-if="loginType === 'username'">
+    <label>Username</label>
+    <input placeholder="Enter your username">
+</template>
+<template v-else>
+    <label>Email</label>
+    <input placeholder="Enter your email address">
+</template>
+··
+在上面的代码中切换 loginType 将会保留已输入的内容。因为两个模板使用了相同的元素，<input> 仅仅是替换了它的 placeholder。
+所以添加一个具有唯一值的·key·属性可以表明元素是独立的，无需复用，即每次切换都会清空输入的值
+··
+<template v-if="loginType === 'username'">
+    <label>Username</label>
+    <input placeholder="Enter your username" key="username-input">
+</template>
+<template v-else>
+    <label>Email</label>
+    <input placeholder="Enter your email address" key="email-input">
+</template>
+··
+
+##v-for
+根据一组数组的选项列表进行渲染，写法有：
+!!
+item in array：array 为源数据，item 代表源数据的每一项
+item of array：同上，另一种写法
+(item, index) in array：index 为当前项的索引
+(value, key, index) in object：当循环对象时 item 作为键值，index 作为键名，第 3 个为当前项的索引
+    注意在遍历对象时，是按·Object.keys()·的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下是一致的
+!!
+··
+<div v-for="item in array"></div>
+<div v-for="item of array"></div>
+<div v-for="(item, index) in array"></div>
+<div v-for="(value, key, index) in object"></div>
+··
+###key
+为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 key 属性。理想的 key 值是每项都有的且唯一的 id。说白了就是更高效，如果遍历输出的 DOM 内容比较简单或者就是要高性能不加也行
+··
+<div v-for="item in items" :key="item.id">{{item.name}}</div>
+··
+###组件的 v-for
+当在组件中使用 v-for 时，key 现在是必须的。
+循环的数据不会被自动传递到组件里，因为组件有自己独立的作用域，这更有利于组件的重复使用，所以需要用·props·：
+··
+<my-component v-for="(item, index) in items" :item="item" :index="index" :key="item.id" ></my-component>
+··
+###v-for with v-if
+当它们处于同一节点，v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中。
+··
+<li v-for="todo in todos" v-if="!todo.isComplete">{{ todo }}</li>
+··
+如果是有条件地跳过循环的执行，那么可以将 v-if 置于外层元素 (或 <template>)上。如：
+··
+<ul v-if="todos.length">
+    <li v-for="todo in todos">{{ todo }}</li>
+</ul>
+<p v-else>No todos left!</p>
+··
+###数组更新检测
+能改变原数组触发视图更新的方法有7个：·push()·、·pop()·、·shift()·、·unshift()·、·splice()·、·sort()·、·reverse()·
+比如：·vm.arr.push({message: 'msg'})·
+当用返回新数组的方法时，比如·slice()·、·filter()·等，可以用新数组替换旧数组
+比如：·vm.arr = vm.arr.filter(item => item.message.match(/Foo/))·
+重新替换数组并不会丢弃现有 DOM 重新渲染整个列表，Vue 仍会高效的重用，请放心食用
+###js限制
+由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
+!!
+利用索引直接设置一个项时，例如：vm.items[1] = 'x'
+修改数组的长度时，例如：vm.items.length = 2
+!!
+第一类问题可以用·splice()·方法代替：·vm.items.splice(index, 1, newValue)·
+也可以用·Vue.set·：·Vue.set(vm.items, index, newValue)·
+或·vm.$set·：·vm.$set(vm.items, index, newValue)·
+还有 Vue 不能检测对象属性的添加或删除：
+··
+var vm = new Vue({
+    data: {
+        userInfo: {
+            name: 'a'
+        }
+    }
+})
+vm.userInfo.age = 22 // 不是响应式的
+··
+也需要用·Vue.set·：·Vue.set(vm.userInfo, 'age', 22)·
+或·vm.$set·：·vm.$set(vm.userInfo, 'age', 22)·
+需要添加多个对象可以用·Object.assign()·方法，注意这样写是无效的：
+··
+Object.assign(vm.userInfo, {
+    age: 27,
+    favoriteColor: 'Vue Green'
+})
+··
+这是浅拷贝，所以应该这样：
+··
+vm.userInfo = Object.assign({}, vm.userInfo, {
+    age: 27,
+    favoriteColor: 'Vue Green'
+})
+··
+即给·vm.userInfo·赋值一个新对象，或者深拷贝赋值：
+··
+var obj = JSON.parse(JSON.stringify(vm.userInfo))
+obj.age = 27,
+obj.favoriteColor = 'Vue Green'
+vm.userInfo = obj
+··
+###显示过滤/排序结果
+有时想要显示一个数组的过滤或排序副本可以使用计算属性：
+··
+<li v-for="n in evenNumbers">{{ n }}</li>
+
+data: {
+    numbers: [ 1, 2, 3, 4, 5 ]
+},
+computed: {
+    evenNumbers: vm => vm.numbers.filter(number => number % 2 === 0)
+}
+··
+在计算属性不适用的情况下 (例如，在嵌套 v-for 循环中) 可以使用 method 方法：
+··
+<li v-for="n in even(numbers)">{{ n }}</li>
+methods: {
+    even: arr => arr.filter(number => number % 2 === 0)
+}
+··
+###一段取值范围的 v-for
+··
+<span v-for="n in 10">{{ n }} </span>	// n 为 1-10
+··
+
+##v-on
+绑定事件监听器，可缩写为·@·，用在普通元素上时，只能监听原生 DOM 事件。用在自定义元素组件上时，也可以监听子组件触发的自定义事件。支持的修饰符有：
+!!
+.stop：阻止冒泡，调用 event.stopPropagation()
+.prevent：阻止默认行为，调用 event.preventDefault()
+.capture：添加事件侦听器时使用 capture 捕获模式
+.self：事件是从侦听器绑定的元素本身触发时才触发回调
+.keyCode/keyAlias：事件是从特定键触发时才触发回调，比如13代表enter键，可以查看@[keyCode对照表|http://www.t086.com/article/4315]，这通常是比较难记的，所以最常用的按键提供了别名:
+    .enter：回车
+    .tab：制表
+    .delete：删除和退格
+    .esc：退出
+    .space：空格
+    .up：上
+    .down：下
+    .left：左
+    .right：右
+    可以通过全局·config.keyCodes·对象自定义按键修饰符别名，比如·Vue.config.keyCodes.f1 = 112·
+    也可以使用任意有效按键名转换为短横线隔开的形式来作为修饰符，比如·@keyup.page-down="onPageDown"·
+
+    系统修饰键：在按下相应按键时才触发相应事件，比如·@click.ctrl·为·Ctrl + Click·，·@keyup.alt.67·为·Alt + C·
+        注意修饰键在于比如·Ctrl·键需要按住再按其他键才会触发，单按·Ctrl·是不会触发的，想要触发就换成keyCode的17
+        .ctrl：控制
+        .alt：alt
+        .shift：shift
+        .meta：windows对应⊞，mac对应⌘
+    特殊修饰符·.exact·：控制由精确的系统修饰符组合触发的事件，比如:
+        @click.ctrl：即使 Alt 或 Shift 被一同按下时也会触发
+        @click.ctrl.exact：有且只有 Ctrl 被按下的时候才触发
+        @click.exact：没有任何系统修饰符被按下的时候才触发
+.native：监听组件根元素的原生事件
+.once：该事件只触发一次
+.left：点击鼠标左键时触发
+.right：点击鼠标右键时触发
+.middle：点击鼠标中键时触发
+.passive：以 { passive: true } 模式添加侦听器，此模式会忽略 event.preventDefault() 行为
+!!
+注意使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用·v-on:click.prevent.self·会阻止所有的点击，而·v-on:click.self.prevent·只会阻止对元素自身的点击。
+··
+<!-- 方法处理器 -->
+<button v-on:click="doThis"></button>
+
+<!-- 内联语句 -->
+<button v-on:click="doThat('hello', $event)"></button>
+
+<!-- 缩写 -->
+<button @click="doThis"></button>
+
+<!-- 停止冒泡 -->
+<button @click.stop="doThis"></button>
+
+<!-- 阻止默认行为 -->
+<button @click.prevent="doThis"></button>
+
+<!-- 阻止默认行为，没有表达式 -->
+<form @submit.prevent></form>
+
+<!--  串联修饰符 -->
+<button @click.stop.prevent="doThis"></button>
+
+<!-- 键修饰符，键别名 -->
+<input @keyup.enter="onEnter">
+
+<!-- 键修饰符，键代码 -->
+<input @keyup.13="onEnter">
+
+<!-- 点击回调只会触发一次 -->
+<button v-on:click.once="doThis"></button>
+
+<!-- 对象语法 (2.4.0+) -->
+<button v-on="{ mousedown: doThis, mouseup: doThat }"></button>
+
+<!-- 在子组件上监听自定义事件 (当子组件触发“my-event”时将调用事件处理器) -->
+<my-component @my-event="handleThis"></my-component>
+
+<!-- 内联语句 -->
+<my-component @my-event="handleThis(123, $event)"></my-component>
+
+<!-- 组件中的原生事件 -->
+<my-component @click.native="onClick"></my-component>
+··
+###为什么在 HTML 中监听事件?
+Vue 的事件处理都严格绑定在当前视图的 ViewModel 上，它不会导致任何维护上的困难。
+扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。
+纯粹的逻辑，和 DOM 完全解耦，更易于测试。
+当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何清理它们。
+
+##v-bind
+动态地绑定一个或多个特性，或一个组件 prop 到表达式，可以缩写为·:·
+在绑定 class 和 style 时，如果是包含键值对的对象，字符串的键可以不用引号，但使用了连字符必须要用引号。·v-bind:class·指令也可以与普通的 class 属性共存。style 的键可以使用驼峰式，编译时会自动转换。
+当·v-bind:style·使用需要添加浏览器引擎前缀的 CSS 属性时，如 transform，Vue.js 会自动侦测并添加相应的前缀。
+style 还可以绑定多重值，通常用于前缀中，这样只会渲染数组中最后一个被浏览器支持的值。
+··
+<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+··
+在绑定 prop 时，prop 必须在子组件中声明。
+没有参数时，可以绑定到一个包含键值对的对象。注意此时 class 和 style 绑定不支持数组和对象。
+支持的修饰符有：
+!!
+.prop：被用于绑定 DOM 属性 (property)
+.camel：将用短横线连接的特性名转换为驼峰式
+.sync：语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器
+!!
+··
+<!-- 绑定一个属性 -->
+<img v-bind:src="imageSrc">
+
+<!-- 缩写 -->
+<img :src="imageSrc">
+
+<!-- 内联字符串拼接 -->
+<img :src="'/path/to/images/' + fileName">
+
+<!-- class绑定 -->
+<div :class="{ red: isRed }"></div>	// red 是否存在取决于 isRed 的真假
+<div :class="{ red: isRed }" class="blue"></div>	// 共存
+<div :class="[classA, classB]"></div>
+<div :class="[classA, { classB: isB, classC: isC }]">
+
+<!-- style绑定 -->
+<div :style="{ fontSize: size + 'px' }"></div>
+<div :style="[styleObjectA, styleObjectB]"></div>
+
+<!-- 绑定一个有属性的对象 -->
+<div v-bind="{ id: someProp, 'other-attr': otherProp }"></div>
+
+<!-- 通过 prop 修饰符绑定 DOM 属性 -->
+<div v-bind:text-content.prop="text"></div>
+
+<!-- prop 绑定。“prop”必须在 my-component 中声明。-->
+<my-component :prop="someThing"></my-component>
+
+<!-- 通过 $props 将父组件的 props 一起传给子组件 -->
+<child-component v-bind="$props"></child-component>
+
+<!-- XLink -->
+<svg><a :xlink:special="foo"></a></svg>
+
+<!-- .camel 可将属性名称驼峰化，在使用字符串模板或通过 vue-loader/vueify 编译时，无需使用 .camel -->
+<svg :view-box.camel="viewBox"></svg>
+··
+
+##v-model
+在表单控件或者组件上创建双向绑定，监听输入和输出。适用的组件有：·<input> <select> <textarea> components·
+在文本框中：
+··
+<input type="text" v-model="searchText"/>
+// 等同于
+<input :value="searchText" @input="searchText=$event.target.value"/>
+··
+在多选框中：
+··
+<input type="text" v-model="searchText"/>
+// 等同于
+<input type="checkbox" :checked="checked" @change="$event.target.checked"/>
+··
+其它元素依次类推
+支持的修饰符有：
+!!
+.lazy：取代 input 改为 change 事件
+.number：输入字符串转为数字类型，因为即使·type="number"·也是返回字符串
+.trim：输入首尾空格过滤
+!!
+注意·v-model·会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源。应在 data 选项中声明初始值。
+·v-model·不会更新需要拼写语言的过程，如果需要就用·input·事件
+··
+<!-- 多个复选框，绑定到同一个数组 -->
+<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+<label for="jack">Jack</label>
+<input type="checkbox" id="john" value="John" v-model="checkedNames">
+<label for="john">John</label>
+<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+<label for="mike">Mike</label>
+<br>
+<span>Checked names: {{ checkedNames }}</span>
+// 只要该复选框被选中，它的value就会出现在 checkedNames 中，否则会自动删除
+data: {
+checkedNames: []
+}
+
+<!-- 单选 -->
+<input type="radio" id="one" value="One" v-model="picked">
+<label for="one">One</label>
+<br>
+<input type="radio" id="two" value="Two" v-model="picked">
+<label for="two">Two</label>
+<br>
+<span>Picked: {{ picked }}</span>
+// picked 为选择的值
+data: {
+picked: ''
+}
+
+<!-- 下拉框单选 -->
+<select v-model="selected">
+    <option disabled value="">请选择</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+</select>
+<span>Selected: {{ selected }}</span>
+// selected 为选择的 option 值，如果 option 有 value 就取 value 的值，没有就取选项文本的值
+data: {
+selected: ''
+}
+// 如果 v-model 的初始值未能匹配任何选项，在 iOS 中会无法选择第一个选项，所以推荐提供一个值为空的禁用选项
+
+<!-- 下拉框多选 -->
+<select v-model="selected" multiple>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+</select>
+<br>
+<span>Selected: {{ selected }}</span>
+
+data: {
+selected: []
+}
+··
+###复选框
+··
+<input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+
+vm.toggle === 'yes'	// 当选中时
+vm.toggle === 'no'	// 当没有选中时
+··
+这里的·true-value·和·false-value·特性并不会影响输入控件的 value 特性，因为浏览器在提交表单时并不会包含未被选中的复选框。如果要确保表单中这两个值中的一个能够被提交，(比如“yes”或“no”)，请换用单选按钮。
+###单选框
+··
+<input type="radio" v-model="pick" v-bind:value="a">
+
+vm.pick === vm.a	// 当选中时
+··
+
+##v-pre
+跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。
+··
+<span v-pre>{{这个元素将保持现在的样子，不会被编译}}</span>
+··
+
+##v-cloak
+和 CSS 规则如·[v-cloak] { display: none }·一起用，可以隐藏未编译的 Mustache 标签直到实例准备完毕。
+··
+[v-cloak] {
+    display: none;
+}
+// 这个元素在 vue 实例准备好后才会显示
+<div v-cloak>{{ message }}</div>
+··
+
+##v-once
+只渲染元素或组件一次。随后的重新渲染将被视为静态内容并跳过。这可以用于优化更新性能。
+··
+<span v-once>This will never change: {{msg}}</span>
+··
+
+#过渡动画
+##概述
+Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。
+包括以下工具：
+!!
+在 CSS 过渡和动画中自动应用 class
+可以配合使用第三方 CSS 动画库，如 Animate.css
+在过渡钩子函数中使用 JavaScript 直接操作 DOM
+可以配合使用第三方 JavaScript 动画库，如 Velocity.js
+!!
+在下列情形中可以使用·<transition>·元素定义过渡动画，注意只能包含一个根元素
+!!
+条件渲染：使用 v-if
+条件展示：使用 v-show
+动态组件
+组件根节点
+!!
+当插入或删除包含在 transition 组件中的元素时，Vue 将会做以下处理：
+!!
+自动嗅探目标元素是否应用了 CSS 过渡或动画，如果是，在恰当的时机添加/删除 CSS 类名。
+如果过渡组件提供了 JavaScript 钩子函数，这些钩子函数将在恰当的时机被调用。
+如果没有找到 JavaScript 钩子并且也没有检测到 CSS 过渡/动画，DOM 操作 (插入/删除) 在下一帧中立即执行。(注意此指浏览器逐帧动画机制，和 Vue 的 nextTick 概念不同)
+!!
+###同时使用过渡动画
+在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 animation 很快的被触发并完成了，而 transition 效果还没结束。在这种情况中，你就需要使用 type 特性并设置 animation 或 transition 来明确声明你需要 Vue 监听的类型。
+###显性的过度动画持续时间
+当嵌套的内部元素比根元素有延迟的或更长的过渡效果。可以使用 duration 属性定制一个显性的过渡持续时间 (以毫秒计)：
+··
+<transition :duration="1000">...</transition>
+<transition :duration="{ enter: 500, leave: 800 }">...</transition>	// 定制进入和移出的持续时间
+··
+
+##类名
+在进入/离开的过渡中，会有 6 个 class 切换：
+!!
+v-enter：定义进入过渡的开始状态。在元素被插入之前生效，被插入之后的下一帧移除。
+v-enter-active：定义进入过渡生效时的状态。在过渡/动画完成之后移除，用来定义进入过渡的过程时间，延迟和曲线函数。
+v-enter-to：定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。
+v-leave：定义离开过渡的开始状态。下一帧被移除。
+v-leave-active：定义离开过渡生效时的状态。在过渡/动画完成之后移除。用来定义离开过渡的过程时间，延迟和曲线函数。
+v-leave-to：定义离开过渡的结束状态。在过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。
+!!
+!./img/js-library/vue02.png,600
+这些是默认的类名，即以·v·开头，可以给·<transition>·自定义一个 name 属性以更换开头，比如·<transition name="fade">·代表·v-enter·就会被替换为·fade-enter·
+比如 v-if 的过渡
+··
+<button v-on:click="show = !show"> Toggle </button>
+<transition name="fade">
+    <p v-if="show">hello</p>
+</transition>
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+··
+v-if 的动画，一般只定义 active，在 keyframes 中定义起始和结束的运动状态
+··
+<button @click="show = !show">Toggle show</button>
+<transition name="bounce">
+    <p v-if="show">hello</p>
+</transition>
+
+.bounce-enter-active {
+    animation: bounce-in .5s;
+}
+.bounce-leave-active {
+    animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+··
+###自定义类名
+通常通过自定义类名可以结合第三方 CSS 动画库使用，只需定义对应的属性·enter-class·、·enter-active-class·、·enter-to-class·、·leave-class·、·leave-active-class·、·leave-to-class·
+··
+<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+
+<div id="example-3">
+    <button @click="show = !show">
+        Toggle render
+    </button>
+    <transition enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
+        <p v-if="show">hello</p>
+    </transition>
+</div>
+··
+
+##钩子方法
+可以在属性中声明 JavaScript 钩子，在 methods 中定义对应的方法即可。共有8个：
+··
+<transition
+    v-on:before-enter="beforeEnter"
+    v-on:enter="enter"
+    v-on:after-enter="afterEnter"
+    v-on:enter-cancelled="enterCancelled"
+
+    v-on:before-leave="beforeLeave"
+    v-on:leave="leave"
+    v-on:after-leave="afterLeave"
+    v-on:leave-cancelled="leaveCancelled"
+>
+    <!-- ... -->
+</transition>
+
+// 在 enter 和 leave 中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。
+methods: {
+    beforeEnter: function (el) {
+        // ...
+    },
+
+    enter: function (el, done) {
+        // ...
+        done()	// 此回调函数是可选项的设置，与 CSS 结合时使用
+    },
+    afterEnter: function (el) {
+        // ...
+    },
+    enterCancelled: function (el) {
+        // ...
+    },
+
+    beforeLeave: function (el) {
+        // ...
+    },
+    leave: function (el, done) {
+        // ...
+        done()	// 此回调函数是可选项的设置，与 CSS 结合时使用
+    },
+    afterLeave: function (el) {
+        // ...
+    },
+    // leaveCancelled 只用于 v-show 中
+    leaveCancelled: function (el) {
+        // ...
+    }
+}
+··
+推荐对于仅使用 JavaScript 过渡的元素添加·v-bind:css="false"·，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。
+一个使用 Velocity.js 的简单例子：
+··
+<!-- Velocity 和 jQuery.animate 的工作方式类似，也是用来实现 JavaScript 动画的一个很棒的选择 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+
+<div id="example-4">
+    <button @click="show = !show"> Toggle </button>
+    <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
+        <p v-if="show"> Demo </p>
+    </transition>
+</div>
+
+methods: {
+    beforeEnter: function (el) {
+        el.style.opacity = 0
+        el.style.transformOrigin = 'left'
+    },
+    enter: function (el, done) {
+        Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
+        Velocity(el, { fontSize: '1em' }, { complete: done })
+    },
+    leave: function (el, done) {
+        Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+        Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+        Velocity(el, {
+            rotateZ: '45deg',
+            translateY: '30px',
+            translateX: '30px',
+            opacity: 0
+        }, { complete: done })
+    }
+}
+··
+
+##初始渲染过渡
+可以通过 appear 特性设置节点在初始渲染的过渡，比如·<transition appear name="fade"></transition>·
+也可以自定义 CSS 类名：
+··
+<transition
+    appear
+    appear-class="custom-appear-class"
+    appear-to-class="custom-appear-to-class"
+    appear-active-class="custom-appear-active-class"
+>
+    <!-- ... -->
+</transition>
+··
+自定义 JavaScript 钩子：
+··
+<transition
+    appear
+    v-on:before-appear="customBeforeAppearHook"
+    v-on:appear="customAppearHook"
+    v-on:after-appear="customAfterAppearHook"
+    v-on:appear-cancelled="customAppearCancelledHook"
+>
+    <!-- ... -->
+</transition>
+··
+
+##多个元素过渡
+使用·v-if/v-else-if/v-else·可以用来定义多个元素过渡。最常见的多标签过渡是一个列表和描述这个列表为空消息的元素：
+··
+<transition>
+    <table v-if="items.length > 0">
+        <!-- ... -->
+    </table>
+    <p v-else>Sorry, no items found.</p>
+</transition>
+··
+注意如果是相同的元素之间切换是没有过渡的：
+··
+<transition name="fade">
+    <button @click="show=!show" v-if="show">on</button>
+    <button @click="show=!show" v-else>off</button>
+</transition>
+··
+因为 Vue 会高效渲染而复用相同的组件，即上面的·<button>·没有消失过，所以这时需要加上·key·来保持独立性：
+··
+<transition name="fade">
+    <button @click="show=!show" v-if="show" key="on">on</button>
+    <button @click="show=!show" v-else key="off">off</button>
+</transition>
+··
+还可以给同一个元素的·key·设置不同的状态来代替·v-if·和·v-else·：
+··
+<button @click="show=!show" :key="show">{{show ? 'on' : 'off'}}</button>
+··
+使用多个 v-if 的多个元素的过渡可以重写为绑定了动态属性的单个元素过渡。例如：
+··
+<transition name="fade">
+    <button @click="show='b'" v-if="show==='a'" key="a">a</button>
+    <button @click="show='c'" v-else-if="show==='b'" key="b">b</button>
+    <button @click="show='a'" v-else key="c">c</button>
+</transition>
+··
+所以也可以重写为：
+··
+<transition>
+    <button @click="change" :key="arr[stateIndex]">{{arr[showIndex]}}</button>
+</transition>
+
+data: {
+    stateIndex: 2,
+    arr: ['a', 'b', 'c']
+},
+computed: {
+    showIndex: vm => vm.stateIndex + 1 === 3 ? 0 : vm.stateIndex + 1
+},
+methods: {
+    change() {
+        this.stateIndex = this.stateIndex===2 ? 0 : this.stateIndex + 1
+    }
+}
+··
+同时生效的进入和离开的过渡不能满足所有要求，所以 Vue 提供了过渡模式：
+!!
+in-out：新元素先进行过渡，完成之后当前元素过渡离开。
+out-in：当前元素先进行过渡，完成之后新元素过渡进入。
+!!
+
+##列表过渡
+使用·<transition-group>·组件可以实现列表过渡，不同于·<transition>·，它会以一个真实元素呈现，即默认渲染为一个·<span>·。也可以通过·tag·属性更换为其他元素。注意这个组件不能使用过渡模式·in-out·和·out-in·了，内部元素总是需要提供唯一的·key·属性值。
+··
+.list {
+    display: flex;
+}
+.list-item {
+    margin-right: 10px;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.fade-enter-active, .fade-leave-active {
+    transition: 0.5s linear;
+}
+
+<button @click="add">Add</button>
+<button @click="remove">Remove</button>
+<transition-group name="fade" tag="p">
+    <span v-for="item in items" :key="item" class="list-item">{{item}}</span>
+</transition-group>
+
+data: {
+    arr: [1, 2, 3, 4, 5],
+    nextNum: 6
+},
+methods: {
+    randomIndex() {
+        return Math.floor(Math.random() * this.arr.length)
+    },
+    add() {
+        this.arr.splice(this.randomIndex(), 0, this.nextNum++)
+    },
+    remove() {
+        this.arr.splice(this.randomIndex(), 1)
+    }
+}
+··
+这个例子有个小问题，当添加和移除元素的时候，周围的元素会瞬间移动到他们的新布局的位置，而不是平滑的过渡，下面会解决这个问题。
+
+##列表排序过渡
+定义·v-move·的样式会在元素的改变定位的过程中应用过渡，像之前的类名一样，可以通过·name·属性来自定义前缀。
+··
+.flip-list-move {
+    transition: transform 1s;
+}
+
+<button @click="shuffle">Shuffle</button>
+<transition-group name="flip-list" tag="ul">
+    <li v-for="item in items" :key="item">{{ item }}</li>
+</transition-group>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+
+data: {
+    items: [1,2,3,4,5,6,7,8,9]
+},
+methods: {
+    shuffle: function () {
+        this.items = _.shuffle(this.items)
+    }
+}
+··
+内部的实现是 Vue 使用了一个叫 @[FLIP|https://aerotwist.com/blog/flip-your-animations/] 简单的动画队列，使用 transforms 将元素从之前的位置平滑过渡新的位置。
+@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
+需要注意的是使用 FLIP 过渡的元素不能设置为·display: inline·。作为替代方案，可以设置为·display: inline-block·或者放置于 flex 中
+所以上面的加减数字的 css 改成
+··
+.list-item {
+    display: inline-block;
+    transition: 0.5s;
+    margin-right: 10px;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.fade-leave-active {
+    position: absolute;
+}
+··
+即可实现周围元素的过渡
+FLIP 动画不仅可以实现单列过渡，@[多维网格也同样可以过渡|https://jsfiddle.net/chrisvfritz/sLrhk1bc/]
+
+###列表的交错过渡
+
+#组件
+##全局注册
+·Vue.component(id, [definition])·：注册或获取全局组件，给定的 id 作为组件的名称
+··
+// 注册组件，传入一个扩展过的构造器
+Vue.component('my-component', Vue.extend({ /* ... */ }))
+
+// 注册组件，传入一个选项对象 (自动调用 Vue.extend)
+Vue.component('my-component', { /* ... */ })
+
+// 获取注册的组件 (始终返回构造器)
+var MyComponent = Vue.component('my-component')
+··
+###命名方式
+!!
+kebab-case 短横线隔开：Vue.component('my-component-name', { /* ... */ })，在 html 中使用·<my-component-name>·
+PascalCase 驼峰式：Vue.component('MyComponentName', { /* ... */ })，引用这个元素时都可以使用·<my-component-name>·或·<MyComponentName>·，但在 html 中只能使用·<my-component-name>·
+!!
+
+##局部注册
+如果你使用一个像 webpack 这样的构建系统，全局注册所有的组件会被包含在最终的构建结果中。这造成了用户下载的 JavaScript 的无谓的增加。在这些情况下可以通过一个普通的 JavaScript 对象来定义组件：
+··
+var ComponentA = { /* ... */ }
+var ComponentB = { /* ... */ }
+var ComponentC = { /* ... */ }
+
+// 然后在 new Vue 中的 components 选项定义组件
+// 属性名就是 Vue.component 的 id，属性值就是选项
+new Vue({
+    el: '#app'
+    components: {
+        'component-a': ComponentA,
+        'component-b': ComponentB,
+        'component-c': ComponentC
+    }
+})
+··
+^^注意^^局部注册的组件在其子组件中不可用
+可以在其组件的子属性中再次声明，例如 ComponentA 在 ComponentB 中使用：
+··
+var ComponentA = { /* ... */ }
+var ComponentB = {
+    components: {
+        'component-a': ComponentA
+    }
+}
+··
+也可以在模块系统中局部注册，例如在 ComponentB.js 或 ComponentB.vue 文件中：
+··
+import ComponentA from './ComponentA'
+import ComponentC from './ComponentC'
+
+export default {
+    components: {
+        ComponentA,
+        ComponentC
+    },
+}
+··
+现在 ComponentA 和 ComponentC 都可以在 ComponentB 的模板中使用了
+
+##注册组件
+··
+// 定义一个名为 button-counter 的新组件：
+Vue.component('button-counter', {
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+    data: function () {
+        return {
+            count: 0
+        }
+    }
+})
+
+// 直接在 Vue 中使用，可以多次复用
+<button-counter></button-counter>
+<button-counter></button-counter>
+··
+参数和·new Vue·时基本相同，不同的是·el·选项换成·template·模板，组件模板同样只能有一个根元素，且·data·是个函数
+^^一个组件的 data 选项必须是一个函数^^，多次复用时数据才是独立的，如果只是一个对象，那么多个同样的组件之间数据是共用的
+###动态切换组件
+通过 Vue 的·<component>·元素和·is·属性可以切换组件，相当于·if·：
+··
+<div id="dynamic-component-demo" class="demo">
+    <button
+        v-for="tab in tabs"
+        :key="tab"
+        :class="{active: currentTab === tab}"
+        @click="currentTab = tab"
+    >{{ tab }}</button>
+    <component :is="currentTabComponent" class="tab" ></component>
+</div>
+
+// js
+Vue.component('tab-home', {
+    template: '<div>Home component</div>'
+})
+Vue.component('tab-posts', {
+    template: '<div>Posts component</div>'
+})
+Vue.component('tab-archive', {
+    template: '<div>Archive component</div>'
+})
+
+new Vue({
+    el: '#dynamic-component-demo',
+    data: {
+        currentTab: 'Home',
+        tabs: ['Home', 'Posts', 'Archive']
+    },
+    computed: {
+        currentTabComponent: function () {
+            return 'tab-' + this.currentTab.toLowerCase()
+        }
+    }
+})
+··
+###解析 DOM 模板时的注意事项
+有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。比如：
+··
+<table>
+    <blog-post-row></blog-post-row>
+</table>
+··
+·<blog-post-row>·会被作为无效的内容提升到外部，即等同于：
+··
+<blog-post-row></blog-post-row>
+<table>
+</table>
+··
+此时需要使用·is·属性来代替才会正常渲染：
+··
+<table>
+    <tr is="blog-post-row"></tr>
+</table>
+··
+需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：
+!!
+字符串 (例如·template: '...'·)
+单文件组件 (·.vue·)
+·<script type="text/x-template">·
+!!
+
+##props
+当要给组件传值的时候需要·props {Array/Object}·，自定义任意属性名即可
+··
+Vue.component('blog-post', {
+    props: ['title'],
+    template: '<h3>{{ title }}</h3>'
+})
+
+// 定义的 title 属性即传给组件的值
+<blog-post title="My journey with Vue"></blog-post>
+<blog-post title="Blogging with Vue"></blog-post>
+
+// 和 data 使用
+<blog-post v-for="post in posts" :key="post.id" :title="post.title"></blog-post>
+··
+^^注意^^ html 中是不区分大小写的，所以·postTitle·需改成·post-title·，当然在·template·中使用时没有这个限制，即：
+··
+Vue.component('blog-post', {
+    props: ['postTitle'],
+    template: '<h3>{{ postTitle }}</h3>'
+})
+
+// html 中使用
+<blog-post post-title="My journey with Vue"></blog-post>
+··
+###类型
+一般以字符串数组的方式列出 prop：
+··
+props: ['title', 'likes', 'isPublished', 'commentIds', 'author']
+··
+也可以用对象的形式指定值类型，key 作为 prop 的名称，value 作为类型，当未按照指定类型传值时 Vue 会在控制台发出警告：
+可选·String/Number/Boolean/Array/Object/Date/Function/Symbol/null·
+··
+props: {
+    title: String,	// 字符串
+    likes: Number,	// 数字
+    isPublished: Boolean,	// 布尔值
+    commentIds: null,	// 任意类型
+    author: [Array, Object], // 用数组表示多类型
+    content: {	// 用对象指定属性
+        type: String,	// 类型为字符串
+        required: true,	// 是否必填
+        default: '空'	// 默认值
+    },
+    content2: {
+        type: [Object, Array],	// 类型为对象或字符串时
+        default: function () {	// 默认值必须通过函数返回，否则会造成共用
+            return { message: 'hello' }
+        }
+    },
+    content3: {
+        validator: function (value) {	// 自定义验证函数
+            // 这个值必须匹配下列字符串中的一个，否则 Vue 将会产生一个控制台的警告（开发环境）
+            return ['success', 'warning', 'danger'].indexOf(value) !== -1
+        }
+    }
+}
+··
+而使用的指定类型的方式就需要注意^^没有通过·v-bind·绑定的属性都是字符串类型^^，所以记得加上·v-bind·，比如：
+··
+Vue.component('blog-post', {
+    props: {
+        likes: Number,
+        isPublished: Boolean
+    },
+    template: '<span v-if="isPublished">{{ likes }}</span>'
+})
+
+// html
+<blog-post likes="36" isPublished="false"></blog-post> // 报错，实际都是 String 类型
+<blog-post :likes="36" :isPublished="false"></blog-post>	// 用 v-bind 告诉 Vue 这是个表达式而非字符串
+··
+###传入一个对象的所有属性
+直接使用不带参数的·v-bind·可传入一个对象（注意此时不能使用简写·:·）：
+··
+data: {
+    book: {
+        id: 1,
+        name: 'vue',
+        title: 'My Journey with Vue'
+    }
+}
+
+<blog-post v-bind="book"></blog-post>
+// 等同于
+<blog-post :id="book.id" :name="book.name" :title="book.title"></blog-post>
+··
+###替换/合并已有的特性
+比如：
+··
+Vue.component('blog-post', {
+    template: '<span class="demo" message="hhh">demo</span>'
+})
+
+// html
+<blog-post class="active" message="hello"></blog-post>
+
+// 在浏览器中，class 和 style 会合并，其他属性会覆盖组件的
+<blog-post class="demo active" message="hello"></blog-post>
+··
+###禁用继承
+如果不希望组件的根元素继承特性，可以在组件的选项中设置·inheritAttrs: false·，注意这个选项对 class 和 style 绑定不影响，	比如：
+··
+Vue.component('blog-post', {
+    template: '<span class="demo" weather="cloudy">demo</span>'
+})
+
+// html
+<blog-post class="active" weather="sunny"></blog-post>
+
+// 浏览器中显示覆盖了组件的 weather 属性
+<span class="demo active" weather="sunny">demo</span>
+··
+若加上了·inheritAttrs: false·：
+··
+Vue.component('blog-post', {
+    inheritAttrs: false,
+    template: '<span class="demo" weather="cloudy">demo</span>'
+})
+
+// html
+<blog-post class="active" weather="sunny"></blog-post>
+
+// 浏览器中显示未覆盖
+<span class="demo active" weather="cloudy">demo</span>
+··
+默认不会显示未在组件上声明的元素，通过实例属性·$attrs·则可以让继承特性生效，比如：
+··
+Vue.component('blog-post', {
+    template: '<span class="demo">demo</span>',
+    created() {
+        console.log(this.$attrs)
+    }
+})
+
+// html
+<blog-post class="active" message="hello"></blog-post>
+
+// 浏览器中未显示 message 属性，可以在看到控制台打印 {message: 'hello'}，说明接收到了属性但未使用
+<span class="demo active">demo</span>
+··
+需要在元素上显示时可以加上·v-bind="$attrs"·：
+··
+Vue.component('blog-post', {
+    template: '<span class="demo" v-bind="$attrs">demo</span>',
+})
+
+// html
+<blog-post class="active" message="hello"></blog-post>
+
+// 浏览器中显示了 message 属性
+<span class="demo active" message="hello">demo</span>
+··
+
+##$emit()
+当组件向外部传值时需通过·$emit()·自定义事件名，相当于模板内将点击事件换个名字：
+··
+Vue.component('blog-post', {
+    template: \`<button v-on:click="$emit('welcome')">Click me to be welcomed</button>\`
+})
+
+// 使用
+<blog-post @welcome="hi"></blog-post>
+
+methods: {
+    hi() {
+        alert('Hi!')
+    }
+}
+··
+第二个之后的参数代表传递的参数：
+··
+Vue.component('blog-post', {
+    template: \`<button v-on:click="$emit('welcome', 20, 30)">Click me to be welcomed</button>\`
+})
+
+// 通过 $event 访问，代表传递的第一个参数 20
+<div :style="{'font-size': fz + 'px'}">welcome</div>
+<blog-post @welcome="fz = $event"></blog-post>
+data: {
+    fz: 16
+}
+
+// 如果是一个方法，参数与传入的值一一对应
+<div :style="{'font-size': fz + 'px'}">welcome</div>
+<blog-post @welcome="test"></blog-post>
+data: {
+    fz: 16
+},
+methods: {
+    test(res1, res2) {
+        this.fz = res1	// 20
+        console.log(res2)	// 30
+    }
+}
+··
+也可以在 methods 里面通过·this.$emit·调用：
+··
+Vue.component('magic-eight-ball', {
+    template: '<button v-on:click="giveAdvice">Click me for advice</button>',
+    data: function () {
+        return {
+            possibleAdvice: ['Yes', 'No', 'Maybe']
+        }
+    },
+    methods: {
+        giveAdvice: function () {
+            var randomAdviceIndex = Math.floor(Math.random() * this.possibleAdvice.length)
+            this.$emit('give-advice', this.possibleAdvice[randomAdviceIndex])
+        }
+    }
+})
+
+// 使用
+<magic-eight-ball v-on:give-advice="showAdvice"></magic-eight-ball>
+methods: {
+    showAdvice: function (advice) {
+        alert(advice)
+    }
+}
+··
+^^注意大小写^^，如果定义·this.$emit('myEvent')·，在 html 中使用时需改成小写：·@myevent=""·
+###在组件上使用 v-model
+因为·v-model·的原理是：
+··
+<input :value="searchText" @input="searchText = $event.target.value">
+··
+所以在组件上就是同时完成外部向组件内传值、组件向外部传值，由于·$event·在组件内的含义不同，需要改写成：
+··
+Vue.component('custom-input', {
+    props: ['value'],
+    template: \`<input :value="value" @input="$emit('input', $event.target.value)" />\`
+})
+
+// 现在可以使用 v-model 了
+<custom-input v-model="searchText"></custom-input>
+data: {
+    searchText: ''
+}
+··
+一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件可能会将 value 特性用于不同的目的。·model·选项可以用来避免这样的冲突：
+··
+Vue.component('base-checkbox', {
+    model: {
+    prop: 'checked',
+    event: 'change'
+    },
+    props: {
+    checked: Boolean
+    },
+    template: \`<input type="checkbox" :checked="checked" @change="$emit('change', $event.target.checked)">\`
+})
+
+// html
+<base-checkbox v-model="lovingVue"></base-checkbox>
+··
+这里的 lovingVue 的值将会传入这个名为 checked 的 prop。同时当·<base-checkbox>·触发一个 change 事件并附带一个新的值的时候，这个 lovingVue 的属性将会被更新
+@[将原生事件绑定到组件|https://cn.vuejs.org/v2/guide/components-custom-events.html#%E5%B0%86%E5%8E%9F%E7%94%9F%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%88%B0%E7%BB%84%E4%BB%B6]
+@[.sync 修饰符|https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6]
+
+##slot
+和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样：
+··
+Vue.component('alert-box', {
+    template: \`
+        <div class="demo-alert-box">
+            <strong>Hello </strong>
+        </div>
+    \`
+})
+
+// 添加文本
+<alert-box>World</alert-box>
+
+// 浏览器中
+<div class="demo-alert-box">
+    <strong>Hello </strong>
+</div>
+··
+直接添加内容是无效的，需要使用 slot 在需要的地方加入：
+··
+Vue.component('alert-box', {
+    template: \`
+        <div class="demo-alert-box">
+            <strong>Hello </strong>
+            <slot></slot>
+        </div>
+    \`
+})
+
+// 添加文本
+<alert-box>World</alert-box>
+
+// 浏览器中
+<div class="demo-alert-box">
+    <strong>Hello </strong>
+    World
+</div>
+··
+插槽内可以包含任何模板代码，包括 HTML 和其他组件
+###多个插槽
+通过·<slot>·的·name·属性定义名称来使用，可以保留一个未命名插槽作为默认插槽，未定义名称的都会在其中输出，比如：
+··
+Vue.component('blog-post', {
+    template: \`
+        <div class="container">
+            <header>
+                <slot name="header"></slot>
+            </header>
+            <main>
+                <slot></slot>
+            </main>
+            <footer>
+                <slot name="footer"></slot>
+            </footer>
+        </div>
+    \`
+})
+··
+在 html 中使用：
+··
+<blog-post>
+    <h1 slot="header">这里是 header 内部</h1>
+    <h2 slot="header">这里是 header 内部2</h2>
+
+    <p>这里是 main 内部</p>
+    <p>这里是 main 内部2</p>
+
+    <p slot="footer">这里是 footer 内部</p>
+</blog-post>
+··
+多个相同的插槽可以使用·<template>·包裹：
+··
+<blog-post>
+    <template slot="header">
+        <h1>这里是 header 内部</h1>
+        <h2>这里是 header 内部2</h2>
+    </template>
+
+    <p>这里是 main 内部</p>
+    <p>这里是 main 内部2</p>
+
+    <p slot="footer">这里是 footer 内部</p>
+</blog-post>
+··
+###插槽的默认内容
+在·<slot>·元素内添加内容可作为默认内容，如果在使用这个插件时提供了内容将会覆盖默认的，否则就显示默认的：
+··
+<button type="submit">
+    <slot>Submit</slot>
+</button>
+··
+###编译作用域
+
+#单文件组件
+##介绍
+通常在项目中使用·Vue.component·来定义全局组件，这在很多中小规模的项目中运作的很好，但当在更复杂的项目中，或者你的前端完全由 JavaScript 驱动的时候，下面这些缺点将变得非常明显：
+!!
+全局定义：强制要求每个 component 中的命名不得重复
+字符串模板：缺乏语法高亮，在 HTML 有多行的时候，需要用到丑陋的·\\·
+不支持 CSS：意味着当 HTML 和 JavaScript 组件化时，CSS 明显被遗漏
+没有构建步骤：限制只能使用 HTML 和 ES5 JavaScript, 而不能使用预处理器，如 Pug (formerly Jade) 和 Babel
+!!
+而文件扩展名为·.vue·的单文件组件为以上所有问题提供了解决方法，并且还可以使用 webpack 或 Browserify 等构建工具。
+###写法
+把 html、css、js 写到一个文件中，从而实现对组件的封装， 一个.vue 文件就是一个单独的组件：
+··
+<!-- html 部分，使用 <template> 标签包裹，同样使用一个最大父容器 -->
+<template>
+    <div class="hello">
+        <h1>{{msg}}</h1>
+    </div>
+</template>
+
+<!-- js 部分，使用 <script> 标签包裹，export default 表示导出该组件，这样在其他页面中用 import 可使用该组件 -->
+<script>
+    export default {
+        name: 'hello'
+        data() {
+            return {
+                msg: 'hello world!'
+            }
+        }
+    }
+</script>
+
+<!-- css 部分，使用 <style> 标签包裹，scoped 属性表示此样式只用于当前组件内 -->
+<style scoped>
+    h1 {
+        font-size: 20px;
+    }
+</style>
+··
+###怎么看待关注点分离？
+一个重要的事情值得注意，关注点分离不等于文件类型分离。
+在现代 UI 开发中，相比于把代码库分离成三大层次文件（html、css、js），把它们划分为松散耦合的组件再将其组合起来更合理一些。在一个组件里，其模板、逻辑和样式是内部耦合的，使得组件更加内聚且更可维护。
+即便你不喜欢单文件组件，你仍然可以把 JavaScript、CSS 分离成独立的文件然后做到热重载和预编译。比如：
+··
+<template>
+    <div>This will be pre-compiled</div>
+</template>
+<script src="./my-component.js"></script>
+<style src="./my-component.css"></style>
+··
+
+##Vue CLI
+Vue CLI 是一个基于 Vue.js 进行快速开发的完整系统，提供：交互式、快速、零配置、依赖可升级扩展、丰富的插件、图形界面
+Vue CLI 分为几个独立的部分：
+!!
+CLI：一个全局安装的 npm 包，提供了终端里的 vue 命令，包括 vue create、vue serve、vue ui等
+CLI 服务：一个开发环境依赖，也是一个 npm 包，局部安装在每个 @vue/cli 创建的项目中，基于 webpack
+CLI 插件：提供插件，名字以 @vue/cli-plugin- (内建插件) 或 vue-cli-plugin- (社区插件) 开头
+!!
+###全局安装
+··
+cnpm install -g @vue/cli
+··
+安装完成后可以访问·vue·命令，比如·vue -V·
+###使用命令
+创建新项目：
+··
+vue create hello-world
+··
+然后会提示选取一个 preset。直接按回车将选择默认的包含了基本的 Babel + ESLint 设置的 preset，也可以按上下键选“手动选择特性”来选取需要的特性
+如果安装出现这样的错误：
+··
+command failed: npm install --loglevel error --registry=https://registry.npm......
+··
+可以试试直接使用·cnpm·初始化：
+··
+vue create -r cnpm project-name
+··
+###使用图形化界面
+··
+vue ui
+··
+上述命令会打开一个浏览器窗口，并以图形化界面将你引导至项目创建的流程
+###运行
+初始化完毕后可在·package.json·中查看可使用的命令：
+··
+{
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
+    }
+}
+··
+在初始化的·README.md·中也可以看到，所以运行项目可使用命令：
+··
+npx vue-cli-service serve
+··
+或者：
+··
+npm run serve
+··
+然后在浏览器中打开
+··
+http://localhost:8080/
+··
+即可访问初始化的·index.html·
+
+##Vue CLI 配置
+有两种方式可以对项目进行配置：vue.config.js 和 package.json
+vue.config.js 是一个可选的配置文件，没有的话可以自行新建，这个文件应该导出一个包含了选项的对象：
+··
+module.exports = {
+    // 选项...
+}
+··
+package.json 中的 vue 字段，也是一个可选的配置选项，没有的话可以自行添加（注意格式）：
+··
+"vue": {
+    // 选项...
+}
+··
+当然如果需求比较多的话还是 vue.config.js 更方便，毕竟还可以添加语句，比如对 baseUrl 根据环境进行配置：
+··
+module.exports = {
+    baseUrl: process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/'
+}
+··
+可配置的参数有：
+!!
+baseUrl{String}[/]：运行·npm run build·打包后的引用资源的开头 url 路径
+outputDir{String}[dist]：运行·npm run build·打包后的输出路径，注意目标目录在构建之前会被清除（构建时传入 --no-clean 可关闭该行为）
+assetsDir{String}：放置生成的静态资源（js、css、img、fonts）的（相对于 outputDir 的）目录
+indexPath{String}[index.html]：指定生成的 index.html 的输出路径 (相对于 outputDir)，也可以是一个绝对路径
+filenameHashing{Boolean}[true]：通过 Vue CLI 生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存，如果不想使用带 hash 的 index.html 可设为 false 关闭
+pages{Object}：自定义  entry, template, filename, title 和 chunks 的配置
+lintOnSave{Boolean}[true]：是否在开发环境下通过 eslint-loader 在每次保存时 lint 代码。安装 @vue/cli-plugin-eslint 后生效
+runtimeCompiler{Boolean}[false]：是否使用包含运行时编译器的 Vue 构建版本
+transpileDependencies{StringArray/RegExpArray}：默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果想通过 Babel 显式转译某依赖，可以在这个选项中列出来
+productionSourceMap{Boolean}[true]：如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
+crossorigin{String}：设置生成的 HTML 中·<link rel="stylesheet">·和·<script>·标签的·crossorigin·属性
+integrity{Boolean}[false]：如果你构建后的文件是部署在 CDN 上的，启用该选项可在生成的 HTML 中的·<link rel="stylesheet">·和·<script>·标签上启用 Subresource Integrity (SRI)以提供额外的安全性
+configureWebpack{Object/Function}：webpack 配置方式，参考 @[配合 webpack > 简单的配置方式|https://cli.vuejs.org/zh/guide/webpack.html#%E7%AE%80%E5%8D%95%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F]
+css：
+    modules{Boolean}[false]：css 模块配置方式，参考 @[配合 CSS > CSS Modules|https://cli.vuejs.org/zh/guide/css.html#css-modules]
+    extract{Boolean/Object}：是否将组件中的 CSS 提取至一个独立的 CSS 文件中，而不是注入到 JavaScript 中的 inline 代码
+    sourceMap{Boolean}[false]：是否为 CSS 开启 source map。设置为 true 之后可能会影响构建的性能
+    loaderOptions{Object}：向 CSS 相关的 loader 传递选项，参考 @[向预处理器 Loader 传递选项|https://cli.vuejs.org/zh/guide/css.html#%E5%90%91%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8-loader-%E4%BC%A0%E9%80%92%E9%80%89%E9%A1%B9]
+devServer{Object}：所有 webpack-dev-server 的 @[选项|https://webpack.js.org/configuration/dev-server/] 都支持
+    proxy{Object/String}：将任何未知请求 (没有匹配到静态文件的请求) 代理到指定地址
+parallel{Boolean}：是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建
+pwa{Object}：向 @[PWA 插件|https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa] 传递选项
+pluginOptions{Object}：这是一个不进行任何 schema 验证的对象，可传递任何第三方插件选项
+!!
+
+##初始化项目分析
+默认初始化的项目目录结构是：
+!!
+node_modules/：npm 依赖包
+public/：公共文件
+    favicon.ico：网页标签 icon
+    index.html：入口文件
+src/：主文件
+    assets/：资源文件
+        logo.png：logo 图片
+    components/：Vue 组件
+        HelloWorld.vue：HelloWorld 组件
+    App.vue：入口组件
+    main.js：入口 js
+babel.config.js：babel 转换配置
+package.json：项目配置信息
+package-lock.json：node_modules/ 的依赖包信息
+README.md：项目说明文档
+!!
+###public/index.html
+该文件是一个会被 @[html-webpack-plugin|https://github.com/jantimon/html-webpack-plugin] 处理的模板，可以看到没有任何的 css 和 js 文件的引入，因此直接将该文件在浏览器中运行是什么都不会发生的，需运行·npm run dev·指令，在构建过程中对应的资源链接会被自动注入，或者运行·npm run build·将项目打包成静态文件后再在浏览器中运行查看
+###src/components/HelloWorld.vue
+该组件的有个 msg 的 props 作为标题，在使用该组件时传入 msg，其余都是静态页面
+###src/App.vue
+该组件作为入口组件
+··
+<template>
+    <div id="app">
+        <img alt="Vue logo" src="./assets/logo.png">
+        <!-- 使用 HelloWorld 组件，并传入 msg 这个 props 作为标题 -->
+        <HelloWorld msg="Welcome to Your Vue.js App"/>
+    </div>
+</template>
+
+<script>
+    // 引入 HelloWorld.vue 这个组件，并用 HelloWorld 这个变量表示它
+    import HelloWorld from './components/HelloWorld.vue'
+
+    // 导出本 App.vue 组件
+    export default {
+        name: 'app',	// 组件名为 app，该选项在单文件中不那么重要了，反正 import 时会重新命名
+        components: {	// 声明使用的组件
+            HelloWorld
+        }
+    }
+</script>
+··
+###src/main.js
+··
+import Vue from 'vue'	// 引入 Vue.js，并用 Vue 这个变量表示它
+import App from './App.vue'	// 引入 App.vue 这个组件，并用 App 这个变量表示它
+
+// 阻止 Vue 在启动时生成生产提示
+Vue.config.productionTip = false
+
+new Vue({
+    render: h => h(App)	// 渲染 App 这个组件，只包含运行时版只能使用渲染函数或包含编译器的构建，参考@[版本说明|https://cn.vuejs.org/v2/guide/installation.html#%E5%AF%B9%E4%B8%8D%E5%90%8C%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E8%A7%A3%E9%87%8A]
+}).$mount('#app')	// 挂载 el 为 index.html 中的 #app
+
+// 在渲染时 App.vue 中的内容会代替 index.html 中的 <div id="app"></div>
+··
+
+##Vue Router
+Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌。包含的功能有：
+!!
+嵌套的路由/视图表
+模块化的、基于组件的路由配置
+路由参数、查询、通配符
+基于 Vue.js 过渡系统的视图过渡效果
+细粒度的导航控制
+带有自动激活的 CSS class 的链接
+HTML5 历史模式或 hash 模式，在 IE9 中自动降级
+自定义的滚动条行为
+!!
+
+@@
+官方文档|https://cn.vuejs.org/v2/guide/
+Vue CLI|https://cli.vuejs.org/zh/guide/
+Vue Router|https://router.vuejs.org/zh/
+Vuex|https://vuex.vuejs.org/zh/
+Vue SSR|https://ssr.vuejs.org/zh/
+周边资源|https://github.com/vuejs/awesome-vue
+@@
+
+&2018/9/13
 `
