@@ -39,7 +39,7 @@ $.escapeSelector(selector)：转义选择器中的关键字·. # , : [ ] = @·
 也可以自定义加斜杠的方法：
 ··
 function jq(selector) {
-    return selector.replace(/[:\\.\\[\\],=@]/g, '\\\\$&')
+	return selector.replace(/[:\\.\\[\\],=@]/g, '\\\\$&')
 }
 
 $('#' + jq('#demo.text'))
@@ -85,17 +85,17 @@ prev~siblings：后面的元素，比如·$('#demo~.text')·，所有后面的�
 比如：
 ··
 <ul>
-    <li>A</li>
-    <li>B</li>
-    <li>C</li>
-    <li>D</li>
+	<li>A</li>
+	<li>B</li>
+	<li>C</li>
+	<li>D</li>
 </ul>
 <ul>
-    <p>P</p>
-    <li>E</li>
-    <li>F</li>
-    <li>G</li>
-    <li>H</li>
+	<p>P</p>
+	<li>E</li>
+	<li>F</li>
+	<li>G</li>
+	<li>H</li>
 </ul>
 
 $('li:nth-child(1)')	// A （必须是父元素的第一个子元素，所以没有 E）
@@ -196,16 +196,16 @@ $.grep(array, function(item, index) [, invert])：筛选元素或数组，·inve
 比如：
 ··
 <ul>
-    <li>A</li>
-    <li>B</li>
-    <li class="mark">C</li>
-    <li class="mark">D</li>
+	<li>A</li>
+	<li>B</li>
+	<li class="mark">C</li>
+	<li class="mark">D</li>
 </ul>
 
 $('li').filter('.mark')	// C, D
 $('li').filter(':odd')	// B, D
 $('li').filter(function (index) {	// A, D
-    return index % 3 === 0
+	return index % 3 === 0
 })
 ··
 ###.slice(start [, end])
@@ -262,15 +262,15 @@ $('li').filter(function (index) {	// A, D
 比如：
 ··
 <ul>
-    <li>AAA</li>
-    <li>BBB <span>bbb</span></li>
-    <li class="mark">CCC</li>
-    <li class="mark">DDD <span>ddd</span></li>
+	<li>AAA</li>
+	<li>BBB <span>bbb</span></li>
+	<li class="mark">CCC</li>
+	<li class="mark">DDD <span>ddd</span></li>
 </ul>
 
 $('li').is('.mark')	// true
 $('ul').on('click', function (event) {
-    $(event.target).is('li') && $(event.target).css('color', 'red')	// 点击 span 不会触发
+	$(event.target).is('li') && $(event.target).css('color', 'red')	// 点击 span 不会触发
 })
 ··
 
@@ -292,7 +292,7 @@ $.cssNumber：在用 .css() 设置数值时哪些属性不用加 px
 ··
 // index 为当前元素在所有匹配的元素即 $('.demo') 的索引值，currentClass 为当前元素的类名
 $('.demo').addClass(function (index, currentClass) {
-    return 'active'	// 返回结果表示要添加的类名，可以是字符串或方法函数
+	return 'active'	// 返回结果表示要添加的类名，可以是字符串或方法函数
 })
 ··
 ###.removeClass([className]/function)
@@ -327,16 +327,16 @@ state ? $('.demo').addClass(className/function) : $('.demo').removeClass(classNa
 ··
 // index 为当前元素在所有匹配的元素即 $('.demo') 的索引值，style 为当前元素所设置属性的原有的样式值
 $('.demo').css('width', function (index, style) {
-    return '100px'
+	return '100px'
 })
 ··
 同时设置多个属性用键值对表示，键名可以不用引号，但包含连字符时必须得用引号
 比如：
 ··
 $('.demo').css({
-    'color': '#f00',
-    'background-color': '#f80',
-    'font-size': '18px'
+	'color': '#f00',
+	'background-color': '#f80',
+	'font-size': '18px'
 })
 ··
 ###$.cssHooks
@@ -373,8 +373,8 @@ $('.demo').css({
 比如：
 ··
 $('.demo').attr({
-    'title': 'hello world',
-    'alt': '好啊好啊'
+	'title': 'hello world',
+	'alt': '好啊好啊'
 })
 ··
 ###.removeAttr(attributeName)
@@ -539,42 +539,42 @@ $('.demo').wrap('<div class="test"></div>')
 
 // 变成
 <div class="test">
-    <div class="demo"></div>
+	<div class="demo"></div>
 </div>
 <div class="test">
-    <div class="demo"></div>
+	<div class="demo"></div>
 </div>
 ··
 添加多个外层标签
 ··
 <div class="test">
-    <div class="first"></div>
-    <div class="second">
-        <div class="child"></div>
-    </div>
-    <div class="third"></div>
+	<div class="first"></div>
+	<div class="second">
+		<div class="child"></div>
+	</div>
+	<div class="third"></div>
 </div>
 
 $('.demo').wrap('.test')
 
 // 变成
 <div class="test">
-    <div class="first">
-        <div class="demo"></div>
-    </div>
-    <div class="second">
-        <div class="child"></div>
-    </div>
-    <div class="third"></div>
+	<div class="first">
+		<div class="demo"></div>
+	</div>
+	<div class="second">
+		<div class="child"></div>
+	</div>
+	<div class="third"></div>
 </div>
 <div class="test">
-    <div class="first">
-        <div class="demo"></div>
-    </div>
-    <div class="second">
-        <div class="child"></div>
-    </div>
-    <div class="third"></div>
+	<div class="first">
+		<div class="demo"></div>
+	</div>
+	<div class="second">
+		<div class="child"></div>
+	</div>
+	<div class="third"></div>
 </div>
 ··
 ###wrapAll(element/function(index))
@@ -591,8 +591,8 @@ $('.demo').wrap('<div class="test"></div>')
 
 // 变成
 <div class="test">
-    <div class="demo"></div>
-    <div class="demo"></div>
+	<div class="demo"></div>
+	<div class="demo"></div>
 </div>
 <div class="middle"></div>
 ··
@@ -608,10 +608,10 @@ $('.demo').wrapInner('<div class="test"></div>')
 
 // 变成
 <div class="demo">
-    <div class="test">123 <i></i></div>
+	<div class="test">123 <i></i></div>
 </div>
 <div class="demo">
-    <div class="test">123 <i></i></div>
+	<div class="test">123 <i></i></div>
 </div>
 ··
 ###.unwrap([selector])
@@ -637,12 +637,12 @@ $('.demo').wrapInner('<div class="test"></div>')
 <div class="demo detach">detach</div>
 
 $('.demo').on('click', function () {
-    console.log(123)
+	console.log(123)
 })
 var remove = $('.remove').remove()	// 再次被添加无点击效果
 var detach = $('.detach').detach()	// 再次被添加有点击效果
 $('input').on('click', function () {
-    $(this).after(remove, detach)
+	$(this).after(remove, detach)
 })
 ··
 ###.empty()
@@ -713,10 +713,10 @@ $('.demo').removeClass('active').pushStack($('p')).remove().end().addClass('acti
 比如：
 ··
 <div class="demo">
-    <div class="first">
-        <div class="child"></div>
-    </div>
-    <div class="second"></div>
+	<div class="first">
+		<div class="child"></div>
+	</div>
+	<div class="second"></div>
 </div>
 
 $('.demo').find('.first').end()	// .demo
@@ -735,7 +735,7 @@ $('.demo').find('.first').removeClass('active').end().find('.second').addClass('
 比如：
 ··
 $('.demo').each(function (index, item) {
-    console.log($(this).css('color'))
+	console.log($(this).css('color'))
 })
 ··
 
@@ -749,9 +749,9 @@ $('.demo').each(function (index, item) {
 比如：
 ··
 const res = $('input')
-    .map((index, item) => $(item).val())
-    .get() // 此时返回的仍是一个 jQuery 包装的数组，用 .get() 可转为原生数组
-    .join(', ')
+	.map((index, item) => $(item).val())
+	.get() // 此时返回的仍是一个 jQuery 包装的数组，用 .get() 可转为原生数组
+	.join(', ')
 $('p').text(res)
 ··
 
@@ -773,40 +773,40 @@ handler{Function}：事件触发时执行的函数
 快捷写法支持的事件包括：
 !!
 鼠标：
-    click：左键点击
-    contextmenu：右键点击
-    dblclick：左键双击
-    mousedown：左键或右键按下
-    mouseup：左键或右键松开
-    mouseover：当指针覆盖元素时（冒泡）
-    mouseout：当指针离开元素时（冒泡）
-    mouseenter：当指针覆盖元素时（不冒泡）
-    mouseleave：当指针离开元素时（不冒泡）
-    hover(fn(e), fn(e))：当指针覆盖和离开时，等同于.mouseenter(fn(e)).mouseleave(fn(e))
+	click：左键点击
+	contextmenu：右键点击
+	dblclick：左键双击
+	mousedown：左键或右键按下
+	mouseup：左键或右键松开
+	mouseover：当指针覆盖元素时（冒泡）
+	mouseout：当指针离开元素时（冒泡）
+	mouseenter：当指针覆盖元素时（不冒泡）
+	mouseleave：当指针离开元素时（不冒泡）
+	hover(fn(e), fn(e))：当指针覆盖和离开时，等同于.mouseenter(fn(e)).mouseleave(fn(e))
 键盘：
-    keydown：按下按键时，如果不抬起来会一直触发（input 和 textarea 元素中）
-    keyup：松开按键时（input 和 textarea 元素中）
-    keypress：按下按键时，不抬起来也只触发一次，且只有字母、数字、符号键和 enter 键按下能触发（input 和 textarea 元素中）
+	keydown：按下按键时，如果不抬起来会一直触发（input 和 textarea 元素中）
+	keyup：松开按键时（input 和 textarea 元素中）
+	keypress：按下按键时，不抬起来也只触发一次，且只有字母、数字、符号键和 enter 键按下能触发（input 和 textarea 元素中）
 表单：
-    focus：获得焦点（不冒泡），设置 tabindex 属性也可获得焦点
-    blur：失去焦点（不冒泡）
-    focusin：获得焦点（冒泡）
-    focusout：失去焦点（冒泡）
-    select：选中完文本时（input 和 textarea 元素中）
-    change：元素的值改变的时（input、 textarea 和 select 元素中）
+	focus：获得焦点（不冒泡），设置 tabindex 属性也可获得焦点
+	blur：失去焦点（不冒泡）
+	focusin：获得焦点（冒泡）
+	focusout：失去焦点（冒泡）
+	select：选中完文本时（input 和 textarea 元素中）
+	change：元素的值改变的时（input、 textarea 和 select 元素中）
 浏览器：
-    resize：当浏览器的尺寸改变（在·$(window)·上绑定 ），不同浏览器略有不同，例如 Chrome 是改变时持续调用，Opera 在改变后调用
-    scroll：页面滚动时触发（在·$(window)·或滚动容器上绑定），鼠标点击或拖动滚动条、按箭头键、或使用鼠标的滚轮都可能触发
+	resize：当浏览器的尺寸改变（在·$(window)·上绑定 ），不同浏览器略有不同，例如 Chrome 是改变时持续调用，Opera 在改变后调用
+	scroll：页面滚动时触发（在·$(window)·或滚动容器上绑定），鼠标点击或拖动滚动条、按箭头键、或使用鼠标的滚轮都可能触发
 文档加载：
-    ready：写法·$(fn)·，当文档准备就绪时（其他写法都已弃用，例如·$(document).on('ready', fn)·，实际上·$(document)·什么也没选择）
-    $.holdReady(Boolean)：延迟 ready 事件的触发，在 ready 事件触发前调用，例如先执行·$.holdReady(true)·，即使文档准备就绪也不会触发·$(fn)·，需再执行·$.holdReady(false)·才触发·$(fn)·
+	ready：写法·$(fn)·，当文档准备就绪时（其他写法都已弃用，例如·$(document).on('ready', fn)·，实际上·$(document)·什么也没选择）
+	$.holdReady(Boolean)：延迟 ready 事件的触发，在 ready 事件触发前调用，例如先执行·$.holdReady(true)·，即使文档准备就绪也不会触发·$(fn)·，需再执行·$.holdReady(false)·才触发·$(fn)·
 !!
 ·$.holdReady(Boolean)·例如：
 ··
 // 延迟就绪事件，直到已加载插件
 $.holdReady(true)
 $.getScript('myplugin.js', function () {
-    $.holdReady(false)
+	$.holdReady(false)
 })
 ··
 
@@ -843,13 +843,13 @@ extraParameters{Array/Object}：传递给事件函数的参数
 所有以事件名为调用的方法都是该事件的快捷写法，比如·.click()·等同于·.trigger('click')·，trigger 的快捷写法支持的事件同·on()·的支持
 ··
 $('#btn1').click(function (e, a, b) {
-    console.log(e, a, b)
+	console.log(e, a, b)
 })
 
 // 点击 btn2 同时触发 btn1
 $('#btn2').click(function () {
-    console.log('222')
-    $('#btn1').click(['aaa', 'bbb'])
+	console.log('222')
+	$('#btn1').click(['aaa', 'bbb'])
 })
 ··
 
@@ -912,21 +912,21 @@ easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear�
 queue{Boolean/String}[true]：是否将动画放置在效果队列中，若设为 false 将立即开始动画，若设为一个字符串则表示为该动画队列加上名称，执行时只是加入队列中，动画不会立即启动，执行该队列需调用·$(selector).dequeue('queuename')·才会启动，例如·$('.demo').animate({width: 200}).hide({queue: true})·表示先改变宽度再隐藏，设为 false 将立即隐藏
 specialEasing{Object}：分别为属性定义运动曲线，例如·{ width: 'linear', height: 'swing' }·
 step{Function(now, tween)}：每个动画元素的每个动画属性在每帧调用的函数
-    now{Number}：当前帧的属性值
-    tween{Object}：当前帧的属性
-        easing{String}：当前属性应用的运动曲线
-        elem{Element}：当前动画的元素
-        prop{String}：当前动画的 css 属性名
-        start{Number}：当前动画的起始值
-        end{Number}：当前动画的目标值
-        now{Number}：字面上理解是当前动画的当前值？为何和 end 一样
-        pos{Number}：1 ？为何总是 1
-        unit{String}：属性单位，默认 px
-        options{Object}：其他属性，例如 duration 和 queue
+	now{Number}：当前帧的属性值
+	tween{Object}：当前帧的属性
+		easing{String}：当前属性应用的运动曲线
+		elem{Element}：当前动画的元素
+		prop{String}：当前动画的 css 属性名
+		start{Number}：当前动画的起始值
+		end{Number}：当前动画的目标值
+		now{Number}：字面上理解是当前动画的当前值？和 end 一样
+		pos{Number}：1 ？总是 1
+		unit{String}：属性单位，默认 px
+		options{Object}：其他属性，例如 duration 和 queue
 progress{Function(animation, progress, remainingMs)}：每帧动画完成后调用的一个函数
-    animation{Object}：当前动画的属性，比如当前动画的元素、duration
-    progress{Number}：当前动画的进度，范围 0~1
-    remainingMs{Number}：当前动画剩余的时间，单位 ms
+	animation{Object}：当前动画的属性，比如当前动画的元素、duration
+	progress{Number}：当前动画的进度，范围 0~1
+	remainingMs{Number}：当前动画剩余的时间，单位 ms
 complete{Function}：在动画完成时要执行的函数
 done{Function(animation, jumpedToEnd)}：在动画完成时要执行的函数（Promise 对象状态已完成）
 fail{Function(animation, jumpedToEnd)}：动画失败完成时执行的函数（Promise 对象状态未完成）
@@ -945,10 +945,10 @@ always{Function(animation, jumpedToEnd)}：在动画完成或未完成情况下�
 .fadeIn()：以改变透明度的形式渐渐显示元素，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
 .fadeToggle()：如果元素显示就淡出，隐藏就淡入，不传参数默认动画时长 400ms，其他参数用法同·.hide()·
 .fadeTo(duration, opacity [, easing] [, complete])：仅改变元素的透明度
-    duration{Number/String}：动画持续时间，单位 ms，可选 normal(400)、fast(200)、slow(600)
-    opacity{Number}：目标透明度，范围 0~1
-    easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear
-    complete{Function}：在动画完成时要执行的函数
+	duration{Number/String}：动画持续时间，单位 ms，可选 normal(400)、fast(200)、slow(600)
+	opacity{Number}：目标透明度，范围 0~1
+	easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear
+	complete{Function}：在动画完成时要执行的函数
 !!
 
 ##滑动
@@ -967,25 +967,25 @@ always{Function(animation, jumpedToEnd)}：在动画完成或未完成情况下�
 可以提供一个以 += 或 -= 开始的字符串值，那么目标值就是以这个属性的当前值加上或者减去给定的数字来计算的
 ··
 $('.demo').animate({
-    width: 200,
-    height: '+=50',
-    lateX: 400 // 自定义的值将从 0 开始变化，在 step 方法中使用
+	width: 200,
+	height: '+=50',
+	lateX: 400 // 自定义的值将从 0 开始变化，在 step 方法中使用
 }, {
-    duration: 1000,
-    specialEasing: {
-        width: 'linear',
-        height: 'swing'
-    },
-    step: function (now, tween) {
-        if (tween.prop == 'lateX') {
-            $(this).css('transform', 'translateX(' + now + 'px)')
-        }
-    },
-    progress: function (an, pro, ms) {
-        if (pro > 0.5) {
-            console.log('动画进行了一半')
-        }
-    }
+	duration: 1000,
+	specialEasing: {
+		width: 'linear',
+		height: 'swing'
+	},
+	step: function (now, tween) {
+		if (tween.prop == 'lateX') {
+			$(this).css('transform', 'translateX(' + now + 'px)')
+		}
+	},
+	progress: function (an, pro, ms) {
+		if (pro > 0.5) {
+			console.log('动画进行了一半')
+		}
+	}
 })
 ··
 
@@ -1031,22 +1031,22 @@ callback{Function}：要添加进队列的函数
 在当前动画队列最后执行的函数
 ··
 $('.demo').queue(function () {
-    console.log(123) // 当前元素的所有动画执行完毕之后打印 123
-    $(this).dequeue() // 继续执行其他队列
+	console.log(123) // 当前元素的所有动画执行完毕之后打印 123
+	$(this).dequeue() // 继续执行其他队列
 })
 ··
 
 ##其他
 !!
 .finish([queue])：立即完成所有动画
-    queue{String}[fx]：指定要完成动画队列的名称
+	queue{String}[fx]：指定要完成动画队列的名称
 .delay(duration [, queue])：延迟动画
-    duration{Number/String}：动画要延迟的时间，单位 ms，可选 fast(200)、slow(600)
-    queue{String}[fx]：指定延迟的动画队列的名称
+	duration{Number/String}：动画要延迟的时间，单位 ms，可选 fast(200)、slow(600)
+	queue{String}[fx]：指定延迟的动画队列的名称
 .dequeue([queueName])：执行队列
-    queueName{String}[fx]：指定要执行的动画队列的名称
+	queueName{String}[fx]：指定要执行的动画队列的名称
 .clearQueue([queueName])：删除所有未执行的动画队列，等同于·.queue([])·
-    queueName{String}[fx]：指定要删除的动画队列的名称
+	queueName{String}[fx]：指定要删除的动画队列的名称
 $.queue()：·.queue()·的另一种写法，元素作为第一个参数
 $.dequeue()：·.dequeue()·的另一种写法，元素作为第一个参数
 jQuery.fx.off{Boolean}[false]：全局禁用所有动画，即立即完成动画
@@ -1064,13 +1064,13 @@ method{String}[GET]：请求方法（1.9.0 之前的版本需使用 type）
 data{Object/Array/String}：携带的数据，会转换成查询字符串（字符串类型不转换），若包含数组如·{a: [1, 2]}·将转换为·a=1&a=2·
 processData{Boolean}[true]：是否将 data 转换成查询字符串
 dataType{String}[通过 MIME 类型的响应信息来判断]：指定返回的数据类型，可用的类型有：
-    text：纯文本字符串
-    xml： XML 文档
-    html：HTML 文本
-    script：执行该脚本并将该脚本以文本形式返回
-    json：JSON 格式，如果是不规范的 JSON 格式将报错
-    jsonp：跨域请求 JSON 数据，会在请求的 url 最后添加·&callback=jQuery随机数_TIMESTAMP·，并附加查询字符串变量·&_=[TIMESTAMP]·
-    多个用空格分割的值：例如将 jsonp 以 text 接受并以 xml 解析使用·jsonp text xml·或简写·jsonp xml·
+	text：纯文本字符串
+	xml： XML 文档
+	html：HTML 文本
+	script：执行该脚本并将该脚本以文本形式返回
+	json：JSON 格式，如果是不规范的 JSON 格式将报错
+	jsonp：跨域请求 JSON 数据，会在请求的 url 最后添加·&callback=jQuery随机数_TIMESTAMP·，并附加查询字符串变量·&_=[TIMESTAMP]·
+	多个用空格分割的值：例如将 jsonp 以 text 接受并以 xml 解析使用·jsonp text xml·或简写·jsonp xml·
 
 jsonp{String/Boolean}：在 jsonp 请求中指定·&callback=jQuery随机数_TIMESTAMP·的·callback·为新名称，设为 false 将不添加该 callback
 jsonpCallback{String/Function}：在 jsonp 请求中指定·&callback=jQuery随机数_TIMESTAMP·的·jQuery随机数_TIMESTAMP·为新名称
@@ -1083,7 +1083,7 @@ scriptCharset{String}：在请求·script·脚本时设置其·charset·属性
 timeout{Number}：设置请求超时时间，单位毫秒
 
 converters{Object}：将返回的原始数据转换为 js 对象，每个转换器的值是一个函数
-    默认为·{"* text": window.String, "text html": true, "text json": jQuery.parseJSON, "text xml": jQuery.parseXML}·
+	默认为·{"* text": window.String, "text html": true, "text json": jQuery.parseJSON, "text xml": jQuery.parseXML}·
 accepts{Object}[取决于 dataType]：dataType 的 MIME 类型，可自定义（下方有举例）
 cache{Boolean}[true(dataType 为 script/jsonp 时为 false)]：是否缓存此页面
 contents{Object}：一个以"{字符串/正则表达式}"配对的对象，根据给定的内容类型，解析请求的返回结果
@@ -1106,35 +1106,35 @@ complete{Function(jqXHR, textStatus)}：请求完成的回调函数，也可以�
 ··
 // accepts
 $.ajax({
-    accepts: {
-        mycustomtype: 'application/x-some-custom-type'
-    },
-    // 补充返回的数据的转换方法
-    converters: {
-        'text mycustomtype': function(result) {
-            // parse code
-            return newresult
-        }
-    },
-    dataType: 'mycustomtype'
+	accepts: {
+		mycustomtype: 'application/x-some-custom-type'
+	},
+	// 补充返回的数据的转换方法
+	converters: {
+		'text mycustomtype': function(result) {
+			// parse code
+			return newresult
+		}
+	},
+	dataType: 'mycustomtype'
 })
 
 // context
 $.ajax({
-    url: 'test.html',
-    context: document.body,
-    success: function () {
-        console.log(this) // body 元素
-    }
+	url: 'test.html',
+	context: document.body,
+	success: function () {
+		console.log(this) // body 元素
+	}
 })
 
 // statusCode
 $.ajax({
-    statusCode: {
-        404: function() {
-            alert('page not found')
-        }
-    }
+	statusCode: {
+		404: function() {
+			alert('page not found')
+		}
+	}
 })
 ··
 
@@ -1161,20 +1161,20 @@ $.post()：post 请求
 可使用和·$.ajax()·一样的对象参数，或快捷写法·.get(url [, data] [, success] [, dataType])·，等同于：
 ··
 $.ajax({
-    url: url,
-    data: data,
-    success: success,
-    dataType: dataType
+	url: url,
+	data: data,
+	success: success,
+	dataType: dataType
 })
 ··
 ###$.getJSON()
 ·$.getJSON(url [, data] [, success(data, textStatus, jqXHR)])·，如果 url 包含字符串·callback=?·将被视为·jsonp·请求，等同于：
 ··
 $.ajax({
-    dataType: 'json',
-    url: url,
-    data: data,
-    success: success
+	dataType: 'json',
+	url: url,
+	data: data,
+	success: success
 })
 ··
 
@@ -1182,20 +1182,20 @@ $.ajax({
 ·$.getScript(url [, success(script, textStatus, jqXHR)])·，等同于：
 ··
 $.ajax({
-    dataType: 'script',
-    url: url,
-    success: success
+	dataType: 'script',
+	url: url,
+	success: success
 })
 ··
 ###$.post()
 可使用和·$.ajax()·一样的对象参数，或快捷写法·$.post(url [, data] [, success] [, dataType])·，等同于：
 ··
 $.ajax({
-    method: 'POST',
-    url: url,
-    data: data,
-    success: success,
-    dataType: dataType
+	method: 'POST',
+	url: url,
+	data: data,
+	success: success,
+	dataType: dataType
 })
 ··
 ###.load()
@@ -1235,13 +1235,13 @@ traditional{Boolean}[false]：是否以传统的方式来序列化数据
 注意此方法能力有限，对嵌套的对象或数组可能达不到预期
 ··
 const obj = {
-    a: {
-        one: 1,
-        two: 2,
-        three: 3
-    },
-    b: [1, 2, 3],
-    c: 'ss'
+	a: {
+		one: 1,
+		two: 2,
+		three: 3
+	},
+	b: [1, 2, 3],
+	c: 'ss'
 }
 
 console.log($.param(obj))
@@ -1274,8 +1274,8 @@ objectN：被合并的对象，如果目标对象和被合并对象有相同的�
 !!
 ··
 let obj = {
-    name: 'abc',
-    add: 'xyz'
+	name: 'abc',
+	add: 'xyz'
 }
 let newObj = $.extend({}， obj)
 ··
@@ -1283,12 +1283,12 @@ let newObj = $.extend({}， obj)
 将自定义对象合并到 jQuery 对象中
 ··
 $.extend({
-    check: function () {
-        return this.each(function () { this.checked = true })
-    },
-    uncheck: function () {
-        return this.each(function () { this.checked = false })
-    }
+	check: function () {
+		return this.each(function () { this.checked = true })
+	},
+	uncheck: function () {
+		return this.each(function () { this.checked = false })
+	}
 })
 
 $('input[type=checkbox]').check()
@@ -1298,72 +1298,72 @@ $('input[type=checkbox]').check()
 ··
 // jQuery 源码
 jQuery.extend = jQuery.fn.extend = function() {
-    var options, name, src, copy, copyIsArray, clone,
-        target = arguments[ 0 ] || {},
-        i = 1,
-        length = arguments.length,
-        deep = false;
+	var options, name, src, copy, copyIsArray, clone,
+		target = arguments[ 0 ] || {},
+		i = 1,
+		length = arguments.length,
+		deep = false;
 
-    // 判断是否需要深拷贝
-    if ( typeof target === "boolean" ) {
-        deep = target;
+	// 判断是否需要深拷贝
+	if ( typeof target === "boolean" ) {
+		deep = target;
 
-        // 目标对象改为第二个参数
-        target = arguments[ i ] || {};
-        i++;
-    }
+		// 目标对象改为第二个参数
+		target = arguments[ i ] || {};
+		i++;
+	}
 
-    // 当目标不是个对象或函数时则视为一个空对象
-    if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
-        target = {};
-    }
+	// 当目标不是个对象或函数时则视为一个空对象
+	if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
+		target = {};
+	}
 
-    // 如果只传递一个参数将目标对象当作 jQuery 本身，即表示这是在 jQuery 上扩展新属性
-    if ( i === length ) {
-        target = this;
-        i--;
-    }
+	// 如果只传递一个参数将目标对象当作 jQuery 本身，即表示这是在 jQuery 上扩展新属性
+	if ( i === length ) {
+		target = this;
+		i--;
+	}
 
-    // 循环被合并的对象
-    for ( ; i < length; i++ ) {
+	// 循环被合并的对象
+	for ( ; i < length; i++ ) {
 
-        // options 代表每项，null/undefined 不处理
-        if ( ( options = arguments[ i ] ) != null ) {
+		// options 代表每项，null/undefined 不处理
+		if ( ( options = arguments[ i ] ) != null ) {
 
-            // name 代表每项的每个属性
-            for ( name in options ) {
-                src = target[ name ]; // 目标对象的同属性的属性值
-                copy = options[ name ]; // 被合并对象的当前属性值
+			// name 代表每项的每个属性
+			for ( name in options ) {
+				src = target[ name ]; // 目标对象的同属性的属性值
+				copy = options[ name ]; // 被合并对象的当前属性值
 
-                // 防止无限循环，当目标对象和被合并对象的属性值相等 ???
-                if ( target === copy ) {
-                    continue;
-                }
+				// 防止无限循环，当目标对象和被合并对象的属性值相等 ???
+				if ( target === copy ) {
+					continue;
+				}
 
-                // 如果是深拷贝，并且是个对象或数组则进行递归拷贝，copyIsArray 代表当前是个数组
-                if ( deep && copy && ( jQuery.isPlainObject( copy ) || ( copyIsArray = Array.isArray( copy ) ) ) ) {
+				// 如果是深拷贝，并且是个对象或数组则进行递归拷贝，copyIsArray 代表当前是个数组
+				if ( deep && copy && ( jQuery.isPlainObject( copy ) || ( copyIsArray = Array.isArray( copy ) ) ) ) {
 
-                    if ( copyIsArray ) {
-                        copyIsArray = false;
-                        clone = src && Array.isArray( src ) ? src : [];
-                        // 当目标对象的当前属性值不是数组或对象时用空数组或空对象代替，因为被合并对象的当前属性值是对象或数组
-                    } else {
-                        clone = src && jQuery.isPlainObject( src ) ? src : {};
-                    }
+					if ( copyIsArray ) {
+						copyIsArray = false;
+						clone = src && Array.isArray( src ) ? src : [];
+						// 当目标对象的当前属性值不是数组或对象时用空数组或空对象代替，因为被合并对象的当前属性值是对象或数组
+					} else {
+						clone = src && jQuery.isPlainObject( src ) ? src : {};
+					}
 
-                    // 递归调用自身拷贝子对象或数组
-                    target[ name ] = jQuery.extend( deep, clone, copy );
+					// 递归调用自身拷贝子对象或数组
+					target[ name ] = jQuery.extend( deep, clone, copy );
 
-                // 如果是浅拷贝则直接赋值，值为 undefined 时不合并
-                } else if ( copy !== undefined ) {
-                    target[ name ] = copy;
-                }
-            }
-        }
-    }
+				// 如果是浅拷贝则直接赋值，值为 undefined 时不合并
+				} else if ( copy !== undefined ) {
+					target[ name ] = copy;
+				}
+			}
+		}
+	}
 
-    // 返回改变后的目标对象
-    return target;
+	// 返回改变后的目标对象
+	return target;
 };
 ··
 
@@ -1374,7 +1374,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 // 用闭包重新使用 $
 $.noConflict()
 (function ($) {
-    // code
+	// code
 })(jQuery)
 
 // 用 _ 代替 $ 和 jQuery
@@ -1419,13 +1419,13 @@ deferred.then(function (即 jqXHR.done), function(即 jqXHR.fail))：包含·.do
 deferred.catch(function (即 jqXHR.fail))：等同于·deferred.then(null, fn)·
 
 deferred.progress(progressCallbacks, progressCallbacks)：当 Deferred（延迟）对象生成正在执行中的进度通知时，调用添加处理程序
-    progressCallbacks{Function/Array Function}：当 Deferred（延迟）对象生成正在执行中的进度通知时被调用
-    progressCallbacks{Function/Array Function}：附加的函数
+	progressCallbacks{Function/Array Function}：当 Deferred（延迟）对象生成正在执行中的进度通知时被调用
+	progressCallbacks{Function/Array Function}：附加的函数
 deferred.notify(args)：调用 Deferred（延迟）对象上进行中的回调 （progressCallbacks）
-    args{Object}：传递参数给进行中的回调
+	args{Object}：传递参数给进行中的回调
 deferred.notifyWith(context [, args])：调用 Deferred（延迟）对象上进行中的回调（progressCallbacks）
-    context{Object}：Context（上下文） 作为 this 对象传递给进行中的回调（progressCallbacks）
-    args{Array}：一个可选的参数数组传递给进行中的回调（progressCallbacks）
+	context{Object}：Context（上下文） 作为 this 对象传递给进行中的回调（progressCallbacks）
+	args{Array}：一个可选的参数数组传递给进行中的回调（progressCallbacks）
 deferred.resolve(args)：调用成功的回调函数，参数同 notify
 deferred.resolveWith(context [, args])：调用成功的回调函数，参数同 notifyWith
 deferred.reject(args)：调用失败的回调函数，参数同 notify
@@ -1434,16 +1434,16 @@ deferred.state()：返回一个字符串，表示 Deferred（延迟）对象的�
 
 deferred.promise()：返回 Deferred（延迟）的 Promise（承诺）对象
 .promise([type] [, target])：为 DOM 绑定延迟对象，通常用于动画中
-    type{String}[fx]：需要待观察队列类型
-    target{Object}[fx]：将要绑定 promise 方法的对象
+	type{String}[fx]：需要待观察队列类型
+	target{Object}[fx]：将要绑定 promise 方法的对象
 $.when()：可让零到多个延迟对象执行延迟方法
 !!
 ###deferred.promise()
 ··
 const obj = {
-    hello: function (name) {
-        alert('Hello' + name )
-    }
+	hello: function (name) {
+		alert('Hello' + name )
+	}
 }
 const defer = $.Deferred() // 创建延时对象
 
@@ -1451,7 +1451,7 @@ defer.promise(obj) // 创建 promise
 defer.resolve('John') // 调用成功
 
 obj.done(function(name) {
-    obj.hello(name) // 先 John
+	obj.hello(name) // 先 John
 }).hello('Karl') // 后 Karl
 ··
 
@@ -1459,9 +1459,9 @@ obj.done(function(name) {
 ··
 // 当前所有动画完成后触发 done
 $('div').each(function(i) {
-    $(this).fadeIn().fadeOut(1000 * (i+1))
+	$(this).fadeIn().fadeOut(1000 * (i+1))
 }).promise().done(function () {
-    console.log('finfsh!')
+	console.log('finfsh!')
 })
 ··
 ###$.when()
@@ -1470,18 +1470,18 @@ $('div').each(function(i) {
 ··
 // 都请求成功触发 successFn，任意一个失败触发 failFn
 $.when($.ajax('/page1'), $.ajax('/page2'))
-    .then(successFn, failFn)
+	.then(successFn, failFn)
 ··
 
 ##回调对象
 管理回调函数列表
 !!
 $.Callbacks(flags)：创建回调对象
-    flags：回调对象的配置，以空格隔开的字符串，支持的参数有：
-        once：回调列表只执行第一次，即只执行第一个·fire()·
-        memory：将添加到这个列表的后面的最新的回调立即执行
-        unique：不添加重复的回调
-        stopOnFalse：当一个回调返回·false·时中断调用
+	flags：回调对象的配置，以空格隔开的字符串，支持的参数有：
+		once：回调列表只执行第一次，即只执行第一个·fire()·
+		memory：将添加到这个列表的后面的最新的回调立即执行
+		unique：不添加重复的回调
+		stopOnFalse：当一个回调返回·false·时中断调用
 callbacks.add(callbacks)：添加一个函数或数组函数到回调列表
 callbacks.fire(arguments)：传入一个参数并调用所有回调函数
 callbacks.fireWith([context] [, args])：传入一个上下文（·this·）和一个参数并调用所有回调函数

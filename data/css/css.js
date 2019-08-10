@@ -201,6 +201,17 @@ font-variant[normal]：字体变形，复合属性，例如设置字体为小型
 其他不常用属性参考 @[MDN <font>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/font]
 !!
 
+@font-face
+
+
+##white-space
+处理空白
+!!
+normal[默认]：连续的空格符会被合并，换行符会被当作空格符来处理
+nowrap：连续的空格符会被合并，忽略换行符
+pre：保留所有空格符和换行符
+!!
+
 #图像系列
 
 ##background

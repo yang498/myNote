@@ -164,6 +164,156 @@ false /¿ '5' // 0
 + [] // 0
 ··
 
+#JSON
+
+##JSON 格式
+JSON 格式（JavaScript Object Notation）是一种用于数据交换的文本格式，2001年由 Douglas Crockford 提出，目的是取代繁琐笨重的 XML 格式
+书写规范：
+!!
+复合类型的值只能是数组或对象，不能是函数、正则表达式对象、日期对象
+原始类型的值只有字符串、数值（十进制）、布尔值和·null·（不能使用·NaN·, ·Infinity·, ·-Infinity·和·undefined·）
+字符串必须使用双引号表示，不能使用单引号
+对象的键名必须使用双引号
+数组或对象最后一个成员的后面，不能加逗号
+!!
+··
+["one", "two", "three"]
+
+{ "one": 1, "two": 2, "three": 3 }
+
+{"names": ["张三", "李四"] }
+
+[ { "name": "张三"}, {"name": "李四"} ]
+··
+
+##JSON 对象
+·JSON·对象是 JavaScript 的原生对象，用来处理 JSON 格式数据。它有两个静态方法：·JSON.stringify()·和·JSON.parse()·
+
+##JSON.stringify()
+将 JSON 对象转为 JSON 字符串：·JSON.stringify(obj, propArr/fn, format)·
+··
+JSON.stringify('abc') // ""abc""
+JSON.stringify(1) // "1"
+JSON.stringify(false) // "false"
+JSON.stringify([]) // "[]"
+JSON.stringify({}) // "{}"
+
+JSON.stringify([1, "false", false])
+// '[1,"false",false]'
+
+JSON.stringify({ name: "张三" })
+// '{"name":"张三"}'
+
+// 不符合规范的值会被忽略
+var obj = {
+    a: undefined,
+    b: function () {}
+}
+JSON.stringify(obj) // "{}"
+··
+
+##第二个参数
+第二个参数表示只转换指定的属性（只在转换对象时有效，对数组无效）：
+··
+var obj = {
+    'prop1': 'value1',
+    'prop2': 'value2',
+    'prop3': 'value3'
+}
+
+JSON.stringify(obj, ['prop1', 'prop2'])
+// "{"prop1":"value1","prop2":"value2"}"
+··
+还可以是一个函数更改返回值（该函数会递归处理每个键值对，且第一个是对象本身）：
+··
+JSON.stringify({ a: 1, b: 2 }, function (key, value) {
+    if (typeof value === "number") value = 2 * value
+    return value
+})
+// '{"a": 2,"b": 4}'
+
+var o = {a: 1}
+JSON.stringify(o, function (key, value) {
+    if (typeof value === 'object') return {b: 2}
+    return value * 2
+})
+// "{"b": 4}"
+··
+
+##第三个参数
+第三个参数表示增加字符串的可读性，在每个属性前面添加指定的字符
+传入数字（·1-10·）表示空格的个数，传入字符串（长度·<=10·）表示该字符串
+··
+JSON.stringify({ p1: 1, p2: { a: 1, b: [1, 2] } }, null, 4)
+/*
+"{
+  "p1": 1,
+  "p2": {
+    "a": 1,
+    "b": [
+      1,
+      2
+    ]
+  }
+}"
+*/
+
+JSON.stringify({ p1: 1, p2: { a: 1, b: [1, 2] } }, null, '|---')
+/*
+"{
+|---"p1": 1,
+|---"p2": {
+|---|---"a": 1,
+|---|---"b": [
+|---|---|---1,
+|---|---|---2
+|---|---]
+|---}
+}"
+*/
+··
+
+##参数对象 toJSON
+如果参数对象有自定义的·toJSON·方法，那么·JSON.stringify()·会直接使用这个方法的返回值作为参数
+··
+var user = {
+    lastName: '张',
+    firstName: '三',
+    toJSON: function () {
+        return {
+            name:  this.firstName + this.lastName
+        }
+    }
+}
+JSON.stringify(user)
+// "{"name":"张三"}"
+
+JSON.stringify(new Date) // Date 也有定义过
+// ""2015-01-01T00:00:00.000Z""
+
+// 转换正则
+RegExp.prototype.toJSON = RegExp.prototype.toString
+JSON.stringify(/foo/) // ""/foo/""
+··
+
+##JSON.parse()
+将 JSON 字符串转换成对应的值，即·JSON.stringify()·的逆操作
+··
+JSON.parse('{}') // {}
+JSON.parse('true') // true
+JSON.parse('"foo"') // "foo"
+JSON.parse('[1, 5, "false"]') // [1, 5, "false"]
+JSON.parse('null') // null
+··
+可以传入一个函数作为第二个参数，用法与·JSON.stringify()·类似
+··
+JSON.parse('{"a": 1, "b": 2}', function (key, value) {
+    if (key === 'a') return value + 10
+    return value
+})
+// {a: 11, b: 2}
+··
+
 #window
 
 ##window
@@ -335,5 +485,5 @@ fnB();
 ##运算符优先级
 @[参照 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table]
 
-&2019/8/1
+&2019/8/8
 `
