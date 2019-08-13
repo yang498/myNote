@@ -46,4 +46,12 @@ readonly 外观无变化，disable 背景会变灰色
 readonly 可聚焦，disable 不行
 用于表单提交时 readonly 会提交，disable 不会
 !!
+
+#小技巧
+图片加载失败
+!!
+使用背景图片，适用于头像类
+图片监听·error·事件然后替换·src·
+图片监听·load·事件然后判断图片大小、宽高若为 0 则替换·src·
+!!
 `
