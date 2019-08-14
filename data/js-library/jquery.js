@@ -60,10 +60,10 @@ prev~siblings：后面的元素，比如·$('#demo~.text')·，所有后面的�
 [attr]：属性，比如·$('[class]')·
 [attr="value"]：属性 + 值，比如·$('[class="demo"]')·，·$('[class="demo text"]')·
 [attr!="value"]：不包括该属性 + 值，比如·$('[class!="demo"]')·
-[attr*="value"]：含有指定字符串，比如·$('[class*="acti"]')·表示选择含有 acti 字符的类的元素
-[attr~="value"]：含有指定单词，比如·$('[class*="active"]')·表示选择含有 active 类的元素
-[attr^="value"]：以指定字符串开头的属性，比如·$('[class^="text-"]')·表示选择以 text- 开头的类的元素
-[attr$="value"]：以指定字符串结尾的属性，比如·$('[class$="-text"]')·表示选择以 -text 结尾的类的元素
+[attr*="value"]：含有指定字符串，比如·$('[class*="acti"]')·表示选择含有·acti·字符的类的元素
+[attr~="value"]：含有指定单词，比如·$('[class*="active"]')·表示选择含有·active·类的元素
+[attr^="value"]：以指定字符串开头的属性，比如·$('[class^="text-"]')·表示选择以·text-·开头的类的元素
+[attr$="value"]：以指定字符串结尾的属性，比如·$('[class$="-text"]')·表示选择以·-text·结尾的类的元素
 [attr|="value"]：正好是 value 或以 value- 开头的属性，比如·$('a[hreflang|="en"]')·表示选择·hreflang="en"·或·hreflang="en-UK"·，不会选择·hreflang="english"·
 !!
 
@@ -763,9 +763,9 @@ $('p').text(res)
 ##.on()
 绑定事件：·.on(events [, selector] [, data], handler(eventObject))·
 !!
-events{String}：事件类型，比如·click·点击事件，可选择添加一个或多个命名空间比如·click.demo·、·click.demo.active·，相当于元素的 class
-selector{String}：触发事件的元素为指定后代元素，即事件代理，常用于变动的后代元素，可选择不填或 null
-data{Anything}：事件被触发时传递给事件处理函数的 event.data，若是 String 类型则需要填写 selector 或为 null，否则会被当做 selector
+events{String}：事件类型，可添加一个或多个命名空间例如·click.demo·、·click.demo.active·，相当于元素的 class
+selector{String}：触发事件的元素为指定后代元素，即事件代理，常用于变动的后代元素，可选择不填或填写·null·
+data{Anything}：事件触发时传递给回调函数的·event.data·，若是字符串类型则需要填写·selector·参数，否则会被当做·selector·
 handler{Function}：事件触发时执行的函数
 !!
 所有以事件名为方法名的方法都是该事件的快捷写法，注意简写的方式没有事件代理

@@ -191,9 +191,11 @@ font-size[medium]：字体大小，浏览器默认·medium·代表·16px·
 	<相对大小关键字>：·larger, smaller·（比父元素的字体大或小）
 	<length>：字体大小，参考 @[<length>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/length]
 	<percentage>：以父元素为基准的百分比，参考 @[<percentage>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/percentage]
-line-height[normal]：字体行高，可使用长度单位
-	normal：约为·1.2·，取决于·font-family·
-	<数字或百分比>：·font-size·的倍数
+line-height[normal]：字体行高
+    normal：约为·1.2·，取决于·font-family·
+    <length>：尺寸单位
+    <百分比>：以当前元素·font-size·为基准的倍数，注意子元素只继承行高，即子元素的行高等于父元素的行高
+    <数字>：以当前元素·font-size·为基准的倍数，注意子元素也会继承这个值，即子元素的行高等于·<数字> * font-size·
 font-family：字体，可以指定多个字体以逗号隔开，优先采用第一个，若用户计算机中没有或不支持则依次采用下一个
 	引号：若字体名不包含空格或者属于通用字体族名可以省略，否则需要加上
 	常用字体名：微软雅黑·Microsoft YaHei·，思源黑体·Source Han Sans·，英文等宽·Consolas·，黑体·SimHei·，宋体·SimSun·

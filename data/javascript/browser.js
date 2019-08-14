@@ -32,7 +32,7 @@ url3.href // "http://example.com/"
 （URL 实例的属性同 location 对象）
 !!
 URL.createObjectURL(file)：用来为上传/下载的文件、流媒体文件生成一个 URL 字符串，以·blob:·开头
-    这个 URL 对应内存的一个 Blob 对象，与·data://URL·（URL 包含实际数据）和·file://URL·（本地文件系统里面的文件）都不一样
+	这个 URL 对应内存的一个 Blob 对象，与·data://URL·（URL 包含实际数据）和·file://URL·（本地文件系统里面的文件）都不一样
 URL.revokeObjectURL(blobUrl)：释放·createObjectURL()·生成的实例以节省内存，参数即·createObjectURL()·返回的 url
 !!
 预览上传的图片
@@ -45,7 +45,7 @@ URL.revokeObjectURL(blobUrl)：释放·createObjectURL()·生成的实例以节�
 const $file = document.querySelector('#file')
 const $img = document.querySelector('#img')
 $file.onchange = function () {
-    $img.src = URL.createObjectURL(this.files[0]) // 形如 blob:http://localhost/c745ef73-ece9-46da-8f66-ebes574789b1
+	$img.src = URL.createObjectURL(this.files[0]) // 形如 blob:http://localhost/c745ef73-ece9-46da-8f66-ebes574789b1
 }
 ··
 
@@ -59,16 +59,16 @@ Blob (Binary Large Object)：二进制大对象，Blob 对象表示一个二进�
 !!
 array{Array}：由字符串或二进制对象组成的数组
 options{Object}：配置
-    type{String}['']：数据的 MIME 类型，@[参考 MDN|https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types]
+	type{String}['']：数据的 MIME 类型，@[参考 MDN|https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types]
 !!
 返回的实例属性方法
 !!
 myBlob.size{Number}：数据的大小
 myBlob.type{String}：数据的类型
 myBlob.slice([start, end, contentType])：拷贝原来的数据并返回一个·Blob·实例
-    start{Number}[0]：指定起始的字节位置
-    end{Number}[myBlob.size]：指定结束的字节位置，该位置本身将不包含在拷贝的数据之中
-    contentType{String}['']：数据类型
+	start{Number}[0]：指定起始的字节位置
+	end{Number}[myBlob.size]：指定结束的字节位置，该位置本身将不包含在拷贝的数据之中
+	contentType{String}['']：数据类型
 !!
 保存 html 数据：
 ··
@@ -88,8 +88,8 @@ myBlob.type // "text/html"
 array{Array}：以二进制对象或字符串组成的数组，表示文件的内容
 name{String}：文件名或文件路径
 options{Object}：设置实例的属性
-    type{String}['']：实例对象的 MIME 类型
-    lastModified{Number}[Date.now()]：上次修改的时间
+	type{String}['']：实例对象的 MIME 类型
+	lastModified{Number}[Date.now()]：上次修改的时间
 !!
 ··
 const file = new File(['foo'], 'foo.txt', {type: 'text/plain'})
@@ -147,10 +147,10 @@ FileReader.abort(file)：终止读取操作，·readyState·属性将变成·2·
 FileReader.readAsArrayBuffer(file)：以·ArrayBuffer·的格式读取文件
 FileReader.readAsBinaryString(file)：以·BinaryString·的格式读取文件
 FileReader.readAsDataURL(file)：以·DataURL·（Base64 编码）的格式读取文件，对于图片文件可直接用于·<img>·的·src·属性
-    注意不能直接进行 Base64 解码，必须把前缀·data:*/*;base64,·从字符串里删除后再进行
+	注意，不能直接对 Base64 解码，必须把前缀·data:*/*;base64,·从字符串里删除后再进行
 FileReader.readAsText(file [, encode])：以·text·的格式读取文件
-    file：文件的 Blob 实例
-    encode[UTF-8]：文本编码
+	file：文件的 Blob 实例
+	encode[UTF-8]：文本编码
 !!
 预览上传的图片：
 ··
@@ -162,9 +162,9 @@ FileReader.readAsText(file [, encode])：以·text·的格式读取文件
 const $file = document.querySelector('#file')
 const $img = document.querySelector('#img')
 $file.onchange = function () {
-    const reader = new FileReader()
-    if (this.files[0]) reader.readAsDataURL(this.files[0]) // 加个判断防止选择文件时点击取消也会触发
-    reader.onload = () => $img.src = reader.result
+	const reader = new FileReader()
+	if (this.files[0]) reader.readAsDataURL(this.files[0]) // 加个判断防止选择文件时点击取消也会触发
+	reader.onload = () => $img.src = reader.result
 }
 ··
 
