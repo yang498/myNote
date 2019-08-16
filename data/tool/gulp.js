@@ -5,11 +5,11 @@ gulp 是个前端构建工具，它充分借鉴了 unix 操作系统的管道（
 gulp 一般使用流程：
 !!
 task()：创建任务
-    src()：获取文件流
-        pipe()：传输文件流，将文件流导入到需要的 gulp 插件中处理
-            pipe()：传输文件流，把处理后的文件流导入到·dest()·
-                dest()：输入处理后的文件
-    watch()：监听文件的变动执行相应的任务
+	src()：获取文件流
+		pipe()：传输文件流，将文件流导入到需要的 gulp 插件中处理
+			pipe()：传输文件流，把处理后的文件流导入到·dest()·
+				dest()：输入处理后的文件
+	watch()：监听文件的变动执行相应的任务
 !!
 例如：
 ··
@@ -18,14 +18,14 @@ const sass = require('gulp-sass') // 加载 gulp-sass 模块
 
 // 创建编译 sass 任务：获取 scss 文件，以 compact 模式编译，将结果输出到 css 文件中
 gulp.task('sass', function () {
-    gulp.src('scss/*.scss')
-        .pipe(sass({outputStyle: 'compact'}))
-        .pipe(gulp.dest('css'))
+	gulp.src('scss/*.scss')
+		.pipe(sass({outputStyle: 'compact'}))
+		.pipe(gulp.dest('css'))
 })
 
 // 监听 scss 文件，若发生改变则自动编译成 css
 gulp.task('compile', function () {
-    gulp.watch('scss/*.scss', ['sass'])
+	gulp.watch('scss/*.scss', ['sass'])
 })
 ··
 
@@ -54,7 +54,7 @@ cnpm install gulp  --save-dev
 ··
 var gulp = require('gulp')
 gulp.task('hello', function () {
-    console.log('hello world')
+	console.log('hello world')
 })
 ··
 在存放·gulpfile.js·文件的目录下执行·gulp hello·即可运行这个任务，若不指定任务名即执行·gulp·，将会执行任务名为·default·的默认任务
@@ -67,20 +67,20 @@ gulp.task('hello', function () {
 name{String}：自定义任务名
 deps{Array}：当前任务依赖的任务名，当前任务会在所有依赖的任务执行完毕后才开始执行
 fn(call){Function}：任务内容
-    call{Function}：通知当前任务完成，在异步任务中使用
+	call{Function}：通知当前任务完成，在异步任务中使用
 !!
 依赖的任务：
 ··
 gulp.task('one', ['two', 'three', 'four'], function () {
-    // 在 two、three、four 执行完后执行
+	// 在 two、three、four 执行完后执行
 });
 ··
 注意若依赖的任务是异步的，gulp 并不会等异步任务完成，而是会接着执行后续的任务。例如：
 ··
 gulp.task('one', () => {
-    setTimeout(() => {
-        console.log('one')
-    }, 1000)
+	setTimeout(() => {
+		console.log('one')
+	}, 1000)
 })
 
 gulp.task('two', ['one'], () => console.log('two'))
@@ -92,10 +92,10 @@ gulp.task('two', ['one'], () => console.log('two'))
 回调通知可在异步完成之后再执行
 ··
 gulp.task('one', call => {
-    setTimeout(() => {
-        console.log('one')
-        call() // 执行回调，表示这个异步任务已经完成
-    }, 1000)
+	setTimeout(() => {
+		console.log('one')
+		call() // 执行回调，表示这个异步任务已经完成
+	}, 1000)
 })
 
 gulp.task('two', ['one'], () => console.log('two'))
@@ -103,9 +103,9 @@ gulp.task('two', ['one'], () => console.log('two'))
 返回文件流也可在异步完成之后再执行
 ··
 gulp.task('one', () => {
-    return gulp.src('*')
-        .pipe(fn()) // fn() 中有异步操作
-        .pipe(gulp.dest('dest'))
+	return gulp.src('*')
+		.pipe(fn()) // fn() 中有异步操作
+		.pipe(gulp.dest('dest'))
 })
 
 gulp.task('two', ['one'], () => console.log('two'))
@@ -115,11 +115,11 @@ gulp.task('two', ['one'], () => console.log('two'))
 ·gulp.src(globs[, options])·：读取文件
 !!
 globs{String/Array}：文件匹配模式，可匹配文件路径和文件名
-    可使用数组的形式表示多个匹配模式，且在非第一个元素的开头加上·!·可使用排除模式，即会在匹配的结果中排除这个匹配
+	可使用数组的形式表示多个匹配模式，且在非第一个元素的开头加上·!·可使用排除模式，即会在匹配的结果中排除这个匹配
 options{Object}：可选参数，通常情况下不需要用到
-    base{String}：默认值为基础路径，·dest()·有介绍
-    buffer{Boolean}[true]：·true·是以文件 buffer 的方式返回·file.contents·，否则以 stream 方式（适合大文件）返回
-    其他参数见底部官网链接
+	base{String}：默认值为基础路径，·dest()·有介绍
+	buffer{Boolean}[true]：·true·是以文件 buffer 的方式返回·file.contents·，否则以 stream 方式（适合大文件）返回
+	其他参数见底部官网链接
 !!
 gulp 内部使用了 @[node-glob|https://github.com/isaacs/node-glob] 模块（类似正则表达式）来实现其文件匹配功能，可使用一些特殊字符来匹配文件：
 !!
@@ -158,19 +158,19 @@ gulp.src(['!b*.js', '*.js']) // 排除无效，不能出现在数组的第一个
 !!
 path{String/Function}：写入文件的路径目录，注意不能是文件名，否则也会当成目录，文件名随·src()·获取的文件名
 options{Object}：可选参数，通常情况下不需要用到
-    cwd{String}[process.cwd()]：输出目录的 cwd 参数，只在所给的输出目录是相对路径时候有效
-    mode{String}[0777]：八进制权限字符，用以定义所有在输出目录中所创建的目录的权限
-    其他参数见底部官网链接
+	cwd{String}[process.cwd()]：输出目录的 cwd 参数，只在所给的输出目录是相对路径时候有效
+	mode{String}[0777]：八进制权限字符，用以定义所有在输出目录中所创建的目录的权限
+	其他参数见底部官网链接
 !!
 输出的文件路径是传入的·path·参数后面再加上·src()·中有通配符开始出现的那部分路径，没有则取最后的文件名。例如：
 ··
 var gulp = reruire('gulp')
 
 gulp.src('script/*¿*/*¿.js') // 通配符部分的路径为 **/*.js
-    .pipe(gulp.dest('dist')) // 输出路径为 dist/**/*.js
+	.pipe(gulp.dest('dist')) // 输出路径为 dist/**/*.js
 
 gulp.src('script/js/jquery.js') // 没有通配符取最后的文件名
-    .pipe(gulp.dest('dist')) // 输出路径为 dist/jquery.js
+	.pipe(gulp.dest('dist')) // 输出路径为 dist/jquery.js
 ··
 通过指定·src()·中第二个参数的·base·属性可以指定输出路径，·base·的默认值为通配符开始出现之前那部分路径
 例如·gulp.src('app/src/**/*.css')·中·base·的值为·app/src·，所以其实·dest()·传入的输出路径也就是替换了·src()·中的·base·路径
@@ -178,7 +178,7 @@ gulp.src('script/js/jquery.js') // 没有通配符取最后的文件名
 var gulp = reruire('gulp')
 
 gulp.src('js/lib/*.js', {base : 'js'})	// 指定 base 路径为 js
-    .pipe(gulp.dest('build'))	// 替换 js，输出路径为 build/lib/*.js
+	.pipe(gulp.dest('build'))	// 替换 js，输出路径为 build/lib/*.js
 ··
 用·dest()·输出文件后，文件流仍然可以继续使用，即可继续使用·pipe()·
 
@@ -198,14 +198,14 @@ gulp.watch('js/*.js', ['uglify', 'reload'])
 ###gulp.watch(glob [, opts] [, call])
 !!
 call(info){Function}：每当监视的文件发生变化时，就会调用这个函数
-    info{Object}：文件变化的信息
-        type：变化的类型，可以是·added·新增、·changed·改变 、·deleted·删除
-        path：变化文件的路径
+	info{Object}：文件变化的信息
+		type：变化的类型，可以是·added·新增、·changed·改变 、·deleted·删除
+		path：变化文件的路径
 !!
 ··
 gulp.watch('js/*¿*/*.js', function (res) {
-    console.log(res.type)
-    console.log(res.path)
+	console.log(res.type)
+	console.log(res.path)
 })
 ··
 
@@ -220,11 +220,11 @@ cnpm install gulp-load-plugins --save-dev
 使用前：
 ··
 const gulp = require('gulp'),
-    a = require('gulp-a'),
-    b = require('gulp-b'),
-    c = require('gulp-c'),
-    d = require('gulp-d'),
-    e = require('gulp-e')
+	a = require('gulp-a'),
+	b = require('gulp-b'),
+	c = require('gulp-c'),
+	d = require('gulp-d'),
+	e = require('gulp-e')
 ··
 使用后：
 ··
@@ -235,12 +235,12 @@ const {a, b, c, d, e} = require('gulp-load-plugins')()
 例如假设·package.json·文件里的依赖是这样的：
 ··
 {
-    "devDependencies": {
-        "gulp": "^3.9.1",
-        "gulp-rename": "^1.2.0",
-        "gulp-ruby-sass": "^4.0.1",
-        "gulp-load-plugins": "^1.5.0"
-    }
+	"devDependencies": {
+		"gulp": "^3.9.1",
+		"gulp-rename": "^1.2.0",
+		"gulp-ruby-sass": "^4.0.1",
+		"gulp-load-plugins": "^1.5.0"
+	}
 }
 ··
 引用时：
@@ -260,14 +260,14 @@ cnpm install gulp-rename --save-dev
 使用：
 ··
 const gulp = require('gulp'),
-    rename = require('gulp-rename'),
-    uglify = require("gulp-uglify") // 压缩 js
+	rename = require('gulp-rename'),
+	uglify = require("gulp-uglify") // 压缩 js
 
 gulp.task('rename', function () {
-    gulp.src('js/jquery.js')
-        .pipe(uglify())
-        .pipe(rename('jquery.min.js')) // 重命名为 jquery.min.js
-        .pipe(gulp.dest('js'))
+	gulp.src('js/jquery.js')
+		.pipe(uglify())
+		.pipe(rename('jquery.min.js')) // 重命名为 jquery.min.js
+		.pipe(gulp.dest('js'))
 })
 ··
 
@@ -286,12 +286,12 @@ cnpm install gulp-imagemin --save-dev
 使用
 ··
 const gulp = require('gulp'),
-    miniHtml = require('gulp-htmlmin')
+	miniHtml = require('gulp-htmlmin')
 
 gulp.task('htmlmin', function () {
-    gulp.src('html/*.html')
-    .pipe(miniHtml())
-    .pipe(gulp.dest('dist/html'))
+	gulp.src('html/*.html')
+	.pipe(miniHtml())
+	.pipe(gulp.dest('dist/html'))
 })
 ··
 
@@ -304,12 +304,12 @@ cnpm install --save-dev gulp-concat
 使用：
 ··
 const gulp = require('gulp'),
-    concat = require('gulp-concat')
+	concat = require('gulp-concat')
 
 gulp.task('concat', function () {
-    gulp.src('js/*.js')
-    .pipe(concat('all.js')) 	// 合并匹配到的 js 文件并命名为 all.js
-    .pipe(gulp.dest('dist'))
+	gulp.src('js/*.js')
+	.pipe(concat('all.js')) 	// 合并匹配到的 js 文件并命名为 all.js
+	.pipe(gulp.dest('dist'))
 })
 ··
 
@@ -322,12 +322,12 @@ cnpm install jshint --save-dev
 使用：
 ··
 const gulp = require('gulp'),
-    jshint = require('jshint')
+	jshint = require('jshint')
 
 gulp.task('jsLint', function () {
-    gulp.src('js/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter())	// 输出检查结果
+	gulp.src('js/*.js')
+	.pipe(jshint())
+	.pipe(jshint.reporter())	// 输出检查结果
 })
 ··
 
@@ -340,12 +340,12 @@ cnpm install gulp-sass --save-dev
 使用：
 ··
 const gulp = require('gulp'),
-    sass = require('gulp-sass')
+	sass = require('gulp-sass')
 
 gulp.task('compile-sass', function () {
-    gulp.src('sass/*.sass')
-    .pipe(sass({outputStyle: 'compact'}))
-    .pipe(gulp.dest('dist/css'))
+	gulp.src('sass/*.sass')
+	.pipe(sass({outputStyle: 'compact'}))
+	.pipe(gulp.dest('dist/css'))
 })
 ··
 
@@ -358,12 +358,12 @@ cnpm install --save-dev gulp-babel @babel/core @babel/preset-env
 使用：
 ··
 const gulp = require('gulp'),
-    babel = require('gulp-babel')
+	babel = require('gulp-babel')
 
 gulp.task('default', function () {
-    gulp.src('js/*.js')
-        .pipe( babel({ presets: ['@babel/env'] }) )
-        .pipe(gulp.dest('dest/js'))
+	gulp.src('js/*.js')
+		.pipe( babel({ presets: ['@babel/env'] }) )
+		.pipe(gulp.dest('dest/js'))
 })
 ··
 
@@ -381,10 +381,10 @@ var gulp = require('gulp')
 var bs = require('browser-sync').create()
 
 gulp.task('serve', function () {
-    // 初始化静态服务器，server 为服务配置，空字符串代表根目录，默认打开 index.html
-    bs.init({ server: '' })
-    // 当文件改动时刷新浏览器
-    gulp.watch(['index.html', 'css/*.css', 'js/*.js'], bs.reload)
+	// 初始化静态服务器，server 为服务配置，空字符串代表根目录，默认打开 index.html
+	bs.init({ server: '' })
+	// 当文件改动时刷新浏览器
+	gulp.watch(['index.html', 'css/*.css', 'js/*.js'], bs.reload)
 })
 ··
 
@@ -413,46 +413,46 @@ const bs = require('browser-sync').create()
 
 // 获取 scss 文件，以 compact 模式编译，将结果输出到 css 文件中，刷新浏览器并注入流
 gulp.task('sass', () => {
-    gulp.src('scss/*¿.scss')
-        .pipe(p.sass({outputStyle: 'compact'}))
-        .pipe(gulp.dest('css'))
-        .pipe(bs.reload({stream: true}))
+	gulp.src('scss/*¿.scss')
+		.pipe(p.sass({outputStyle: 'compact'}))
+		.pipe(gulp.dest('css'))
+		.pipe(bs.reload({stream: true}))
 })
 
 // 开启服务，实时编译 scss 文件，文件改动时自动刷新浏览器
 gulp.task('default', () => {
-    bs.init({server: ''})
-    gulp.watch('scss/*¿.scss', ['sass'])
-    gulp.watch(['index.html', 'css/*¿.css', 'js/*¿.js'], bs.reload)
+	bs.init({server: ''})
+	gulp.watch('scss/*¿.scss', ['sass'])
+	gulp.watch(['index.html', 'css/*¿.css', 'js/*¿.js'], bs.reload)
 })
 
 // 压缩 html
 gulp.task('mhtml', () => {
-    gulp.src('html/*.html')
-        .pipe(p.htmlmin())
-        .pipe(gulp.dest('dist/html'))
+	gulp.src('html/*.html')
+		.pipe(p.htmlmin())
+		.pipe(gulp.dest('dist/html'))
 })
 
 // 压缩 css
 gulp.task('mcss', () => {
-    gulp.src('css/*.css')
-        .pipe(p.cleanCss())
-        .pipe(gulp.dest('dist/css'))
+	gulp.src('css/*.css')
+		.pipe(p.cleanCss())
+		.pipe(gulp.dest('dist/css'))
 })
 
 // 压缩 js
 gulp.task('mjs', () => {
-    gulp.src('js/*.js')
-        .pipe(p.babel({ presets: ['@babel/env'] }))
-        .pipe(p.uglify())
-        .pipe(gulp.dest('dist/js'))
+	gulp.src('js/*.js')
+		.pipe(p.babel({ presets: ['@babel/env'] }))
+		.pipe(p.uglify())
+		.pipe(gulp.dest('dist/js'))
 })
 
 // 压缩图片
 gulp.task('mimg', () => {
-    gulp.src('img/*')
-        .pipe(p.imagemin())
-        .pipe(gulp.dest('dist/img'))
+	gulp.src('img/*')
+		.pipe(p.imagemin())
+		.pipe(gulp.dest('dist/img'))
 })
 
 // 压缩打包文件

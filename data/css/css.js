@@ -192,10 +192,10 @@ font-size[medium]：字体大小，浏览器默认·medium·代表·16px·
 	<length>：字体大小，参考 @[<length>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/length]
 	<percentage>：以父元素为基准的百分比，参考 @[<percentage>|https://developer.mozilla.org/zh-CN/docs/Web/CSS/percentage]
 line-height[normal]：字体行高
-    normal：约为·1.2·，取决于·font-family·
-    <length>：尺寸单位
-    <百分比>：以当前元素·font-size·为基准的倍数，注意子元素只继承行高，即子元素的行高等于父元素的行高
-    <数字>：以当前元素·font-size·为基准的倍数，注意子元素也会继承这个值，即子元素的行高等于·<数字> * font-size·
+	normal：约为·1.2·，取决于·font-family·
+	<length>：尺寸单位
+	<百分比>：以当前元素·font-size·为基准的倍数，注意子元素只继承行高，即子元素的行高等于父元素的行高
+	<数字>：以当前元素·font-size·为基准的倍数，注意子元素也会继承这个值，即子元素的行高等于·<数字> * font-size·
 font-family：字体，可以指定多个字体以逗号隔开，优先采用第一个，若用户计算机中没有或不支持则依次采用下一个
 	引号：若字体名不包含空格或者属于通用字体族名可以省略，否则需要加上
 	常用字体名：微软雅黑·Microsoft YaHei·，思源黑体·Source Han Sans·，英文等宽·Consolas·，黑体·SimHei·，宋体·SimSun·
@@ -213,6 +213,8 @@ normal[默认]：连续的空格符会被合并，换行符会被当作空格符
 nowrap：连续的空格符会被合并，忽略换行符
 pre：保留所有空格符和换行符
 !!
+
+#边框阴影系列
 
 #图像系列
 
@@ -261,8 +263,7 @@ background-blend-mode[normal]：多个背景图片下定义混合模式，例如
 !!
 
 ##mask
-用遮罩图片的透明部分把元素遮住（变透明），只影响元素本身而不会遮挡底部元素
-所以不透明的 jpg 图片和非透明渐变是没有效果的
+用遮罩图片的透明部分把元素遮住（变透明），所以不透明的 jpg 图片和非透明渐变是没有效果的
 考虑兼容性应加上·-webkit-·前缀
 遮罩：·mask: image mode repeat position clip origin size type composite;·
 可以分别设置多个属性以逗号隔开，例如：·mask: url(...), radial-gradient(...);·
@@ -283,7 +284,7 @@ mask-clip[border-box]：遮罩的裁剪范围，参考·background-clip·，并�
 mask-origin[border-box]：遮罩的范围起点，参考·background-origin·，多出的属性参考·mask-clip·
 mask-size[auto]：遮罩的大小，参考·background-size·
 mask-type[luminance]：专用于 SVG 元素的·mask-mode·，注意不支持·match-source·属性
-mask-composite[source-over]：多个遮罩下的混合模式，参考 Canvas 的 @[globalCompositeOperation|https://www.canvasapi.cn/CanvasRenderingContext2D/globalCompositeOperation]
+mask-composite[source-over]：多个遮罩下的混合模式，参考 @[MDN 老版|https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask-composite]， @[MDN 新版|https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-mask-composite] 和 Canvas 的 @[globalCompositeOperation|https://www.canvasapi.cn/CanvasRenderingContext2D/globalCompositeOperation]
 !!
 
 ##clip-path
@@ -720,7 +721,7 @@ will-change[auto]：
 !!
 
 ##demo
-###Windows 进度条：
+###模拟 Windows 进度条：
 ··
 <div class="progress">
 	<div class="color"></div>
@@ -915,6 +916,48 @@ body {
 }
 /* ::before 显示 a */
 /* ::after 显示 b */
+··
+作用范围和选择器类似，如果同级重名的计数器则每次都从新开始，如果不同级重名的计数器则互不干扰：
+··
+ol {
+	counter-reset: demo;
+	list-style-type: none;
+}
+li::before {
+	counter-increment: demo;
+	content: counter(demo);
+}
+
+<ol>
+	<li></li>
+	<li></li>
+</ol>
+<ol>
+	<li></li>
+	<li></li>
+</ol>
+/*
+1
+2
+1
+2
+*/
+
+<ol>
+	<li>
+		<ol>
+			<li></li>
+			<li></li>
+		</ol>
+	</li>
+	<li></li>
+</ol>
+/*
+1
+	1
+	2
+2
+*/
 ··
 
 ##counters()

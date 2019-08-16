@@ -12,10 +12,10 @@ commonData.html.applet.content = `
 ##起步
 !!
 首先@[注册|https://mp.weixin.qq.com/wxopen/waregister?action=step1]一个小程序帐号，通过这个帐号你就可以管理你的小程序
-    也可以通过已注册的订阅号或服务号在关联小程序时快速注册，沿用之前的资质
+	也可以通过已注册的订阅号或服务号在关联小程序时快速注册，沿用之前的资质
 一个帐号只能发布一个小程序，同一个主体身份下个人帐户可创建 5 个、企业 50 个的小程序账号
 @[下载微信开发者工具|https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=201861]来开发小程序
-    需要填写的小程序·AppID·，登录@[小程序平台|https://mp.weixin.qq.com]，在菜单【设置 - 开发设置】可以看到
+	需要填写的小程序·AppID·，登录@[小程序平台|https://mp.weixin.qq.com]，在菜单【设置 - 开发设置】可以看到
 !!
 
 ##公众号关联小程序
@@ -35,7 +35,7 @@ commonData.html.applet.content = `
 获取输入框中的内容可以使用·bindinput·或·bindblur·事件
 iOS 上页面最后的元素·margin-bottom·无效，所以在页面底部留白的还是改用空高·<view>·或父容器·padding·
 自定义弹窗阻止页面滑动：在遮罩和弹窗容器上·catchtouchmove·一个空方法，若弹窗是可滚动的则只在遮罩上使用
-    如果页面是·<srcoll-view>·则可以改成在弹窗出现时将页面·<srcoll-view>·的·scroll-y·设为·false·
+	如果页面是·<srcoll-view>·则可以改成在弹窗出现时将页面·<srcoll-view>·的·scroll-y·设为·false·
 !!
 
 ##相关小程序
@@ -78,27 +78,27 @@ debug{Boolean}：设置是否开启 debug 模式，在控制台面板显示调�
 例如：
 ··
 {
-    "pages": [
-        "pages/index/index",
-        "pages/logs/index"
-    ],
-    "window": {
-        "navigationBarTitleText": "Demo"
-    },
-    "tabBar": {
-        "list": [{
-            "pagePath": "pages/index/index",
-            "text": "首页"
-        }, {
-            "pagePath": "pages/logs/logs",
-            "text": "日志"
-        }]
-    },
-    "networkTimeout": {
-        "request": 10000,
-        "downloadFile": 10000
-    },
-    "debug": true
+	"pages": [
+		"pages/index/index",
+		"pages/logs/index"
+	],
+	"window": {
+		"navigationBarTitleText": "Demo"
+	},
+	"tabBar": {
+		"list": [{
+			"pagePath": "pages/index/index",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/logs/logs",
+			"text": "日志"
+		}]
+	},
+	"networkTimeout": {
+		"request": 10000,
+		"downloadFile": 10000
+	},
+	"debug": true
 }
 ··
 
@@ -106,11 +106,11 @@ debug{Boolean}：设置是否开启 debug 模式，在控制台面板显示调�
 每一个小程序页面也可以使用 .json 文件来对本页面的窗口样式进行单独配置，如：
 ··
 {
-    "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "微信接口功能演示",
-    "backgroundColor": "#eeeeee",
-    "backgroundTextStyle": "light"
+	"navigationBarBackgroundColor": "#ffffff",
+	"navigationBarTextStyle": "black",
+	"navigationBarTitleText": "微信接口功能演示",
+	"backgroundColor": "#eeeeee",
+	"backgroundTextStyle": "light"
 }
 ··
 
@@ -126,20 +126,20 @@ debug{Boolean}：设置是否开启 debug 模式，在控制台面板显示调�
 App() 函数用来注册一个小程序。接受一个 object 参数，其指定小程序的生命周期函数等。
 !!
 onLaunch：生命周期函数--监听小程序初始化，当小程序初始化完成时触发，全局只触发一次，可接受一个参数对象，属性：
-    path{String}：打开小程序的路径
-    query{Object}：打开小程序的携带的参数
-    scene{Number}：打开小程序的场景值
-    shareTicket{String}：shareTicket，详见转发
-    referrerInfo{Object}：当场景为由从另一个小程序或公众号或App打开时，返回此字段
-        appId{String}：来源小程序或公众号或App的 appId，支持返回的场景有：1020、1035、1036、1037、1038、1043
-        extraData{Object}：来源小程序传过来的数据，scene=1037或1038时支持
+	path{String}：打开小程序的路径
+	query{Object}：打开小程序的携带的参数
+	scene{Number}：打开小程序的场景值
+	shareTicket{String}：shareTicket，详见转发
+	referrerInfo{Object}：当场景为由从另一个小程序或公众号或App打开时，返回此字段
+		appId{String}：来源小程序或公众号或App的 appId，支持返回的场景有：1020、1035、1036、1037、1038、1043
+		extraData{Object}：来源小程序传过来的数据，scene=1037或1038时支持
 onShow：生命周期函数--监听小程序显示，当小程序启动，或从后台进入前台显示，可接受一个参数对象，属性同 onLaunch
 onHide：生命周期函数--监听小程序隐藏，当小程序从前台进入后台
 onError：错误监听函数，当小程序发生脚本错误，或者 api 调用失败时，会触发 onError 并带上错误信息
 onPageNotFound：页面不存在监听函数，当小程序出现要打开的页面不存在的情况，会带上页面信息回调该函数，必须是同步处理，异步处理（例如 setTimeout 异步执行）无效
-    path{String}：不存在页面的路径
-    query{Object}：打开不存在页面的query
-    isEntryPage{Boolean}：是否本次启动的首个页面（例如从分享等入口进来，首个页面是开发者配置的分享页面）
+	path{String}：不存在页面的路径
+	query{Object}：打开不存在页面的query
+	isEntryPage{Boolean}：是否本次启动的首个页面（例如从分享等入口进来，首个页面是开发者配置的分享页面）
 其他：开发者可以添加任意的函数或数据到参数中，用 this 可以访问
 !!
 前台、后台定义：当用户点击右上角关闭，或者按了设备 Home 键离开微信，小程序并没有直接销毁，而是进入了后台；当再次进入微信或再次打开小程序，又会从后台进入前台。需要注意的是：只有当小程序进入后台一定时间（一般是5分钟），或者系统资源占用过高，才会被真正的销毁。
@@ -152,7 +152,7 @@ onPageNotFound：页面不存在监听函数，当小程序出现要打开的页
 ··
 // app.js
 App({
-    globalData: 'I am global data'
+	globalData: 'I am global data'
 })
 
 // other.js
@@ -181,7 +181,7 @@ onReachBottom：页面上拉触底，可在app.json的window选项中或当前�
 在触发距离内滑动期间，本事件只会被触发一次
 onShareAppMessage：用户点击右上角转发，设置该函数右上角菜单才会显示转发选项
 onPageScroll：监听页面滚动，每次页面滚动时触发，返回参数如下 :
-    scrollTop{Number}：页面在垂直方向已滚动的距离（单位px）
+	scrollTop{Number}：页面在垂直方向已滚动的距离（单位px）
 onTabItemTap：当前是 tab 页时，点击 tab 时触发，可用于回到顶部或刷新等
 其他：开发者可以添加任意的函数或数据到参数中，在页面的函数中用 this 可以访问
 !!
@@ -189,17 +189,17 @@ onTabItemTap：当前是 tab 页时，点击 tab 时触发，可用于回到顶�
 ·route·字段可以获取到当前页面的路径
 ··
 Page({
-    onLoad: function () {
-        console.log(this.route)
-    }
+	onLoad: function () {
+		console.log(this.route)
+	}
 })
 ··
 ###Page.prototype.setData()
 ·setData·函数用于将数据从逻辑层发送到视图层（异步），同时改变对应的 this.data 的值（同步），参数说明：
 !!
 data{Object}!：这次要改变的数据
-    key：要改变的 data 的键名，以数据路径的形式给出，如·'array[2].message'·、·'a.b.c.d'·，并且不需要在 this.data 中预先定义
-    value：要改变的 data 的键值
+	key：要改变的 data 的键名，以数据路径的形式给出，如·'array[2].message'·、·'a.b.c.d'·，并且不需要在 this.data 中预先定义
+	value：要改变的 data 的键值
 callback{Function}!：回调函数，在这次 setData 对界面渲染完毕后调用
 !!
 ^^注意：^^
@@ -211,36 +211,36 @@ callback{Function}!：回调函数，在这次 setData 对界面渲染完毕后�
 事实上 setData 中的 key 只能以字符串或中括号的形式书写，并且是中括号的形式时就代表这是一个变量，示例代码：
 ··
 Page({
-    data: {
-        array: [],
-        object: {}
-    },
-    onLoad: function (options) {
-        const age = 'age'
-        this.setData({
-            name: 'Tom', // key 为普通字符串，可不用引号
-            'array[0]': 'changed data', // array 和下标表示需要加引号
-            'object.text': 'changed data' // object 的 key 表示需要加引号
-            [age]: 20 // age 是个变量，用 [] 包裹
-        })
+	data: {
+		array: [],
+		object: {}
+	},
+	onLoad: function (options) {
+		const age = 'age'
+		this.setData({
+			name: 'Tom', // key 为普通字符串，可不用引号
+			'array[0]': 'changed data', // array 和下标表示需要加引号
+			'object.text': 'changed data' // object 的 key 表示需要加引号
+			[age]: 20 // age 是个变量，用 [] 包裹
+		})
 
-        // 当 key 是个链式写法还带变量时，不加引号语法错误，加引号又无法表示变量
-        const index = 0
-        this.setData({ array[index].text: 'new data' })
-        this.setData({ 'array[index].text': 'new data' })
-        // 所以可以使用先赋值改变再 setData 的方式
-        this.data.array[index].text = 'new data'
-        this.setData({ array: this.data.array })
+		// 当 key 是个链式写法还带变量时，不加引号语法错误，加引号又无法表示变量
+		const index = 0
+		this.setData({ array[index].text: 'new data' })
+		this.setData({ 'array[index].text': 'new data' })
+		// 所以可以使用先赋值改变再 setData 的方式
+		this.data.array[index].text = 'new data'
+		this.setData({ array: this.data.array })
 
-        // 假如要一次性修改很多数据，如果直接在循环里面直接调用 setData 是很耗性能的，因为它会不停的渲染
-        for (let i = 0; i < 100; i++) {
-            this.data.array.push(i)
-            this.setData({ array: this.data.array })
-        }
-        // 建议先修改 data（并且这能很好的修改变量），再 setData，这样只会渲染一次，大大减少性能消耗
-        for (let i = 0; i < 100; i++) this.data.array.push(i)
-        this.setData({ array: this.data.array })
-    }
+		// 假如要一次性修改很多数据，如果直接在循环里面直接调用 setData 是很耗性能的，因为它会不停的渲染
+		for (let i = 0; i < 100; i++) {
+			this.data.array.push(i)
+			this.setData({ array: this.data.array })
+		}
+		// 建议先修改 data（并且这能很好的修改变量），再 setData，这样只会渲染一次，大大减少性能消耗
+		for (let i = 0; i < 100; i++) this.data.array.push(i)
+		this.setData({ array: this.data.array })
+	}
 })
 ··
 ###路由
@@ -268,18 +268,18 @@ D（从转发进入）,B,D.onUnload()，B.onLoad()，B.onShow()
 ··
 // util.js
 function sayHello(name) {
-    console.log(\`Hello \${name} !\`)
+	console.log(\`Hello \${name} !\`)
 }
 module.exports = {
-    sayHello
+	sayHello
 }
 
 // 其他 js 文件，使用 require() 引入，只支持相对路径，不支持绝对路径
 const util = require('util.js')
 Page({
-    helloMINA: function() {
-        util.sayHello('MINA')
-    }
+	helloMINA: function() {
+		util.sayHello('MINA')
+	}
 })
 ··
 
@@ -352,58 +352,58 @@ touchforcechange：在支持 3D Touch 的 iPhone 设备，重按时会触发
 <view bindtap="onclick" data-name="foo">click me</view>
 
 Page({
-    onclick(e) {
-        console.log(e.currentTarget.dataset.name)	// foo
-    }
+	onclick(e) {
+		console.log(e.currentTarget.dataset.name)	// foo
+	}
 })
 ··
 
 事件对象：
 ··
 eventName(e) {
-    e: {
-        "type"："tap", // 事件类型
-        "timeStamp"：895, // 事件生成时的时间戳，从页面打开开始计算
-        "target"：{ // 事件的目标对象属性
-            "id"："tapTest", // 对象元素的 id 值
-            "dataset"：{ // wxml 中定义的 data- 数据，即靠 data- 可传参，属性名会转换成驼峰
-                "hi"："WeChat"
-            },
-            "offsetLeft"：9 // 相对于父容器且不包括 padding 和滚动条的 px 单位距离
-            "offsetTop"：6
-        },
-        "currentTarget"：{ // 事件的当前对象属性
-            "id"："tapTest",
-            "dataset"：{
-                "hi"："WeChat"
-            },
-            "offsetLeft"：12,
-            "offsetTop"：18
-        },
-        "detail"：{ // 事件的信息
-            "x"：53, // 同pageX
-            "y"：14
-        },
-        "touches"：[{ // 触摸点信息
-            "identifier"：0, // 触摸点的标识符
-            "pageX"：53, // 相对于文档的距离，包括滚动距离
-            "pageY"：14,
-            "clientX"：53, // 相对于屏幕除了导航栏的距离
-            "clientY"：14
-        }],
-        "changedTouches"：[{ // 变化的触摸点信息，如 touchstart 从无变有，touchmove 位置变化，touchend、touchcancel 从有变无
-            "identifier"：0,
-            "pageX"：53,
-            "pageY"：14,
-            "clientX"：53,
-            "clientY"：14
-        }],
-        canvasTouch：[{ // canvas 专属的触摸点信息
-            "identifier"：0, // 触摸点的标识符
-            "x"：53, // 相对于 canvas 左上角的距离
-            "y"：14,
-        }]
-    }
+	e: {
+		"type"："tap", // 事件类型
+		"timeStamp"：895, // 事件生成时的时间戳，从页面打开开始计算
+		"target"：{ // 事件的目标对象属性
+			"id"："tapTest", // 对象元素的 id 值
+			"dataset"：{ // wxml 中定义的 data- 数据，即靠 data- 可传参，属性名会转换成驼峰
+				"hi"："WeChat"
+			},
+			"offsetLeft"：9 // 相对于父容器且不包括 padding 和滚动条的 px 单位距离
+			"offsetTop"：6
+		},
+		"currentTarget"：{ // 事件的当前对象属性
+			"id"："tapTest",
+			"dataset"：{
+				"hi"："WeChat"
+			},
+			"offsetLeft"：12,
+			"offsetTop"：18
+		},
+		"detail"：{ // 事件的信息
+			"x"：53, // 同pageX
+			"y"：14
+		},
+		"touches"：[{ // 触摸点信息
+			"identifier"：0, // 触摸点的标识符
+			"pageX"：53, // 相对于文档的距离，包括滚动距离
+			"pageY"：14,
+			"clientX"：53, // 相对于屏幕除了导航栏的距离
+			"clientY"：14
+		}],
+		"changedTouches"：[{ // 变化的触摸点信息，如 touchstart 从无变有，touchmove 位置变化，touchend、touchcancel 从有变无
+			"identifier"：0,
+			"pageX"：53,
+			"pageY"：14,
+			"clientX"：53,
+			"clientY"：14
+		}],
+		canvasTouch：[{ // canvas 专属的触摸点信息
+			"identifier"：0, // 触摸点的标识符
+			"x"：53, // 相对于 canvas 左上角的距离
+			"y"：14,
+		}]
+	}
 }
 ··
 
@@ -423,31 +423,31 @@ WXML（WeiXin Markup Language）是框架设计的一套标签语言，结合基
 <view data-obj="{{foo, bar}}"></view> // 对象的 key 和 value 相同可以间接表达
 
 Page({
-    data: {
-        message: 'Hello MINA!',
-        id: 0,
-        a: 1,
-        b: 2,
-        c: 3,
-        obj1: {
-            a: 1,
-            b: 2
-        },
-        obj2: {
-            c: 3,
-            d: 4
-        },
-        obj3: {
-            a: 1,
-            b: 2
-        },
-        obj4: {
-            b: 3,
-            f: 4
-        },
-        foo: 'my-foo',
-        bar: 'my-bar'
-    }
+	data: {
+		message: 'Hello MINA!',
+		id: 0,
+		a: 1,
+		b: 2,
+		c: 3,
+		obj1: {
+			a: 1,
+			b: 2
+		},
+		obj2: {
+			c: 3,
+			d: 4
+		},
+		obj3: {
+			a: 1,
+			b: 2
+		},
+		obj4: {
+			b: 3,
+			f: 4
+		},
+		foo: 'my-foo',
+		bar: 'my-bar'
+	}
 })
 
 // 表示 boolean 值时注意不要直接写 checked="false"，这表示字符串，代表 true
@@ -469,33 +469,33 @@ Page({
 <view wx:for="{{array}}" wx:for-index="idx" wx:for-item="name">{{idx+1}}、{{name.message}}</view>
 
 Page({
-    data: {
-        array: [
-            { message: 'foo' },
-            { message: 'bar' }
-        ]
-    }
+	data: {
+		array: [
+			{ message: 'foo' },
+			{ message: 'bar' }
+		]
+	}
 })
 
 // 循环一个对象，index 代表 key，item 代表 value
 <view wx:for="{{obj}}">{{index}}：{{item}}</view>
 Page({
-    data: {
-        obj: {
-            a: '123',
-            b: '456',
-            c: '789'
-        }
-    }
+	data: {
+		obj: {
+			a: '123',
+			b: '456',
+			c: '789'
+		}
+	}
 })
 
 // wx:for也可以嵌套，这是一个九九乘法表
 <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i">
-    <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="j">
-        <text wx:if="{{i <= j}}">
-            {{i}} * {{j}} = {{i * j}}
-        </text>
-    </view>
+	<view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="j">
+		<text wx:if="{{i <= j}}">
+			{{i}} * {{j}} = {{i * j}}
+		</text>
+	</view>
 </view>
 
 // 当wx:for的值为字符串时，会将字符串解析成字符串数组
@@ -527,15 +527,15 @@ Page({
 <switch wx:for="{{numberArray}}" wx:key="*this"> {{item}} </switch>
 
 Page({
-    data: {
-        objectArray: [
-            {id: 0, unique: 'unique_0'},
-            {id: 1, unique: 'unique_1'},
-            {id: 2, unique: 'unique_2'},
-            {id: 3, unique: 'unique_3'}
-        ],
-        numberArray: [1, 2, 3, 4]
-    }
+	data: {
+		objectArray: [
+			{id: 0, unique: 'unique_0'},
+			{id: 1, unique: 'unique_1'},
+			{id: 2, unique: 'unique_2'},
+			{id: 3, unique: 'unique_3'}
+		],
+		numberArray: [1, 2, 3, 4]
+	}
 })
 ··
 
@@ -566,15 +566,15 @@ Page({
 ··
 // /¿components/¿dome/¿dome.wxml
 <template name="msgItem">
-    <view class="demo">
-        <text> {{index}}: {{msg}} </text>
-        <text> Time: {{time}} </text>
-    </view>
+	<view class="demo">
+		<text> {{index}}: {{msg}} </text>
+		<text> Time: {{time}} </text>
+	</view>
 </template>
 
 // /components/dome/dome.wxss
 .demo {
-    height: 200rpx;
+	height: 200rpx;
 }
 ··
 使用·is·属性指定 template 的·name·，然后传入所需要的·data·，如：
@@ -584,13 +584,13 @@ Page({
 
 <template is="msgItem" data="{{...item}}"/>
 Page({
-    data: {
-        item: {
-            index: 0,
-            msg: 'this is a template',
-            time: '2016-09-15'
-        }
-    }
+	data: {
+		item: {
+			index: 0,
+			msg: 'this is a template',
+			time: '2016-09-15'
+		}
+	}
 })
 ··
 import 有作用域范围，即只会 import 目标文件中定义的 template，而不会 import 目标文件 import 的 template。
@@ -628,14 +628,14 @@ iPhone6 的屏幕宽度为 375px，共有 750 个物理像素，·1rpx = 0.5px =
 ··
 /* common.wxss */
 .small-p {
-    padding:5px;
+	padding:5px;
 }
 ··
 ··
 /* app.wxss */
 @import "common.wxss";
 .middle-p {
-    padding:15px;
+	padding:15px;
 }
 ··
 
@@ -662,10 +662,10 @@ WXS 代码模块可以编写在 wxml 文件中的·<wxs>·标签内，或以·.w
 标签形式：
 ··
 <wxs module="foo">
-    var some_msg = "hello world"
-    module.exports = {
-        msg: some_msg
-    }
+	var some_msg = "hello world"
+	module.exports = {
+		msg: some_msg
+	}
 </wxs>
 <view> {{foo.msg}} </view>
 ··
@@ -674,11 +674,11 @@ WXS 代码模块可以编写在 wxml 文件中的·<wxs>·标签内，或以·.w
 // /pages/tools.wxs
 var foo = "'hello world' from tools.wxs"
 var bar = function (d) {
-    return d
+	return d
 }
 module.exports = {
-    FOO: foo,
-    bar: bar,
+	FOO: foo,
+	bar: bar,
 };
 module.exports.msg = "some msg"
 ··
@@ -702,23 +702,23 @@ wxs 模块均为单例，wxs 模块在第一次被引用时，会自动初始化
 和页面一样，一个自定义组件由·json wxml wxss js·4个文件组成。首先需要在·json·文件中声明这是一个自定义组件：
 ··
 {
-    "component": true
+	"component": true
 }
 ··
 然后 wxml 和 wxss 就和平时写页面一样。区别在于 js，不是·Page()·而是·Component()·，@[参考官方|https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/]
 使用自定义组件前先要在页面的 json 文件中进行引用声明，key 为指定自定义组件的名称，value 为自定义组件的路径：
 ··
 {
-    "usingComponents": {
-        "component-tag-name": "/components/demo/demo"
-    }
+	"usingComponents": {
+		"component-tag-name": "/components/demo/demo"
+	}
 }
 ··
 其他页面的引用，节点属性即传递给组件的属性值：
 ··
 <view>
-    <!-- 以下是对一个自定义组件的引用 -->
-    <component-tag-name inner-text="Some text"></component-tag-name>
+	<!-- 以下是对一个自定义组件的引用 -->
+	<component-tag-name inner-text="Some text"></component-tag-name>
 </view>
 ··
 注意：
@@ -763,37 +763,37 @@ A 或 B,B,清空原来的页面栈，打开指定页面（相当于执行 wx.reL
 ##目录
 !!
 视图容器
-    view：视图容器，可以当成·div·标签
-    scroll-view：可滚动视图容器
-    swiper：轮播图
-    swiper-item：仅可放置在·<swiper>·组件中，宽高自动设置为 100%
-    以及 movable-view、cover-image、cover-view、movable-area
+	view：视图容器，可以当成·div·标签
+	scroll-view：可滚动视图容器
+	swiper：轮播图
+	swiper-item：仅可放置在·<swiper>·组件中，宽高自动设置为 100%
+	以及 movable-view、cover-image、cover-view、movable-area
 基础内容
-    icon：图标，目前有![./img/html/wechat-applet05.jpg,auto,30]，注意wxss无法改变color、size、line-height
-    text：文字容器，内联元素
-    rich-text：富文字容器
-    progress：进度条
+	icon：图标，目前有![./img/html/wechat-applet05.jpg,auto,30]，注意wxss无法改变color、size、line-height
+	text：文字容器，内联元素
+	rich-text：富文字容器
+	progress：进度条
 表单
-    button：按钮
-    input：输入框
-    picker：列表选择器
-    switch：开关
-    textarea：文本域
-    以及 checkbox、checkbox-group、editor、form、label、picker-view、picker-view-column、radio、radio-group、slider
+	button：按钮
+	input：输入框
+	picker：列表选择器
+	switch：开关
+	textarea：文本域
+	以及 checkbox、checkbox-group、editor、form、label、picker-view、picker-view-column、radio、radio-group、slider
 导航
-    functional-page-navigator：仅在插件中有效，用于跳转到插件功能页
-    navigator：页面链接，相当于·<a>·
+	functional-page-navigator：仅在插件中有效，用于跳转到插件功能页
+	navigator：页面链接，相当于·<a>·
 媒体
-    image：图片，默认宽 300px、高 225px（4 : 3）
-    以及 audio、video、camera、live-player、live-pusher
+	image：图片，默认宽 300px、高 225px（4 : 3）
+	以及 audio、video、camera、live-player、live-pusher
 地图
-    map：地图
+	map：地图
 画布
-    canvas：画布
+	canvas：画布
 开放能力
-    open-data：展示微信开放的数据，比如群名称
-    web-view：承载网页的容器，会自动铺满整个小程序页面。个人类型与海外类型的小程序暂不支持使用
-    以及 ad、official-account
+	open-data：展示微信开放的数据，比如群名称
+	web-view：承载网页的容器，会自动铺满整个小程序页面。个人类型与海外类型的小程序暂不支持使用
+	以及 ad、official-account
 原生组件说明：层级是最高的，还无法在·<picker-view>·中使用，部分 CSS 样式无法应用于原生组件
 无障碍访问：为了更好地满足视障人士对于小程序的访问需求，基础库自 2.5.0 起，支持部分 ARIA 标签
 block：常用于·wx:for·，以包含多个节点，自身不在页面中显示
@@ -803,9 +803,9 @@ block：常用于·wx:for·，以包含多个节点，自身不在页面中显�
 !!
 selectable{Boolean}[false]：文本是否可选中
 space{String}[false]：是否显示连续空格，可选 :
-    ensp：中文字符空格一半大小
-    emsp：中文字符空格大小
-    nbsp：根据字体设置的空格大小
+	ensp：中文字符空格一半大小
+	emsp：中文字符空格大小
+	nbsp：根据字体设置的空格大小
 decode{Boolean}[false]：是否解码，可解析的有 : ·&amp;nbsp;· ·&amp;lt;· ·&amp;gt;· ·&amp;amp;· ·&amp;apos;· ·&amp;ensp;· ·&amp;emsp;·
 !!
 注意：各个操作系统的空格标准并不一致，<text/> 组件内只支持 <text/> 嵌套，除了文本节点以外的其他节点都无法长按选中
@@ -814,10 +814,10 @@ decode{Boolean}[false]：是否解码，可解析的有 : ·&amp;nbsp;· ·&amp;
 !!
 src{String}：图片资源地址
 mode{String}[scaleToFill]：图片裁剪缩放模式
-    scaleToFill：100%
-    aspectFit：contain
-    aspectFill：cover
-    top | right | bottom | left | center | top left | top right | bottom left | bottom right：显示原图大小对应的位置
+	scaleToFill：100%
+	aspectFit：contain
+	aspectFill：cover
+	top | right | bottom | left | center | top left | top right | bottom left | bottom right：显示原图大小对应的位置
 lazy-load{Boolean}[false]：图片懒加载，只在page与scroll-view下的image有效
 binderror{HandleEvent}：当错误发生时，发布到 AppService 的事件名，事件对象event.detail = {errMsg: 'something wrong'}
 bindload{HandleEvent}：当图片载入完毕时，发布到 AppService 的事件名，事件对象event.detail = {height:'图片高度px', width:'图片宽度px'}
@@ -827,14 +827,14 @@ bindload{HandleEvent}：当图片载入完毕时，发布到 AppService 的事�
 用于展示微信开放的数据，比如获取用户头像、昵称无需授权
 !!
 type{String}：开放数据类型，可选 :
-    groupName：拉取群名称
-    userNickName：用户昵称
-    userAvatarUrl：用户头像
-    userGender：用户性别
-    userCity：用户所在城市
-    userProvince：用户所在省份
-    userCountry：用户所在国家
-    userLanguage：用户的语言
+	groupName：拉取群名称
+	userNickName：用户昵称
+	userAvatarUrl：用户头像
+	userGender：用户性别
+	userCity：用户所在城市
+	userProvince：用户所在省份
+	userCountry：用户所在国家
+	userLanguage：用户的语言
 open-gid{String}：群id，当·type="groupName"·时生效，只有当前用户在此群内才能拉取到群名称，获取·open-gid·的方法可查看转发
 lang{String}[en]：以哪种语言展示 userInfo，当·type="user*"·时生效，有效值有 en（英文）、zh_CN（简体中文）、zh_TW（繁体中文）
 !!
@@ -871,54 +871,54 @@ disabled{Boolean}[false]：是否禁用
 ··
 // 将<picker>标签包围要点击触发的区域即可触发选择器
 <picker bind:change="pickerChange" value="{{index}}" range="{{array}}">
-    <text>选择：{{array[index]}}</text>
+	<text>选择：{{array[index]}}</text>
 </picker>
 Page({
-    data: {
-        array: ['九江', '吉安', '莆田', '广州', '深圳'],
-        index: 0
-    },
-    pickerChange(e) {
-        this.setData({ index: e.detail.value })
-    }
+	data: {
+		array: ['九江', '吉安', '莆田', '广州', '深圳'],
+		index: 0
+	},
+	pickerChange(e) {
+		this.setData({ index: e.detail.value })
+	}
 })
 
 // 对象数组
 <picker bind:change="pickerChange" value="{{index}}" range="{{array}}" range-key="name">
-    <text>选择：{{array[index].name}}</text>
+	<text>选择：{{array[index].name}}</text>
 </picker>
 Page({
-    data: {
-        array: [
-                { id:0, name:'九江' },
-                { id:1, name:'吉安' },
-                { id:2, name:'莆田' },
-                { id:3, name:'广州' },
-                { id:4, name:'深圳' }
-            ],
-        index: 0
-    },
-    pickerChange(e) {
-        this.setData({ index: e.detail.value })
-    }
+	data: {
+		array: [
+				{ id:0, name:'九江' },
+				{ id:1, name:'吉安' },
+				{ id:2, name:'莆田' },
+				{ id:3, name:'广州' },
+				{ id:4, name:'深圳' }
+			],
+		index: 0
+	},
+	pickerChange(e) {
+		this.setData({ index: e.detail.value })
+	}
 })
 
 // 二维数组
 <picker mode="multiSelector" bind:change="pickerChange" value="{{index}}" range="{{array}}">
-    <text>选择：{{array[0][index[0]]}}-{{array[1][index[1]]}}-{{array[2][index[2]]}}</text>
+	<text>选择：{{array[0][index[0]]}}-{{array[1][index[1]]}}-{{array[2][index[2]]}}</text>
 </picker>
 Page({
-    data: {
-        array: [
-                ['123', '456'],
-                ['吉安', '九江', '莆田'],
-                ['吉安', '广州', '深圳']
-            ],
-        index: [0, 0, 0]
-    },
-    pickerChange(e) {
-        this.setData({ index: e.detail.value })
-    }
+	data: {
+		array: [
+				['123', '456'],
+				['吉安', '九江', '莆田'],
+				['吉安', '广州', '深圳']
+			],
+		index: [0, 0, 0]
+	},
+	pickerChange(e) {
+		this.setData({ index: e.detail.value })
+	}
 })
 ··
 
@@ -927,132 +927,132 @@ Page({
 ##目录
 !!
 ^^基础^^
-    wx.canIUse：判断小程序的API，回调，参数，组件等是否在当前版本可用
-    wx.base64ToArrayBuffer：将 Base64 字符串转成 ArrayBuffer 对象
-    wx.arrayBufferToBase64：将 ArrayBuffer 对象转成 Base64 字符串
-    wx.getSystemInfo/Sync：异/同步获取系统信息
+	wx.canIUse：判断小程序的API，回调，参数，组件等是否在当前版本可用
+	wx.base64ToArrayBuffer：将 Base64 字符串转成 ArrayBuffer 对象
+	wx.arrayBufferToBase64：将 ArrayBuffer 对象转成 Base64 字符串
+	wx.getSystemInfo/Sync：异/同步获取系统信息
 ^^更新^^
-    wx.getUpdateManager：获取全局唯一的版本更新管理器，用于管理小程序更新，返回·UpdateManager·对象用来管理更新
+	wx.getUpdateManager：获取全局唯一的版本更新管理器，用于管理小程序更新，返回·UpdateManager·对象用来管理更新
 ^^小程序^^
-    wx.getLaunchOptionsSync：获取小程序启动时的参数。与·App.onLaunch·的回调参数一致
-    以及·wx.on/offPageNotFound··wx.on/offError··wx.on/offAudioInterruptionBegin/End··wx.on/offAppShow··wx.on/offAppHide·
+	wx.getLaunchOptionsSync：获取小程序启动时的参数。与·App.onLaunch·的回调参数一致
+	以及·wx.on/offPageNotFound··wx.on/offError··wx.on/offAudioInterruptionBegin/End··wx.on/offAppShow··wx.on/offAppHide·
 ^^调试^^
-    wx.setEnableDebug：设置是否打开调试开关。此开关对正式版也能生效
-    wx.getLogManager：获取日志管理器对象
+	wx.setEnableDebug：设置是否打开调试开关。此开关对正式版也能生效
+	wx.getLogManager：获取日志管理器对象
 ^^路由^^
-    wx.navigateTo：保留当前页面，跳转到应用内非 tabBar 的页面
-    wx.redirectTo：关闭当前页面，跳转到应用内非 tabBar 的页面，所以不能退回
-    wx.reLaunch：关闭所有页面，打开到任意页面，如果是 tabBar 则不能带参数
-    wx.switchTab：跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面（不会刷新 tabBar 页面），不能带参数
-    wx.navigateBack：关闭当前页面，返回上一页面或多级页面
+	wx.navigateTo：保留当前页面，跳转到应用内非 tabBar 的页面
+	wx.redirectTo：关闭当前页面，跳转到应用内非 tabBar 的页面，所以不能退回
+	wx.reLaunch：关闭所有页面，打开到任意页面，如果是 tabBar 则不能带参数
+	wx.switchTab：跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面（不会刷新 tabBar 页面），不能带参数
+	wx.navigateBack：关闭当前页面，返回上一页面或多级页面
 ^^交互反馈^^
-    wx.showToast：显示消息提示框，可选 success、loading、none
-    wx.showLoading：显示 loading 提示框, 需主动调用 wx.hideLoading 才能关闭提示框
-    wx.hideToast：隐藏消息提示框
-    wx.hideLoading：隐藏 loading 提示框，调用 wx.showToast() 也可覆盖loading 提示框
-    wx.showModal：​显示模态弹窗
-    wx.showActionSheet：显示操作菜单
-    导航栏：设置当前页面的标题、导航条的颜色、显示隐藏导航条加载动画
-    wx.setBackgroundTextStyle：动态设置下拉背景字体、loading 图的样式
-    wx.setBackgroundColor：动态设置窗口的背景色
-    Tab Bar：显示隐藏 TabBar 某一项右上角的红点、显示隐藏 tabBar、设置样式内容
-    wx.loadFontFace：动态加载网络字体。文件地址需为下载类型。iOS 仅支持 https 格式文件地址
-    wx.startPullDownRefresh：开始下拉刷新，效果与用户手动下拉刷新一致
-    wx.stopPullDownRefresh：停止当前页面下拉刷新
-    wx.pageScrollTo：将页面滚动到目标位置，单位 px
-    wx.createAnimation：创建一个动画实例 animation。调用实例的方法来描述动画，其实可以尽量使用 wxss 代替
-    wx.setTopBarText：动态设置置顶栏文字内容，只有当前小程序被置顶时能生效（貌似微信7.0版本开始不生效了）
-    wx.nextTick：延迟一部分操作到下一个时间片再执行（类似于 setTimeout）
-    wx.getMenuButtonBoundingClientRect：获取菜单按钮（右上角胶囊按钮）的布局位置信息。坐标信息以屏幕左上角为原点
-    wx.onWindowResize：监听窗口尺寸变化事件
-    wx.offWindowResize：取消监听窗口尺寸变化事件
-    wx.onKeyboardHeightChange：监听键盘高度变化
+	wx.showToast：显示消息提示框，可选 success、loading、none
+	wx.showLoading：显示 loading 提示框, 需主动调用 wx.hideLoading 才能关闭提示框
+	wx.hideToast：隐藏消息提示框
+	wx.hideLoading：隐藏 loading 提示框，调用 wx.showToast() 也可覆盖loading 提示框
+	wx.showModal：​显示模态弹窗
+	wx.showActionSheet：显示操作菜单
+	导航栏：设置当前页面的标题、导航条的颜色、显示隐藏导航条加载动画
+	wx.setBackgroundTextStyle：动态设置下拉背景字体、loading 图的样式
+	wx.setBackgroundColor：动态设置窗口的背景色
+	Tab Bar：显示隐藏 TabBar 某一项右上角的红点、显示隐藏 tabBar、设置样式内容
+	wx.loadFontFace：动态加载网络字体。文件地址需为下载类型。iOS 仅支持 https 格式文件地址
+	wx.startPullDownRefresh：开始下拉刷新，效果与用户手动下拉刷新一致
+	wx.stopPullDownRefresh：停止当前页面下拉刷新
+	wx.pageScrollTo：将页面滚动到目标位置，单位 px
+	wx.createAnimation：创建一个动画实例 animation。调用实例的方法来描述动画，其实可以尽量使用 wxss 代替
+	wx.setTopBarText：动态设置置顶栏文字内容，只有当前小程序被置顶时能生效（貌似微信7.0版本开始不生效了）
+	wx.nextTick：延迟一部分操作到下一个时间片再执行（类似于 setTimeout）
+	wx.getMenuButtonBoundingClientRect：获取菜单按钮（右上角胶囊按钮）的布局位置信息。坐标信息以屏幕左上角为原点
+	wx.onWindowResize：监听窗口尺寸变化事件
+	wx.offWindowResize：取消监听窗口尺寸变化事件
+	wx.onKeyboardHeightChange：监听键盘高度变化
 ^^网络^^
-    wx.request：发起网络请求
-    wx.downloadFile：下载文件
-    wx.uploadFile：上传文件
-    WebSocket：创建 WebSocket 连接
-    mDNS：发起局域网网络请求
-    UDP 通信：创建局域网内的 WebSocket 连接
+	wx.request：发起网络请求
+	wx.downloadFile：下载文件
+	wx.uploadFile：上传文件
+	WebSocket：创建 WebSocket 连接
+	mDNS：发起局域网网络请求
+	UDP 通信：创建局域网内的 WebSocket 连接
 ^^数据缓存^^
-    wx.setStorage/Sync：异/同步存储本地存储在指定的 key 中，若原来 key 有内容会覆盖，本地缓存大小限制为 10MB
-    wx.getStorage/Sync：异/同步获取本地存储在指定的 key 中的内容
-    wx.getStorageInfo/Sync：异/同步获取本地存储的信息，包含所有key、占用的空间、可用的空间
-    wx.removeStorage/Sync：异/同步从本地缓存中异步移除指定 key
-    wx.clearStorage/Sync：异/同步清空所有本地缓存
+	wx.setStorage/Sync：异/同步存储本地存储在指定的 key 中，若原来 key 有内容会覆盖，本地缓存大小限制为 10MB
+	wx.getStorage/Sync：异/同步获取本地存储在指定的 key 中的内容
+	wx.getStorageInfo/Sync：异/同步获取本地存储的信息，包含所有key、占用的空间、可用的空间
+	wx.removeStorage/Sync：异/同步从本地缓存中异步移除指定 key
+	wx.clearStorage/Sync：异/同步清空所有本地缓存
 ^^媒体^^
-    wx.saveImageToPhotosAlbum：保存图片到系统相册
-    wx.previewImage：预览图片
-    wx.getImageInfo：获取图片信息
-    wx.compressImage：压缩图片
-    wx.chooseMessageFile：从客户端会话选择文件
-    wx.chooseImage：从本地相册选择图片或使用相机拍照
-    以及操作地图组件、视频、音频、背景音频、实时音视频、录音、相机、富文本
+	wx.saveImageToPhotosAlbum：保存图片到系统相册
+	wx.previewImage：预览图片
+	wx.getImageInfo：获取图片信息
+	wx.compressImage：压缩图片
+	wx.chooseMessageFile：从客户端会话选择文件
+	wx.chooseImage：从本地相册选择图片或使用相机拍照
+	以及操作地图组件、视频、音频、背景音频、实时音视频、录音、相机、富文本
 ^^位置^^
-    wx.openLocation：​使用微信内置地图查看位置
-    wx.getLocation：获取当前的地理位置、速度
-    wx.chooseLocation：打开地图选择位置
+	wx.openLocation：​使用微信内置地图查看位置
+	wx.getLocation：获取当前的地理位置、速度
+	wx.chooseLocation：打开地图选择位置
 ^^转发^^
-    wx.updateShareMenu：更新转发属性
-    wx.showShareMenu：显示当前页面的转发按钮
-    wx.hideShareMenu：隐藏转发按钮
-    wx.getShareInfo：获取转发详细信息
+	wx.updateShareMenu：更新转发属性
+	wx.showShareMenu：显示当前页面的转发按钮
+	wx.hideShareMenu：隐藏转发按钮
+	wx.getShareInfo：获取转发详细信息
 ^^画布^^
-    wx.createCanvasContext：创建 canvas 的绘图上下文对象
-    wx.canvasToTempFilePath：把当前画布导出生成指定大小的图片。注意在·draw()·回调里调用该方法才能保证图片导出成功
+	wx.createCanvasContext：创建 canvas 的绘图上下文对象
+	wx.canvasToTempFilePath：把当前画布导出生成指定大小的图片。注意在·draw()·回调里调用该方法才能保证图片导出成功
 ^^文件^^
-    wx.saveFile：保存文件到本地
-    wx.removeSavedFile：删除本地缓存文件
-    wx.openDocument：新开页面打开文档，支持格式有·doc, xls, ppt, pdf, docx, xlsx, pptx·
-    wx.getSavedFileList：获取该小程序下已保存的本地缓存文件列表
-    wx.getSavedFileInfo：获取本地文件的文件信息
-    wx.getFileSystemManager：获取全局唯一的文件管理器
-    wx.getFileInfo：获取临时文件信息
+	wx.saveFile：保存文件到本地
+	wx.removeSavedFile：删除本地缓存文件
+	wx.openDocument：新开页面打开文档，支持格式有·doc, xls, ppt, pdf, docx, xlsx, pptx·
+	wx.getSavedFileList：获取该小程序下已保存的本地缓存文件列表
+	wx.getSavedFileInfo：获取本地文件的文件信息
+	wx.getFileSystemManager：获取全局唯一的文件管理器
+	wx.getFileInfo：获取临时文件信息
 ^^开放接口^^
-    wx.login：获取临时登录凭证（code）
-    wx.checkSession：校验用户当前 session_key 是否有效，用户越使用小程序越保持有效，越久未使用越有可能失效
-    wx.navigateToMiniProgram：打开另一个小程序
-    wx.navigateBackMiniProgram：返回到上一个小程序。只有在当前小程序是被其他小程序打开时可以调用成功
-    wx.getAccountInfoSync：获取当前帐号信息，返回小程序 appId 和使用的插件信息
-    wx.getUserInfo：获取用户信息，接口后续将不再出现授权弹窗，不建议使用，改为使用·<button>·获取
-    wx.reportMonitor：自定义业务数据监控上报接口
-    wx.reportAnalytics：自定义分析数据上报接口
-    wx.requestPayment：发起微信支付
-    wx.authorize：提前向用户发起授权请求，不会实际调用对应接口，若之前已授权则不会出现授权弹窗直接调用成功
-    wx.openSetting：调起客户端小程序向用户请求过的权限设置界面
-    wx.getSetting：获取某项功能或数据有没有被授权
-    以及获取收货地址、卡券、发票、生物认证、微信运动
+	wx.login：获取临时登录凭证（code）
+	wx.checkSession：校验用户当前 session_key 是否有效，用户越使用小程序越保持有效，越久未使用越有可能失效
+	wx.navigateToMiniProgram：打开另一个小程序
+	wx.navigateBackMiniProgram：返回到上一个小程序。只有在当前小程序是被其他小程序打开时可以调用成功
+	wx.getAccountInfoSync：获取当前帐号信息，返回小程序 appId 和使用的插件信息
+	wx.getUserInfo：获取用户信息，接口后续将不再出现授权弹窗，不建议使用，改为使用·<button>·获取
+	wx.reportMonitor：自定义业务数据监控上报接口
+	wx.reportAnalytics：自定义分析数据上报接口
+	wx.requestPayment：发起微信支付
+	wx.authorize：提前向用户发起授权请求，不会实际调用对应接口，若之前已授权则不会出现授权弹窗直接调用成功
+	wx.openSetting：调起客户端小程序向用户请求过的权限设置界面
+	wx.getSetting：获取某项功能或数据有没有被授权
+	以及获取收货地址、卡券、发票、生物认证、微信运动
 ^^设备^^
-    wx.setClipboardData：设置系统剪贴板的内容
-    wx.getClipboardData：获取系统剪贴板的内容
-    wx.makePhoneCall：打电话
-    以及 iBeacon、WiFi、低功耗蓝牙、手机通讯录联系人、蓝牙、电量、NFC、网络状况、屏幕亮度、截屏事件
-    以及 加速计、罗盘、设备方向、陀螺仪、性能、扫码、振动
+	wx.setClipboardData：设置系统剪贴板的内容
+	wx.getClipboardData：获取系统剪贴板的内容
+	wx.makePhoneCall：打电话
+	以及 iBeacon、WiFi、低功耗蓝牙、手机通讯录联系人、蓝牙、电量、NFC、网络状况、屏幕亮度、截屏事件
+	以及 加速计、罗盘、设备方向、陀螺仪、性能、扫码、振动
 ^^Worker^^
-    wx.createWorker：创建一个 Worker 线程，目前限制最多只能创建一个 Worker
+	wx.createWorker：创建一个 Worker 线程，目前限制最多只能创建一个 Worker
 ^^第三方平台^^
-    wx.getExtConfig/Sync：获取授权的第三方平台给的自定义数据字段
+	wx.getExtConfig/Sync：获取授权的第三方平台给的自定义数据字段
 ^^WXML^^
-    wx.createSelectorQuery：返回一个 SelectorQuery 对象实例以获取节点信息
-    wx.createIntersectionObserver：用于推断某些节点是否可以被用户看见、有多大比例可以被用户看见
+	wx.createSelectorQuery：返回一个 SelectorQuery 对象实例以获取节点信息
+	wx.createIntersectionObserver：用于推断某些节点是否可以被用户看见、有多大比例可以被用户看见
 ^^广告^^
-    wx.createRewardedVideoAd：创建激励视频广告组件
-    wx.createInterstitialAd：创建插屏广告组件
+	wx.createRewardedVideoAd：创建激励视频广告组件
+	wx.createInterstitialAd：创建插屏广告组件
 !!
 
 ##页面导航
 !!
 wx.navigateTo({	保留当前页面跳转到非 tabBar 的页面，可返回原页面，目前页面路径最多只能十层
-    url{String}!：路径，可带参数，参数与路径之间使用?分隔，参数键与参数值用=相连，不同参数用&分隔
-    success{Function}：接口调用成功的回调函数
-    fail{Function}：接口调用失败的回调函数
-    complete{Function}：接口调用结束的回调函数
+	url{String}!：路径，可带参数，参数与路径之间使用?分隔，参数键与参数值用=相连，不同参数用&分隔
+	success{Function}：接口调用成功的回调函数
+	fail{Function}：接口调用失败的回调函数
+	complete{Function}：接口调用结束的回调函数
 })
 wx.redirectTo(Object)：关闭当前页面，跳转到应用内非 tabBar 的页面，所以不能退回，属性同navigateTo
 wx.reLaunch(Object)：关闭所有页面，打开到任意页面，如果是tabBar则不能带参数，属性同navigateTo
 wx.switchTab(Object)：跳转到 tabBar 页面并关闭所有非 tabBar 页面（不刷新 tabBar 页面），不能带参数，属性同navigateTo
 wx.navigateBack({	关闭当前页面返回上一页面或多级页面（不刷新返回的页面）
-    delta{Number}[1]：返回的页面数，如果·delta·大于现有页面数则返回到首页，可通过·getCurrentPages()·获取当前的页面栈情况
+	delta{Number}[1]：返回的页面数，如果·delta·大于现有页面数则返回到首页，可通过·getCurrentPages()·获取当前的页面栈情况
 })
 !!
 
@@ -1061,14 +1061,14 @@ wx.navigateBack({	关闭当前页面返回上一页面或多级页面（不刷�
 ###消息提示框
 !!
 wx.showToast({
-    title{String}!：提示的内容
-    icon{String}：图标，可选success、loading、none
-    image{String}：自定义图标的本地路径，会覆盖icon
-    duration{Number}[1500]：持续时间，单位ms
-    mask{Boolean}[false]：是否显示透明蒙层，防止触摸穿透
-    success{Function}：成功的回调函数
-    fail{Function}：失败的回调函数
-    complete{Function}：完成的回调函数
+	title{String}!：提示的内容
+	icon{String}：图标，可选success、loading、none
+	image{String}：自定义图标的本地路径，会覆盖icon
+	duration{Number}[1500]：持续时间，单位ms
+	mask{Boolean}[false]：是否显示透明蒙层，防止触摸穿透
+	success{Function}：成功的回调函数
+	fail{Function}：失败的回调函数
+	complete{Function}：完成的回调函数
 })
 wx.hideToast()：主动隐藏消息提示框
 !!
@@ -1077,11 +1077,11 @@ wx.hideToast()：主动隐藏消息提示框
 需调用 wx.hideLoading() 后才会消失
 !!
 wx.showLoading({
-    title{String}!：提示的内容
-    mask{Boolean}[false]：是否显示透明蒙层，防止触摸穿透
-    success{Function}：成功的回调函数
-    fail{Function}：失败的回调函数
-    complete{Function}：完成的回调函数
+	title{String}!：提示的内容
+	mask{Boolean}[false]：是否显示透明蒙层，防止触摸穿透
+	success{Function}：成功的回调函数
+	fail{Function}：失败的回调函数
+	complete{Function}：完成的回调函数
 })
 wx.hideLoading()：隐藏loading提示框
 !!
@@ -1098,32 +1098,32 @@ wx.hideLoading()：隐藏loading提示框
 ###发起网络请求
 !!
 wx.request({
-    url{String}!：接口地址
-    data{Object/String/ArrayBuffer}：请求的参数，如果是非 String 类型会转换成 String 类型，转换规则如下 :
-        GET请求： query string（encodeURIComponent(k)=encodeURIComponent(v)&...）
-        POST请求且且 header['content-type'] 为 application/json 的数据：对数据进行 JSON 序列化
-        POST请求且且 header['content-type'] 为 application/x-www-form-urlencoded 的数据：同 GET 的 query string
-    header{Object}[{'content-type':'application/json'}]：请求头，不能设置 Referer
-    method{String}[GET]：请求方式（需大写），有效值 OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    dataType{String}[json]：设置返回的数据格式，设为 json 会尝试对返回的数据做一次 JSON.parse
-    responseType{String}[text]：设置响应的数据类型，可选 text、arraybuffer
-    success{Function(res)}：成功的回调函数
-        res：{
-            data{Object/String/ArrayBuffer}：返回的数据
-            statusCode{Number}：返回的 HTTP 状态码
-            header{Object}：返回的 HTTP Response Header
-        }
-    fail{Function}：失败的回调函数
-    complete{Function}：完成的回调函数
+	url{String}!：接口地址
+	data{Object/String/ArrayBuffer}：请求的参数，如果是非 String 类型会转换成 String 类型，转换规则如下 :
+		GET请求： query string（encodeURIComponent(k)=encodeURIComponent(v)&...）
+		POST请求且且 header['content-type'] 为 application/json 的数据：对数据进行 JSON 序列化
+		POST请求且且 header['content-type'] 为 application/x-www-form-urlencoded 的数据：同 GET 的 query string
+	header{Object}[{'content-type':'application/json'}]：请求头，不能设置 Referer
+	method{String}[GET]：请求方式（需大写），有效值 OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+	dataType{String}[json]：设置返回的数据格式，设为 json 会尝试对返回的数据做一次 JSON.parse
+	responseType{String}[text]：设置响应的数据类型，可选 text、arraybuffer
+	success{Function(res)}：成功的回调函数
+		res：{
+			data{Object/String/ArrayBuffer}：返回的数据
+			statusCode{Number}：返回的 HTTP 状态码
+			header{Object}：返回的 HTTP Response Header
+		}
+	fail{Function}：失败的回调函数
+	complete{Function}：完成的回调函数
 })
 !!
 返回一个 requestTask 对象，可调用·abort()·用于中断请求任务，比如：
 ··
 const requestTask = wx.request({
-    url: 'test.php',
-    success: function(res) {
-        console.log(res.data)
-    }
+	url: 'test.php',
+	success: function(res) {
+		console.log(res.data)
+	}
 })
 
 requestTask.abort()	// 取消请求任务
@@ -1133,15 +1133,15 @@ requestTask.abort()	// 取消请求任务
 在 Page 中定义 onShareAppMessage 函数，右上角菜单才会显示转发按钮， return 一个 Object 用于自定义转发内容
 !!
 onShareAppMessage(res) {
-    res：{
-        from{String}：转发事件来源。button：页面内转发按钮；menu：右上角转发菜单
-        target{Object}：如果 from 值是 button，则 target 是触发这次转发事件的 button，否则为 undefined
-    }
-    return {
-        title：转发的标题，默认为当前小程序名称
-        path：转发的路径，默认为当前页面路径 ，必须是以 / 开头的完整路径
-        imageUrl：图片路径，支持PNG及JPG，默认为当前页面的截图，长宽比是 5:4
-    }
+	res：{
+		from{String}：转发事件来源。button：页面内转发按钮；menu：右上角转发菜单
+		target{Object}：如果 from 值是 button，则 target 是触发这次转发事件的 button，否则为 undefined
+	}
+	return {
+		title：转发的标题，默认为当前小程序名称
+		path：转发的路径，默认为当前页面路径 ，必须是以 / 开头的完整路径
+		imageUrl：图片路径，支持PNG及JPG，默认为当前页面的截图，长宽比是 5:4
+	}
 }
 !!
 通常开发者希望转发出去的小程序被二次打开的时候能够获取到一些信息，例如群的标识。
@@ -1153,7 +1153,7 @@ onShareAppMessage(res) {
 !!
 in(component)：选择自定义组件 component 内的节点
 select(selector)：在当前页面下选择第一个匹配的节点，返回一个NodesRef对象实例，用于获取节点信息，selector支持 :
-    #id、.class、#id, .class、.parent>.child、.parent .children、.parent >>> .children（跨自定义组件的后代选择器）
+	#id、.class、#id, .class、.parent>.child、.parent .children、.parent >>> .children（跨自定义组件的后代选择器）
 selectAll(selector)：在当前页面下选择所有匹配的节点，返回一个数组形式的NodesRef对象实例
 selectViewport()：选择显示区域（当前页面），可用于获取显示区域的尺寸、滚动位置等信息，返回一个NodesRef对象实例
 exec([callback])：执行所有的请求，请求结果按请求次序构成数组，在callback的第一个参数中返回
@@ -1164,12 +1164,12 @@ boundingClientRect([callback])：返回节点信息，包括 id、dataset、left
 scrollOffset([callback])：返回节点滚动位置信息，节点必须是 scroll-view 或 viewport，包括 id、dataset、scrollTop、scrollLeft，单位为 px
 context：添加节点的 Context 对象查询请求，目前支持 VideoContext、CanvasContext、LivePlayerContext 和 MapContext 
 fields(fields,[callback])：自定义指定获取节点的相关信息，返回值是nodesRef对应的selectorQuery。可指定获取的字段包括
-    id{Boolean}[false]：是否返回节点id
-    dataset{Boolean}[false]：是否返回节点dataset
-    rect{Boolean}[false]：是否返回节点布局位置（left、right、top、bottom）
-    size{Boolean}[false]：是否返回节点尺寸（width、height）
-    scrollOffset{Boolean}[false]：是否返回节点的 scrollLeft scrollTop ，节点必须是scroll-view或viewport
-    properties{StringArray}[[]]：指定节点属性名列表，以返回对应属性值（ id、class、style 和事件绑定的属性值不可获取）
+	id{Boolean}[false]：是否返回节点id
+	dataset{Boolean}[false]：是否返回节点dataset
+	rect{Boolean}[false]：是否返回节点布局位置（left、right、top、bottom）
+	size{Boolean}[false]：是否返回节点尺寸（width、height）
+	scrollOffset{Boolean}[false]：是否返回节点的 scrollLeft scrollTop ，节点必须是scroll-view或viewport
+	properties{StringArray}[[]]：指定节点属性名列表，以返回对应属性值（ id、class、style 和事件绑定的属性值不可获取）
 !!
 
 示例代码：
@@ -1178,30 +1178,30 @@ fields(fields,[callback])：自定义指定获取节点的相关信息，返回�
 const query = wx.createSelectorQuery()
 const ref = query.select('.class')
 ref.boundingClientRect(res => {
-    console.log(res)
+	console.log(res)
 }).exec()
 
 // 获取多个节点的相关信息
-    wx.createSelectorQuery().selectAll('.a-class').boundingClientRect().exec(function(res){
-    res.forEach(item => {
-        console.log(item)
-    })
+	wx.createSelectorQuery().selectAll('.a-class').boundingClientRect().exec(function(res){
+	res.forEach(item => {
+		console.log(item)
+	})
 })
 
 // 获取 fields
-    wx.createSelectorQuery().select('#id').fields({
-    dataset: true,
-    size: true,
-    scrollOffset: true,
-    properties: ['scrollX', 'scrollY']
+	wx.createSelectorQuery().select('#id').fields({
+	dataset: true,
+	size: true,
+	scrollOffset: true,
+	properties: ['scrollX', 'scrollY']
 }, res => {
-    res.dataset    // 节点的dataset
-    res.width      // 节点的宽度
-    res.height     // 节点的高度
-    res.scrollLeft // 节点的水平滚动位置
-    res.scrollTop  // 节点的竖直滚动位置
-    res.scrollX    // 节点 scroll-x 属性的当前值
-    res.scrollY    // 节点 scroll-y 属性的当前值
+	res.dataset    // 节点的dataset
+	res.width      // 节点的宽度
+	res.height     // 节点的高度
+	res.scrollLeft // 节点的水平滚动位置
+	res.scrollTop  // 节点的竖直滚动位置
+	res.scrollX    // 节点 scroll-x 属性的当前值
+	res.scrollY    // 节点 scroll-y 属性的当前值
 }).exec()
 ··
 
@@ -1212,14 +1212,14 @@ ref.boundingClientRect(res => {
 用户向公众号发送消息时，公众号方收到的消息发送者是一个OpenID，是使用用户微信号加密后的结果，每个用户(微信号)对每个公众号有一个唯一的 OpenID
 !!
 wx.login({
-    timeout{Number}：超时时间，单位 ms
-    success{Function(res)}!：成功的回调
-        res：{
-            errMsg{String}：调用结果
-            code{String}：用户登录凭证（有效期五分钟）
-        }
-    fail{Function}：失败的回调
-    complete{Function}：完成的回调
+	timeout{Number}：超时时间，单位 ms
+	success{Function(res)}!：成功的回调
+		res：{
+			errMsg{String}：调用结果
+			code{String}：用户登录凭证（有效期五分钟）
+		}
+	fail{Function}：失败的回调
+	complete{Function}：完成的回调
 })
 !!
 然后在服务器后台调用指定接口，使用 code 换取 openid、session_key、unionid，地址
@@ -1243,12 +1243,12 @@ unionid：用户在开放平台的唯一标识符（满足UnionID下发条件才
 !!
 session_key：用于在服务器解密·wx.getUserInfo()·返回的敏感数据，为了数据安全不建议服务器把·session_key·下发到小程序
 unionid：如果开发者拥有多个移动应用（比如在 APP 内开发了微信分享、微信支付）、网站应用（比如在某网站开放了微信快捷登录）、和公众帐号，微信针对用户在不同的应用下都有唯一的一个·openId·，所以在不同的公众账号下·openid·是不一样的，但·unionid·却是一样的
-    对于拥有多个账号的企业来说，·unionid·可以帮助识别不同公众账号下的用户是否是同一个人。这样在不同账号下对该用户提供的服务可以连续起来了，可以实现多个小程序、公众号、APP之间数据互通。还可以去除重复关注的用户数，便于统计真实的关注用户总数
-    unionid 作为互通的用户标识，不建议作为用户ID，应该用·openid·。否则一旦发生小程序、公众号或者APP迁移到其他的开放平台下，就无法识别出来原来的用户了（迁移指微信开放平台的a帐号迁移到了b帐号）。而迁移小程序只要·appid·不变，·openid·就是不会变的。当然如果能保证账号之间不会迁移用·unionid·作为用户标识也是可以的。
+	对于拥有多个账号的企业来说，·unionid·可以帮助识别不同公众账号下的用户是否是同一个人。这样在不同账号下对该用户提供的服务可以连续起来了，可以实现多个小程序、公众号、APP之间数据互通。还可以去除重复关注的用户数，便于统计真实的关注用户总数
+	unionid 作为互通的用户标识，不建议作为用户ID，应该用·openid·。否则一旦发生小程序、公众号或者APP迁移到其他的开放平台下，就无法识别出来原来的用户了（迁移指微信开放平台的a帐号迁移到了b帐号）。而迁移小程序只要·appid·不变，·openid·就是不会变的。当然如果能保证账号之间不会迁移用·unionid·作为用户标识也是可以的。
 unionid 获得途径：
-    调用接口 wx.getUserInfo，从解密数据中获取 UnionID。注意本接口需要用户授权，需妥善处理拒绝授权后的情况
-    如果开发者帐号下存在同主体的公众号，并且该用户已经关注了该公众号。可以通过wx.login获取到该用户UnionID
-    如果开发者帐号下存在同主体的公众号或移动应用，并且该用户已经授权登录过该公众号或移动应用。也可以通过wx.login获取到
+	调用接口 wx.getUserInfo，从解密数据中获取 UnionID。注意本接口需要用户授权，需妥善处理拒绝授权后的情况
+	如果开发者帐号下存在同主体的公众号，并且该用户已经关注了该公众号。可以通过wx.login获取到该用户UnionID
+	如果开发者帐号下存在同主体的公众号或移动应用，并且该用户已经授权登录过该公众号或移动应用。也可以通过wx.login获取到
 !!
 
 ###设计规范
@@ -1273,14 +1273,14 @@ URL 地址：·https://api.mch.weixin.qq.com/pay/unifiedorder·，参考@[小程
 返回的结果都是小程序支付 API 的参数，所以请求成功后就可以调起支付窗口：
 !!
 wx.requestPayment({
-    timeStamp{String}!：时间戳从1970年1月1日00:00:00至今的秒数，即当前的时间
-    nonceStr{String}!：随机字符串，长度为32个字符以下
-    package{String}!：统一下单接口返回的 prepay_id 参数值，提交格式如·prepay_id=*·
-    signType{String}!：签名算法，暂支持 MD5
-    paySign{String}!：MD5 签名
-    success{Function}：成功的回调函数
-    fail{Function}：失败的回调函数
-    complete{Function}：结束的回调函数
+	timeStamp{String}!：时间戳从1970年1月1日00:00:00至今的秒数，即当前的时间
+	nonceStr{String}!：随机字符串，长度为32个字符以下
+	package{String}!：统一下单接口返回的 prepay_id 参数值，提交格式如·prepay_id=*·
+	signType{String}!：签名算法，暂支持 MD5
+	paySign{String}!：MD5 签名
+	success{Function}：成功的回调函数
+	fail{Function}：失败的回调函数
+	complete{Function}：结束的回调函数
 })
 !!
 
@@ -1352,21 +1352,21 @@ qcloudRoot{Path String}：指定腾讯云项目的目录(需为相对路径)
 pluginRoot{Path String}：指定插件项目的目录(需为相对路径)
 compileType{String}：编译类型，可选 miniprogram（小程序）、plugin（小程序插件）
 setting{Object}：项目设置
-    es6{Boolean}：是否启用 es5 转 es6
-    postcss{Boolean}：上传代码时样式是否自动补全
-    minified{Boolean}：上传代码时是否自动压缩
-    urlCheck{Boolean}：是否检查安全域名和 TLS 版本
+	es6{Boolean}：是否启用 es5 转 es6
+	postcss{Boolean}：上传代码时样式是否自动补全
+	minified{Boolean}：上传代码时是否自动压缩
+	urlCheck{Boolean}：是否检查安全域名和 TLS 版本
 libVersion{String}：基础库版本
 appid{String}：项目的 appid，只在新建项目时读取
 projectname{String}：项目名字，只在新建项目时读取
 packOptions{Object}：打包配置选项，打包是预览 、上传时对项目进行的必须步骤
-    ignore{Object Array}：用以配置打包时对符合指定规则的文件或文件夹进行忽略，以跳过打包的过程，这些文件或文件夹将不会出现在预览或上传的结果内。每项如下 :
-        type{String}：类型，可选folder（文件夹）、file（文件）、suffix（后缀）、prefix（前缀）
-        value{String}：路径或取值，不支持通配符、正则表达式。若是路径则以小程序目录 (miniprogramRoot) 为根目录
+	ignore{Object Array}：用以配置打包时对符合指定规则的文件或文件夹进行忽略，以跳过打包的过程，这些文件或文件夹将不会出现在预览或上传的结果内。每项如下 :
+		type{String}：类型，可选folder（文件夹）、file（文件）、suffix（后缀）、prefix（前缀）
+		value{String}：路径或取值，不支持通配符、正则表达式。若是路径则以小程序目录 (miniprogramRoot) 为根目录
 scripts{Object}：自定义预处理
-    beforeCompile：编译前预处理命令
-    beforePreview：预览前预处理命令
-    beforeUpload：上传前预处理命令
+	beforeCompile：编译前预处理命令
+	beforePreview：预览前预处理命令
+	beforeUpload：上传前预处理命令
 !!
 
 #云开发

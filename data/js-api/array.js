@@ -66,7 +66,7 @@ var a = [1, 2, 3]
 a.foo = true
 
 for (var key in a) {
-    console.log(key)
+	console.log(key)
 }
 // 0
 // 1
@@ -78,10 +78,10 @@ for (var key in a) {
 如果一个对象的所有键名都是正整数或零，并且有·length·属性，可以称之为“类似数组的对象”（array-like object）
 ··
 var obj = {
-    0: 'a',
-    1: 'b',
-    2: 'c',
-    length: 3
+	0: 'a',
+	1: 'b',
+	2: 'c',
+	length: 3
 }
 ··
 但因为本质是个对象，所以·length·不会随着成员的变化而变化，也不具备数组的方法
@@ -99,7 +99,7 @@ var arr = Array.prototype.slice.call(arrayLike)
 或者通过·call()·把数组的方法放到对象上面
 ··
 function print(value, index) {
-    console.log(index + ' : ' + value)
+	console.log(index + ' : ' + value)
 }
   
 Array.prototype.forEach.call(arrayLike, print)
@@ -149,42 +149,42 @@ unshift(...obj)：在数组的第一个位置添加元素，并返回添加新�
 shift()：删除数组的第一个元素，并返回该元素。注意，该方法会改变原数组
 reverse()：颠倒数组元素顺序，返回改变后的数组。注意，该方法将改变原数组
 sort(fn)：对数组进行排序，默认按照字典顺序从小到大排序。注意，该方法将改变原数组
-    排序时数值会被先转成字符串，再按照字典顺序进行比较，所以·101·会排在·11·的前面，可以传入一个函数作为参数来自定义排序
-    fn(a, b){f}：接受两个参数，表示当前进行比较的两个数组成员，假设参数是·a·和·b·，进行·return a - b·：
-        如果该函数的返回值大于·0·，表示·a·排在·b·后面，否则·a·排在·b·前面，即从小到大排列，可以·return b - a·从大到小排列
+	排序时数值会被先转成字符串，再按照字典顺序进行比较，所以·101·会排在·11·的前面，可以传入一个函数作为参数来自定义排序
+	fn(a, b){f}：接受两个参数，表示当前进行比较的两个数组成员，假设参数是·a·和·b·，进行·return a - b·：
+		如果该函数的返回值大于·0·，表示·a·排在·b·后面，否则·a·排在·b·前面，即从小到大排列，可以·return b - a·从大到小排列
 splice(start, count, ...add)：删除原数组的一部分成员，并可以在删除的位置添加新成员，返回被删除的元素。注意，该方法会改变原数组
-    start{n}[0]：开始位置，可以是负数表示倒数
-    count{n}[数组长度-start]：删除的个数，注意不填则默认从·start·开始全都删除，如果只想添加元素可以设为·0·
-    ...add：要添加的元素
+	start{n}[0]：开始位置，可以是负数表示倒数
+	count{n}[数组长度-start]：删除的个数，注意不填则默认从·start·开始全都删除，如果只想添加元素可以设为·0·
+	...add：要添加的元素
 
 join(str)：将所有数组成员以参数字符串连接为一个字符串返回，参数默认为逗号
 concat(...obj)：合并多个任意类型的参数为一个新数组
 slice(start, end)：提取目标数组的一部分，返回一个新数组，参数可以是负数表示倒数，若·start·大于·end·则返回空字符串
-    start{n}[0]：开始位置
-    end{n}[数组的长度]：结束位置（不含该位置）
+	start{n}[0]：开始位置
+	end{n}[数组的长度]：结束位置（不含该位置）
 
 map(fn(item, index, arr), thisObj)：遍历每个成员依次执行参数函数，把每次的返回的执行结果组成一个新数组返回
-    item：当前循环的数组元素
-    index{n}：当前循环的数组元素的索引
-    arr：原数组
-    thisObj：将回调函数内部的·this·指向此参数
+	item：当前循环的数组元素
+	index{n}：当前循环的数组元素的索引
+	arr：原数组
+	thisObj：将回调函数内部的·this·指向此参数
 forEach(fn(item, index, arr), thisObj)：遍历每个成员依次执行参数函数，参数的说明同·map()·
-    注意，·forEach·循环不能通过·break·或·return·中断，可以使用抛出错误来中断，例如·throw 'err'·
+	注意，·forEach·循环不能通过·break·或·return·中断，可以使用抛出错误来中断，例如·throw 'err'·
 filter(fn(item, index, arr), thisObj)：遍历过滤数组，把每次的返回的执行结果为·true·的成员组成新数组返回，参数的说明同·map()·
 
 some(fn(item, index, arr), thisObj)：遍历判断若参数函数有一次的返回值是·true·则结果为·true·，否则·false·，参数的说明同·map()·
-    注意，对于空数组使用只返回·false·，不会执行参数函数
+	注意，对于空数组使用只返回·false·，不会执行参数函数
 every(fn(item, index, arr), thisObj)：遍历判断若参数函数有一次的返回值是·false·则结果为·false·，否则·true·，参数的说明同·map()·
-    注意，对于空数组使用只返回·true·，不会执行参数函数
+	注意，对于空数组使用只返回·true·，不会执行参数函数
 
 reduce(fn(a, b, index, arr), initial)：从左到右遍历数组，最终累计为一个值，参数·index·和·arr·的说明同·map()·
-    a：累积变量，默认为数组的第一个成员
-    b：当前变量，默认为数组的第二个成员
-    initial：对累积变量指定初值，当空数组使用此方法时会报错，设定初始值则可以不报错并返回此初始值
+	a：累积变量，默认为数组的第一个成员
+	b：当前变量，默认为数组的第二个成员
+	initial：对累积变量指定初值，当空数组使用此方法时会报错，设定初始值则可以不报错并返回此初始值
 reduceRight(fn(a, b, index, arr), initial)：从右到左遍历数组，最终累计为一个值，参数的说明和用法同·reduce()·
 
 indexOf(obj, start)：查找参数在原数组中第一次出现的索引，若没找到返回·-1·，可以传入第二个参数表示从哪开始找起
-    注意，此方法使用·===·进行比较，而·NaN·不等于自身，所以当查找·NaN·时始终返回·false·
+	注意，此方法使用·===·进行比较，而·NaN·不等于自身，所以当查找·NaN·时始终返回·false·
 lastIndexOf(obj, start)：和·indexOf()·相似，区别在于：·indexOf()·是从左往右找，·lastIndexOf()·是从右往左找
 !!
 
@@ -212,9 +212,9 @@ Array.prototype.join.call({ 0: 'a', 1: 'b', length: 2 }, '-') // "a-b"
 [10111, 1101, 111].sort((a, b) => a - b) // [111, 1101, 10111]
 
 [
-    { name: "张三", age: 30 },
-    { name: "李四", age: 24 },
-    { name: "王五", age: 28 }
+	{ name: "张三", age: 30 },
+	{ name: "李四", age: 24 },
+	{ name: "王五", age: 28 }
 ].sort((o1, o2) => o1.age - o2.age)
 // [
 //   { name: "李四", age: 24 },
@@ -229,8 +229,8 @@ Array.prototype.join.call({ 0: 'a', 1: 'b', length: 2 }, '-') // "a-b"
 ##reduce()
 ··
 [1, 2, 3, 4, 5].reduce((a, b) => {
-    console.log(a, b)
-    return a + b
+	console.log(a, b)
+	return a + b
 })
 // 1 2
 // 3 3
@@ -248,26 +248,26 @@ strArr.reduce((long, item) => long.length > item.length ? long : item, '')
 !!
 ^^静态方法^^（即定义在对象本身，而不是定义在对象实例的方法）
 Array.from(obj, fn(item, index), thisObj)：将类似数组的对象和可遍历（iterable）的对象转为真正的数组，也可正确识别四字节字符
-    fn{f}：遍历每个成员依次执行参数函数
-    item：当前循环的元素
-    index{n}：当前循环的元素索引
-    thisObj：将回调函数内部的·this·指向此参数
+	fn{f}：遍历每个成员依次执行参数函数
+	item：当前循环的元素
+	index{n}：当前循环的元素索引
+	thisObj：将回调函数内部的·this·指向此参数
 Array.of(...obj)：将一组值转换为数组，主要是弥补·Array()·因参数个数不同而导致的差异
 
 ^^实例方法^^（以下方法前面省略·Array.prototype.·）
 copyWithin(target, start, end)：在数组内将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组，即会修改当前数组
-    target：从该位置开始替换数据。可以是负数表示倒数
-    start[0]：从该位置开始读取数据。可以是负数表示倒数
-    end[数组长度]：到该位置前停止读取数据。可以是负数表示倒数（不含该位置）
+	target：从该位置开始替换数据。可以是负数表示倒数
+	start[0]：从该位置开始读取数据。可以是负数表示倒数
+	end[数组长度]：到该位置前停止读取数据。可以是负数表示倒数（不含该位置）
 find(fn(item, index, arr), thisObj)：找出第一个符合条件的数组成员，没有则返回·undefined·，并可以找·NaN·，参数的说明同·map()·
 findIndex(fn(item, index, arr), thisObj)：和·find()·相似，找出第一个符合条件的数组成员的位置，参数的说明同·map()·
 includes(str, start)：返回一个布尔值，表示原数组是否包含给定的值，可传入第二个数字参数表示起始搜索的位置（可以是负数表示倒数）
 fill(value, start, end)：使用给定值，填充一个数组，注意，如果填充的类型为对象，那么被赋值的是同一个内存地址的对象，而不是深拷贝
-    value：要填充的值
-    start[0]：从该位置开始读取数据。可以是负数表示倒数
-    end[数组长度]：到该位置前停止读取数据。可以是负数表示倒数（不含该位置）
+	value：要填充的值
+	start[0]：从该位置开始读取数据。可以是负数表示倒数
+	end[数组长度]：到该位置前停止读取数据。可以是负数表示倒数（不含该位置）
 flat(n)：将多维数组拉平成一维数组，返回一个新数组，会跳过数组空位
-    n[1]：指定要拉平的层数，可以用·Infinity·关键字表示拉平任意层
+	n[1]：指定要拉平的层数，可以用·Infinity·关键字表示拉平任意层
 flatMap(fn(item, index, arr), thisObj)：相当于对数组先·map()·再·flat()·，因为不能指定展开层数所以只能展开一层
 
 keys()：返回数组键名的遍历器对象（Iterator）
@@ -307,11 +307,11 @@ console.log(...[1, 2, 3])
 也可用于函数的参数，传入参数时使用可将数组变为参数序列，接受参数时表示接受任意长度的参数
 ··
 function push(array, ...items) {
-    array.push(...items)
+	array.push(...items)
 }
 
 function add(x, y) {
-    return x + y
+	return x + y
 }
 const numbers = [4, 38]
 add(...numbers) // 42
@@ -407,21 +407,21 @@ let array = [...nodeList]
 自定义：
 ··
 Number.prototype[Symbol.iterator] = function*() {
-    let i = 0
-    let num = this.valueOf()
-    while (i < num) {
-        yield i++
-    }
+	let i = 0
+	let num = this.valueOf()
+	while (i < num) {
+		yield i++
+	}
 }
 console.log([...5]) // [0, 1, 2, 3, 4]
 ··
 没有部署 Iterator 接口的类似数组的对象无法转换
 ··
 let arrayLike = {
-    '0': 'a',
-    '1': 'b',
-    '2': 'c',
-    length: 3
+	'0': 'a',
+	'1': 'b',
+	'2': 'c',
+	length: 3
 }
 
 // TypeError: Cannot spread non-iterable object.

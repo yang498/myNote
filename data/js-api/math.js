@@ -64,12 +64,12 @@ getRandomInt(1, 6) // 5
 
 // 返回任意长度的随机字符串
 const getRandomStr = len => {
-    const STR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-                'abcdefghijklmnopqrstuvwxyz' +
-                '0123456789-_'
-    let str = ''
-    for (let i = 0; i < len; i++) str += STR[Math.floor(Math.random() * STR.length)]
-    return str
+	const STR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+				'abcdefghijklmnopqrstuvwxyz' +
+				'0123456789-_'
+	let str = ''
+	for (let i = 0; i < len; i++) str += STR[Math.floor(Math.random() * STR.length)]
+	return str
 }
 getRandomStr(6) // "shift"
 ··

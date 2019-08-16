@@ -14,21 +14,21 @@ commonData.jsApi.string.content = `
 ··
 // 每行尾部使用反斜杠，注意反斜杠后面除了换行符不能有其他字符
 var longString = 'Long \\
-    string'
+	string'
 
 // 使用 + 连接
 var longString = 'Long '
-    + 'string'
+	+ 'string'
 
 // 使用注释
 (function () {/*
-    line 1
-    line 2
+	line 1
+	line 2
 */}).toString().split('\\n').slice(1, -1).join('')
 
 // 使用反单引号
 var longString = \`Long
-    string\`
+	string\`
 ··
 特殊字符需要使用反斜杠·\\·转义，如果在非特殊字符前面使用反斜杠会被省略
 !!
@@ -110,40 +110,40 @@ String(obj)：将任意类型的值转为字符串形式，对于数组相当于
 
 ^^静态方法^^（即定义在对象本身，而不是定义在对象实例的方法）
 String.fromCharCode(...Unicode)：返回由 Unicode 码点组成的字符串，注意码点大于·0xFFFF·的字符需用 2 个参数表示
-    Unicode{n}：一个或多个数值，代表 Unicode 码点
+	Unicode{n}：一个或多个数值，代表 Unicode 码点
 
 ^^实例属性^^
 String.prototype.length：字符串的长度
 
 ^^实例方法^^（以下方法前面省略·String.prototype.·）
 slice(begin, end)：指定范围提取字符串某一段，参数可以是负数表示倒数，若·begin·大于·end·则返回空字符串
-    begin{n}[0]：开始位置
-    end{n}[字符串的长度]：结束位置（不含该位置）
+	begin{n}[0]：开始位置
+	end{n}[字符串的长度]：结束位置（不含该位置）
 substring(begin, end)：和·slice()·相似，区别在于：若任一参数小于 0 就会当作 0，并且若·begin·大于·end·则参数位置互换
-    此方法太违反直觉，建议优先使用·slice()·
+	此方法太违反直觉，建议优先使用·slice()·
 substr(begin, length)：和·slice()·相似，区别在于第二个参数是长度
-    begin{n}[0]：开始位置
-    length{n}[字符串的长度 - begin]：要提取的长度
+	begin{n}[0]：开始位置
+	length{n}[字符串的长度 - begin]：要提取的长度
 split(rule, length)：按照给定参数的规则分割字符串，返回一个由分割出来的子字符串组成的数组
-    rule{s/r}：分割规则，关于正则分割查看《regexp》
-    length{n}：指定要分割几个
+	rule{s/r}：分割规则，关于正则分割查看《regexp》
+	length{n}：指定要分割几个
 indexOf(str, start)：查找参数字符串在原字符串中第一次出现的索引，若没找到返回·-1·，可以传入第二个参数表示从哪开始找起
 lastIndexOf(str, start)：和·indexOf()·相似，区别在于：·indexOf()·是从左往右找，·lastIndexOf()·是从右往左找
 
 localeCompare(compareStr, lang)：比较两个字符串，返回一个整数，若·<0·则左字符串小于右字符串，若·=0·则相等，若·>0·则左大于右
-    lang{s}：比较的语言，默认对英文比较，可选填简体中文（拼音）·zh-Hans-CN·、德语·de·、瑞典语·sv·，@[参阅 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare]
+	lang{s}：比较的语言，默认对英文比较，可选填简体中文（拼音）·zh-Hans-CN·、德语·de·、瑞典语·sv·，@[参阅 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare]
 trim()：去除字符串两端的空格，包括制表符·\\t \\v·、换行符·\\n·和回车符·\\r·，相当于·str.replace(/^\\s+|\\s+$/g, '')·
 toLowerCase()：将字符串的英文字母全部转为小写
 toUpperCase()：将字符串的英文字母全部转为大写
 match(str/reg)：以数组的形式返回匹配的结果，若匹配失败返回·null·，关于正则匹配查看《regexp》
-    返回的数组还有·index·和·input·属性，分别表示匹配字符串开始的位置和原字符串
+	返回的数组还有·index·和·input·属性，分别表示匹配字符串开始的位置和原字符串
 search(str/reg)：和·indexOf()·相似，区别在于：没有第二个参数，可以使用正则，关于正则匹配查看《regexp》
 replace(str/reg, newStr)：将字符串的某个部分替换为新字符串，若参数是字符串只替换第一个匹配，关于正则匹配查看《regexp》
 
 concat(...obj)：将任意对象连接成字符串，完全可以用·+·代替，若是·+·用于数字相加就多加个空字符串
 charAt(index)：返回指定位置的字符，完全可以用数组下标替代
 charCodeAt(index)：返回字符串指定位置的 Unicode 码点（十进制表示）
-    注意码点大于·65536（0xFFFF）·的字符需连续使用 2 次，即·charCodeAt(index) + ' ' + charCodeAt(index + 1)·
+	注意码点大于·65536（0xFFFF）·的字符需连续使用 2 次，即·charCodeAt(index) + ' ' + charCodeAt(index + 1)·
 !!
 
 ##split()
@@ -185,9 +185,9 @@ startsWith(str, start)：返回布尔值，表示参数字符串是否在原字�
 endsWith(str, n)：返回布尔值，表示参数字符串是否在原字符串的尾部，可传入第二个数字参数表示在前·n·个字符中匹配
 repeat(n)：返回一个新字符串，表示将原字符串重复·n·次，参数如果是小数，会被向下取整，支持数字字符串参数
 padStart(length, str)：在原字符串前面补全为新的长度，即第一个参数·length·，一般用来补全位数或格式
-    若·length·大于原字符串的长度则使用第二个参数·str·补全，不够则会一直重复第二个参数·str·直到达到指定长度
-    若·length·小于等于原字符串的长度则无效，返回原字符串
-    如果省略第二个参数，默认使用空格补全长度
+	若·length·大于原字符串的长度则使用第二个参数·str·补全，不够则会一直重复第二个参数·str·直到达到指定长度
+	若·length·小于等于原字符串的长度则无效，返回原字符串
+	如果省略第二个参数，默认使用空格补全长度
 padEnd(length, str)：在原字符串后面补全为新的长度，用法和·padStart()·一样
 trimStart()：消除字符串头部的空格，浏览器还部署了额外的别名方法·trimLeft()·
 trimEnd()：消除字符串尾部的空格，浏览器还部署了额外的别名方法·trimRight()·
@@ -265,8 +265,8 @@ let y = 2
 const tmpl = addrs => \`
 <table>
 \${addrs.map(addr => \`¿
-    <tr><td>\${addr.first}</td></tr>
-    <tr><td>\${addr.last}</td></tr>
+	<tr><td>\${addr.first}</td></tr>
+	<tr><td>\${addr.last}</td></tr>
 \`¿).join('')}
 </table>
 \`

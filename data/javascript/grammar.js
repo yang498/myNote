@@ -85,10 +85,10 @@ String(null) // "null"
 // 对象
 /*
 先调用了对象的 toString()
-    若返回原始类型值则直接使用 String()
-    若返回对象则继续使用 valueOf()，
-        若返回原始类型值则直接使用 String()
-        若返回对象则报错（自定义 valueOf() 和 String() 返回对象的情况）
+	若返回原始类型值则直接使用 String()
+	若返回对象则继续使用 valueOf()，
+		若返回原始类型值则直接使用 String()
+		若返回对象则报错（自定义 valueOf() 和 String() 返回对象的情况）
 */
 String({a: 1}) // "[object Object]"
 String([1, 2, 3]) // "1,2,3"
@@ -117,7 +117,7 @@ Boolean(new Boolean(false)) // true
 注意对于对象会先用·String()·再使用·Boolean()·转换比较
 ··
 if ('abc') {
-    console.log('hello')
+	console.log('hello')
 }
 // "hello"
 
@@ -206,8 +206,8 @@ JSON.stringify({ name: "张三" })
 
 // 不符合规范的值会被忽略
 var obj = {
-    a: undefined,
-    b: function () {}
+	a: undefined,
+	b: function () {}
 }
 JSON.stringify(obj) // "{}"
 ··
@@ -216,9 +216,9 @@ JSON.stringify(obj) // "{}"
 第二个参数表示只转换指定的属性（只在转换对象时有效，对数组无效）：
 ··
 var obj = {
-    'prop1': 'value1',
-    'prop2': 'value2',
-    'prop3': 'value3'
+	'prop1': 'value1',
+	'prop2': 'value2',
+	'prop3': 'value3'
 }
 
 JSON.stringify(obj, ['prop1', 'prop2'])
@@ -227,15 +227,15 @@ JSON.stringify(obj, ['prop1', 'prop2'])
 还可以是一个函数更改返回值（该函数会递归处理每个键值对，且第一个是对象本身）：
 ··
 JSON.stringify({ a: 1, b: 2 }, function (key, value) {
-    if (typeof value === "number") value = 2 * value
-    return value
+	if (typeof value === "number") value = 2 * value
+	return value
 })
 // '{"a": 2,"b": 4}'
 
 var o = {a: 1}
 JSON.stringify(o, function (key, value) {
-    if (typeof value === 'object') return {b: 2}
-    return value * 2
+	if (typeof value === 'object') return {b: 2}
+	return value * 2
 })
 // "{"b": 4}"
 ··
@@ -249,11 +249,11 @@ JSON.stringify({ p1: 1, p2: { a: 1, b: [1, 2] } }, null, 4)
 "{
   "p1": 1,
   "p2": {
-    "a": 1,
-    "b": [
-      1,
-      2
-    ]
+	"a": 1,
+	"b": [
+	  1,
+	  2
+	]
   }
 }"
 */
@@ -277,13 +277,13 @@ JSON.stringify({ p1: 1, p2: { a: 1, b: [1, 2] } }, null, '|---')
 如果参数对象有自定义的·toJSON·方法，那么·JSON.stringify()·会直接使用这个方法的返回值作为参数
 ··
 var user = {
-    lastName: '张',
-    firstName: '三',
-    toJSON: function () {
-        return {
-            name:  this.firstName + this.lastName
-        }
-    }
+	lastName: '张',
+	firstName: '三',
+	toJSON: function () {
+		return {
+			name:  this.firstName + this.lastName
+		}
+	}
 }
 JSON.stringify(user)
 // "{"name":"张三"}"
@@ -308,8 +308,8 @@ JSON.parse('null') // null
 可以传入一个函数作为第二个参数，用法与·JSON.stringify()·类似
 ··
 JSON.parse('{"a": 1, "b": 2}', function (key, value) {
-    if (key === 'a') return value + 10
-    return value
+	if (key === 'a') return value + 10
+	return value
 })
 // {a: 11, b: 2}
 ··
@@ -418,17 +418,17 @@ JSON.stringify(obj) === '{}'
 ··
 var a = 'a'
 var obj = {
-    a: 1,
-    b: this.a,	// 'a'
-    c: function () {
-        console.log(this.a)	// 1
-    },
-    d: function () {
-        var e = function () {
-            console.log(this.a)
-        }
-        e()	// 'a'
-    }
+	a: 1,
+	b: this.a,	// 'a'
+	c: function () {
+		console.log(this.a)	// 1
+	},
+	d: function () {
+		var e = function () {
+			console.log(this.a)
+		}
+		e()	// 'a'
+	}
 }
 ··
 
@@ -464,11 +464,11 @@ JSON.stringify(obj) === '{}'
 //调用函数只会作用于原来的地方，在这个地方调用，并不是把函数拿过来用
 var a='a';
 function fnA(){
-    console.log(a);
+	console.log(a);
 }
 function fnB(){
-    var a=66;
-    fnA();
+	var a=66;
+	fnA();
 }
 fnB();
 

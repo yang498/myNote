@@ -13,13 +13,13 @@ commonData.html.html.content = `
 ###p 标签内不能嵌套块级（block）元素，否则会被嵌套的标签分隔
 ··
 <p>
-    123
-    <div>456</div>
+	123
+	<div>456</div>
 </p>
 
 // 在浏览器中变成
 <p>
-    123
+	123
 </p>
 <div>456</div>
 <p></p>
@@ -27,13 +27,13 @@ commonData.html.html.content = `
 a 标签不能嵌套 a 标签，否则会被分开
 ··
 <a>
-    123
-    <a>a</a>
+	123
+	<a>a</a>
 </a>
 
 // 在浏览器中变成
 <a>
-    123
+	123
 </a>
 <a>a</a>
 ··

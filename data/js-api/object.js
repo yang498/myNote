@@ -7,8 +7,8 @@ commonData.jsApi.object.content = `
 最后一个属性后面可以加逗号（trailing comma），也可以不加，无影响
 ··
 var obj = {
-    foo: 'Hello',
-    bar: 'World'
+	foo: 'Hello',
+	bar: 'World'
 }
 
 // 动态创建修改
@@ -22,32 +22,32 @@ obj.foo = 123
 ··
 // 报错
 var obj = {
-    1p: 'Hello World'
+	1p: 'Hello World'
 }
 
 // 不报错
 var obj = {
-    20: 'Hello World',
-    p1: 'Hello World',
-    '1p': 'Hello World',
-    'h w': 'Hello World',
-    'p+q': 'Hello World'
+	20: 'Hello World',
+	p1: 'Hello World',
+	'1p': 'Hello World',
+	'h w': 'Hello World',
+	'p+q': 'Hello World'
 }
 ··
 ##键值
 可以是任何数据类型，若是函数则可以调用，若还是一个对象就形成了链式引用
 ··
 var obj = {
-    p: function (x) {
-        return 2 * x
-    }
+	p: function (x) {
+		return 2 * x
+	}
 }
 obj.p(1)
 
 var obj = {
-    foo: {
-        bar: 'hello'
-    }
+	foo: {
+		bar: 'hello'
+	}
 }
 o1.foo.bar
 ··
@@ -102,7 +102,7 @@ eval('({foo: 123})') // {foo: 123}
 数字键可以不加引号，因为会自动转成字符串，注意，数值键名不能使用点运算符（因为会被当成小数点），只能使用方括号运算符
 ··
 var obj = {
-    p: 'Hello World'
+	p: 'Hello World'
 }
 
 obj.p // "Hello World"
@@ -119,8 +119,8 @@ obj // {}
 注意，删除一个不存在的属性，·delete·不报错且返回·true·，只有当该属性存在且不得删除时使用·delete·会返回·false·
 ··
 var obj = Object.defineProperty({}, 'p', {
-    value: 123,
-    configurable: false
+	value: 123,
+	configurable: false
 })
 obj.p // 123
 delete obj.p // false
@@ -148,7 +148,7 @@ obj.hasOwnProperty('toString') // false
 var obj = {a: 1, b: 2, c: 3}
 
 for (var i in obj) {
-    console.log(i)
+	console.log(i)
 }
 // a
 // b
@@ -160,13 +160,13 @@ for (var i in obj) {
 操作同一个对象的多个属性时，提供一些书写的方便
 ··
 var obj = {
-    p1: 1,
-    p2: 2
+	p1: 1,
+	p2: 2
 }
 
 with (obj) {
-    p1 = 4
-    p2 = 5
+	p1 = 4
+	p2 = 5
 }
 // 等同于
 obj.p1 = 4
@@ -185,7 +185,7 @@ p1 // 4
 因此，建议不要使用·with·语句，可以考虑用一个临时变量代替·with·
 ··
 with(obj1.obj2.obj3) {
-    console.log(p1 + p2)
+	console.log(p1 + p2)
 }
 
 // 可以写成
@@ -200,12 +200,12 @@ JavaScript 提供了一个内部数据结构，用来描述对象的属性，控
 这个内部数据结构称为“属性描述对象”（attributes object），可通过一些静态方法来操作
 ··
 {
-    value: 123,
-    writable: true,
-    enumerable: true,
-    configurable: true,
-    get: undefined,
-    set: undefined
+	value: 123,
+	writable: true,
+	enumerable: true,
+	configurable: true,
+	get: undefined,
+	set: undefined
 }
 ··
 !!
@@ -213,24 +213,24 @@ value[undefined]：属性值
 writable{b}[true]：·value·是否可改变，若设为·false·只能通过·Object.defineProperty/ies()·修改绕过这个限制
 enumerable{b}[true]：·value·是否可遍历
 configurable{b}[true]：·value·是否可修改属性描述对象，和是否可删除此属性
-    若·configurable·设为·false·，则修改·writable·将·true·改为·false·是允许的
-    至于·value·，只要·writable·和·configurable·有一个为·true·，就允许改动
+	若·configurable·设为·false·，则修改·writable·将·true·改为·false·是允许的
+	至于·value·，只要·writable·和·configurable·有一个为·true·，就允许改动
 get{f}[undefined]：取值函数（getter）
 set{f}[undefined(value)]：存值函数（setter），接受赋予的值作为参数
-    注意，若定义了·get·或·set·，就不能将·writable·属性设为·true·，也不能设置·value·
-        因为此时获取该属性返回的不是·value·，而是·get·返回的值，同理，赋值时就会调用·set·
+	注意，若定义了·get·或·set·，就不能将·writable·属性设为·true·，也不能设置·value·
+		因为此时获取该属性返回的不是·value·，而是·get·返回的值，同理，赋值时就会调用·set·
 !!
 
 ##存储器的写法
 第一种是通过·Object.defineProperty/ies()·定义：
 ··
 var obj = Object.defineProperty({}, 'p', {
-    get: function () {
-        return 'getter'
-    },
-    set: function (value) {
-        console.log('setter: ' + value)
-    }
+	get: function () {
+		return 'getter'
+	},
+	set: function (value) {
+		console.log('setter: ' + value)
+	}
 })
 
 obj.p // "getter"
@@ -239,12 +239,12 @@ obj.p = 123 // "setter: 123"
 第二种是直接在对象上定义，方法名即属性名：
 ··
 var obj = {
-    get p() {
-        return 'getter'
-    },
-    set p(value) {
-        console.log('setter: ' + value)
-    }
+	get p() {
+		return 'getter'
+	},
+	set p(value) {
+		console.log('setter: ' + value)
+	}
 }
 ··
 
@@ -253,12 +253,12 @@ var obj = {
 ··
 // next 属性的存值函数和取值函数，都依赖于内部属性 $n
 var obj ={
-    $n : 5,
-    get next() { return this.$n++ },
-    set next(n) {
-        if (n >= this.$n) this.$n = n
-        else throw new Error('新的值必须大于当前值')
-    }
+	$n : 5,
+	get next() { return this.$n++ },
+	set next(n) {
+		if (n >= this.$n) this.$n = n
+		else throw new Error('新的值必须大于当前值')
+	}
 }
 
 obj.next // 5
@@ -274,8 +274,8 @@ obj.next = 5
 有时，我们需要将一个对象的所有属性，拷贝到另一个对象：
 ··
 var extend = function (to, from) {
-    for (var property in from) to[property] = from[property]
-    return to
+	for (var property in from) to[property] = from[property]
+	return to
 }
 
 extend({}, { a: 1 }) // {a: 1}
@@ -283,23 +283,23 @@ extend({}, { a: 1 }) // {a: 1}
 但如果遇到存取器定义的属性，会只拷贝值：
 ··
 extend({}, {
-    get a() { return 1 }
+	get a() { return 1 }
 })
 // {a: 1}
 ··
 可以通过·Object.defineProperty()·来拷贝属性描述对象
 ··
 var extend = function (to, from) {
-    for (var property in from) {
-        if (from.hasOwnProperty(property)) {
-            Object.defineProperty(
-                to,
-                property,
-                Object.getOwnPropertyDescriptor(from, property)
-            )
-        }
-    }
-    return to
+	for (var property in from) {
+		if (from.hasOwnProperty(property)) {
+			Object.defineProperty(
+				to,
+				property,
+				Object.getOwnPropertyDescriptor(from, property)
+			)
+		}
+	}
+	return to
 }
 
 extend({}, { get a() { return 1 } })
@@ -351,7 +351,7 @@ obj === fn // true
 判断变量是否为对象：
 ··
 function isObject(value) {
-    return value === Object(value)
+	return value === Object(value)
 }
 ··
 
@@ -377,7 +377,7 @@ Object.create(obj)：指定原型对象和属性，返回一个新的对象，�
 
 Object.defineProperty(obj, key, attrObj)：定义或修改属性描述对象，返回修改后的对象
 Object.defineProperties(obj, {¿keys: attrObjs})：：定义或修改多个属性描述对象，返回修改后的对象
-    注意，若·defineProperty()·和·defineProperties()·未定义·writable configurable enumerable·则默认都为·false·
+	注意，若·defineProperty()·和·defineProperties()·未定义·writable configurable enumerable·则默认都为·false·
 
 Object.preventExtensions(obj)：禁止对象添加新的属性
 Object.isExtensible(obj)：检查一个对象是否可以添加新的属性，返回布尔值
@@ -392,7 +392,7 @@ Object.isFrozen(obj)：检查一个对象是否使用了·Object.freeze()·方�
 !!
 valueOf()：返回对象的原始值，默认返回对象本身，主要用于自动类型转换时调用
 toString()：返回对象的字符串形式，即·"[object Object]"·，数组、字符串、函数、Date 对象都分别自定义过
-    ·Object.prototype.toString.call(value)·：结合·call·方法可以判断值的具体类型
+	·Object.prototype.toString.call(value)·：结合·call·方法可以判断值的具体类型
 toLocaleString()：和·toString()·的返回结果相同，主要作用是留出一个接口自定义，如数组、数字、Date 对象都分别自定义过
 
 isPrototypeOf()：判断当前对象是否为另一个对象的原型
@@ -408,7 +408,7 @@ __proto__：用来读取或设置当前对象的·prototype·对象，前后的�
 ^^静态方法^^
 Object.is(a, b)：比较两个值是否相等，和·===·类似，还包括了·NaN·可以等于本身和·+0·不等于·-0·
 Object.assign(target, ...source)：将源对象复制到目标对象，若有同名属性则后面覆盖前面，非对象或非字符串不会产生效果
-    注意，此方法是浅拷贝，即若源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用
+	注意，此方法是浅拷贝，即若源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用
 Object.getOwnPropertyDescriptors(obj)：返回一个对象上所有属性的描述对象，可以结合·Object.assign()·正确拷贝·get·和·set·属性
 Object.setPrototypeOf(obj, proto)：设置一个对象的·prototype·对象，返回参数对象本身
 Object.values()：返回一个由参数对象的键值组成的数组，只返回可遍历的属性
@@ -428,26 +428,26 @@ obj // {foo: "abc"}
 方法也可以简写：
 ··
 const o = {
-    method() {
-        return "Hello!"
-    }
+	method() {
+		return "Hello!"
+	}
 }
   
 // 等同于
   
 const o = {
-    method: function () {
-        return "Hello!"
-    }
+	method: function () {
+		return "Hello!"
+	}
 }
 ··
 
 如果某个方法的值是一个 Generator 函数，前面需要加上星号
 ··
 const obj = {
-    * m() {
-        yield 'hello world'
-    }
+	* m() {
+		yield 'hello world'
+	}
 }
 ··
 
@@ -455,8 +455,8 @@ const obj = {
 ES5 中定义对象时属性名只能是字符串：
 ··
 var obj = {
-    foo: true,
-    abc: 123
+	foo: true,
+	abc: 123
 }
 ··
 ES6 可以使用方括号将属性名定义变量：
@@ -464,16 +464,16 @@ ES6 可以使用方括号将属性名定义变量：
 let propKey = 'foo'
 
 let obj = {
-    [propKey]: true,
-    ['a' + 'bc']: 123
+	[propKey]: true,
+	['a' + 'bc']: 123
 }
 ··
 还可用于方法名的简写：
 ··
 let obj = {
-    ['h' + 'ello']() {
-        return 'hi'
-    }
+	['h' + 'ello']() {
+		return 'hi'
+	}
 }
 ··
 但不能用于属性的简写，否则报错：
@@ -486,17 +486,17 @@ const baz = { [foo] } // 报错
 函数和方法有·name·属性：
 ··
 const person = {
-    sayName() {
-        console.log('hello!')
-    }
+	sayName() {
+		console.log('hello!')
+	}
 }
 person.sayName.name // "sayName"
 ··
 若是取值函数（getter）和存值函数（setter），则·name·属性不在该方法上，而是属性的描述对象的·get·和·set·属性上：
 ··
 const obj = {
-    get foo() {},
-    set foo(x) {}
+	get foo() {},
+	set foo(x) {}
 }
 const descriptor = Object.getOwnPropertyDescriptor(obj, 'foo')
 descriptor.get.name // "get foo"
@@ -515,8 +515,8 @@ doSomething.bind().name // "bound doSomething"
 const key1 = Symbol('description')
 const key2 = Symbol()
 let obj = {
-    [key1]() {},
-    [key2]() {},
+	[key1]() {},
+	[key2]() {},
 }
 obj[key1].name // "[description]"
 obj[key2].name // ""
@@ -526,21 +526,21 @@ obj[key2].name // ""
 ·this·总是指向函数所在的当前对象，而·super·指向当前对象的原型对象，且只能用在对象的方法之中（属性方法的简写形式）
 ··
 const obj = {
-    name: '张三',
-    getName: function () {
-        console.log(this.name)
-    }
+	name: '张三',
+	getName: function () {
+		console.log(this.name)
+	}
 }
 obj.getName() // 张三
 
 const obj = {
-    foo: 'world',
-    find() {
-        console.log(super.foo)
-    }
+	foo: 'world',
+	find() {
+		console.log(super.foo)
+	}
 }
 const proto = {
-    foo: 'hello'
+	foo: 'hello'
 }
 obj.__proto__ = proto
 obj.find() // "hello"
@@ -554,10 +554,10 @@ const obj = {
 
 // 不是属性方法的简写形式
 const obj = {
-    foo: () => super.foo,
-    bar: function () {
-        return super.bar
-    }
+	foo: () => super.foo,
+	bar: function () {
+		return super.bar
+	}
 }
 ··
 JavaScript 引擎内部，·super.foo·等同于·Object.getPrototypeOf(this).foo·（属性）或·Object.getPrototypeOf(this).foo.call(this)·（方法）

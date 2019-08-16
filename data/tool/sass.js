@@ -7,43 +7,43 @@ scss 是 sass 3 引入的新语法，其语法完全兼容 css，也就是说，
 ··
 // css
 #box {
-    width: 400px;
-    height: 400px;
+	width: 400px;
+	height: 400px;
 }
 
 #box h1 {
-    font-size: 22px;
-    color: red;
+	font-size: 22px;
+	color: red;
 }
 
 #box p {
-    font-size: 18px;
-    color: green;
+	font-size: 18px;
+	color: green;
 }
 
 // sass
 #box
-    width: 400px
-    height: 400px
-    h1
-    font-size: 22px
-    color: red
-    p
-    font-size: 18px
-    color: green
+	width: 400px
+	height: 400px
+	h1
+	font-size: 22px
+	color: red
+	p
+	font-size: 18px
+	color: green
 
 // scss
 #box {
-    width: 400px;
-    height: 400px;
-    h1 {
-        font-size: 22px;
-        color: red;
-    }
-    p {
-        font-size: 18px;
-        color: green;
-    }
+	width: 400px;
+	height: 400px;
+	h1 {
+		font-size: 22px;
+		color: red;
+	}
+	p {
+		font-size: 18px;
+		color: green;
+	}
 }
 ··
 
@@ -75,16 +75,16 @@ sass -h
 现有如下 scss：
 ··
 #box {
-    width: 400px;
-    height: 400px;
-    h1 {
-        font-size: 22px;
-        color: red;
-    }
-    p {
-        font-size: 18px;
-        color: green;
-    }
+	width: 400px;
+	height: 400px;
+	h1 {
+		font-size: 22px;
+		color: red;
+	}
+	p {
+		font-size: 18px;
+		color: green;
+	}
 }
 ··
 
@@ -92,31 +92,31 @@ sass -h
 默认输出方式，保持一定的缩进
 ··
 #box {
-    width: 400px;
-    height: 400px;
-    border: 1px solid gray; }
-    #box h1 {
-    font-size: 22px;
-    color: red; }
-    #box p {
-    font-size: 18px;
-    color: green; }
+	width: 400px;
+	height: 400px;
+	border: 1px solid gray; }
+	#box h1 {
+	font-size: 22px;
+	color: red; }
+	#box p {
+	font-size: 18px;
+	color: green; }
 ··
 
 ##expanded 展开
 ··
 #box {
-    width: 400px;
-    height: 400px;
-    border: 1px solid gray;
+	width: 400px;
+	height: 400px;
+	border: 1px solid gray;
 }
 #box h1 {
-    font-size: 22px;
-    color: red;
+	font-size: 22px;
+	color: red;
 }
 #box p {
-    font-size: 18px;
-    color: green;
+	font-size: 18px;
+	color: green;
 }
 ··
 

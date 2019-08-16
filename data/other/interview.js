@@ -18,17 +18,17 @@ commonData.other.interview.content = `
 $headerMenuActive.append('<i></i>').find(li[data-href=]).addClass('active');
 var a = /ab\\/c/g
 $headerMenu.on({
-    'mouseenter': function() {
-        if(/[^]*/g.test(a)) {
-            let move = $(this).index() - $headerMenuActive.index();
-            $headerMenuActive.find('i').css('transform', translateX(00%));
-        } else {
-            return false
-        }
-    },
-    'mouseleave': function() {
-        $headerMenuActive.find('i').removeAttr('style');
-    }
+	'mouseenter': function() {
+		if(/[^]*/g.test(a)) {
+			let move = $(this).index() - $headerMenuActive.index();
+			$headerMenuActive.find('i').css('transform', translateX(00%));
+		} else {
+			return false
+		}
+	},
+	'mouseleave': function() {
+		$headerMenuActive.find('i').removeAttr('style');
+	}
 });
 ··
 ··
@@ -37,13 +37,13 @@ $headerMenuActive.append('<i></i>').find(li[data-href=]).addClass('active');
 ··
 ··
 $headerMenu.on({
-    'mouseenter': function() {
-        let move = $(this).index() - $headerMenuActive.index();
-        $headerMenuActive.find('i').css('transform', translateX(00%));
-    },
-    'mouseleave': function() {
-        $headerMenuActive.find('i').removeAttr('style');
-    }
+	'mouseenter': function() {
+		let move = $(this).index() - $headerMenuActive.index();
+		$headerMenuActive.find('i').css('transform', translateX(00%));
+	},
+	'mouseleave': function() {
+		$headerMenuActive.find('i').removeAttr('style');
+	}
 });
 ··
 

@@ -46,28 +46,28 @@ weex create project-name
 安装后的目录结构：
 ··
 | —— configs
-    | —— config.js                  webpack 全局配置文件
-    | —— helper.js                  辅助方法
-    | —— logo.png
-    | —— plugin.js                  编译插件
-    | —— utils.js                   工具方法
-    | —— vue-loader.conf.js         weex 的 loader 配置
-    | —— webpack.common.conf.js     用于公共环境的 webpack 配置
-    | —— webpack.dev.conf.js        用于开发环境的 webpack 配置
-    | —— webpack.prod.conf.js       用于生产环境的 webpack 配置
-    | —— webpack.test.conf.js       用于测试环境的 webpack 配置
+	| —— config.js                  webpack 全局配置文件
+	| —— helper.js                  辅助方法
+	| —— logo.png
+	| —— plugin.js                  编译插件
+	| —— utils.js                   工具方法
+	| —— vue-loader.conf.js         weex 的 loader 配置
+	| —— webpack.common.conf.js     用于公共环境的 webpack 配置
+	| —— webpack.dev.conf.js        用于开发环境的 webpack 配置
+	| —— webpack.prod.conf.js       用于生产环境的 webpack 配置
+	| —— webpack.test.conf.js       用于测试环境的 webpack 配置
 | —— platforms
-    | —— platforms.json             平台标签数据
+	| —— platforms.json             平台标签数据
 | —— plugins
-    | —— plugins.json               插件数据
+	| —— plugins.json               插件数据
 | —— src
-    | —— entry.js                   全局入口文件
-    | —— index.vue                  默认打开页面
+	| —— entry.js                   全局入口文件
+	| —— index.vue                  默认打开页面
 | —— test
-    | —— unit
-    | —— specs                    测试 js
-    | —— index.js                 源代码和配置测试环境
-    | —— karma.conf.js            配置项
+	| —— unit
+	| —— specs                    测试 js
+	| —— index.js                 源代码和配置测试环境
+	| —— karma.conf.js            配置项
 | —— web                          静态资源
 | —— .babelrc                     babel-loader 配置
 | —— android.config.json          打包 android 项目的配置
@@ -88,10 +88,10 @@ build/*：构建脚本
 weex.html：web端展示页面
 index.html：用iframe内嵌weex.html展示效果，或手机下载playground扫一扫
 assets：资源文件，用于网页浏览
-    style.css：css文件，
-    qrcode.js：生成二维码
-    url.js：生成链接
-    phantom-limb.js：鼠标模拟touch
+	style.css：css文件，
+	qrcode.js：生成二维码
+	url.js：生成链接
+	phantom-limb.js：鼠标模拟touch
 .babelrc：转es5配置
 .eslintrc：.babelrc转换标准
 !!
@@ -190,15 +190,15 @@ image：图片，必须要有宽高，不支持子组件
 input：输入框，不支持子组件
 textarea：文本域
 list：列表滚动容器，适合长列表的展示，相当于·<ul>·
-    cell：子组件，相当于·<li>·
+	cell：子组件，相当于·<li>·
 recycle-list：list的升级版，具有回收和复用的能力，可以大幅优化内存占用和渲染性能
-    cell-slot：子节点
+	cell-slot：子节点
 refresh：下拉刷新，只能在scroller、list、waterfall中使用
-    loading-indicator：转圈动画的子组件，注意Android和iOS的样式是不一样的
+	loading-indicator：转圈动画的子组件，注意Android和iOS的样式是不一样的
 loading：上拉加载，属性同refresh
-    loading-indicator：转圈动画的子组件，注意Android和iOS的样式是不一样的
+	loading-indicator：转圈动画的子组件，注意Android和iOS的样式是不一样的
 slider：轮播图
-    indicator：轮播图的指示器小点组件
+	indicator：轮播图的指示器小点组件
 switch：开关
 video：视频
 waterfall：瀑布流布局的组件容器
@@ -216,9 +216,9 @@ resize{String}[stretch]：显示模式，可选cover（完全覆盖）、contain
 save：保存图片内容到本地文件或相册，此操作可能需要设备相关权限
 !!
 callback{Function}：在图片被写入到本地文件或相册后的回调
-    result{Object}：回调结果对象，属性列表
-        success{Boolean}：标记图片是否已写入完成
-        errorDesc{String}：如果图像没有成功写入，该字符串包含了详细的错误描述
+	result{Object}：回调结果对象，属性列表
+		success{Boolean}：标记图片是否已写入完成
+		errorDesc{String}：如果图像没有成功写入，该字符串包含了详细的错误描述
 !!
 示例：
 ··
@@ -226,12 +226,12 @@ callback{Function}：在图片被写入到本地文件或相册后的回调
 // methods
 const $image = this.$refs.poster
 $image.save(result => {
-    if (result.success) {
-    // Do something to hanlde success
-    } else {
-    console.log(result.errorDesc)
-    // Do something to hanlde failure
-    }
+	if (result.success) {
+	// Do something to hanlde success
+	} else {
+	console.log(result.errorDesc)
+	// Do something to hanlde failure
+	}
 })
 ··
 ###事件
@@ -240,8 +240,8 @@ load：当加载完成 src 指定的图片时触发
 !!
 success{Boolean}：标记图片是否成功加载
 size{Object}：加载的图片大小对象
-    naturalWidth{Number}：图片宽度，如果图片加载失败则为0
-    naturalHeight{Number}：图片高度，如果图片加载失败则为0
+	naturalWidth{Number}：图片宽度，如果图片加载失败则为0
+	naturalHeight{Number}：图片高度，如果图片加载失败则为0
 !!
 
 ##refresh
@@ -254,81 +254,81 @@ display{String}[show]：控制组件的显示隐藏，可选show、hide
 !!
 refresh：下拉完时触发，即手松开的时候
 pullingdown：被下拉时触发，即手移动的时候，事件参数对象属性如下
-    dy: 前后两次回调滑动距离的差值
-    pullingDistance: 下拉的距离
-    viewHeight: refresh 组件高度
-    type: “pullingdown” 常数字符串
+	dy: 前后两次回调滑动距离的差值
+	pullingDistance: 下拉的距离
+	viewHeight: refresh 组件高度
+	type: “pullingdown” 常数字符串
 !!
 ###示例
 ··
 <list>
-    <refresh class="refresh" :display="refreshing?'show':'hide'" @refresh="onrefresh" @pullingdown="onpullingdown">
-        <loading-indicator class="refresh-indicator" :style="{'color':(pullingBorder?'rgba(0,140,214,1)':'rgba(0,140,214,0.5)')}"/>
-        <div class="refresh-content" v-if="platform==='ios'&&!refreshing">
-            <text class="refresh-arrow">{{pullingBorder?'&uarr;':'&darr;'}}</text>
-            <text class="refresh-text">{{pullingBorder?'释放刷新':'下拉刷新'}}</text>
-        </div>
-    </refresh>
+	<refresh class="refresh" :display="refreshing?'show':'hide'" @refresh="onrefresh" @pullingdown="onpullingdown">
+		<loading-indicator class="refresh-indicator" :style="{'color':(pullingBorder?'rgba(0,140,214,1)':'rgba(0,140,214,0.5)')}"/>
+		<div class="refresh-content" v-if="platform==='ios'&&!refreshing">
+			<text class="refresh-arrow">{{pullingBorder?'&uarr;':'&darr;'}}</text>
+			<text class="refresh-text">{{pullingBorder?'释放刷新':'下拉刷新'}}</text>
+		</div>
+	</refresh>
 
-    <cell></cell>
-    ...
+	<cell></cell>
+	...
 </list>
 
 // script
 data: {
-    refreshing: false,	// 是否显示下拉刷新
-    pullingBorder: false,	// 下拉刷新是否到了松手可刷新的边界值
-    pullingDistance: 170	// 下拉刷新的最低刷新下拉距离
+	refreshing: false,	// 是否显示下拉刷新
+	pullingBorder: false,	// 下拉刷新是否到了松手可刷新的边界值
+	pullingDistance: 170	// 下拉刷新的最低刷新下拉距离
 },
 methods: {
-    onrefresh() {
-        this.refreshing = true	// 手松开显示加载中
-        this.init()	// 加载数据
-    },
-    onpullingdown(e) {
-        this.pullingBorder = Math.abs(e.pullingDistance) > this.pullingDistance ? true : false
-    },
-    init() {
-        stream.fetch({
-            method: 'GET',
-            type:'json',
-            url: url
-        }, res => {
-            // 加载完数据隐藏加载动画
-            this.refreshing = false
-        })
+	onrefresh() {
+		this.refreshing = true	// 手松开显示加载中
+		this.init()	// 加载数据
+	},
+	onpullingdown(e) {
+		this.pullingBorder = Math.abs(e.pullingDistance) > this.pullingDistance ? true : false
+	},
+	init() {
+		stream.fetch({
+			method: 'GET',
+			type:'json',
+			url: url
+		}, res => {
+			// 加载完数据隐藏加载动画
+			this.refreshing = false
+		})
 }
 
 // css
 .refresh {
-    width: 750px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+	width: 750px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
 .refresh-indicator {
-    width: 75px;
-    height: 75px;
+	width: 75px;
+	height: 75px;
 }
 
 .refresh-content {
-    width: 260px;
-    flex-direction: row;
-    align-items: center;
+	width: 260px;
+	flex-direction: row;
+	align-items: center;
 }
 
 .refresh-arrow {
-    color: #008cd6;
-    font-size: 50px;
-    margin-right: 10px;
+	color: #008cd6;
+	font-size: 50px;
+	margin-right: 10px;
 }
 
 .refresh-text {
-    color: #008cd6;
-    font-size: 32px;
+	color: #008cd6;
+	font-size: 32px;
 }
 ··
 
@@ -356,27 +356,27 @@ webview：操作·<web>·网页的前进、后退、刷新、向当前页面发�
 !!
 el：将要执行动画的元素，通过设置ref属性和this.$refs调用
 options：参数
-    styles：动画样式
-        width{Length}：目标宽度
-        height{Length}：目标高度
-        backgroundColor{String}：目标颜色
-        opacity{Number/0-1}[1]：目标透明度
-        transformOriginn{String/x,y}[center center]：动画中心点
-        transform{String}：变形，多个动画用空格隔开
-            translate/translateX/translateY{px/%}：目标位置
-            rotate/rotateX/rotateY{Number}：旋转角度
-            scale/scaleX/scaleY{Number}：缩放
-            perspective{Number}[+∞]：观察者距离z=0平面的距离
-    duration{Number}[0]：持续时间，单位毫秒
-    delay{Number}[0]：延迟时间，单位毫秒
-    needLayout{Boolean}[false]：执行时是否产生布局动画即LayoutAnimation
-    timingFunction{String}[linear]：运动曲线
-        linear：匀速
-        ease：逐渐变慢
-        ease-in：由慢到快
-        ease-out：由快到慢
-        ease-in-out：由慢到快，到中间点再由快到慢
-        cubic-bezier(x1, y1, x2, y2)：自定义@[贝塞尔|http://cubic-bezier.com/]值
+	styles：动画样式
+		width{Length}：目标宽度
+		height{Length}：目标高度
+		backgroundColor{String}：目标颜色
+		opacity{Number/0-1}[1]：目标透明度
+		transformOriginn{String/x,y}[center center]：动画中心点
+		transform{String}：变形，多个动画用空格隔开
+			translate/translateX/translateY{px/%}：目标位置
+			rotate/rotateX/rotateY{Number}：旋转角度
+			scale/scaleX/scaleY{Number}：缩放
+			perspective{Number}[+∞]：观察者距离z=0平面的距离
+	duration{Number}[0]：持续时间，单位毫秒
+	delay{Number}[0]：延迟时间，单位毫秒
+	needLayout{Boolean}[false]：执行时是否产生布局动画即LayoutAnimation
+	timingFunction{String}[linear]：运动曲线
+		linear：匀速
+		ease：逐渐变慢
+		ease-in：由慢到快
+		ease-out：由快到慢
+		ease-in-out：由慢到快，到中间点再由快到慢
+		cubic-bezier(x1, y1, x2, y2)：自定义@[贝塞尔|http://cubic-bezier.com/]值
 callback：动画执行完毕之后的回调函数。在iOS上可以获取动画执行是否成功的信息，Android木有
 !!
 示例：
@@ -384,16 +384,16 @@ callback：动画执行完毕之后的回调函数。在iOS上可以获取动画
 const animation = weex.requireModule('animation')
 
 animation.transition(this.$refs.xx, {
-    styles: {
-        color: '#f00',
-        backgroundColor: '#ccc',
-        transform: 'translateY(-100%) rotate(180deg)',
-        transformOrigin: 'center center'
-    },
-    duration: 800,
-    timingFunction: 'ease',
+	styles: {
+		color: '#f00',
+		backgroundColor: '#ccc',
+		transform: 'translateY(-100%) rotate(180deg)',
+		transformOrigin: 'center center'
+	},
+	duration: 800,
+	timingFunction: 'ease',
 }, () => {
-    modal.toast({ message: 'animation finished' })
+	modal.toast({ message: 'animation finished' })
 })
 ··
 
@@ -402,8 +402,8 @@ animation.transition(this.$refs.xx, {
 ###API
 !!
 getString(callback(res))：获取粘贴板的内容
-    res.data：获取到的文本内容
-    res.result：返回状态，可能为 success 或 fail
+	res.data：获取到的文本内容
+	res.result：返回状态，可能为 success 或 fail
 setString(text)：将一段文本复制到剪切板，相当于手动复制文本
 !!
 ###示例
@@ -412,7 +412,7 @@ const clipboard = weex.requireModule('clipboard')
 
 clipboard.setString('来自clipboard')
 clipboard.getString(res => {
-    this.message = 'text from clipboard:' + res.data
+	this.message = 'text from clipboard:' + res.data
 })
 ··
 
@@ -422,8 +422,8 @@ clipboard.getString(res => {
 !!
 ref{Node}：要滚动的节点
 options{Object}:
-    offset{Number}[0]: 一个到其可见位置的偏移距离
-    animated{Boolean}[true]：是否需要附带滚动动画
+	offset{Number}[0]: 一个到其可见位置的偏移距离
+	animated{Boolean}[true]：是否需要附带滚动动画
 !!
 ··
 const dom = weex.requireModule('dom')
@@ -434,15 +434,15 @@ dom.scrollToElement(this.$refs.item10[0], { offset: 10 })
 通过标签的 ref 获得其布局信息，返回的信息在 callBack 中：
 ··
 {
-    result: true,
-    size: {
-        bottom: 60,
-        height: 15,
-        left: 0,
-        right: 353,
-        top: 45,
-        width: 353
-    }
+	result: true,
+	size: {
+		bottom: 60,
+		height: 15,
+		left: 0,
+		right: 353,
+		top: 45,
+		width: 353
+	}
 }
 ··
 如果想要获取到 Weex 视口容器的布局信息，可以指定 ref 为字符串 'viewport'，即·getComponentRect('viewport', callback)·
@@ -451,8 +451,8 @@ addRule是可以为 dom 添加一条规则，目前支持自定义字体fontFace
 ··
 const dom = weex.requireModule('dom')
 dom.addRule('fontFace', {
-    'fontFamily': "iconfont2",	// 注意不要和已有的字体名称冲突，所以要特殊一点
-    'src': "url('http://at.alicdn.com/t/font_1469606063_76593.ttf')"
+	'fontFamily': "iconfont2",	// 注意不要和已有的字体名称冲突，所以要特殊一点
+	'src': "url('http://at.alicdn.com/t/font_1469606063_76593.ttf')"
 })
 ··
 
@@ -462,31 +462,31 @@ const modal = weex.requireModule('modal')	//引入模块
 
 // 提示消息，在显示一段时间之后自动消失
 modal.toast({
-    message{String}：'要提示的消息',
-    duration{Number}[3]: 持续的时间，以秒为单位，Android大于3秒会使用系统变量LONG，否则是SHORT
+	message{String}：'要提示的消息',
+	duration{Number}[3]: 持续的时间，以秒为单位，Android大于3秒会使用系统变量LONG，否则是SHORT
 })
 
 // 提示警告框
 modal.alert({
-    message{String}：'要提示的消息',
-    okTitle{String}[OK]：'确定按钮的文字'
+	message{String}：'要提示的消息',
+	okTitle{String}[OK]：'确定按钮的文字'
 }, callback{Function}：用户操作完成后的回调)
 
 // 确认框
 modal.confirm({
-    message{String}：'要提示的消息',
-    okTitle{String}[OK]：'确定按钮的文字',
-    cancelTitle{String}[Cancel]：'取消按钮的文字'
+	message{String}：'要提示的消息',
+	okTitle{String}[OK]：'确定按钮的文字',
+	cancelTitle{String}[Cancel]：'取消按钮的文字'
 }, callback{Function(res)}：用户操作完成后的回调，res为确定按钮上的文字)
 
 // 提示输入框
 modal.prompt({
-    message{String}：'要提示的消息',
-    okTitle{String}[OK]：'确定按钮的文字',
-    cancelTitle{String}[Cancel]：'取消按钮的文字'
+	message{String}：'要提示的消息',
+	okTitle{String}[OK]：'确定按钮的文字',
+	cancelTitle{String}[Cancel]：'取消按钮的文字'
 }, callback{Function(res{Object})}：用户操作完成后的回调，res参数如下：
-    result{String}：用户按下的按钮上的文字信息,
-    data{String}：用户输入的信息
+	result{String}：用户按下的按钮上的文字信息,
+	data{String}：用户输入的信息
 )
 ··
 
@@ -495,66 +495,66 @@ modal.prompt({
 ###pick(options, [callback])：单选
 !!
 options：样式参数
-    items{Array}：数据源
-    index{Number}：默认选中的选项
-    textColor{Color}：选项文字的颜色
-    selectionColor{Color}：选中item的背景色
-    confirmTitle{String}：确认按钮的文字
-    cancelTitle{String}：取消按钮的文字
-    confirmTitleColor{Color}：确认按钮的文字颜色
-    cancelTitleColor{Color}：取消按钮的文字颜色
-    title{String}：对话框的标题
-    titleColor{Color}：对话框标题的文字颜色
-    titleBackgroundColor{Color}：对话框标题的背景色
+	items{Array}：数据源
+	index{Number}：默认选中的选项
+	textColor{Color}：选项文字的颜色
+	selectionColor{Color}：选中item的背景色
+	confirmTitle{String}：确认按钮的文字
+	cancelTitle{String}：取消按钮的文字
+	confirmTitleColor{Color}：确认按钮的文字颜色
+	cancelTitleColor{Color}：取消按钮的文字颜色
+	title{String}：对话框的标题
+	titleColor{Color}：对话框标题的文字颜色
+	titleBackgroundColor{Color}：对话框标题的背景色
 callback{Function(res{Object})}：选择完的回调函数。res参数属性如下
-    result{String}：结果三种类型 success, cancel, error
-    data{Number}：选择的选项，仅成功确认时候存在
+	result{String}：结果三种类型 success, cancel, error
+	data{Number}：选择的选项，仅成功确认时候存在
 !!
 
 ###pickDate(options, [callback])：日期选择
 !!
 options{Object}：选项参数
-    value{String}：必填，默认选中的选项，时间格式为yyyy-MM-dd
-    max{String}：可选，date 的最大值
-    min{String}：可选，date 的最小值
+	value{String}：必填，默认选中的选项，时间格式为yyyy-MM-dd
+	max{String}：可选，date 的最大值
+	min{String}：可选，date 的最小值
 callback{Function(ret{Object})}：选择完的回调函数。res参数属性如下
-    result{String}：结果三种类型 success, cancel, error
-    data{String}：选择的值，格式为yyyy-MM-dd，仅成功确认的时候存在。
+	result{String}：结果三种类型 success, cancel, error
+	data{String}：选择的值，格式为yyyy-MM-dd，仅成功确认的时候存在。
 !!
 
 ###pickTime(options, [callback])：时间选择
 !!
 options{Object}：选项参数
-    value{String}：必填，默认选中的选项，时间格式为HH:mm
+	value{String}：必填，默认选中的选项，时间格式为HH:mm
 callback{Function(ret{Object})}：选择完的回调函数。res参数属性如下
-    result{String}：结果三种类型 success, cancel, error
-    data{String}：选择的值，格式为HH:mm，仅成功确认的时候存在。
+	result{String}：结果三种类型 success, cancel, error
+	data{String}：选择的值，格式为HH:mm，仅成功确认的时候存在。
 !!
 
 ##stream
 网络请求：·stream.fetch(options, callback, [progressCallback])·
 !!
 options{Object}：请求的选项
-    method{String}：GET/POST，GET请求不支持body方式传递参数，需使用url传参
-    url{String}：请求的URL
-    headers{Object}：HTTP请求头
-    type{String}：响应类型，json、text或是jsonp
-    body{String}：HTTP请求体，如果是JSON格式需先将其转为字符串
+	method{String}：GET/POST，GET请求不支持body方式传递参数，需使用url传参
+	url{String}：请求的URL
+	headers{Object}：HTTP请求头
+	type{String}：响应类型，json、text或是jsonp
+	body{String}：HTTP请求体，如果是JSON格式需先将其转为字符串
 callback{Function(res)}：响应结果回调，res参数属性如下
-    status{Number}：返回的状态码
-    ok{Boolean}：如果状态码在200~299之间就为真
-    statusText{String}：状态描述文本
-    data{Object|String}：返回的数据，如果请求类型是json和jsonp为object，否则是string
-    headers{Object}：响应头
+	status{Number}：返回的状态码
+	ok{Boolean}：如果状态码在200~299之间就为真
+	statusText{String}：状态描述文本
+	data{Object|String}：返回的数据，如果请求类型是json和jsonp为object，否则是string
+	headers{Object}：响应头
 progressCallback{Function(res)}：关于请求状态的回调，在请求完成后被调用，res参数属性如下
-    readyState{Number}：当前状态，数字说明如下
-        1：state，请求连接中
-        2：opened，返回响应头中
-        3：received，正在加载返回数据
-    status{Number}：响应状态码
-    length{Number}：已经接受到的数据长度，可以从响应头中获取总长度
-    statusText{String}：状态文本
-    headers{Object}：响应头
+	readyState{Number}：当前状态，数字说明如下
+		1：state，请求连接中
+		2：opened，返回响应头中
+		3：received，正在加载返回数据
+	status{Number}：响应状态码
+	length{Number}：已经接受到的数据长度，可以从响应头中获取总长度
+	statusText{String}：状态文本
+	headers{Object}：响应头
 !!
 ^^注意：^^
 默认·Content-Type·是·application/x-www-form-urlencoded·，如果需要通过POST json，需设为·application/json·
@@ -589,12 +589,12 @@ verticalpan：垂直拖动
 Weex 实例变量的类型定义如下：
 ··
 declare type Weex = {
-    config: WeexConfigAPI;	// 当前环境信息
-    document: WeexDocument;	// 当前页面的文档模型对象
-    requireModule: (name: string) => Object | void;	// 引用自定义或内置的模块
-    supports: (condition: string) => boolean | void;	// 检测某个功能在当前环境中是否可用
-    isRegisteredModule: (moduleName: string, methodName: string) => boolean	// 检测某个特定的模块或者接口是否可用
-    isRegisteredComponent: (moduleName: string, methodName: string) => boolean	// 检测某个特定的组件是否可用
+	config: WeexConfigAPI;	// 当前环境信息
+	document: WeexDocument;	// 当前页面的文档模型对象
+	requireModule: (name: string) => Object | void;	// 引用自定义或内置的模块
+	supports: (condition: string) => boolean | void;	// 检测某个功能在当前环境中是否可用
+	isRegisteredModule: (moduleName: string, methodName: string) => boolean	// 检测某个特定的模块或者接口是否可用
+	isRegisteredComponent: (moduleName: string, methodName: string) => boolean	// 检测某个特定的组件是否可用
 }
 ··
 
@@ -602,9 +602,9 @@ declare type Weex = {
 包含了当前 Weex 页面的所有环境信息
 ··
 declare type WeexConfigAPI = {
-    bundleUrl: string;
-    bundleType?: string;
-    env: WeexEnvironment;
+	bundleUrl: string;
+	bundleType?: string;
+	env: WeexEnvironment;
 }
 ··
 通过调用·this.$getConfig()·也能获取同样的信息：·weex.config === this.$getConfig()·
@@ -614,17 +614,17 @@ declare type WeexConfigAPI = {
 bundleUrl：xxx.js，当前页面js的url
 bundleType：当前页面的开发框架，可以是 "Vue" 或者 "Rax"
 env：环境对象
-    appGroup：WXApp，当前APP应用类型
-    appName：WXSample，当前APP应用名字
-    appVersion：0.5.2.5，当前APP应用版本
-    deviceWidth：1080，设备宽度
-    deviceHeight：1920，设备高度
-    deviceModel：vivoX6D，设备型号
-    platform：Android，当前运行平台
-    osName：Android，操作系统名称
-    osVersion：5.1，系统版本
-    weexVersion：0.9.4，weex sdk版本
-    scale：3.0，页面缩放比例
+	appGroup：WXApp，当前APP应用类型
+	appName：WXSample，当前APP应用名字
+	appVersion：0.5.2.5，当前APP应用版本
+	deviceWidth：1080，设备宽度
+	deviceHeight：1920，设备高度
+	deviceModel：vivoX6D，设备型号
+	platform：Android，当前运行平台
+	osName：Android，操作系统名称
+	osVersion：5.1，系统版本
+	weexVersion：0.9.4，weex sdk版本
+	scale：3.0，页面缩放比例
 !!
 
 ##weex.supports
@@ -700,27 +700,27 @@ es6（暂时发现）：支持·let·, ·const·, ·=>·，对象属性同名简
 ##vue的不支持
 !!
 组件
-    transition：在移动端 enter 与 leave 的概念可能有点不同，并且 Weex 不支持·display: none;·
-    transition-group：同 transition
-    keep-alive：移动端的原生组件不能被前端缓存
+	transition：在移动端 enter 与 leave 的概念可能有点不同，并且 Weex 不支持·display: none;·
+	transition-group：同 transition
+	keep-alive：移动端的原生组件不能被前端缓存
 生命周期
-    activated：不支持·<keep-alive>·
-    deactivated：不支持·<keep-alive>·
+	activated：不支持·<keep-alive>·
+	deactivated：不支持·<keep-alive>·
 模板指令
-    v-html：Weex 中没有 HTML 解析器
-    v-show：不支持·display:none;·
-    v-cloak：不支持·[attr]·选择器，只支持·.class·
+	v-html：Weex 中没有 HTML 解析器
+	v-show：不支持·display:none;·
+	v-cloak：不支持·[attr]·选择器，只支持·.class·
 实例方法
-    vm.$mount()：无需手动安装 Vue 实例
+	vm.$mount()：无需手动安装 Vue 实例
 选项
-    template：Weex 用的是 @[只包含运行时构建|https://cn.vuejs.org/v2/guide/installation.html#%E8%BF%90%E8%A1%8C%E6%97%B6-%E7%BC%96%E8%AF%91%E5%99%A8-vs-%E5%8F%AA%E5%8C%85%E5%90%AB%E8%BF%90%E8%A1%8C%E6%97%B6]
-    comments：是否保留且渲染模板中的 HTML 注释
+	template：Weex 用的是 @[只包含运行时构建|https://cn.vuejs.org/v2/guide/installation.html#%E8%BF%90%E8%A1%8C%E6%97%B6-%E7%BC%96%E8%AF%91%E5%99%A8-vs-%E5%8F%AA%E5%8C%85%E5%90%AB%E8%BF%90%E8%A1%8C%E6%97%B6]
+	comments：是否保留且渲染模板中的 HTML 注释
 全局API
-    Vue.compile：同 template
+	Vue.compile：同 template
 全局配置
-    Vue.config.devtools：只在 Web 环境下支持
-    Vue.config.performance：同 Vue.config.devtools
-    Vue.config.keyCodes：在移动端不需要
+	Vue.config.devtools：只在 Web 环境下支持
+	Vue.config.performance：同 Vue.config.devtools
+	Vue.config.keyCodes：在移动端不需要
 !!
 
 #动态性

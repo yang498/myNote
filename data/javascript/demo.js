@@ -6,13 +6,13 @@ commonData.javascript.demo.content = `
 // bad
 let result = null
 if (conditionA) {
-    if (conditionB) {
-        result = "A & B"
-    } else {
-        result = "A"
-    }
+	if (conditionB) {
+		result = "A & B"
+	} else {
+		result = "A"
+	}
 } else {
-    result = "Not A"
+	result = "Not A"
 }
 
 // good
@@ -28,18 +28,18 @@ const result = !conditionA
 ··
 // switch
 switch (str) {
-    case 'a': return 'AAA'
-    case 'b': return 'BBB'
-    case 'c': return 'CCC'
-    default: return 'DDD'
+	case 'a': return 'AAA'
+	case 'b': return 'BBB'
+	case 'c': return 'CCC'
+	default: return 'DDD'
 }
 
 // object literal
 const swap = {
-    a: () => 'AAA',
-    b: () => 'BBB',
-    c: () => 'CCC',
-    default: () => 'DDD'
+	a: () => 'AAA',
+	b: () => 'BBB',
+	c: () => 'CCC',
+	default: () => 'DDD'
 }
 const str = (swap[str] || swap['default'])()
 ··

@@ -80,7 +80,7 @@ myBlob.type // "text/html"
 ··
 
 #File
-·File·对象代表一个文件，用来读写文件信息。它继承了·Blob·对象
+·File·对象代表一个文件，用来读写文件信息，继承自·Blob·对象
 
 ##new File
 ·new File(array, name [, options])·：主动生成·File·实例对象

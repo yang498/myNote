@@ -16,20 +16,20 @@ Alt+上下键：移动当前行
 创建表和表头，语法：
 ··
 create table ·tableName· (
-    column_name1 data_type(size),
-    column_name2 data_type(size),
-    column_name3 data_type(size),
-    ...
+	column_name1 data_type(size),
+	column_name2 data_type(size),
+	column_name3 data_type(size),
+	...
 )
 ··
 比如创建用户信息表：
 ··
 create table user_info (
-    id bigint,
-    name varchar(20),
-    age int,
-    sex int,
-    address varchar(255)
+	id bigint,
+	name varchar(20),
+	age int,
+	sex int,
+	address varchar(255)
 )
 ··
 
@@ -68,11 +68,11 @@ not：非，除了指定条件
 in (...)：在指定的值内
 between ... and ...：指定范围，不同数据库是否包括开头结尾可能不一致
 like：指定模式，相当于正则，
-    %：代表 0 到多个字符
-    _：代表 1 个字符
-    [¿charlist]¿：中括号中任意一个字符
-    [¿^charlist]¿ 或 [¿!¿charlist]¿：非中括号中任意单一字符
-    [¿0-9]¿[¿a-z]¿：中括号中使用 - 可表示范围
+	%：代表 0 到多个字符
+	_：代表 1 个字符
+	[¿charlist]¿：中括号中任意一个字符
+	[¿^charlist]¿ 或 [¿!¿charlist]¿：非中括号中任意单一字符
+	[¿0-9]¿[¿a-z]¿：中括号中使用 - 可表示范围
 !!
 比如有个 Persons 表：
 %%
@@ -113,13 +113,13 @@ Gates,Bill,Xuanwumen 10,Beijing,1985
 语法：^^select ·columnName· from ·tableName· order by ·columnName· [asc/desc]^^
 例如：
 排序：
-    ·select Company, OrderNumber from Orders order by Company·
+	·select Company, OrderNumber from Orders order by Company·
 每个相同的 Company 中再进行 OrderNumber 排序：
-    ·select Company, OrderNumber from Orders order by Company, OrderNumber·
+	·select Company, OrderNumber from Orders order by Company, OrderNumber·
 倒叙：
-    ·select Company, OrderNumber from Orders order by Company desc·
+	·select Company, OrderNumber from Orders order by Company desc·
 每个相同的 Company 中再进行 OrderNumber 正序排序：
-    ·select Company, OrderNumber from Orders order by Company desc, OrderNumber asc·
+	·select Company, OrderNumber from Orders order by Company desc, OrderNumber asc·
 
 ##top
 规定要返回多少条数据，语法：select top ·number|percent· ·columnName· from ·tableName·
