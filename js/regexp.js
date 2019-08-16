@@ -86,7 +86,7 @@ REG.linkOneLine = /@@(?=\n)[^]*?@@(?=\n)/g
 // 底部链接，多行
 REG.linkMultiLine = /@@!(?=\n)[^]*?@@(?=\n)/g
 // 底部链接，内部匹配
-REG.linkInside = /(\s*)([^]*)\|([^]*)/g
+REG.linkInside = /([^]*)\|([^]*)/g
 // 底部链接，标签
 REG.link = /^@@|@@$/g
 // 最后更新时间

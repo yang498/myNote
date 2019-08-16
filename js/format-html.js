@@ -47,11 +47,11 @@ const formatHtml = text => {
 			.replace(REG.imgInline, item => REG.imgFn(item, REG.imgInline, true))
 
 			// 底部链接，单行，在每一行中替换，里面转 <a> ，最后合并成一行
-			.replace(REG.linkOneLine, item => '@@学习参考链接：' + item.slice(2, -3).replace(REG.multiLine, (res, $1) =>
-				$1.replace(REG.linkInside, '<a href="$3" target="_blank">$2</a>，')).replace(/\n|，$/gm, '') + '@@')
+			.replace(REG.linkOneLine, item => '@@学习参考链接：' + item.slice(2, -2).replace(REG.multiLine, (res, $1) =>
+                $1.replace(REG.linkInside, '<a href="$2" target="_blank">$1</a>，')).replace(/\n|，$/gm, '') + '@@')
 			// 底部链接，多行，在每一行中替换，里面转 <a> ，最后合并成一行
-			.replace(REG.linkMultiLine, item => '@@学习参考链接：' + item.slice(3, -3).replace(REG.multiLine, (res, $1) =>
-				$1.replace(REG.linkInside, '<a href="$3" target="_blank" class="pd">$2</a>')).replace('\n', '') + '@@')
+			.replace(REG.linkMultiLine, item => '@@学习参考链接：' + item.slice(3, -2).replace(REG.multiLine, (res, $1) =>
+				$1.replace(REG.linkInside, '<a href="$2" target="_blank" class="pd">$1</a>')).replace('\n', '') + '@@')
 
 			// 列表，在每一行中替换，每个缩进换成 css 控制，开头加类型、默认值、必填加粗
 			.replace(REG.list, item => '!!' + item.slice(2, -2).replace(REG.multiLine, (res, $1) =>
