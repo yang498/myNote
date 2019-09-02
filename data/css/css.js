@@ -642,9 +642,9 @@ transition-timing-function[ease]：过渡动画的加速度曲线
 	step-start：一开始就结束了，·steps(1, start)·的快捷写法
 	step-end：开始不变，直到·duration·的最后结束，·steps(1, end)·的快捷写法
 	cubic-bezier(x1, y1, x2, y2)：贝塞尔曲线函数，可使用 @[预览调试工具|http://cubic-bezier.com/#.17,.67,.83,.67]
-	steps(steps, direction)：等距阶梯函数
-		steps：分几步，应传入整数
-		direction：左连续还是右连续
+	steps(<steps>, <direction>)：等距阶梯函数
+		<steps>：分几步，应传入整数
+		<direction>：左连续还是右连续
 			start：左连续，因此第一步发生在动画开始时
 			end：右连续，因此最后一步发生在动画结束时
 transition-delay[0s]：过渡动画开始前的等待时间，单位秒(s)或毫秒(ms)

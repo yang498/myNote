@@ -465,8 +465,8 @@ gulp 中文网|https://www.gulpjs.com.cn/docs/getting-started/
 博客园-无双|http://www.cnblogs.com/2050/p/4198792.html
 npm 搜索 gulp 插件|https://www.npmjs.com/search?q=keywords:gulpplugin
 Browsersync 中文网|http://www.browsersync.cn
-gulp 4 升级指南（本文是 3）|https://segmentfault.com/a/1190000005357048
+gulp 4 升级指南|https://segmentfault.com/a/1190000005357048
 @@
 
-&2019/4/10
+&2019/4/10（本文档基于 gulp 3）
 `

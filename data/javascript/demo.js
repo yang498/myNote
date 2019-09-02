@@ -1,4 +1,9 @@
 commonData.javascript.demo.content = `
+#小技巧
+!!
+使用构造函数时如果不传参数则可以省略括号，例如·new Date·
+!!
+
 #编程模式
 
 ##三元嵌套
