@@ -1,4 +1,159 @@
 commonData.javascript.grammar.content = `
+#this
+·this·返回当前对象
+
+##全局环境指向 window
+··
+this // window
+··
+
+##构造函数指向实例
+··
+var Obj = function (p) {
+	this.p = p
+}
+var o = new Obj('Hello World!')
+o.p // "Hello World!"
+··
+
+##对象方法中指向该对象
+··
+var A = {
+	name: '张三',
+	describe: function () {
+		return this.name
+	}
+}
+A.describe() // "张三"
+  
+var B = {
+	name: '李四'
+}
+B.describe = A.describe
+B.describe() // "李四"
+··
+
+##改变指向
+··
+var obj ={
+	foo: function () {
+		console.log(this)
+	}
+}
+
+// 情况一
+(obj.foo = obj.foo)() // window
+// 情况二
+(false || obj.foo)() // window
+// 情况三
+(1, obj.foo)() // window
+··
+JavaScript 引擎内部·obj·和·obj.foo·储存在两个内存地址，称为地址 A 和 B
+·obj.foo()·调用时从地址 A 调用地址 B，因此地址 B 的运行环境是地址 A，·this·指向·obj·
+但上面三种情况都是直接取出地址 B 进行调用，这样运行环境就是全局环境
+
+##对象方法的第一层
+###对象方法嵌套
+··
+var a = {
+	p: 'a',
+	b: {
+		p: 'b',
+		m: function () {
+			console.log(this.p)
+		}
+	}
+}
+
+a.b.m() // "b"
+··
+###对象方法嵌套方法实际是在全局中调用
+内层的·this·不指向外部，而指向顶层对象·window·
+··
+var a = {
+	p: 'a',
+	b: function() {
+		setTimeout(function () {
+			console.log(this.p)
+		})
+	}
+}
+
+a.b() // window
+··
+常见的做法：用变量固定·this·的值，或使用箭头函数
+
+##F.p.call()
+·Function.prototype.call(obj, ...arg)·：指定函数内部·this·的指向并调用该函数
+第一个参数为要指向的对象，后面的参数为函数调用时所需的参数
+如果参数为空、·null·和·undefined·，则默认传入全局对象·window·
+··
+var obj = {}
+
+var f = function () {
+	return this
+}
+
+f() === window // true
+f.call(obj) === obj // true
+··
+如果参数是一个原始值则会自动转成对应的包装对象
+··
+var f = function () {
+	console.log(this)
+}
+  
+f.call(5) // Number {[[PrimitiveValue]]: 5}
+··
+
+##F.p.apply()
+·Function.prototype.apply(obj, [...arg])·：作用和·call()·一样，区别就是第二个参数是个数组
+
+###找出数组最大元素
+··
+var a = [10, 2, 4, 15, 9]
+Math.max.apply(null, a) // 15
+··
+
+###将数组的空元素变为 undefined
+空元素和·undefined·的区别详见·js标准库 - array - es6 - 数组的空位·
+··
+Array.apply(null, ['a', ,'b'])
+// [ 'a', undefined, 'b' ]
+··
+
+##F.p.bind()
+·Function.prototype.bind(obj, ...arg)·：将函数体内的·this·绑定到某个对象，然后返回一个新函数，参数说明同·call()·
+###直接赋值对象的方法
+··
+var obj = {
+    a: 'obj',
+    b: function () {
+	    console.log(this.a)
+    }
+}
+
+var f1 = obj.b
+f1() // undefined
+
+var f2 = obj.b.bind(obj)
+f2() // "obj"
+··
+###使用参数
+··
+var add = function (x, y) {
+	return x * this.m + y * this.n
+}
+  
+var obj = {
+	m: 2,
+	n: 2
+}
+  
+var newAdd = add.bind(obj, 5) // 将第一个参数 x 绑定成 5，只要再接受一个参数 y 即可
+newAdd(5) // 20
+··
+
 #包装对象
 
 ##介绍
@@ -485,5 +640,5 @@ fnB();
 ##运算符优先级
 @[参照 MDN|https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table]
 
-&2019/8/8
+&2019/9/17
 `

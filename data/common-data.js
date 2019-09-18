@@ -1,7 +1,7 @@
 // 首页目录循环 commonData，key 为一级路径，二级 key 为 二级路径，目录名用 key 表示，中文加上 name 表示，注意文件名和 key 的一致
 // underway 表示进行中，complete 表示已完成，没有就是未开始
 // js 文件命名：html 不区分大小写所以用短横线连接，而对象的 key 中用短横线会当作减法，所以用驼峰命名，所以引用 script 时先驼峰转短横线
-// plan：文字系列 > number > favicon > function > @media（和适配方法） > node 表单提交，基本 API 调用 > es6 > canvas > 面向对象 > dom > 浏览器 > vue > SVG > console > 数据类型和重要语法 > audio & video > html（元素的 js 属性也列出来）
+// plan：文字系列 > number > favicon > function > @media（和适配方法） > node 表单提交，基本 API 调用 > es6 > canvas > 面向对象 > dom > 浏览器 > vue（从头开始，精简） > SVG > console > 数据类型和重要语法 > audio & video > html（元素的 js 属性也列出来）
 // 所有可运行的 demo 要把运行结果展示出来，然后点击使用 slideDown 展示代码，并且可在线编辑（复杂的话使用插件）（代码块内识别颜色）
 // 各种库和框架只收录最核心最流行的，并且遵循用最精简的话来纪录，目的是为了速查速记，否则没有意义，还不如看官方文档，要是有新版了还要考虑为旧版本留个链接
 let commonData = {

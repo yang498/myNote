@@ -1640,6 +1640,11 @@ Vue.component('blog-post', {
 	}
 </style>
 ··
+·export·和·export default·的区别：
+·export·能导出多个对象，所以在引入时是一个包含多个对象的对象，要使用其中某一个还需要再索引到其中某个对象，例如·import {foo} from './foo.vue'·
+·export default·：只能导出一个对象，且不需要命名，在引入时也是直接使用，例如·import foo from './foo.vue'·
+而一个组件就是一个对象，所以是用·export default·是比较合适的，更多区别参考 ES6 - Module 的语法
+
 ###怎么看待关注点分离？
 一个重要的事情值得注意，关注点分离不等于文件类型分离。
 在现代 UI 开发中，相比于把代码库分离成三大层次文件（html、css、js），把它们划分为松散耦合的组件再将其组合起来更合理一些。在一个组件里，其模板、逻辑和样式是内部耦合的，使得组件更加内聚且更可维护。
@@ -1830,6 +1835,8 @@ Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度�
 HTML5 历史模式或 hash 模式，在 IE9 中自动降级
 自定义的滚动条行为
 !!
+
+#vuex
 
 @@
 官方文档|https://cn.vuejs.org/v2/guide/

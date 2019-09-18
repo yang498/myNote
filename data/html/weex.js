@@ -759,6 +759,7 @@ demo：Weex 300行代码开发一款简易的跑步App|https://segmentfault.com/
 demo：Weex开发之路（二） - 完成一个ToDoList项目|http://ios.jobbole.com/91773/
 UI库 - Weex UI|https://alibaba.github.io/weex-ui/#/
 UI库 - BUI-Weex|http://dev.bingocc.com/buiweex/
+weex封装扩展 - weexplus|https://weexplus.github.io/doc/
 weex封装扩展 - BindingX|https://alibaba.github.io/bindingx/
 weex封装扩展 - eros|https://bmfe.github.io/eros-docs/#/
 weex封装扩展 - Nat|http://natjs.com/#/zh-cn/
