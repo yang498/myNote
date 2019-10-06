@@ -9,7 +9,7 @@ let commonData = {
 		html: {},
 		mobile: {},
 		optimize: { name: '优化' },
-		applet: { name: '微信小程序', underway: true },
+		applet: { name: '微信小程序', complete: true },
 		weex: { underway: true },
 		electron: {}
 	},
