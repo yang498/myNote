@@ -1823,7 +1823,7 @@ new Vue({
 // 在渲染时 App.vue 中的内容会代替 index.html 中的 <div id="app"></div>
 ··
 
-##Vue Router
+#Vue Router
 Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌。包含的功能有：
 !!
 嵌套的路由/视图表
@@ -1836,7 +1836,7 @@ HTML5 历史模式或 hash 模式，在 IE9 中自动降级
 自定义的滚动条行为
 !!
 
-#vuex
+#Vuex
 
 @@
 官方文档|https://cn.vuejs.org/v2/guide/

@@ -1380,25 +1380,6 @@ scripts{Object}：自定义预处理
 云调用,原生微信服务集成,基于云函数免鉴权使用小程序开放接口的能力，包括服务端调用、获取开放数据等能力
 %%
 
-#小游戏
-
-##介绍
-微信小游戏是小程序的一个类目。用户完成小程序注册后，可选择“游戏”类目并开始开发、调试小游戏
-需要两个必要文件：
-!!
-game.js：小游戏入口文件
-game.json：配置文件
-!!
-每个小游戏允许上传的代码包总大小为 4MB
-
-##game.json
-开发者工具和客户端需要读取这个配置，完成相关界面渲染和属性设置。
-!!
-deviceOrientation{String}[portrait]：屏幕方向，可选 portrait（竖屏）、landscape（横屏）
-showStatusBar{Boolean}[false]：是否显示状态栏
-networkTimeout：
-!!
-
 @@!
 小程序官方文档|https://developers.weixin.qq.com/miniprogram/introduction/index.html?t=2018413
 小程序社区：疑难解答、教程、demo、资源|http://www.wxapp-union.com

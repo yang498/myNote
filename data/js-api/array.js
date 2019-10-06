@@ -247,7 +247,7 @@ strArr.reduce((long, item) => long.length > item.length ? long : item, '')
 #es6 方法
 !!
 ^^静态方法^^（即定义在对象本身，而不是定义在对象实例的方法）
-Array.from(obj, fn(item, index), thisObj)：将类似数组的对象和可遍历（iterable）的对象转为真正的数组，也可正确识别四字节字符
+Array.from(obj, fn(item, index), thisObj)：将类似数组的对象和可遍历（iterable）的对象转为真正的数组并将其返回，也可正确识别四字节字符
 	fn{f}：遍历每个成员依次执行参数函数
 	item：当前循环的元素
 	index{n}：当前循环的元素索引
