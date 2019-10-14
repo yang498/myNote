@@ -42,7 +42,7 @@ let commonData = {
 	tool: {
 		name: '工具',
 		sass: {},
-		git: {},
+		git: { underway: true },
 		gulp: { complete: true },
 		webpack: {},
 		taro: {},
