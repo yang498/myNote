@@ -119,7 +119,7 @@ git merge <branch>
 git branch -d <branchName>
 
 // 删除远程分支
-git push origin --delete <branchName>
+git push <remote> --delete <branchName>
 ··
 
 ##pull / push
@@ -265,12 +265,33 @@ git log --pretty=oneline
 
 // 回到指定版本
 git reset --hard <commit>
+··
 
-// 强制覆盖提交
+###方式一：强制覆盖提交
+··
 git push <remote> --force
 ··
 如果提示拒绝则可能项目被保护了
 在项目托管平台上的当前项目中设置（例如 GitLab）：Settings - Repository - Protected Branches - 点击 Unprotect
+
+###方式二：重新建立分支
+··
+// 复制临时分支
+git checkout -b temp
+git push <remote> temp
+
+// 删除主分支
+git branch -d master
+git push <remote> --delete master
+
+// 新建主分支
+git checkout -b master
+git push <remote> master
+
+// 删除临时分支
+git branch -d temp
+git push <remote> --delete temp
+··
 
 #.gitignore
 .gitignore 文件可以让 Git 不上传哪些文件，比如 node_modules 文件是没必要上传的
