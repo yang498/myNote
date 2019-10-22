@@ -20,6 +20,7 @@ let commonData = {
 		grammar: { name: '语法', underway: true },
 		function: {},
 		browser: { name: '浏览器', underway: true },
+		connect: { name: '网络请求', underway: true },
 		node: { underway: true },
 		demo: { complete: true }
 	},
