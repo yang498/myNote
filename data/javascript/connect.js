@@ -39,112 +39,61 @@ Sec-WebSocket-Location: ws://example.com/
 ··
 
 ##API
-
-浏览器对 WebSocket 协议的处理就是三件事：
-!!
-建立连接和断开连接
-发送数据和接收数据
-处理错误
-!!
-
-##构造函数 WebSocket
+浏览器对 WebSocket 协议的处理就是三件事：建立和断开连接、发送和接收数据、处理错误
 新建·WebSocket·实例，让客户端与服务器进行连接
 ··
 var ws = new WebSocket('ws://localhost:8080')
 ··
-
-##webSocket.readyState
-实例对象的当前状态：
 !!
-CONNECTING：值为 0，表示正在连接
-OPEN：值为 1，表示连接成功，可以通信了
-CLOSING：值为 2，表示连接正在关闭
-CLOSED：值为 3，表示连接已经关闭，或者打开连接失败
+ws.readyState：实例对象的当前状态，可能的值：
+	WebSocket.CONNECTING[0]：表示正在连接
+	WebSocket.OPEN[1]：表示连接成功，可以通信了
+	WebSocket.CLOSING[2]：表示连接正在关闭
+	WebSocket.CLOSED[3]：表示连接已经关闭，或者打开连接失败
+ws.binaryType：指定接收的二进制数据类型
+ws.bufferedAmount：还未发送出去的二进制数据，可以用来判断发送是否结束
+
+ws.send(data)：向服务器发送数据，·data·接受的类型：
+	String：文本字符串
+	Blob：二进制大对象
+	ArrayBuffer：二进制数据
+	ArrayBufferView：二进制帧
+ws.close([code[, reason]])：关闭当前连接
+
+ws.onopen：连接成功时触发
+ws.onclose：连接关闭时触发
+ws.onmessage：收到服务器数据时触发
+ws.onerror：报错时的回调函数
 !!
 示例：
 ··
-switch (ws.readyState) {
-  case WebSocket.CONNECTING: return code
-  case WebSocket.OPEN: return code
-  case WebSocket.CLOSING: return code
-  case WebSocket.CLOSED: return code
-}
-··
+let ws = new WebSocket('wss://echo.websocket.org')
 
-##webSocket.binaryType
-指定接收的二进制数据类型
-··
-// 收到的是 blob 数据
-ws.binaryType = ‘blob‘
-ws.onmessage = function(e) {
-    console.log(e.data.size)
-}
-
-// 收到的是 ArrayBuffer 数据
-ws.binaryType = ‘arraybuffer‘
-ws.onmessage = function(e) {
-    console.log(e.data.byteLength)
-}
-··
-
-##webSocket.onopen
-连接成功后的回调函数
-··
-ws.onopen = function (e) { }
-ws.addEventListener('open', function (e) { })
-··
-
-##webSocket.onclose
-连接关闭后的回调函数
-··
-ws.onclose = function (e) { }
-ws.addEventListener('close', function (e) { })
-··
-
-##webSocket.onmessage
-收到服务器数据后的回调函数
-··
-ws.onmessage = function (event) {
-    var data = event.data
-    // 处理数据
-}
-  
-ws.addEventListener('message', function (event) {
-    var data = event.data
-    // 处理数据
+ws.addEventListener('open', res => {
+	console.log('连接成功')
+	console.log(res)
+})
+ws.addEventListener('message', res => {
+	console.log('连接成功')
+	console.log(res)
+	if (res.data === 'CLOSE_WebSocket') ws.close()
+})
+ws.addEventListener('close', res => {
+	console.log('已关闭连接')
+	console.log(res)
+})
+ws.addEventListener('error', res => {
+	console.log('连接错误')
+	console.log(res)
+})
+$button.addEventListener('click', e => {
+	ws.send('hello')
 })
 ··
 
-##webSocket.send()
-向服务器发送数据
-··
-ws.send('your message')
-··
+@@
+socket.io|https://socket.io/
+@@
 
-##webSocket.bufferedAmount
-还未发送出去的二进制数据，可以用来判断发送是否结束
-··
-var data = new ArrayBuffer(10000000)
-socket.send(data)
-
-if (socket.bufferedAmount === 0) {
-    // 发送完毕
-} else {
-    // 发送还没结束
-}
-··
-
-##webSocket.onerror
-报错时的回调函数
-··
-socket.onerror = function (event) {
-    // handle error event
-}
-
-socket.addEventListener('error', function (event) {
-    // handle error event
-})
-··
-
-&2019/10/22
+&2019/10/23
 `
