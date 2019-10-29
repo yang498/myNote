@@ -1,5 +1,5 @@
 commonData.css.css.content = `
-#display 系列
+#display
 ##flex
 flex 为弹性布局，IE10+ 支持，可灵活控制子元素的排列顺序，@[参考|http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html]
 注意：设为 flex 布局以后，子元素的·float·、·clear·和·vertical-align·属性将失效
@@ -171,7 +171,7 @@ grid-template-rows: [r1] 100px [r2] 100px [r3] auto [r4];
 }
 ··
 
-#文字系列
+#文字
 
 ##font
 字体样式：·font: style variant weight size/line-height family;·，若要简写则·font-size font-family·是必填的
@@ -214,9 +214,9 @@ nowrap：连续的空格符会被合并，忽略换行符
 pre：保留所有空格符和换行符
 !!
 
-#边框阴影系列
+#边框阴影
 
-#图像系列
+#图像
 
 ##background
 背景样式：·background: color image repeat position/size origin attachment;·
@@ -348,7 +348,7 @@ mask-composite[source-over]：多个遮罩下的混合模式，参考 @[MDN 老�
 }
 ··
 
-#渐变系列
+#渐变
 应用于·background-image·和·mask-image·
 
 ##linear-gradient()
@@ -492,7 +492,7 @@ at <position>：渐变中心点，写法参考·background-position·
 }
 ··
 
-#transform 系列
+#transform
 ##transform
 位移、旋转、缩放或倾斜元素。这是通过修改 CSS 视觉格式化模型的坐标空间来实现的
 !!
@@ -622,7 +622,7 @@ hidden：不可见
 }
 ··
 
-#过渡动画系列
+#过渡动画
 
 ##transition
 过渡效果：·transition: property duration timing-function delay;·
@@ -798,7 +798,7 @@ will-change[auto]：
 }
 ··
 
-#计算系列
+#计算
 
 ##--*
 定义 CSS 变量，即预先定义好任意的 CSS 属性，通过·var(--*)·读取变量

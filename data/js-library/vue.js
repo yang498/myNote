@@ -281,6 +281,31 @@ errorCaptured,当捕获一个来自子孙组件的错误时被调用
 %%
 !./img/js-library/vue01.png,600
 
+##和组件的顺序
+假设有 App.vue，通过·import·和·components·使用了 hello.vue，通过·<router-view>·使用了 foo.vue，打印顺序如下：
+··
+App beforeCreate
+App created
+App beforeMount
+
+hello beforeCreate
+hello created
+hello beforeMount
+hello mounted
+
+App mounted
+
+foo beforeCreate
+foo created
+foo beforeMount
+foo mounted
+··
+可以看出：·import·的方式在实例挂载前组件就已全部加载完毕，·<router-view>·的方式则在后面加载
+###注意
+Vue 组件页面产生进程就算组件页面切换了也不会结束
+例如在组件页面中写了定时器，在切换到其他页面之后还是会触发，所以要注意清除定时器，不然再次访问会重复添加定时器
+因为页面每次会重新运行而 js 进程却不会终止
+
 #指令
 
 ##{{ }}
@@ -1824,19 +1849,196 @@ new Vue({
 ··
 
 #Vue Router
-Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌。包含的功能有：
-!!
-嵌套的路由/视图表
-模块化的、基于组件的路由配置
-路由参数、查询、通配符
-基于 Vue.js 过渡系统的视图过渡效果
-细粒度的导航控制
-带有自动激活的 CSS class 的链接
-HTML5 历史模式或 hash 模式，在 IE9 中自动降级
-自定义的滚动条行为
-!!
+Vue Router 是 Vue.js 官方的路由管理器。它和 Vue.js 的核心深度集成，让构建单页面应用变得易如反掌
+
+##安装
+直接下载/CDN
+··
+<script src="/path/to/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> // 指向最新
+<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script> // 指定版本
+··
+NPM
+··
+npm install vue-router
+··
+注意在模块化项目中使用时（非 script 标签），必须通过 Vue.use() 声明使用路由功能：
+··
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+··
+
+##起步
+将组件 (components) 映射到路由 (routes)，然后告诉 Vue Router 在哪里渲染它们
+··
+// html
+<router-link to="/foo">Go to Foo</router-link> // 默认渲染成 a 标签，或者使用 js 例如 this.$router.push('/foo')
+<router-view></router-view> // 路由匹配到的组件将渲染在这里
+// js
+// 1、定义组件（在其他页面写好）
+const routes = [ { path: '/foo', component: Foo } ] // 2、定义路由（每个路由映射一个组件）
+const router = new VueRouter({ routes }) // 3、创建 router 实例
+const app = new Vue({ router }).$mount('#app') // 4、挂载到 vue 实例
+··
+然后可通过 this.$router 访问路由器，包括路径、参数等
+
+##动态路由匹配
+参数、响应变化、高级匹配
+
+##嵌套路由
+被渲染组件同样可以包含自己的嵌套 <router-view>，这需要在 VueRouter 的参数中使用 children 配置
+··
+const routes = [
+	{
+		// 以 /¿ 开头的嵌套路径会被当作根路径
+		path: '/user/:id',
+		component: User
+		children: [
+			// 当 /¿user/¿:id/profile 匹配成功，UserProfile 会被渲染在 User 的 <router-view> 中
+			{ path: 'profile', component: UserProfile },
+			// 当访问 /user/:id 时还没有匹配到子路由，所以 <router-view> 还不会渲染，可以提供一个空的子路由在匹配 /user/:id 成功时即渲染
+			{ path: '', component: UserHome }
+		]
+	}
+]
+··
+
+##编程式的导航
+··
+router.push(location{String/Object}, onComplete?, onAbort?) // 产生历史纪录
+router.replace(location, onComplete?, onAbort?) // 不产生历史纪录
+router.go(n) // 前进或后退多少步
+router.push('user') // 路径
+router.push({ name: 'user', params: { userId: '123' }})
+router.push({ path: 'register', query: { plan: 'private' }})
+router.push({ path: '/user', params: { userId }}) // path 不能和 params 一起写
+router.push({ path: \`/user/\${userId}\` }) // path 需和 params 写成完整路径才有效
+··
+
+##命名多视图
+··
+<router-view class="view one"></router-view>
+<router-view class="view two" name="a"></router-view>
+<router-view class="view three" name="b"></router-view>
+routes: [
+    {
+      path: '/',
+      components: {
+        default: Foo,
+        a: Bar,
+        b: Baz
+      }
+    }
+]
+··
+ 
+##重定向
+··
+routes: [{ path: '/a', redirect: '/b' }] // path
+routes: [{ path: '/a', redirect: { name: 'foo' }}] // name
+routes: [{ path: '/a', redirect: to => { }}] // 以目标路由作为参数，return 要重定向的字符串路径或路径对象
+··
+
+##别名
+··
+/a 的别名是 /b，即当访问 /b 时 URL 不变，返回的结果仍是 /a
+routes: [{ path: '/a', component: A, alias: '/b' }]
+··
+
+路由组件传参：路由的值作为参数组件
+
+HTML5 History 模式：vue-router 默认使用 hash 模拟完整路径的模式，使用 history 模式就像正常的 url，这需要后台的配置支持
+
+##导航守卫
+路由在跳转时的一些监听函数
+··
+router.beforeEach((to, from, next) => { }) // 全局前置守卫，导航之前
+router.beforeResolve((to, from, next) => { }) // 全局解析守卫，目标组件被调用后
+router.afterEach((to, from) => { }) // 全局后置钩子，导航确认后， DOM 更新前
+routes: [{ path: '/foo', component: Foo, beforeEnter: (to, from, next) => { } } ] // 路由独享的守卫，还有 beforeRouteUpdate、beforeRouteLeave
+··
+
+路由元信息：定义路由的时候可以配置 meta 字段
+
+过渡动效：可以用 <transition> 组件给 <router-view> 添加一些过渡效果
+
+数据获取：一般在组件生命周期钩子中获取数据，获取期间显示加载中，也可以在导航之前获取数据成功后执行导航
+
+##滚动行为
+··
+const router = new VueRouter({
+  routes: [...],
+  scrollBehavior (to, from, savedPosition) { // savedPosition 通过浏览器的前进/后退按钮触发时才可用
+    // return 期望滚动到哪个的位置
+  }
+})
+··
+
+##路由懒加载
+把不同路由对应的组件分割成不同的代码块，当被访问的时候才加载对应组件
+将异步组件定义为返回一个 Promise 的工厂函数，在 Webpack 2 中可以使用动态 import 语法来定义代码分块点
 
 #Vuex
+把组件的共享状态抽取出来，以一个全局单例模式管理呢
+在这种模式下，组件树构成了一个巨大的“视图”，不管在树的哪个位置，任何组件都能获取状态或者触发行为
+通过定义和隔离状态管理中的各种概念并通过强制规则维持视图和状态间的独立性，我们的代码将会变得更结构化且易维护
+适用于大型单页应用，如果应用够简单最好不要使用 Vuex，一个简单的 store 模式就够了
+
+##store 仓库
+和单纯的全局对象的不同点：
+Vuex 的状态存储是响应式的，若状态发生变化，相应的组件也会更新
+不能直接改变 store 中的状态，只能提交 (commit) mutation。这样可以跟踪状态的变化，从而能够实现一些工具更好地了解应用
+
+##安装
+直接下载/CDN
+··
+<script src="/path/to/vue.js"></script>
+<script src="https://unpkg.com/vuex"></script> // 指向最新
+<script src="https://unpkg.com/vuex@2.0.0"></script> // 指定版本
+··
+NPM
+··
+npm install vuex --save
+··
+注意在模块化项目中使用时（非 script 标签），必须通过 Vue.use() 声明使用路由功能：
+··
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+··
+Vuex 依赖 Promise，如果你支持的浏览器并没有实现 Promise (比如 IE)，可以使用一个 polyfill 的库，例如 es6-promise
+··
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+npm install es6-promise --save
+import 'es6-promise/auto' // 使用 Vuex 之前
+··
+
+##起步
+··
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  }
+})
+store.commit('increment')
+console.log(store.state.count)
+··
+通过提交 mutation 的方式，而非直接改变 store.state.count，这样可以追踪到状态的变化
+··
+const app = new Vue({ store }).$mount('#app')
+··
+该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到
+
+##State
+Vuex 使用单一状态树，用一个对象包含全部的应用层级状态
+在 Vue 组件中获得 Vuex 状态
+mapState 辅助函数：当一个组件需要获取多个状态时，都声明为计算属性会有些重复和冗余，可以使用 mapState 帮助生成计算属性
 
 @@
 官方文档|https://cn.vuejs.org/v2/guide/

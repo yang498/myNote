@@ -312,9 +312,6 @@ node_modules/	// 根目录下的 node_modules 文件夹
 提示·fatal: Unable to create .git/index.lock': File exists.·错误，在·.git·文件夹内（项目根目录的隐藏文件夹）删除·index.lock·即可
 !!
 
-#Git 原理
-
-
 @@
 git 官网|https://git-scm.com/
 git 中文网|https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6
