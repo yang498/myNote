@@ -74,11 +74,8 @@ if (conditionA) {
 }
 
 // good
-const result = !conditionA
-  ? "Not A"
-  : conditionB
-  ? "A & B"
-  : "A"
+const result = !conditionA ? "Not A" :
+    conditionB ? "A & B" : "A"
 ··
 
 ##object 代替 switch
@@ -102,5 +99,41 @@ const swap = {
 const str = (swap[str] || swap['default'])()
 ··
 
-&2019/07/13
+#小功能
+##空闲计时
+!!
+介绍：页面无操作后一段时间后触发事件
+场景：当前页面/功能需要一直展示，但用户也可以临时查看其他页面或使用其他功能，所以让用户无操作一段时间后仍然返回当前页面/功能
+思路：设定时间，递减时间，直到为 0 触发事件，监听鼠标、键盘、触摸事件，有任何事件触发都将时间重置为初始时间
+!!
+··
+const freeTimer = countdown => {
+    let time = countdown
+    const call = () => {
+        time--
+        time ? setTimeout(call, 1000) : confirm('时间到，是否继续？') ? setTimeout(call, 1000) : removeEvent()
+    }
+    setTimeout(call, 1000)
+    const event = 'click dblclick contextmenu mousemove wheel keydown touchstart touchmove'.split(' ')
+    let lowerFrame = null
+    const watch = e => {
+        // 触发频率高的事件降频以减少卡顿
+        if (/mousemove|wheel|keydown|touchmove/.test(e.type)) {
+            if (!lowerFrame) {
+                lowerFrame = setTimeout(() => {
+                    lowerFrame = null
+                    time = countdown
+                }, 100)
+            }
+        } else {
+            time = countdown
+        }
+    }
+    event.forEach(item => document.addEventListener(item, watch))
+    const removeEvent = () => event.forEach(item => document.removeEventListener(item, watch))
+}
+freeTimer(5 * 60)
+··
+
+&2019/11/10
 `

@@ -85,8 +85,8 @@ Date.UTC(2011, 0, 1, 2, 3, 4, 567) // 1293847384567
 ##D.p.get*()
 ·Date.prototype.get*()·：get 类方法可以用来获取实例对象某个方面的值
 !!
-getTime()：实例距离 1970年1月1日00:00:00 的毫秒数，等同于·valueOf·方法
-getDate()：每个月的几号（从1开始）
+getTime()：1970/01/01 00:00:00 到现在的毫秒数，等同于·valueOf()·（中国由于时区加 8 小时，即 1970/01/01 08:00:00 开始计算）
+getDate()：每个月的几号（从 1 开始）
 getDay()：星期几，星期日为 0，星期一为 1，以此类推
 getYear()：返回距离 1900 的年数
 getFullYear()：返回四位的年份
@@ -108,14 +108,14 @@ d.getTimezoneOffset() // -480，除以 60 即早 8 个小时
 ··
 UTC （世界时间）版：
 !!
-getUTCDate()
-getUTCDay()
-getUTCFullYear()
-getUTCMonth()
-getUTCHours()
-getUTCMinutes()
-getUTCSeconds()
-getUTCMilliseconds()
+getUTCDate():
+getUTCDay():
+getUTCFullYear():
+getUTCMonth():
+getUTCHours():
+getUTCMinutes():
+getUTCSeconds():
+getUTCMilliseconds():
 !!
 
 ##D.p.set*()
@@ -155,13 +155,13 @@ d.setFullYear(d.getFullYear() - 1)
 ··
 UTC （世界时间）版：
 !!
-setUTCDate()
-setUTCFullYear()
-setUTCMonth()
-setUTCHours()
-setUTCMilliseconds()
-setUTCMinutes()
-setUTCSeconds()
+setUTCDate():
+setUTCFullYear():
+setUTCMonth():
+setUTCHours():
+setUTCMilliseconds():
+setUTCMinutes():
+setUTCSeconds():
 !!
 
 ##D.p.valueOf()

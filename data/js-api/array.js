@@ -238,7 +238,16 @@ Array.prototype.join.call({ 0: 'a', 1: 'b', length: 2 }, '-') // "a-b"
 // 10 5
 //最后结果：15
 
-[1, 2, 3, 4, 5].reduce((a, b) => a + b, 10) // 25
+[1, 2, 3, 4, 5].reduce((a, b) => {
+	console.log(a, b)
+	return a + b
+}, 10)
+// 10 1
+// 11 2
+// 13 3
+// 16 4
+// 20 5
+//最后结果：25
 
 // 找出字符长度最长的数组成员
 strArr.reduce((long, item) => long.length > item.length ? long : item, '')

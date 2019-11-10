@@ -1,5 +1,8 @@
 commonData.jsLibrary.jquery.content = `
 #介绍
+
+本文档基于 jQuery v3.2.1
+
 jQuery 是 javascript 的一个库，把一些常用的功能和兼容性问题进行了封装，方便使用和提高开发效率。
 一些使用方式：
 ··
