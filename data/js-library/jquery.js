@@ -1,7 +1,7 @@
 commonData.jsLibrary.jquery.content = `
-#介绍
-
 本文档基于 jQuery v3.2.1
+
+#介绍
 
 jQuery 是 javascript 的一个库，把一些常用的功能和兼容性问题进行了封装，方便使用和提高开发效率。
 一些使用方式：
@@ -1524,5 +1524,5 @@ HTML 中文网 jQuery 文档|https://www.css88.com/jqapi-1.9/
 插件 - jQuery之家|http://www.htmleaf.com/
 @@
 
-&2019/3/28（本文档基于 jQuery v3.2.1）
+&2019/3/28
 `
