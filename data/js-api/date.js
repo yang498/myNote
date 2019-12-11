@@ -171,7 +171,7 @@ setUTCSeconds():
 ##D.p.to*()
 !!
 Date.prototype.toString()：返回日期字符串，当直接读取实例或转为字符串时即调用的该方法
-Date.prototype.toUTCString()：返回日期字符串的世界时间（晚北京时间 8 小时）
+Date.prototype.toUTCString()：返回日期字符串的世界时间（早北京时间 8 小时）
 Date.prototype.toISOString()：返回日期字符串的 ISO8601 （且为 UTC 时间）写法，形如·2012-12-31T16:00:00.000Z·
 Date.prototype.toJSON()：等同于·.toISOString()·
 Date.prototype.toDateString()：返回日期字符串的年月日星期部分（不含时分秒和时区），形如·Thu Apr 04 2019·

@@ -498,7 +498,8 @@ props: {
 	content: {	// 用对象指定属性
 		type: String, // 类型（不声明即是 null）
 		required: true, // 是否必填
-        default: '空', // 默认值，或者是一个有返回值的函数
+        default: '空', // 默认值
+        default: () => [], // 对象或数组默认值必须以函数返回
 		validator: value => ['success', 'error'].indexOf(value) > -1, // 返回 Boolean 值的验证函数
 	}
 }

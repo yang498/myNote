@@ -174,7 +174,7 @@ grid-template-rows: [r1] 100px [r2] 100px [r3] auto [r4];
 #文字
 
 ##font
-字体样式：·font: style variant weight size/line-height family;·，若要简写则·font-size font-family·是必填的
+字体样式：·font: style variant weight size/line-height family;·，若要简写则·font-size font-family·是必填的（·font-family·只能写在最后）
 !!
 font-style[normal]：字体样式
 	normal：常规
@@ -219,7 +219,7 @@ pre：保留所有空格符和换行符
 #图像
 
 ##background
-背景样式：·background: color image repeat position/size origin attachment;·
+背景样式：·background: color image repeat position / size origin attachment;·
 !!
 background-color[transparent]：背景颜色
 background-image[none]：背景图片，比背景颜色层级高，支持·url(imgUrl)·、渐变等，可指定多个背景图片以逗号隔开，层级越后越低
