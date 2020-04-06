@@ -51,6 +51,17 @@ var obj ={
 JavaScript 引擎内部·obj·和·obj.foo·储存在两个内存地址，称为地址 A 和 B
 ·obj.foo()·调用时从地址 A 调用地址 B，因此地址 B 的运行环境是地址 A，·this·指向·obj·
 但上面三种情况都是直接取出地址 B 进行调用，这样运行环境就是全局环境
+所以要注意下面类似的情况：
+··
+var o = new Object()
+o.f = function () {
+    console.log(this === o)
+}
+
+// jQuery 的写法
+$('#button').on('click', o.f) // false
+// 此时 this 不再指向 o 对象，而是指向按钮的 DOM 对象
+··
 
 ##对象方法的第一层
 ###对象方法嵌套
@@ -105,6 +116,14 @@ var f = function () {
   
 f.call(5) // Number {[[PrimitiveValue]]: 5}
 ··
+###调用对象的原生方法防止被覆盖
+··
+var obj = {}
+obj.hasOwnProperty = function () {
+    return true
+}
+Object.prototype.hasOwnProperty.call(obj, 'toString') // false
+··
 
 ##F.p.apply()
 ·Function.prototype.apply(obj, [...arg])·：作用和·call()·一样，区别就是第二个参数是个数组
@@ -123,7 +142,7 @@ Array.apply(null, ['a', ,'b'])
 ··
 
 ##F.p.bind()
-·Function.prototype.bind(obj, ...arg)·：将函数体内的·this·绑定到某个对象，然后返回一个新函数，参数说明同·call()·
+·Function.prototype.bind(obj, ...arg)·：将方法内的·this·绑定到某个对象，然后返回一个新方法，参数用法同·call()·
 ###直接赋值对象的方法
 ··
 var obj = {
@@ -144,7 +163,7 @@ f2() // "obj"
 var add = function (x, y) {
 	return x * this.m + y * this.n
 }
-  
+
 var obj = {
 	m: 2,
 	n: 2
@@ -152,6 +171,18 @@ var obj = {
   
 var newAdd = add.bind(obj, 5) // 将第一个参数 x 绑定成 5，只要再接受一个参数 y 即可
 newAdd(5) // 20
+··
+###每次返回一个新函数
+所以监听事件：
+··
+el.addEventListener('click', o.m.bind(o))
+el.removeEventListener('click', o.m.bind(o)) // 移除无效
+··
+需改成：
+··
+var listener = o.m.bind(o)
+el.addEventListener('click', listener)
+el.removeEventListener('click', listener)
 ··
 
 #包装对象

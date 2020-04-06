@@ -166,11 +166,14 @@ git stash list
 // 将最近的一次储存还原到工作区
 git stash apply
 
+// 将最近的一次储存还原到工作区并删除此存储
+git stash pop
+
 // 删除指定的存储
 git stash drop <stash@{n}>
 
-// 将最近的一次储存还原到工作区并删除此存储
-git stash pop
+// 删除所有存储
+git stash clear
 ··
 
 ##tag

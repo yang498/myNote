@@ -249,6 +249,23 @@ Array.prototype.join.call({ 0: 'a', 1: 'b', length: 2 }, '-') // "a-b"
 // 20 5
 //最后结果：25
 
+// 如果数组只有一个元素将直接返回此元素而不会进行循环
+[{a: 1, b: 2}].reduce((a, b) => {
+	console.log(a, b)
+	return a + b
+})
+// 最后结果：{a: 1, b: 2}
+
+// 如果是对象数组内相加最好使用初始值的方式
+const orderList = [
+    {count: 1, price: 2},
+    {count: 2, price: 1},
+    {count: 3, price: 2},
+    {count: 4, price: 1},
+]
+const totalPrices = orderList.reduce((a, b) => a + b.count * b.price, 0)
+console.log(totalPrices) // 14
+
 // 找出字符长度最长的数组成员
 strArr.reduce((long, item) => long.length > item.length ? long : item, '')
 ··

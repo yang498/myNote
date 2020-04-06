@@ -12,7 +12,7 @@ commonData.other.link.content = `
 鼠标码：左键 1，中建 2，右键 3
 @[HTTP 请求方法|https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods]
 @[HTTP 响应代码|https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status]
-CDN 云资源：@[CDNJS|https://cdnjs.com]，@[jsDelivr|https://www.jsdelivr.com]
+CDN 云资源：@[NPM|https://unpkg.com]，@[CDNJS|https://cdnjs.com]，@[jsDelivr|https://www.jsdelivr.com]
 
 #css 库
 @[组件库 - Bootstrap|https://v4.bootcss.com/]

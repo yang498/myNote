@@ -183,10 +183,13 @@ Date.prototype.toLocaleTimeString()：返回日期字符串当地写法的时分
 #常用时间方法
 ··
 // 判断闰年，能被 4 且不能被 100 整除，或能被 400 整除
-const leapYear = y => y % 4 === 0 && y % 100 !== 0 || y % 400 === 0
+const isLeapYear = y => y % 4 === 0 && y % 100 !== 0 || y % 400 === 0
+
+// 获取今年的天数
+const thisYearDays = isLeapYear(new Date().getFullYear()) ? 366 : 365
 
 // 判断月份的天数，1 3 5 7 8 10 12 返回 31，4 6 9 11 返回 30，2 如果是闰年返回 29，否则 28
-const monthDay = (m, y) => /^1$|3|5|7|8|10|12/.test(m) ? 31 : /4|6|9|11/.test(m) ? 30 : leapYear(y) ? 29 : 28
+const getMonthDays = (m, y) => /^1$|3|5|7|8|10|12/.test(m) ? 31 : /4|6|9|11/.test(m) ? 30 : isLeapYear(y) ? 29 : 28
 
 // 时间只有 1 位就在前面加 0
 const add0 = n => n > 9 ? n : '0' + n

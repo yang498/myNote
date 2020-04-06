@@ -27,13 +27,17 @@ npm install jquery
 npm 连接的是国外的服务器，所以网速比国内的较差，而国内有 npm 的 @[淘宝镜像 cnpm|https://npm.taobao.org/]，每 10 分钟更新一次以保证尽量与 npm 官方服务同步，所以国内可以使用 cnpm 代替 npm
 安装指令：
 ··
-npm install -g cnpm --registry=https://registry.npm.taobao.org
+npm install cnpm -g --registry=https://registry.npm.taobao.org
 ··
 和平时使用 npm 一样，用 cnpm 代替 npm 就行了：
 ··
 cnpm install <name>
 ··
 注意用·cnpm·安装的 node_modules 文件夹是以下划线开头并且带有·@版本·，而不带下划线和版本号的是这些文件的快捷方式，不影响使用
+如果不想安装 cnpm 可以临时使用淘宝的资源安装：
+··
+npm install <package> --registry https://registry.npm.taobao.org
+··
 
 ###npm 命令
 直接在命令行输入·npm·回车可查看能使用的命令列表

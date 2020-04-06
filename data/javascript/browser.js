@@ -168,5 +168,12 @@ $file.onchange = function () {
 }
 ··
 
+#浏览器
+
+##Network
+get - Query String Parameters
+post - Form Data：Content-Type: application/x-www-form-urlencoded (默认)
+post - Request Payload：Content-Type:application/json;charset=UTF-8（jq 默认会把 data 转成查询字符串，如果先 JSON.stringify(data) 就是个对象）
+
 &2019/4/18
 `

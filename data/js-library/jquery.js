@@ -135,7 +135,7 @@ $('li:nth-child(4n)')	// D H
 :first：第一个，比如·$('li:first')·
 :last：最后一个，比如·$('li:last')·
 :gt(index)：下标大于给定 index 的元素，比如·$('li:gt(2)')·
-:lt()：下标小于给定 index 的元素，和·:gt(index)·相反
+:lt(index)：下标小于给定 index 的元素，和·:gt(index)·相反
 :odd：下标为奇数，即 1 3 5 7 9...，比如·$('li:odd')·
 :even：下标为偶数，即 0 2 4 6 8...，比如·$('li:even')·
 !!
@@ -1161,7 +1161,7 @@ $.get()：get 请求
 $.getJSON()：获取 json 数据
 $.getScript()：获取 script 数据
 $.post()：post 请求
-.load()：在指定元素中加载 DOM
+.load()：在指定元素中加载数据
 !!
 ###$.get()
 可使用和·$.ajax()·一样的对象参数，或快捷写法·.get(url [, data] [, success] [, dataType])·，等同于：
@@ -1208,9 +1208,8 @@ $.ajax({
 ·.load(url [, data] [, complete(responseText, textStatus, XMLHttpRequest)])·
 将请求返回的 HTML 数据插入至匹配的元素中，默认使用·GET·，若·data·参数提供一个对象将使用·POST·，且不支持·jsonp·
 在·url·中以空格隔开选择器可选择只加载返回结果中的指定内容
-注意若请求的 html 中含有脚本将会被执行，若请求的 url 包含以空格隔开的选择器将不会执行
 ··
-// 给 result 加载内容，若 $('#result') 未获取到元素将不会触发请求
+// 给 result 加载内容，若·$('#result')·未获取到元素将不会触发请求
 $('#result').load('ajax/test.html')
 
 // 只插入返回结果中的 #container li 部分

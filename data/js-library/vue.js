@@ -1238,7 +1238,7 @@ const routes = [
 	{
 		// 以 /¿ 开头的嵌套路径会被当作根路径
 		path: '/user/:id',
-		component: User
+		component: User,
 		children: [
 			// 当 /¿user/¿:id/profile 匹配成功，UserProfile 会被渲染在 User 的 <router-view> 中
 			{ path: 'profile', component: UserProfile },
