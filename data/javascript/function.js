@@ -1,2 +1,0 @@
-commonData.javascript.function.content = `
-`
