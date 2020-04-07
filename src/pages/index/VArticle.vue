@@ -1,5 +1,7 @@
 <template>
-    <article>article</article>
+    <article>
+        <p>article</p>
+    </article>
 </template>
 
 <script>
@@ -15,5 +17,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+article {
+    overflow-y: auto;
+}
+p {
+    height: 3000px;
+    background-image: linear-gradient(red, orange, yellow, green, blue);
+}
 </style>

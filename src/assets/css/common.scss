@@ -1,10 +1,40 @@
 @charset "utf-8";
 // scss common.scss:common.css --style compressed
 
+$ti-slow:1s;
+$ti-four:0.4s;
+$ti-fast:0.2s;
+$weex: #00B4FA;
+$vue: #42b983;
+$blue: #08f;
+$skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
+// code 清新粉 #ff3860
+.c-red { color: #f00; }
+.c-orange { color: #f80; }
+.c-green { color: #0c0; }
+.c-cyan { color: #0cc; }
+.c-blue { color: #08f; }
+.c-purple { color: #80f; }
+.c-pink { color: #f08; }
+.c-gray { color: #aaa; }
+
+.skin-blue {
+    header, .set { background-color: $weex; }
+}
+
+[class^=el-icon] {
+    font-size: 24px;
+}
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html, body, #app, .skin {
+    height: 100%;
 }
 
 // ---- 滚动条样式 ----
@@ -93,27 +123,8 @@
 .vm { vertical-align: middle; }
 .vb { vertical-align: bottom; }
 
-$ti-slow:1s;
-$ti-four:0.4s;
-$ti-fast:0.2s;
-$weex: #00B4FA;
-$vue: #42b983;
-$hui: #eee;
-$blue: #08f;
-$skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
-// code 清新粉 #ff3860
-.c-red { color: #f00; }
-.c-orange { color: #f80; }
-.c-green { color: #0c0; }
-.c-cyan { color: #0cc; }
-.c-blue { color: #08f; }
-.c-purple { color: #80f; }
-.c-pink { color: #f08; }
-.c-gray { color: #aaa; }
-
-.skin-blue {
-    header, .set { background-color: $weex; }
-}
+.w100p { width: 100%; }
+.h100p { height: 100%; }
 
 .web {
     min-height: 100%;

@@ -11,12 +11,12 @@
         </div>-->
 
         <!-- 左边的目录 -->
-        <!-- <ul class="menu"> -->
-        <!-- 一级目录 -->
-        <!-- <li @click="directory" :class="index ? 'active' : ''">
-                <img src="img/logo.jpg" />
+        <ul class="menu">
+        <!-- 一级目录 @click="directory" :class="index ? 'active' : ''" -->
+        <li>
+                <i class="el-icon-s-home"></i>
             </li>
-            <li
+            <!-- <li
                 v-for="(parentValue, parentKey) in commonData"
                 :class="menuParent === parentKey ? 'active' : ''"
             >
@@ -30,12 +30,13 @@
                         @click="changePage(parentKey, childKey)"
         >{{childValue.name || childKey}}</li>-->
         <!-- </ul>
-            </li>
-        </ul>-->
+            </li>-->
+        </ul>
 
-        <!-- 右边的菜单 -->
-        <!-- <div :class="['option', optionToggle?'active':'']"> -->
+        <!-- 右边的菜单 :class="['option', optionToggle?'active':'']" -->
+        <div class="handle flex">
         <!-- 设置 -->
+        <i class="el-icon-magic-stick"></i>
         <!-- <div class="set hover">
                 <i class="iconfont icon-shezhi"></i>
                 <ul>
@@ -46,64 +47,55 @@
                         <i class="iconfont icon-skin-fill"></i>
                     </li>
                 </ul>
-        </div>-->
+        </div> -->
         <!-- 搜索框 -->
-        <!-- <div class="search">
-                <i
-                    :class="['iconfont icon-search',isSearch?'active':'']"
-                    @click="isSearch=!isSearch"
-                ></i>
-                <transition enter-class="active" leave-to-class="active">
-                    <input type="text" placeholder="搜索建设中" v-if="isSearch" />
-                </transition>
-        </div>-->
-        <!-- github -->
-        <!-- <a
-                class="git"
-                href="https://github.com/yang498/note"
-                target="_blank"
-                @click="hideOption"
-            >
-                <i class="iconfont icon-git"></i>
-        </a>-->
+        <a class="git" href="https://github.com/yang498/note" target="_blank" @click="hideOption">
+            <icon-git></icon-git>
+        </a>
         <!-- 回到顶部/底部 -->
-        <!-- <i
-                class="iconfont icon-arrowhead-bottom back-top"
-                onclick="scrollToTop(document.body.scrollHeight)"
-                @click="hideOption"
-            ></i>
-            <i
-                class="iconfont icon-arrowhead-top back-top"
-                onclick="scrollToTop(0)"
-                @click="hideOption"
-        ></i>-->
-        <!-- </div> -->
+        <i class="el-icon-top" @click="$emit('top'), hideOption()"></i>
+        <i class="el-icon-bottom" @click="$emit('bottom'), hideOption()"></i>
+        </div>
 
         <!-- 右边的菜单收缩触发按钮 -->
-        <!-- <div
+        <div
             :class="['icon-toggle', optionToggle ? 'active' : '']"
             @click="optionToggle = !optionToggle"
         >
             <span class="icon-top"></span>
             <span class="icon-middle"></span>
             <span class="icon-bottom"></span>
-        </div>-->
+        </div>
     </header>
 </template>
 
 <script>
 export default {
+    components: {
+        IconGit: () => import('./IconGit')
+    },
     data () {
-        return {}
+        return {
+            optionToggle: false // 移动端顶部右侧菜单切换
+        }
     },
     mounted () {},
     methods: {
-        init () {}
+        // 移动设备上收缩右侧菜单
+        hideOption () {
+            if (this.optionToggle) this.optionToggle = false
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.handle > * {
+    width: 60px;
+    line-height: 40px;
+}
+.git { padding-top: 5px; }
+
 i.iconfont {
     font-size: 20px;
 }

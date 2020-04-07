@@ -1,10 +1,10 @@
 <template>
-    <div class="skin-blue">
-        <v-header></v-header>
+    <div class="skin skin-blue">
+        <v-header @top="scrollTo(0)" @bottom="scrollTo(1)"></v-header>
         <main class="flex">
-            <v-menu></v-menu>
-            <v-aside></v-aside>
-            <v-article></v-article>
+            <v-menu v-if="false"></v-menu>
+            <v-aside class="h100p"></v-aside>
+            <v-article class="h100p flex-g1" ref="article"></v-article>
         </main>
     </div>
 </template>
@@ -22,11 +22,20 @@ export default {
     },
     mounted () {},
     methods: {
-        init () {}
+        // 回到顶部或底部
+        scrollTo (top) {
+            const $el = this.$refs.article.$el
+            $el.scrollTo({ top: top && $el.scrollHeight, behavior: 'smooth' })
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-
+main {
+    height: calc(100% - 40px);
+    aside {
+        width: 200px;
+    }
+}
 </style>
