@@ -5,7 +5,6 @@
         height="24"
         viewBox="0 0 16 16"
         version="1.1"
-        aria-hidden="true"
     >
         <path
             fill="#fff"

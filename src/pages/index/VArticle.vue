@@ -20,8 +20,4 @@ export default {
 article {
     overflow-y: auto;
 }
-p {
-    height: 3000px;
-    background-image: linear-gradient(red, orange, yellow, green, blue);
-}
 </style>
