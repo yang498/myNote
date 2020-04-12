@@ -1,32 +1,13 @@
 <template>
+    <!-- 头部 -->
     <header class="h40 lh40 tc c-white flex flex-xsb">
-        <!-- aside 收缩菜单触发按钮 -->
+        <!-- 移动端 aside 切换按钮 -->
         <icon-menu :active.sync="asideToggle"></icon-menu>
-
-        <!-- 左边的目录 -->
-        <ul class="menu flex">
-        <!-- 一级目录 -->
+        <!-- 目录 -->
+        <menu-list class="menu flex" li1-class="w100 lh40 td2 cp pr" ul-class="of td2 pa p-l0 p-r0" li2-class="lh40 td2">
             <li class="w100 lh40 td2 cp el-icon-s-home" :class="{ active: isHome }" @click="$router.push('/')"></li>
-            <li
-                class="w100 lh40 td2 cp pr"
-                :class="{ active: menuActive[0] === parentIndex }"
-                v-for="(parentItem, parentIndex) in menuList"
-                :key="parentIndex"
-            >
-                <span>{{parentItem.name}}</span>
-                <ul class="of td2 pa p-l0 p-r0">
-                    <li
-                        class="lh40 td2"
-                        :class="{ active: menuActive[0] === parentIndex && menuActive[1] === index }"
-                        v-for="(item, index) in parentItem.list"
-                        :key="index"
-                        @click="$router.push(item.path)"
-                    >{{item.name}}</li>
-                </ul>
-            </li>
-        </ul>
-
-        <!-- 右边的菜单 :class="['option', optionToggle ? 'active' : '' ]" -->
+        </menu-list>
+        <!-- 工具 -->
         <div class="handle flex" @click="hideOption">
             <!-- 皮肤 -->
             <i class="w60 lh40 el-icon-magic-stick"></i>
@@ -37,8 +18,7 @@
             <!-- 回到底部 -->
             <i class="w60 lh40 el-icon-bottom" @click="$emit('bottom')"></i>
         </div>
-
-        <!-- 右边的菜单收缩触发按钮 -->
+        <!-- 移动端工具切换按钮 -->
         <icon-menu :active.sync="optionToggle"></icon-menu>
     </header>
 </template>
@@ -46,13 +26,13 @@
 <script>
 export default {
     components: {
+        MenuList: () => import('../components/MenuList'),
         IconGit: () => import('../components/IconGit'),
         IconMenu: () => import('../components/IconMenu')
     },
     data () {
         return {
             isHome: false, // 切换目录和文章
-            menuActive: [-1, -1], // 当前菜单
             asideToggle: false, // aside 切换
             optionToggle: false // 顶部右侧菜单切换
         }
@@ -68,17 +48,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.menu {
-    ul {
-        top: 100%;
-        border-radius: 0 0 4px 4px;
-        height: 0;
-        opacity: 0;
-    }
-    & > li:hover ul {
-        height: auto;
-        opacity: 1;
-    }
+.menu ::v-deep {
+    ul { height: 0; opacity: 0; border-radius: 0 0 4px 4px; }
+    li:hover ul { height: auto; opacity: 1; }
 }
 .handle a { padding-top: 8px; }
 </style>

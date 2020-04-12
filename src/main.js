@@ -4,13 +4,13 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import './assets/css/reset.css'
-import './assets/css/common.scss'
-import menuList from './assets/js/menuList'
+import 'A/css/reset.css'
+import 'A/css/common.scss'
+import format from 'A/js/format.js'
 
-Vue.prototype.menuList = menuList
 Vue.use(ElementUI)
 Vue.config.productionTip = false
+Vue.prototype.format = format
 
 new Vue({
     router,

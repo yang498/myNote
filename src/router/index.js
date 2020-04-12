@@ -1,20 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import list from 'A/js/menuList'
 
 Vue.use(VueRouter)
 
-const routes = [
-    {
-        path: '/',
-        name: 'index',
-        component: () => import('../pages/index/VIndex.vue')
-    }
-]
-
-const router = new VueRouter({
+export default new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes: [
+        {
+            path: '/',
+            name: 'index',
+            component: () => import('P/index/VIndex.vue'),
+            children: list.flatMap(item => item.list).map(item => {
+                return {
+                    path: item.path,
+                    component: () => import('@/' + item.path)
+                }
+            })
+        }
+    ]
 })
-
-export default router

@@ -8,6 +8,7 @@ $ti-fast:0.2s;
 $weex: #00B4FA;
 $vue: #42b983;
 $blue: #08f;
+$orange: #f80;
 $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
 // code 清新粉 #ff3860
 .c-red { color: #f00; }
@@ -21,12 +22,22 @@ $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
 
 .skin-blue {
     header {
-        &, .menu ul {
+        &, .menu ul { background-color: $weex; }
+        li:hover, li.active, .handle > *:hover { background-color: $blue; }
+    }
+    .section li li {
+        color: $weex;
+        border-color: $weex;
+        &:hover {
+            color: #fff;
             background-color: $weex;
         }
-        li:hover, li.active, .handle > *:hover {
-            background-color: $blue;
-        }
+        &.underway { border-color: $orange; }
+        &.complete { border-color: $vue; }
+    }
+    article {
+        a, a:hover { color: $blue; }
+        h1:hover, h2:hover { color: $weex; }
     }
 }
 
@@ -59,12 +70,17 @@ html {
 }
 
 // ---- 常用 ----
+.w100p { width: 100%; }
+.h100p { height: 100%; }
 .w60 { width: 60px; }
 .w100 { width: 100px; }
+.w200 { width: 200px; }
 .h40 { height: 40px; }
+.lh30 { line-height: 30px; }
 .lh40 { line-height: 40px; }
 .c-white { color: #fff; }
 .bg-white { background-color: #fff; }
+.bg-gray { background-color: #eee; }
 .ellipsis {
     overflow: hidden;
 	white-space: nowrap;
@@ -157,65 +173,12 @@ html {
 .vm { vertical-align: middle; }
 .vb { vertical-align: bottom; }
 
-.w100p { width: 100%; }
-.h100p { height: 100%; }
-
 // ---- 旧
 .web {
     min-height: 100%;
     padding-top: 40px;
     overflow: hidden;
     background: no-repeat center / cover fixed;
-}
-
-section {
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
-    padding: 50px 0;
-    font-size: 18px;
-    text-align: center;
-    div {
-        width: 300px;
-        border: 1px solid #999;
-        border-radius: 5px;
-        overflow: hidden;
-        margin: 20px;
-    }
-    b {
-        display: block;
-        line-height: 40px;
-        font-weight: bold;
-        background-color: #eee;
-    }
-    ul {
-        display: flex;
-        height: calc(100% - 40px);
-        flex-flow: wrap;
-        justify-content: center;
-        align-items: center;
-        padding: 10px 0 20px;
-        li {
-            margin: 10px 10px 0;
-            line-height: 30px;
-            color: $weex;
-            cursor: pointer;
-            border: 1px solid $weex;
-            border-radius: 3px;
-            padding: 3px 6px;
-            transition-duration:$ti-fast;
-            &:hover {
-                color: #fff;
-                background-color: $weex;
-            }
-            &.underway {
-                border: 2px solid #f80;
-            }
-            &.complete {
-                border: 2px solid $vue;
-            }
-        }
-    }
 }
 
 aside {
@@ -256,232 +219,6 @@ aside {
     .h2 li:hover, .h2 li.active {
         color: $weex;
         background-color: #f5f5f5;
-    }
-}
-
-article {
-    padding: 10px 60px 0 240px;
-    a, a:hover {
-        color: #08f;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    h1 {
-        font-size: 24px;
-        font-weight: bold;
-        padding: 15px 0;
-        border-bottom: 1px solid #ccc;
-        margin-bottom: 15px;
-        cursor: pointer;
-        transition: $ti-fast;
-        &:not(:first-child) {
-            margin-top: 20px;
-        }
-        &:hover {
-            color: $weex;
-        }
-    }
-    h2 {
-        font-size: 20px;
-        margin: 10px 0;
-        font-weight: bold;
-        transition: $ti-fast;
-        cursor: pointer;
-    }
-    h1, h2 {
-        &:not(:first-child) {
-            margin-top: 20px;
-        }
-        &:hover {
-            color: $weex;
-        }
-    }
-    h3 {
-        font-size: 18px;
-        margin: 20px 0 10px;
-        font-weight: bold;
-        text-indent: 2em;
-    }
-    p {
-        text-indent: 2em;
-        line-height: 30px;
-    }
-    b {
-        font-weight: bold;
-    }
-    img {
-        width: 100%;
-        max-width: 1000px;
-        margin: 5px 0 5px 2em;
-		&.inline {
-			margin: 0 5px;
-			vertical-align: text-bottom;
-		}
-    }
-    ul {
-        margin: 5px 2em 10px 2em;
-        padding: 10px 20px;
-        border-left: 10px solid #f80;
-        border-radius: 10px;
-        background-color: #f9f9f9;
-        li {
-            line-height: 30px;
-            &::before {
-                content: '●';
-                color: #f80;
-                margin-right: 10px;
-            }
-        }
-        .attr {
-            padding-left: 2em;
-        }
-        .head {
-            color: #f80;
-            font-family: consolas;
-            word-break: break-all;
-        }
-        .type {
-            color: #08f;
-            font-family: consolas;
-        }
-        .default {
-            color: #0c0;
-            font-family: consolas;
-        }
-    }
-    table {
-        width: 100%;
-        max-width: 1000px;
-        border-radius: 5px;
-        margin: 10px 0 10px 2em;
-        border: 1px solid #ccc;
-        overflow: hidden;
-        text-align: center;
-        thead {
-            color: #fff;
-            background-color: #25A5F7;
-        }
-        tr {
-            height: 40px;
-            &:nth-child(2n) {
-                background-color: #eee;
-            }
-            th:not(:last-child),
-            td:not(:last-child) {
-                border-right: 1px solid #ccc;
-            }
-        }
-        th {
-            padding: 0 20px;
-        }
-        td {
-			padding: 0 20px;
-            border-top: 1px solid #ccc;
-            &.td-left {
-                text-align: left;
-            }
-        }
-    }
-    .link {
-        font-size: 18px;
-        line-height: 30px;
-        margin-top: 50px;
-        padding-top: 20px;
-        border-top: 1px dashed #999;
-        .pd {
-			display: block;
-            margin-left: 2em;
-        }
-    }
-    time {
-        display: block;
-        text-align: right;
-        color: #666;
-        margin: 20px 0;
-    }
-    code {
-        color: #ff3860;
-        margin: 0 3px;
-        padding: 3px 6px;
-        border-radius: 3px;
-        background-color: #f5f5f5;
-        font-family: consolas;
-        word-break: break-all;
-    }
-    span {
-        font-family: inherit;
-    }
-    pre {
-        width: 100%;
-        line-height: 24px;
-        border-radius: 8px;
-        font-family: consolas;
-        border: 1px solid #ccc;
-        background-color: #fafafa;
-        overflow-y: hidden;
-        padding: 20px 30px;
-    }
-    .code {
-        position: relative;
-        padding: 0 2em;
-        .copy {
-            font-size: 14px;
-            padding: 1px 8px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-top-right-radius: 8px;
-            border-bottom-left-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            position: absolute;
-            top: 0;
-            right: 2rem;
-			&:hover {
-				background-color: #fafafa;
-			}
-        }
-    }
-    .copy-success {
-        position: absolute;
-        top: 5px;
-        right: 0;
-        opacity: 0;
-        color: #0c0;
-        font-size: 18px;
-    }
-    .copy-success-active {
-        animation: copy 1s;
-    }
-    @keyframes copy {
-        80% {
-            opacity: 1;
-            transform: translateY(-30px);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-    }
-    #copy-textarea {
-        position: fixed;
-        left: -9999px;
-        opacity: 0;
-    }
-    pre .copy:hover {
-        background-color: #f5f5f5;
-    }
-    pre .copy:active {
-        color: #25A5F7;
-    }
-    .iframe {
-        padding: 10px 2em;
-        iframe {
-            width: 100%;
-            padding: 10px;
-            background-color: #f5f9fa;
-            border: 1px solid #eaf2f4;
-        }
     }
 }
 

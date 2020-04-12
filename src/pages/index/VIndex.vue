@@ -1,9 +1,9 @@
 <template>
     <div class="skin skin-blue">
         <v-header @top="scrollTo(0)" @bottom="scrollTo(1)"></v-header>
-        <main class="flex">
-            <v-menu v-if="false"></v-menu>
-            <v-aside class="h100p"></v-aside>
+        <v-menu v-if="$route.name === 'index'"></v-menu>
+        <main class="flex" v-else>
+            <v-aside class="w200 h100p"></v-aside>
             <v-article class="h100p flex-g1" ref="article"></v-article>
         </main>
     </div>
@@ -34,8 +34,5 @@ export default {
 <style lang="scss" scoped>
 main {
     height: calc(100% - 40px);
-    aside {
-        width: 200px;
-    }
 }
 </style>
