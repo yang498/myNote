@@ -33,7 +33,6 @@ h4,
 h5,
 h6 {
     font-size: 16px;
-    font-weight: normal;
 }
 
 ul,
@@ -54,11 +53,6 @@ input {
 i,
 em {
     font-style: normal;
-}
-
-b,
-strong {
-    font-weight: normal;
 }
 
 table {

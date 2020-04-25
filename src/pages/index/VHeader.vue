@@ -1,6 +1,6 @@
 <template>
     <!-- 头部 -->
-    <header class="h40 lh40 tc c-white flex flex-xsb">
+    <header class="h40 lh40 tc c-white flex flex-xsb pr z1">
         <!-- 移动端 aside 切换按钮 -->
         <icon-menu :active.sync="asideToggle"></icon-menu>
         <!-- 目录 -->

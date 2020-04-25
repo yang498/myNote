@@ -1,4 +1,5 @@
 /* eslint-disable brace-style */
+import store from 'S/store'
 import REG from './regexp'
 export default text => {
     const pageCode = [] // 当前页面代码块以准备复制
@@ -101,6 +102,7 @@ export default text => {
 
     // 将文档分割成每一行进行处理，开头或结尾的标识符替换成对应的标签，没有标识符的当成 p 标签
     const formatTag = function (t) {
+        const scrollIntoView = 'onclick="this.scrollIntoView({ behavior: \'smooth\' })"'
         return t.split('\n').map(item => {
             // 去掉开头缩进
             item = item.replace(/^\s*/, '')
@@ -110,15 +112,16 @@ export default text => {
             }
             // h2 标题
             else if (REG.h2.test(item)) {
+                const index = pageH1.length - 1 + '-' + pageH2[pageH1.length - 1].length
                 pageH2[h1Index].push(item.replace(REG.h2, '')) // 保存 h2 的标题文字
-                return `<h2 onclick="scrollToTop($(this).offset().top - 55)">${item.replace(REG.h2, '')}</h2>`
+                return `<h2 class="h2-${index}" ${scrollIntoView}>${item.replace(REG.h2, '')}</h2>`
             }
             // h1 标题
             else if (REG.h1.test(item)) {
                 pageH1.push(item.replace(REG.h1, '')) // 保存 h1 的标题文字
                 pageH2.push([]) // h2 增加一个数组，即 1 个 h1 包括 1 个数组的 h2
                 h1Index++ // h1 的 index 即 pageH2 的当前索引，随着 h1 的增加而增加
-                return `<h1 onclick="scrollToTop($(this).offset().top - 40)">${item.replace(REG.h1, '')}</h1>`
+                return `<h1 ${scrollIntoView}>${item.replace(REG.h1, '')}</h1>`
             }
             // 图片
             else if (REG.img.test(item)) {
@@ -159,5 +162,8 @@ export default text => {
             }
         }).join('')
     }
-    return formatTag(formatString(text))
+    const str = formatTag(formatString(text))
+    store.commit('h1List', pageH1)
+    store.commit('h2List', pageH2)
+    return str
 }

@@ -1,25 +1,52 @@
 <template>
-    <article>
+    <article class="pr" @scroll="watchScroll" ref="article">
         <router-view></router-view>
     </article>
 </template>
 
 <script>
-// map asideList
-// aside css
-// article h1-2 scroll
-// article css
 // article code style, 简化 format regexp
 // 换肤，加 $vue
 // 补齐所有文章
+// canvas
+// 兼容移动端
 // 对比之前的项目查缺补漏
+// demo 合并过来
+/* global $$ */
 export default {
     data () {
-        return {}
+        return {
+            scrollTimer: null
+        }
     },
-    mounted () {},
+    mounted () {
+        this.watchScroll()
+    },
     methods: {
-        init () {}
+        // 监听文章滚动响应左边的当前标题
+        watchScroll () {
+            // 降低滚动触发频率，至少间隔 100ms 再触发
+            if (!this.scrollTimer) {
+                this.scrollTimer = setTimeout(() => {
+                    this.scrollTimer = null
+                    const h1Index = this.findIndex($$('h1'))
+                    if (h1Index > -1) this.$store.commit('h1Index', h1Index)
+                    const h2Index = this.findIndex($$(`article [class^="h2-${h1Index}-"]`))
+                    if (h2Index > -1) this.$store.commit('h2Index', h2Index)
+                }, 100)
+            }
+        },
+        // 找出当前标题（第一个未被卷去标题的上一个）
+        findIndex ($el) {
+            for (let i = 0; i < $el.length; i++) {
+                if ($el[i].offsetTop > this.$refs.article.scrollTop + 100) {
+                    return i && i - 1
+                } else if (i === $el.length - 1) {
+                    return i // 最后一个标题后面无元素，则卷去即表示当前
+                }
+            }
+            return -1
+        }
     }
 }
 </script>
@@ -30,45 +57,34 @@ article {
     padding: 0 50px;
 }
 article ::v-deep {
-    a:hover {
-        text-decoration: underline;
-    }
     h1 {
         font-size: 24px;
-        font-weight: bold;
-        padding: 15px 0;
-        border-bottom: 1px solid #ccc;
+        line-height: 60px;
         margin-bottom: 15px;
-        cursor: pointer;
-        transition: 0.2s;
+        border-bottom: 1px solid #ccc;
         &:not(:first-child) {
             margin-top: 20px;
         }
     }
     h2 {
         font-size: 20px;
-        margin: 10px 0;
-        font-weight: bold;
-        transition: 0.2s;
-        cursor: pointer;
+        line-height: 40px;
     }
     h1, h2 {
-        &:not(:first-child) {
-            margin-top: 20px;
-        }
+        cursor: pointer;
+        transition-duration: 0.2s;
     }
     h3 {
         font-size: 18px;
-        margin: 20px 0 10px;
-        font-weight: bold;
         text-indent: 2em;
+        margin: 20px 0 10px;
     }
     p {
         text-indent: 2em;
         line-height: 30px;
     }
-    b {
-        font-weight: bold;
+    a:hover {
+        text-decoration: underline;
     }
     img {
         width: 100%;

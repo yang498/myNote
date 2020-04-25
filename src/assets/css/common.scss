@@ -35,6 +35,16 @@ $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
         &.underway { border-color: $orange; }
         &.complete { border-color: $vue; }
     }
+    aside {
+        .h1 li:hover, .h1 li.active {
+            color: #fff;
+            background-color: $weex;
+        }
+        .h2 li:hover, .h2 li.active {
+            color: $weex;
+            background-color: #f5f5f5;
+        }
+    }
     article {
         a, a:hover { color: $blue; }
         h1:hover, h2:hover { color: $weex; }
@@ -75,6 +85,7 @@ html {
 .w60 { width: 60px; }
 .w100 { width: 100px; }
 .w200 { width: 200px; }
+.h30 { height: 30px; }
 .h40 { height: 40px; }
 .lh30 { line-height: 30px; }
 .lh40 { line-height: 40px; }
@@ -179,47 +190,6 @@ html {
     padding-top: 40px;
     overflow: hidden;
     background: no-repeat center / cover fixed;
-}
-
-aside {
-    width: 200px;
-    height: 100%;
-    padding: 20px;
-    // position: fixed;
-    // top: 40px;
-    // left: 0;
-    // z-index: 1;
-    transition: $ti-fast ease-out;
-    background-color: #fff;
-    border-right: 1px solid #ccc;
-    .h1 {
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ccc;
-    }
-    .h2 {
-        height: 100%;
-        font-size: 14px;
-        overflow-y: auto;
-        li {
-            padding-right: 0;
-        }
-    }
-    li {
-        line-height: 30px;
-        padding: 0 10px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: $ti-fast ease-out;
-    }
-    .h1 li:hover, .h1 li.active {
-        color: #fff;
-        background-color: $weex;
-    }
-    .h2 li:hover, .h2 li.active {
-        color: $weex;
-        background-color: #f5f5f5;
-    }
 }
 
 @media screen and (max-width: 991px) {

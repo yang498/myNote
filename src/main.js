@@ -12,6 +12,9 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.format = format
 
+window.$ = document.querySelector.bind(document)
+window.$$ = document.querySelectorAll.bind(document)
+
 new Vue({
     router,
     store,
