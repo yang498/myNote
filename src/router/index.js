@@ -18,6 +18,10 @@ export default new VueRouter({
                     component: () => import('@/' + item.path)
                 }
             })
+        },
+        {
+            path: '*',
+            component: () => import('P/404')
         }
     ]
 })

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// Monaco，好看的代码块展示，carbon
 // article code style, 简化 format regexp
 // 换肤，加 $vue
 // 补齐所有文章

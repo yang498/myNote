@@ -44,6 +44,7 @@ export default [
         list: [
             { name: 'jquery', path: 'jsLib/jquery', progress: 100 },
             { name: 'vue', path: 'jsLib/vue', progress: 50 },
+            { name: 'vue 工具', path: 'jsLib/vueTool', progress: 50 },
             { name: '工具', path: 'jsLib/tool', progress: 50 }
         ]
     },

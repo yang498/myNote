@@ -1,5 +1,5 @@
 <template>
-    <div class="skin skin-blue pf">
+    <div class="pf" :class="$store.state.skin">
         <v-header @top="scrollTo(0)" @bottom="scrollTo(1)"></v-header>
         <v-menu v-if="$route.name === 'index'"></v-menu>
         <main class="flex" v-else>
