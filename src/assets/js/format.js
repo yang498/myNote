@@ -1,169 +1,146 @@
 /* eslint-disable brace-style */
+/* global $ */
 import store from 'S/store'
-import REG from './regexp'
-export default text => {
-    const pageCode = [] // 当前页面代码块以准备复制
-    const pageH1 = [] // 当前页面 h1 标题文字
-    const pageH2 = [] // 当前页面 h2 标题文字
-    let h1Index = -1 // 当前页面匹配 h1 时的索引，配合增加 h2 标题文字
+import { Message } from 'element-ui'
 
-    // 整理行内标识符，多行合并成单行，多行的有：列表、表格、代码块、底部链接
-    const formatString = function (t) {
-        // 文档内包含标签的左右箭头换成转义符，避免解析成 html 标签
-        return t.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+let h2List = []
+let h3List = []
+let copyList = []
 
-        // 匹配多行代码块，里面匹配加颜色，最后合并成单行
-            .replace(REG.codeBlock, item => {
-                // tab 显得比较长，为了格式美观，所以去掉开头 tab，再把其他的 tab 替换成空格
-                item = item.replace(/\t/g, '    ')
-                // 去掉首尾标识符和换行再保存代码以准备复制
-                pageCode.push(item.slice(3, -3).replace(/¿/g, ''))
-                // 1、网址开头和路径不解析成注释
-                item = item.replace(REG.unComment, '$&¿')
-                // 2、注释中包含的标签、关键字、正则、字符串加标记避免被匹配
-                    .replace(REG.comment, res => REG.un(res).replace(REG.strUn, '$&¿'))
-                // 3、字符串中包含的标签、关键字、正则加标记避免被匹配，字符串中的注释比如网址开头和路径已排除
-                    .replace(REG.str, res => REG.un(res))
-                // 4、正则中含后行断言和具名组匹配，对 < > 加标记，对 unComment 中的 */ 去标记
-                    .replace(REG.reg, res => res.replace(/&lt;|&gt;/g, '$&¿').replace(/\*\/¿/g, '*/'))
-                // 5、加颜色，从顺序上来说以字符串开始，不然之前有 html 标签的属性也包含引号，就误判了
-                    .replace(REG.str, '<span class="color-green">$&</span>') // 字符串，绿
-                    .replace(REG.comment, '<span class="color-gray">$&</span>') // 注释，灰
-                    .replace(REG.statement, '<span class="color-pink">$&</span>') // 开头声明，粉
-                    .replace(REG.loopFork, '<span class="color-purple">$&</span>') // 循环分支，紫
-                    .replace(REG.methodKeyword, '<span class="color-blue">$&</span>') // 方法关键字，蓝
-                    .replace(REG.type, '<span class="color-purple">$&</span>') // 类型方法，紫
-                    .replace(REG.reg, '$1<span class="color-orange">$2</span>') // 正则，橙
-                    .replace(REG.start, '&lt;<span class="color-blue">$1</span>') // html 开头标签，蓝
-                    .replace(REG.end, '&lt;/<span class="color-blue">$1</span>') // html 结束标签，蓝
-                // 换成特殊标识符避免和行内代码块冲突，再合并成一行，代码块需要保留回车格式，不像列表和表格外部都用标签包裹无需回车
-                return '‥' + item.slice(3, -3).replace(/\n/g, 'ˊ') + '‥'
-            })
+// 复制代码块
+window.copy = index => {
+    $('article').innerHTML += `<textarea id="copy">${copyList[index]}</textarea>`
+    $('#copy').select()
+    document.execCommand('copy')
+    $('#copy').remove()
+    Message.success('已复制')
+}
 
-        // 行内代码块，<code>
-            .replace(REG.codeInline, (res, $1) => REG.addTag('code', $1))
+// formatString 相关
+const addTag = (text, tag) => `<${tag}>${text}</${tag}>`
+const addA = (text, href) => `<a href="${href}" target="_blank">${text}</a>`
+const addIframe = (height, src) => `~<iframe style="height: ${height}px;" src="${src}"></iframe>`
+const addImg = (size, src) => {
+    const addPx = n => /^\d+$/.test(n) ? n + 'px' : n
+    const sizeList = size.split(',').map(addPx)
+    return `<img src="${src}" style="width: ${sizeList[0] || 'auto'}; height: ${sizeList[1] || 'auto'};"/>`
+}
+const addList = text => {
+    text = text.split('\n').map(item => {
+        return item.replace(/ {4}/g, '<i class="attr"></i>')
+            .replace(/.+?(?=：)/, head =>
+                '<span class="head">' + head
+                    .replace(/(?<!\\)\{.+?(?<!\\)\}/, '<i class="type">$&</i>').replace(/\\(?=\{|\})/g, '')
+                    .replace(/(?<!\\)\[.+?(?<!\\)\]/g, '<i class="default">$&</i>').replace(/\\(?=\[|\])/g, '')
+                    .replace(/!/, '<b>$&</b>') +
+        '</span>')
+    }).join('</li><li>')
+    return '<li>' + text + '</li>'
+}
+const addTable = text => {
+    const list = text.split('\n')
+    const $thead = '<thead><tr><th>' + list[0].replace(/|/g, '</th><th>') + '</th></tr></thead>'
+    const align = list[1].split('|')
+    const $tbody = '<tbody>' + list.slice(2).map(item => {
+        item = item.split('|').map((td, i) => `<td ${align[i] === ':-' ? 'class="td-left"' : ''}>${td}</td>`).join('')
+        return '<tr>' + item + '</tr>'
+    }).join('') + '</tbody>'
+    return `%%${$thead + $tbody}%%`
+}
+const addLink = (text, multi) => '@@学习参考链接：' + text.replace(/\n/g, multi ? '<br>' : '，') + '@@'
+
+// 整理行内标识符，多行合并成单行（列表、表格、代码块、底部链接）
+const formatString = str => {
+    // 标签的左右箭头换成转义符
+    return str.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        // 内嵌网页 <iframe>
+        .replace(/~\[(.*?)\]\((.+?)\)/g, (res, height, src) => addIframe(height, src))
+        // 图片 <img>
+        .replace(/!\[(.*?)\]\((.+?)\)/g, (res, size, src) => addImg(size, src))
         // 链接，<a>
-            .replace(REG.a, '<a href="$2" target="_blank">$1</a>')
-        // 加粗，<b>
-            .replace(REG.b, (res, $1) => REG.addTag('b', $1))
-        // 行内图片，<img>
-            .replace(REG.imgInline, item => REG.imgFn(item, REG.imgInline, true))
+        .replace(/\[([^[]+?)\]\((.+?)\)/g, (res, text, href) => addA(text, href))
+        // 粗体，<b>
+        .replace(/\*\*(.+?)\*\*/g, (res, text) => addTag(text, 'b'))
+        // 多行代码块
+        .replace(/··(.+?)\n··/gs, (res, text) => '‥' + text.replace(/\n/g, 'ˊ') + '‥')
+        // 行内代码块 <code>
+        .replace(/·(.+?)·/g, (res, text) => addTag(text, 'code'))
+        // 列表
+        .replace(/!!\n(.+?)\n!!/gs, (res, text) => '!!' + addList(text) + '!!')
+        // 表格
+        .replace(/%%\n.+?\n%%/gs, (res, text) => addTable(text))
+        // 多行底部链接
+        .replace(/@@@\n(.+?)\n@@@/gs, (res, text) => addLink(text, true))
+        // 单行底部链接
+        .replace(/@@\n(.+?)\n@@/gs, (res, text) => addLink(text, false))
+}
 
-        // 底部链接，单行，在每一行中替换，里面转 <a> ，最后合并成一行
-            .replace(REG.linkOneLine, item => '@@学习参考链接：' + item.slice(2, -2).replace(REG.multiLine, (res, $1) =>
-                $1.replace(REG.linkInside, '<a href="$2" target="_blank">$1</a>，')).replace(/\n|，$/gm, '') + '@@')
-        // 底部链接，多行，在每一行中替换，里面转 <a> ，最后合并成一行
-            .replace(REG.linkMultiLine, item => '@@学习参考链接：' + item.slice(3, -2).replace(REG.multiLine, (res, $1) =>
-                $1.replace(REG.linkInside, '<a href="$2" target="_blank" class="pd">$1</a>')).replace('\n', '') + '@@')
+// formatTag 相关
+const reg = {
+    h1: /^# /,
+    h2: /^## /,
+    h3: /^### /,
+    h4: /^#### /,
+    list: /^!!|!!$/g,
+    table: /^%%|%%$/g,
+    code: /^‥|‥$/g,
+    iframe: /^~/,
+    link: /^@@|@@$/g,
+    time: /^&/
+}
 
-        // 列表，在每一行中替换，每个缩进换成 css 控制，开头加类型、默认值、必填加粗
-            .replace(REG.list, item => '!!' + item.slice(2, -2).replace(REG.multiLine, (res, $1) =>
-                '<li>' + $1.replace(/\t/g, '<i class="attr"></i>').replace(/[^]*?(?=：)/, start =>
-                    '<i class="head">' + start
-                        .replace(/(\{(?!¿))(.+?)(\}(?!¿))/, (r, $1, $2, $3) => {
-                            const rType = $2.split('/').map(i => i === 'o' ? 'Object'
-                                : i === 'a' ? 'Array'
-                                    : i === 'f' ? 'Function'
-                                        : i === 's' ? 'String'
-                                            : i === 'n' ? 'Number'
-                                                : i === 'r' ? 'RegExp'
-                                                    : i === 'nu' ? 'Null'
-                                                        : i === 'u' ? 'Undefined'
-                                                            : i === 'ur' ? 'URL'
-                                                                : i === 'b' ? 'Boolean'
-                                                                    : i === 'bu' ? 'Buffer' : i).join('/')
-                            return ' <i class="type">' + $1 + rType + $3 + '</i>'
-                        })
-                        .replace(/\[(?!¿).*?\]+(?!¿)/g, ' <i class="default">$&</i>')
-                        .replace(/!(?!¿)/, ' <b>$&</b>') +
-                    '</i>').replace(/(.*):$/s, '<i class="head">$1</i>') +
-                    '</li>').replace('\n', '') + '!!')
+// 分割成每一行进行匹配对应的标签
+const formatTag = function (str) {
+    const scrollIntoView = 'onclick="this.scrollIntoView({ behavior: \'smooth\' })"'
+    return str.split('\n').map(item => {
+        // h4 标题
+        if (reg.h4.test(item)) return `<h4>${item.replace(reg.h4, '')}</h4>`
+        // h3 标题
+        if (reg.h3.test(item)) {
+            const index = h2List.length - 1 + '-' + h3List[h2List.length - 1].length
+            h3List[h2List.length - 1].push(item.replace(reg.h3, ''))
+            return `<h3 class="h3-${index}" ${scrollIntoView}>${item.replace(reg.h3, '')}</h3>`
+        }
+        // h2 标题
+        else if (reg.h2.test(item)) {
+            h2List.push(item.replace(reg.h2, ''))
+            h3List.push([])
+            return `<h2 ${scrollIntoView}>${item.replace(reg.h2, '')}</h2>`
+        }
+        // h1 标题
+        else if (reg.h1.test(item)) return `<h1>${item.replace(reg.h1, '')}</h1>`
+        // 列表
+        else if (reg.list.test(item)) return `<ul>${item.replace(reg.list, '')}</ul>`
+        // 表格
+        else if (reg.table.test(item)) return `<table>${item.replace(reg.table, '')}</table>`
+        // 代码块
+        else if (reg.code.test(item)) {
+            item = item.replace(reg.code, '').replace(/ˊ/g, '\n')
+            const lang = item.replace(/\n.+/s, '')
+            const code = item.replace(/.+?\n/s, '')
+            copyList.push(code)
+            return `<div class="code">
+                        <i class="copy el-icon-copy-document" title="复制" onclick="copy(${copyList.length - 1})"></i>
+                        <pre><code class="${lang}">${code}</code></pre>
+                    </div>`
+        }
+        // iframe
+        else if (reg.iframe.test(item)) return `<div class="iframe">${item.replace(reg.iframe, '')}</div>`
+        // 底部链接
+        else if (reg.link.test(item)) return `<div class="link">${item.replace(reg.link, '')}</div>`
+        // 最后更新时间
+        else if (reg.time.test(item)) return `<time>最后更新时间：${item.replace(reg.time, '')}</time>`
+        // 剩下的除了空行都是段落
+        else if (item !== '') return `<p>${item}</p>`
+    }).join('')
+}
 
-        // 表格，按每行分隔，第二行作为对齐方式，第二行最后有数字代表表格宽度，第一行作为表头，第三行之后作为内容
-            .replace(REG.table, item => {
-                item = item.slice(3, -4).split('\n')
-                const align = item[1].split(',')
-                const widthIndex = align.length - 1 > item[0].match(/,/g).length ? align.length - 1 : false
-                item = item.map((tr, index) => {
-                    if (index === 0) {
-                        return '<thead><tr><th>' + tr.replace(/,/g, '</th><th>') + '</th></tr></thead><tbody>'
-                    } else if (index > 1) {
-                        return '<tr>' + tr.split(',').map((td, i) =>
-                            `<td ${align[i] === '1' ? 'class="td-left"' : ''}>${td}</td>`).join('') + '</tr>'
-                    }
-                }).join('')
-                // 因为表格需要加宽度，在外面不好加，所以就在这里处理
-                return `%%<table ${widthIndex ? 'style="width:' + align[widthIndex] + 'px"' : ''}>${item}</tbody></table>%%`
-            })
-
-        // 去掉防误触 ¿，一般用于代码块和 a 标签
-            .replace(/¿/g, '')
-    }
-
-    // 将文档分割成每一行进行处理，开头或结尾的标识符替换成对应的标签，没有标识符的当成 p 标签
-    const formatTag = function (t) {
-        const scrollIntoView = 'onclick="this.scrollIntoView({ behavior: \'smooth\' })"'
-        return t.split('\n').map(item => {
-            // 去掉开头缩进
-            item = item.replace(/^\s*/, '')
-            // h3 标题，从顺序上来说是 h3 h2 h1，因为 h2 的正则包含 h3，h1 的正则包含 h2 和 h3
-            if (REG.h3.test(item)) {
-                return `<h3>${item.replace(REG.h3, '')}</h3>`
-            }
-            // h2 标题
-            else if (REG.h2.test(item)) {
-                const index = pageH1.length - 1 + '-' + pageH2[pageH1.length - 1].length
-                pageH2[h1Index].push(item.replace(REG.h2, '')) // 保存 h2 的标题文字
-                return `<h2 class="h2-${index}" ${scrollIntoView}>${item.replace(REG.h2, '')}</h2>`
-            }
-            // h1 标题
-            else if (REG.h1.test(item)) {
-                pageH1.push(item.replace(REG.h1, '')) // 保存 h1 的标题文字
-                pageH2.push([]) // h2 增加一个数组，即 1 个 h1 包括 1 个数组的 h2
-                h1Index++ // h1 的 index 即 pageH2 的当前索引，随着 h1 的增加而增加
-                return `<h1 ${scrollIntoView}>${item.replace(REG.h1, '')}</h1>`
-            }
-            // 图片
-            else if (REG.img.test(item)) {
-                return item.replace(REG.img, item => REG.imgFn(item, REG.img))
-            }
-            // 列表
-            else if (REG.listTag.test(item)) {
-                return `<ul>${item.replace(REG.listTag, '')}</ul>`
-            }
-            // 表格
-            else if (REG.tableTag.test(item)) {
-                return item.replace(REG.tableTag, '')
-            }
-            // 代码块
-            else if (REG.codeBlockTag.test(item)) {
-                return `<div class="code">
-                            <span class="copy" onclick="copyCode(this)">复制</span>
-                            <pre>${item.replace(REG.codeBlockTag, '').replace(/ˊ/g, '\n')}</pre>
-                            <i class="iconfont icon-dui2 copy-success" onanimationend="this.classList.remove('copy-success-active')"></i>
-                        </div>`
-            }
-            // iframe
-            else if (REG.iframe.test(item)) {
-                const res = item.slice(2).split('|')
-                return `<div class="iframe"><iframe style="${res[0]}" src="${res[1]}"></iframe></div>`
-            }
-            // 底部链接
-            else if (REG.link.test(item)) {
-                return `<div class="link">${item.replace(REG.link, '')}</div>`
-            }
-            // 最后更新时间
-            else if (REG.time.test(item)) {
-                return `<time>最后更新时间：${item.replace(REG.time, '')}</time>`
-            }
-            // 剩下的除了空行都是段落
-            else if (item !== '') {
-                return `<p>${item}</p>`
-            }
-        }).join('')
-    }
-    const str = formatTag(formatString(text))
-    store.commit('h1List', pageH1)
-    store.commit('h2List', pageH2)
-    return str
+export default content => {
+    h2List = []
+    h3List = []
+    copyList = []
+    content = formatTag(formatString(content))
+    store.commit('h2List', h2List)
+    store.commit('h3List', h3List)
+    return content
 }

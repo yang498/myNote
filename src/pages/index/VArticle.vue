@@ -1,23 +1,39 @@
 <template>
     <article class="pr" @scroll="watchScroll" ref="article">
-        <router-view></router-view>
+        <div class="content">
+            <router-view></router-view>
+        </div>
     </article>
 </template>
 
 <script>
-// Monaco，好看的代码块展示，carbon
-// article code style, 简化 format regexp
+// 以后做 node 和 md 相互转换
+// 适合全屏页面的在线编辑：Monaco，codemirror
+// 适合页内简洁展示代码块：highlight
+
 // 换肤，加 $vue
-// 补齐所有文章
-// canvas
+// 补齐所有文章和修复语法
 // 兼容移动端
 // 对比之前的项目查缺补漏
 // demo 合并过来
 /* global $$ */
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
+// 代码块主题：https://highlightjs.org/static/demo/
 export default {
     data () {
         return {
             scrollTimer: null
+        }
+    },
+    computed: {
+        h2List: vm => vm.$store.state.h2List
+    },
+    watch: {
+        h2List () {
+            this.$nextTick(() => {
+                $$('pre code').forEach(block => hljs.highlightBlock(block))
+            })
         }
     },
     mounted () {
@@ -30,10 +46,10 @@ export default {
             if (!this.scrollTimer) {
                 this.scrollTimer = setTimeout(() => {
                     this.scrollTimer = null
-                    const h1Index = this.findIndex($$('h1'))
-                    if (h1Index > -1) this.$store.commit('h1Index', h1Index)
-                    const h2Index = this.findIndex($$(`article [class^="h2-${h1Index}-"]`))
+                    const h2Index = this.findIndex($$('h2'))
                     if (h2Index > -1) this.$store.commit('h2Index', h2Index)
+                    const h3Index = this.findIndex($$(`article [class^="h3-${h2Index}-"]`))
+                    if (h3Index > -1) this.$store.commit('h3Index', h3Index)
                 }, 100)
             }
         },
@@ -56,9 +72,17 @@ export default {
 article {
     overflow-y: auto;
     padding: 0 50px;
+    .content {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 }
 article ::v-deep {
     h1 {
+        font-size: 30px;
+        padding-top: 15px;
+    }
+    h2 {
         font-size: 24px;
         line-height: 60px;
         margin-bottom: 15px;
@@ -67,15 +91,15 @@ article ::v-deep {
             margin-top: 20px;
         }
     }
-    h2 {
+    h3 {
         font-size: 20px;
         line-height: 40px;
     }
-    h1, h2 {
+    h2, h3 {
         cursor: pointer;
         transition-duration: 0.2s;
     }
-    h3 {
+    h4 {
         font-size: 18px;
         text-indent: 2em;
         margin: 20px 0 10px;
@@ -88,19 +112,18 @@ article ::v-deep {
         text-decoration: underline;
     }
     img {
-        width: 100%;
-        max-width: 1000px;
-        margin: 5px 0 5px 2em;
-        &.inline {
-            margin: 0 5px;
-            vertical-align: text-bottom;
+        margin: 0 5px;
+        vertical-align: text-bottom;
+        &:only-child {
+            width: 100%;
+            margin: 5px 0 5px 2em;
         }
     }
     ul {
         margin: 5px 2em 10px 2em;
         padding: 10px 20px;
         border-left: 10px solid #f80;
-        border-radius: 10px;
+        border-radius: 8px;
         background-color: #f9f9f9;
         li {
             line-height: 30px;
@@ -130,7 +153,7 @@ article ::v-deep {
     table {
         width: 100%;
         max-width: 1000px;
-        border-radius: 5px;
+        border-radius: 8px;
         margin: 10px 0 10px 2em;
         border: 1px solid #ccc;
         overflow: hidden;
@@ -176,80 +199,47 @@ article ::v-deep {
         text-align: right;
         color: #666;
         margin: 20px 0;
+        padding-right: 2em;
     }
-    code {
+    code:not(.hljs) {
         color: #ff3860;
         margin: 0 3px;
         padding: 3px 6px;
-        border-radius: 3px;
+        border-radius: 2px;
         background-color: #f5f5f5;
         font-family: consolas;
         word-break: break-all;
     }
-    span {
-        font-family: inherit;
-    }
-    pre {
-        width: 100%;
+    pre code {
+        font-family: consolas;
+        font-size: 16px;
         line-height: 24px;
         border-radius: 8px;
-        font-family: consolas;
-        border: 1px solid #ccc;
-        background-color: #fafafa;
-        overflow-y: hidden;
-        padding: 20px 30px;
+        padding: 15px 20px;
+        overflow-x: auto;
     }
     .code {
         position: relative;
         padding: 0 2em;
         .copy {
             font-size: 14px;
-            padding: 1px 8px;
-            background-color: #fff;
-            border: 1px solid #ccc;
+            padding: 5px 10px;
             border-top-right-radius: 8px;
             border-bottom-left-radius: 8px;
+            border: 1px solid #fff;
+            color: #fff;
             cursor: pointer;
-            transition: 0.2s;
+            transition-duration: 0.2s;
             position: absolute;
             top: 0;
             right: 2rem;
-            &:hover {
-                background-color: #fafafa;
-            }
+            margin: -1px;
         }
     }
-    .copy-success {
-        position: absolute;
-        top: 5px;
-        right: 0;
-        opacity: 0;
-        color: #0c0;
-        font-size: 18px;
-    }
-    .copy-success-active {
-        animation: copy 1s;
-    }
-    @keyframes copy {
-        80% {
-            opacity: 1;
-            transform: translateY(-30px);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-    }
-    #copy-textarea {
+    #copy {
         position: fixed;
         left: -9999px;
         opacity: 0;
-    }
-    pre .copy:hover {
-        background-color: #f5f5f5;
-    }
-    pre .copy:active {
-        color: #25A5F7;
     }
     .iframe {
         padding: 10px 2em;

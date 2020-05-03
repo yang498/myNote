@@ -36,18 +36,18 @@ $skin: #f00 #f80 #fe0 #0e0 #0cc #08f #80f #f08;
         &.complete { border-color: $vue; }
     }
     aside {
-        .h1 li:hover, .h1 li.active {
+        .h2 li:hover, .h2 li.active {
             color: #fff;
             background-color: $weex;
         }
-        .h2 li:hover, .h2 li.active {
+        .h3 li:hover, .h3 li.active {
             color: $weex;
             background-color: #f5f5f5;
         }
     }
     article {
         a, a:hover { color: $blue; }
-        h1:hover, h2:hover { color: $weex; }
+        h2:hover, h3:hover { color: $weex; }
     }
 }
 
