@@ -1,0 +1,27 @@
+$weex: #00B4FA;
+$vue: #42B983;
+
+$skin: #f00 #f80 #fe0 #0cc #80f #ff3860;
+
+.skin.blue { --c: #00B4FA; --bgc: #08f } // weex
+.skin.green { --c: #42B983; --bgc: #393 } // vue
+
+header {
+    &, .menu ul, .handle { background-color: var(--c); }
+    li:hover, li.active, .handle > *:hover, .icon-menu:hover { background-color: var(--bgc); }
+}
+.section li li {
+    color: var(--c);
+    border-color: var(--c);
+    &:hover { color: #fff; background-color: var(--c); }
+    &.underway { border-color: #f80; }
+    &.complete { border-color: $vue; }
+}
+aside {
+    .h2 li:hover, .h2 li.active { color: #fff; background-color: var(--c); }
+    .h3 li:hover, .h3 li.active { color: var(--c); background-color: #f5f5f5; }
+}
+article {
+    a, a:hover { color: #08f; }
+    h2:hover, h3:hover { color: var(--c); }
+}
