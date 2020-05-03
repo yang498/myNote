@@ -1,5 +1,5 @@
 <template>
-    <article class="pr" @scroll="watchScroll" ref="article">
+    <article class="ofy pr" @scroll="watchScroll" ref="article">
         <div class="content">
             <router-view></router-view>
         </div>
@@ -11,9 +11,7 @@
 // 适合全屏页面的在线编辑：Monaco，codemirror
 // 适合页内简洁展示代码块：highlight
 
-// 换肤，加 $vue
 // 补齐所有文章和修复语法
-// 兼容移动端
 // 对比之前的项目查缺补漏
 // demo 合并过来
 /* global $$ */
@@ -69,15 +67,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-article {
-    overflow-y: auto;
-    padding: 0 50px;
-    .content {
-        max-width: 1000px;
-        margin: 0 auto;
-    }
+.content {
+    max-width: 1000px;
+    margin: 0 auto;
 }
-article ::v-deep {
+</style>
+
+<style lang="scss">
+article {
+    padding: 0 50px;
     h1 {
         font-size: 30px;
         padding-top: 15px;
@@ -212,11 +210,9 @@ article ::v-deep {
     }
     pre code {
         font-family: consolas;
-        font-size: 16px;
         line-height: 24px;
         border-radius: 8px;
-        padding: 15px 20px;
-        overflow-x: auto;
+        padding: 15px 20px !important;
     }
     .code {
         position: relative;

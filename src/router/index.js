@@ -10,7 +10,6 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'index',
             component: () => import('P/index/VIndex.vue'),
             children: list.flatMap(item => item.list).map(item => {
                 return {
