@@ -283,7 +283,7 @@ background-clip [border-box]：背景图片或颜色的裁剪范围，和·backg
     content-box：在原始内容区域内显示，即不包括 padding 和 border
     text：在文字区域内显示，注意如果要显示背景图片需把文字颜色去掉，即·color: transparent;·
         ·text·属性的兼容性不太好，若不支持需加上·-webkit-·前缀，即·-webkit-background-clip: text;·
-background-blend-mode [normal]：多个背景图片下定义混合模式，例如高亮、柔光、减淡等，参考 [MDN 中文](https://developer.mozilla.org/zh-CN/docs/Web/CSS/blend-mode) 和 [MDN 英文](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode)
+background-blend-mode [normal]：多个背景图片下定义混合模式，参考 [MDN 中文](https://developer.mozilla.org/zh-CN/docs/Web/CSS/blend-mode) 和 [MDN 英文](https://developer.mozilla.org/en-US/docs/Web/CSS/blend-mode)
 !!
 
 ### mask
@@ -1282,18 +1282,18 @@ body {
 </div>
 
 <style>
-.box {
-    writing-mode: vertical-lr; /* 子元素垂直居中 */
-    text-align: center;
-}
-.box-inner {
-    writing-mode: horizontal-tb; /* 子元素水平居中 */
-    display: inline-block;
-    width: 100%;
-}
-.item {
-    display: inline-block;
-}
+    .box {
+        writing-mode: vertical-lr; /* 子元素垂直居中 */
+        text-align: center;
+    }
+    .box-inner {
+        writing-mode: horizontal-tb; /* 子元素水平居中 */
+        display: inline-block;
+        width: 100%;
+    }
+    .item {
+        display: inline-block;
+    }
 </style>
 ··
 

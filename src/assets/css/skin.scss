@@ -1,14 +1,24 @@
-$weex: #00B4FA;
+$gulp: #CF4647;
+$grunt: #E48632;
+$es6: #FBDE34;
 $vue: #42B983;
+$weex: #00B4FF;
+$bootstrap: #7952B3;
+$sass: #CC6699;
 
-$skin: #f00 #f80 #fe0 #0cc #80f #ff3860;
+// 为什么变量无法用于变量 ----
 
-.skin.blue { --c: #00B4FA; --bgc: #08f } // weex
-.skin.green { --c: #42B983; --bgc: #393 } // vue
+.skin.red { --c: #CF4647; }
+.skin.orange { --c: #E48632; }
+.skin.yellow { --c: #FBDE34; }
+.skin.green { --c: #42B983; }
+.skin.blue { --c: #00B4FF; }
+.skin.purple { --c: #7952B3; }
+.skin.pink { --c: #CC6699; }
 
 header {
     &, .menu ul, .handle { background-color: var(--c); }
-    li:hover, li.active, .handle > *:hover, .icon-menu:hover { background-color: var(--bgc); }
+    li:hover > div, li.active > div, .handle > *:hover, .icon-menu:hover { background-color: rgba(#000, 0.2); }
 }
 .section li li {
     color: var(--c);

@@ -10,6 +10,7 @@
 // 以后做 node 和 md 相互转换
 // 适合全屏页面的在线编辑：Monaco，codemirror
 // 适合页内简洁展示代码块：highlight
+// data:text/html, <html contenteditable>
 
 // 补齐所有文章和修复语法
 // 对比之前的项目查缺补漏
@@ -181,24 +182,6 @@ article {
             }
         }
     }
-    .link {
-        font-size: 18px;
-        line-height: 30px;
-        margin-top: 50px;
-        padding-top: 20px;
-        border-top: 1px dashed #999;
-        .pd {
-            display: block;
-            margin-left: 2em;
-        }
-    }
-    time {
-        display: block;
-        text-align: right;
-        color: #666;
-        margin: 20px 0;
-        padding-right: 2em;
-    }
     code:not(.hljs) {
         color: #ff3860;
         margin: 0 3px;
@@ -208,15 +191,15 @@ article {
         font-family: consolas;
         word-break: break-all;
     }
-    pre code {
-        font-family: consolas;
-        line-height: 24px;
-        border-radius: 8px;
-        padding: 15px 20px !important;
-    }
     .code {
         position: relative;
         padding: 0 2em;
+        pre code {
+            font-family: consolas;
+            line-height: 24px;
+            border-radius: 8px;
+            padding: 15px 20px !important;
+        }
         .copy {
             font-size: 14px;
             padding: 5px 10px;
@@ -245,6 +228,24 @@ article {
             background-color: #f5f9fa;
             border: 1px solid #eaf2f4;
         }
+    }
+    .link {
+        font-size: 18px;
+        line-height: 30px;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 1px dashed #999;
+        .pd {
+            display: block;
+            margin-left: 2em;
+        }
+    }
+    time {
+        display: block;
+        text-align: right;
+        color: #666;
+        margin: 20px 0;
+        padding-right: 2em;
     }
 }
 </style>

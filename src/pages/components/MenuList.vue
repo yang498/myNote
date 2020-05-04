@@ -18,7 +18,9 @@
                     v-for="(item, index) in parentItem.list"
                     :key="index"
                     @click="$router.push('/' + item.path)"
-                >{{item.name}}</li>
+                >
+                    <div>{{item.name}}</div>
+                </li>
             </ul>
         </li>
     </ul>

@@ -6,17 +6,15 @@
 
         <!-- 目录 -->
         <menu-list class="menu flex" li1-class="w100 lh40 td2 cp pr" ul-class="of td2 pa p-l0 p-r0" li2-class="lh40 td2">
-            <li
-                class="w100 lh40 td2 cp el-icon-s-home"
-                :class="{ left: $route.path === '/' }"
-                @click="$router.push('/'), asideToggle = false"
-            ></li>
+            <li class="w100 lh40 td2 cp" :class="{ left: $route.path === '/' }">
+                <div class="w100 lh40 el-icon-s-home" @click="$router.push('/'), asideToggle = false"></div>
+            </li>
         </menu-list>
 
         <!-- 工具 -->
         <div class="handle flex td3 of" :class="{ active: handleToggle }" @click="handleToggle = false">
             <!-- 皮肤 -->
-            <i class="w60 lh40 cp el-icon-magic-stick" title="切换皮肤" @click="visible = true"></i>
+            <i class="w60 lh40 cp el-icon-magic-stick" @click="visible = true"></i>
             <!-- github -->
             <a class="w60 lh40" href="https://github.com/yang498/note" target="_blank"><icon-git></icon-git></a>
             <!-- 回到顶部 -->
@@ -30,24 +28,18 @@
 
         <!-- 切换皮肤 -->
         <el-dialog title="切换皮肤" :visible.sync="visible" append-to-body>
-            <ul class="flex flex-xc">
-                <li class="br4 td2">
-                    <div class="lh40">主色</div>
-                    <div class="lh40">次色</div>
-                </li>
+            <ul class="tc">
                 <li
-                    class="br4 td2 cp"
+                    class="c-white h40 lh30 br4 td2 cp"
                     :class="{ active: skin === item.name }"
+                    :style="{backgroundColor: item.color}"
                     v-for="(item, index) in skinList"
                     :key="index"
                     @click="skin = item.name"
-                >
-                    <div class="w40 h40 br4" :style="{backgroundColor: item.color[0]}"></div>
-                    <div class="w40 h40 br4" :style="{backgroundColor: item.color[1]}"></div>
-                </li>
-                <li class="br4 td2 cp" :class="{ active: skin === 'custom' }" @click="skin = 'custom'">
-                    <el-color-picker class="block" v-model="color" show-alpha></el-color-picker>
-                    <el-color-picker class="block" v-model="bgColor" show-alpha></el-color-picker>
+                >{{item.title}}</li>
+                <li class="br4 td2 cp flex" :class="{ active: skin === 'custom' }" @click="skin = 'custom'">
+                    <el-color-picker v-model="color"></el-color-picker>
+                    <div class="custom c-white flex-g1 lh40 br4" :style="{backgroundColor: color}">自定义</div>
                 </li>
             </ul>
             <template slot="footer">
@@ -72,12 +64,16 @@ export default {
     data () {
         return {
             visible: false,
-            color: this.$store.state.custom[0],
-            bgColor: this.$store.state.custom[1],
+            color: this.$store.state.custom,
             skin: this.$store.state.skin,
             skinList: [
-                { name: 'blue', color: ['#00B4FA', '#08f'] },
-                { name: 'green', color: ['#42B983', '#393'] }
+                { title: 'gulp', name: 'red', color: '#CF4647' },
+                { title: 'grunt', name: 'orange', color: '#E48632' },
+                { title: 'es6', name: 'yellow', color: '#FBDE34' },
+                { title: 'vue', name: 'green', color: '#42B983' },
+                { title: 'weex', name: 'blue', color: '#00B4FA' },
+                { title: 'bootstrap', name: 'purple', color: '#7952b3' },
+                { title: 'sass', name: 'pink', color: '#CC6699' }
             ]
         }
     },
@@ -106,12 +102,10 @@ export default {
                 this.visible = false
             } else {
                 if (!this.color) {
-                    this.$message('请选择主色')
-                } else if (!this.bgColor) {
-                    this.$message('请选择次色')
+                    this.$message('请选择颜色')
                 } else {
                     this.$store.commit('skin', this.skin)
-                    this.$store.commit('custom', [this.color, this.bgColor])
+                    this.$store.commit('custom', this.color)
                     this.visible = false
                 }
             }
@@ -130,17 +124,19 @@ export default {
 .el-dialog ul {
     padding: 0 50px;
     li {
-        margin: 0 20px;
-        padding: 20px;
-        border: 1px solid #fff;
-        &.active {
-            border-color: #ccc;
+        border: 5px solid transparent;
+        &:not(:first-child) {
+            margin-top: 10px;
         }
-        &:not(:first-child):hover {
+        &.active {
+            border-color: #fff;
+        }
+        &:hover, &.active {
             box-shadow: 0 2px 8px rgba(#000, 0.5)
         }
-        & > div + div {
-            margin-top: 20px;
+        .custom {
+            margin-left: 5px;
+            text-shadow: 0 0 2px #000;
         }
     }
 }

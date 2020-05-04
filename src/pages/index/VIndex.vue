@@ -2,7 +2,7 @@
     <div
         class="skin pf w100p"
         :class="skin"
-        :style="skin === 'custom' ? `--c: ${custom[0]}; --bgc: ${custom[1]};` : '' ">
+        :style="skin === 'custom' ? `--c: ${custom};` : '' ">
         <v-header
             :aside.sync="aside"
             :handle.sync="handle"
