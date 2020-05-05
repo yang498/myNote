@@ -1,7 +1,7 @@
 <template>
     <!-- 首页 -->
     <menu-list
-        class="section flex flex-wrap flex-xc tc"
+        class="section ofy flex flex-wrap flex-xc tc"
         li1-class="li1 br4 of"
         li11-class="block lh40 fw bg-gray"
         ul-class="flex flex-wrap flex-xc flex-yc"
@@ -18,7 +18,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.section { padding: 50px 0; }
+.section {
+    height: calc(100% - 40px);
+    padding: 50px 0;
+}
 .section ::v-deep {
     .li1 { width: 300px; margin: 20px; border: 1px solid #ccc; }
     ul { height: calc(100% - 40px); padding: 10px 0 20px; }

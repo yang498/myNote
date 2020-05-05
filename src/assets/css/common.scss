@@ -1,14 +1,9 @@
 @charset "utf-8";
 
-[class*=el-icon] {
-    font-size: 24px;
-}
+[class*=el-icon] { font-size: 24px; }
+html, body, #app, .skin { height: 100%; }
 
-html, body, #app, .skin {
-    height: 100%;
-}
-
-// ---- 滚动条样式 ----
+// ---- 滚动条 ----
 ::-webkit-scrollbar { // 滚动条
     width: 10px; // 竖直滚动条宽度
     height: 10px; // 横向滚动条高度

@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.left { transform: translateX(-100%); }
+.left { margin-left: -100px; }
 .menu ::v-deep {
     ul { height: 0; opacity: 0; border-radius: 0 0 4px 4px; }
     li:hover ul { height: auto; opacity: 1; }

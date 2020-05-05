@@ -7,18 +7,13 @@
 </template>
 
 <script>
-// 以后做 node 和 md 相互转换
-// 适合全屏页面的在线编辑：Monaco，codemirror
-// 适合页内简洁展示代码块：highlight
-// data:text/html, <html contenteditable>
-
 // 补齐所有文章和修复语法
 // 对比之前的项目查缺补漏
 // demo 合并过来
 /* global $$ */
 import hljs from 'highlight.js'
 import 'highlight.js/styles/monokai-sublime.css'
-// 代码块主题：https://highlightjs.org/static/demo/
+// 代码块 css 主题：https://highlightjs.org/static/demo/
 export default {
     data () {
         return {
@@ -121,14 +116,14 @@ article {
     ul {
         margin: 5px 2em 10px 2em;
         padding: 10px 20px;
-        border-left: 10px solid #f80;
+        border-left: 10px solid var(--c);
         border-radius: 8px;
         background-color: #f9f9f9;
         li {
             line-height: 30px;
             &::before {
                 content: '●';
-                color: #f80;
+                color: var(--c);
                 margin-right: 10px;
             }
         }
@@ -145,7 +140,7 @@ article {
             font-family: consolas;
         }
         .default {
-            color: #0c0;
+            color: #42B983;
             font-family: consolas;
         }
     }
@@ -159,7 +154,7 @@ article {
         text-align: center;
         thead {
             color: #fff;
-            background-color: #25A5F7;
+            background-color: var(--c);
         }
         tr {
             height: 40px;

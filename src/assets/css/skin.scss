@@ -1,13 +1,3 @@
-$gulp: #CF4647;
-$grunt: #E48632;
-$es6: #FBDE34;
-$vue: #42B983;
-$weex: #00B4FF;
-$bootstrap: #7952B3;
-$sass: #CC6699;
-
-// 为什么变量无法用于变量 ----
-
 .skin.red { --c: #CF4647; }
 .skin.orange { --c: #E48632; }
 .skin.yellow { --c: #FBDE34; }
@@ -20,12 +10,12 @@ header {
     &, .menu ul, .handle { background-color: var(--c); }
     li:hover > div, li.active > div, .handle > *:hover, .icon-menu:hover { background-color: rgba(#000, 0.2); }
 }
-.section li li {
+.section li li.li2 {
     color: var(--c);
     border-color: var(--c);
     &:hover { color: #fff; background-color: var(--c); }
     &.underway { border-color: #f80; }
-    &.complete { border-color: $vue; }
+    &.complete { border-color: #42B983; }
 }
 aside {
     .h2 li:hover, .h2 li.active { color: #fff; background-color: var(--c); }
