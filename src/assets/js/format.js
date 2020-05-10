@@ -130,8 +130,8 @@ const formatTag = function (str) {
         else if (reg.link.test(item)) return `<div class="link">${item.replace(reg.link, '')}</div>`
         // 最后更新时间
         else if (reg.time.test(item)) return `<time>最后更新时间：${item.replace(reg.time, '')}</time>`
-        // 剩下的除了空行都是段落
-        else if (item !== '') return `<p>${item}</p>`
+        // 非空行都是段落
+        else if (item.trim() !== '') return `<p>${item}</p>`
     }).join('')
 }
 
