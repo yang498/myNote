@@ -31,7 +31,7 @@ const addList = text => {
             .replace(/.+?(?=：)/, head =>
                 '<span class="head">' + head
                     .replace(/(?<!\\)\{.+?(?<!\\)\}/, '<i class="type">$&</i>').replace(/\\(?=\{|\})/g, '')
-                    .replace(/(?<!\\)\[.+?(?<!\\)\]/g, '<i class="default">$&</i>').replace(/\\(?=\[|\])/g, '')
+                    .replace(/(?<!\\)\[.+?(?<!\\)\]/, '<i class="default">$&</i>').replace(/\\(?=\[|\])/g, '')
                     .replace(/!/, '<b>$&</b>') +
         '</span>')
     }).join('</li><li>')
@@ -91,7 +91,6 @@ const reg = {
 
 // 分割成每一行进行匹配对应的标签
 const formatTag = function (str) {
-    const scrollIntoView = 'onclick="this.scrollIntoView({ behavior: \'smooth\' })"'
     return str.split('\n').map(item => {
         // h4 标题
         if (reg.h4.test(item)) return `<h4>${item.replace(reg.h4, '')}</h4>`
@@ -99,13 +98,13 @@ const formatTag = function (str) {
         if (reg.h3.test(item)) {
             const index = h2List.length - 1 + '-' + h3List[h2List.length - 1].length
             h3List[h2List.length - 1].push(item.replace(reg.h3, ''))
-            return `<h3 class="h3-${index}" ${scrollIntoView}>${item.replace(reg.h3, '')}</h3>`
+            return `<h3 class="h3-${index}" onclick="this.scrollIntoView()">${item.replace(reg.h3, '')}</h3>`
         }
         // h2 标题
         else if (reg.h2.test(item)) {
             h2List.push(item.replace(reg.h2, ''))
             h3List.push([])
-            return `<h2 ${scrollIntoView}>${item.replace(reg.h2, '')}</h2>`
+            return `<h2 onclick="this.scrollIntoView()">${item.replace(reg.h2, '')}</h2>`
         }
         // h1 标题
         else if (reg.h1.test(item)) return `<h1>${item.replace(reg.h1, '')}</h1>`

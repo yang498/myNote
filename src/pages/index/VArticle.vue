@@ -88,6 +88,10 @@ article {
     h3 {
         font-size: 20px;
         line-height: 40px;
+        margin: 20px 0 10px;
+        & + h4 {
+            margin-top: 0;
+        }
     }
     h2, h3 {
         cursor: pointer;

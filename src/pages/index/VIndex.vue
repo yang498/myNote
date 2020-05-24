@@ -6,8 +6,8 @@
         <v-header
             :aside.sync="aside"
             :handle.sync="handle"
-            @top="scrollTo(0)"
-            @bottom="scrollTo(1)"
+            @top="scrollTo('top')"
+            @bottom="scrollTo('bottom')"
         ></v-header>
         <v-menu v-if="$route.path === '/'"></v-menu>
         <main class="flex" v-else>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+let timer = null
 export default {
     components: {
         VHeader: () => import('./VHeader'),
@@ -42,9 +43,23 @@ export default {
         custom: vm => vm.$store.state.custom
     },
     methods: {
-        scrollTo (top) {
+        scrollTo (position) {
+            if (timer) clearInterval(timer)
             const $article = this.$refs.article.$el
-            $article.scrollTo({ top: top && $article.scrollHeight, behavior: 'smooth' })
+            const topHeight = $article.scrollHeight - $article.offsetHeight
+            const methods = {
+                top () {
+                    const speed = Math.ceil($article.scrollTop / 5)
+                    $article.scrollTop -= speed
+                    if (!$article.scrollTop) clearInterval(timer)
+                },
+                bottom () {
+                    const speed = Math.ceil((topHeight - $article.scrollTop) / 5)
+                    $article.scrollTop += speed
+                    if (topHeight - $article.scrollTop < 1) clearInterval(timer)
+                }
+            }
+            timer = setInterval(methods[position], 20)
         }
     }
 }
