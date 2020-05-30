@@ -38,14 +38,15 @@ const addList = text => {
     return '<li>' + text + '</li>'
 }
 const addTable = text => {
-    const list = text.split('\n')
-    const $thead = '<thead><tr><th>' + list[0].replace(/|/g, '</th><th>') + '</th></tr></thead>'
-    const align = list[1].split('|')
-    const $tbody = '<tbody>' + list.slice(2).map(item => {
-        item = item.split('|').map((td, i) => `<td ${align[i] === ':-' ? 'class="td-left"' : ''}>${td}</td>`).join('')
-        return '<tr>' + item + '</tr>'
+    const [thead, align, ...tbody] = text.split('\n').map(item => item.slice(1, -1).trim().replace(/ *\| */g, '|'))
+    const $thead = '<thead><tr><th>' + thead.replace(/\|/g, '</th><th>') + '</th></tr></thead>'
+    const alignList = align.split('|')
+    const alignTest = item => /^:-+:$/.test(item) ? 'class="center"' : /^-+:$/.test(item) ? 'class="right"' : ''
+    const $tbody = '<tbody>' + tbody.map(tr => {
+        tr = tr.split('|').map((td, i) => `<td ${alignTest(alignList[i])}>${td}</td>`).join('')
+        return '<tr>' + tr + '</tr>'
     }).join('') + '</tbody>'
-    return `%%${$thead + $tbody}%%`
+    return `%%<table>${$thead + $tbody}</table>%%`
 }
 const addLink = (text, multi) => '@@学习参考链接：' + text.replace(/\n/g, multi ? '<br>' : '，') + '@@'
 
@@ -68,7 +69,7 @@ const formatString = str => {
         // 列表
         .replace(/!!\n(.+?)\n!!/gs, (res, text) => '!!' + addList(text) + '!!')
         // 表格
-        .replace(/%%\n.+?\n%%/gs, (res, text) => addTable(text))
+        .replace(/%%\n(.+?)\n%%/gs, (res, text) => addTable(text))
         // 多行底部链接
         .replace(/@@@\n(.+?)\n@@@/gs, (res, text) => addLink(text, true))
         // 单行底部链接
@@ -111,7 +112,7 @@ const formatTag = function (str) {
         // 列表
         else if (reg.list.test(item)) return `<ul>${item.replace(reg.list, '')}</ul>`
         // 表格
-        else if (reg.table.test(item)) return `<table>${item.replace(reg.table, '')}</table>`
+        else if (reg.table.test(item)) return `<div class="table">${item.replace(reg.table, '')}</div>`
         // 代码块
         else if (reg.code.test(item)) {
             item = item.replace(reg.code, '').replace(/ˊ/g, '\n')

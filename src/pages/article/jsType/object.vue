@@ -11,6 +11,21 @@ export default {
 
 ## 概述
 
+### 定义
+
+一组无序键值对（key-value）的集合，以大括号包裹，键值对之间以逗号·,·分隔，键与值之间以冒号·:·分隔
+
+··js
+var obj = {
+    foo: 'Hello',
+    bar: 'World'
+}
+
+// 修改增加
+obj.foo = 123
+obj.foo2 = 234
+··
+
 ### 键名命名规范
 
 若省略引号则不能包含空格或运算符
@@ -406,7 +421,7 @@ __proto__：用来读取或设置当前对象的·prototype·对象
 ### 静态方法
 
 !!
-Object.is(a, b)：比较两个值是否相等，和·===·类似，还包括了·NaN·可以等于本身和·+0·不等于·-0·
+Object.is(a, b)：比较两个值是否相等，和·===·类似，还包括可以比较·NaN·、·-0·不等于·+0·或·0·
 Object.assign(target, ...source)：将源对象复制到目标对象，若有同名属性则后面覆盖前面
 Object.getOwnPropertyDescriptors(obj)：返回对象上所有属性的描述对象
 Object.setPrototypeOf(obj, proto)：设置一个对象的·prototype·对象，返回参数对象本身

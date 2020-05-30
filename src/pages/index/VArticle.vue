@@ -1,8 +1,6 @@
 <template>
     <article class="ofy pr" @scroll="watchScroll" ref="article">
-        <div class="content">
-            <router-view></router-view>
-        </div>
+        <router-view class="content"></router-view>
     </article>
 </template>
 
@@ -62,16 +60,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.content {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-</style>
-
 <style lang="scss">
 article {
     padding: 0 50px;
+    .content {
+        max-width: 1000px;
+        margin: 0 auto;
+        &  > :not(h1):not(h2):not(h3):not(h4):not(p) {
+            margin: 10px 2em;
+        }
+    }
     h1 {
         font-size: 30px;
         padding-top: 15px;
@@ -99,26 +97,22 @@ article {
     }
     h4 {
         font-size: 18px;
-        text-indent: 2em;
-        margin: 20px 0 10px;
+        margin: 20px 2em 10px;
     }
     p {
-        text-indent: 2em;
+        padding: 0 2em;
         line-height: 30px;
     }
     a:hover {
         text-decoration: underline;
     }
     img {
-        margin: 0 5px;
         vertical-align: text-bottom;
         &:only-child {
             width: 100%;
-            margin: 5px 0 5px 2em;
         }
     }
     ul {
-        margin: 5px 2em 10px 2em;
         padding: 10px 20px;
         border-left: 10px solid var(--c);
         border-radius: 8px;
@@ -148,36 +142,35 @@ article {
             font-family: consolas;
         }
     }
-    table {
-        width: 100%;
-        max-width: 1000px;
+    .table {
         border-radius: 8px;
-        margin: 10px 0 10px 2em;
         border: 1px solid #ccc;
         overflow: hidden;
-        text-align: center;
-        thead {
-            color: #fff;
-            background-color: var(--c);
-        }
-        tr {
-            height: 40px;
-            &:nth-child(2n) {
-                background-color: #eee;
+        table {
+            width: 100%;
+            thead {
+                color: #fff;
+                background-color: var(--c);
             }
-            th:not(:last-child),
-            td:not(:last-child) {
-                border-right: 1px solid #ccc;
+            tr {
+                &:nth-child(2n) {
+                    background-color: #eee;
+                }
+                th:not(:last-child), td:not(:last-child) {
+                    border-right: 1px solid #ccc;
+                }
             }
-        }
-        th {
-            padding: 0 20px;
-        }
-        td {
-            padding: 0 20px;
-            border-top: 1px solid #ccc;
-            &.td-left {
-                text-align: left;
+            td {
+                border-top: 1px solid #ccc;
+                &.center {
+                    text-align: center;
+                }
+                &.right {
+                    text-align: right;
+                }
+            }
+            th, td {
+                padding: 10px 20px;
             }
         }
     }
@@ -192,7 +185,6 @@ article {
     }
     .code {
         position: relative;
-        padding: 0 2em;
         pre code {
             font-family: consolas;
             line-height: 24px;
@@ -210,7 +202,7 @@ article {
             transition-duration: 0.2s;
             position: absolute;
             top: 0;
-            right: 2rem;
+            right: 0;
             margin: -1px;
         }
     }
@@ -219,14 +211,11 @@ article {
         left: -9999px;
         opacity: 0;
     }
-    .iframe {
-        padding: 10px 2em;
-        iframe {
-            width: 100%;
-            padding: 10px;
-            background-color: #f5f9fa;
-            border: 1px solid #eaf2f4;
-        }
+    iframe {
+        width: 100%;
+        padding: 10px;
+        background-color: #f5f9fa;
+        border: 1px solid #eaf2f4;
     }
     .link {
         font-size: 18px;
