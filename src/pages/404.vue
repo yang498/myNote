@@ -1,5 +1,5 @@
 <template>
-    <div class="tc" :class="$store.state.skin">
+    <div class="tc skin" :class="$store.state.skin">
         <v-header></v-header>
         <h1>404</h1>
     </div>

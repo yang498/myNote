@@ -232,8 +232,7 @@ article {
         display: block;
         text-align: right;
         color: #666;
-        margin: 20px 0;
-        padding-right: 2em;
+        padding: 20px 0;
     }
 }
 </style>
