@@ -1397,7 +1397,7 @@ div {
             ? $(this).text('收起')
             : $(this).text('全文')
     })
-<\\/script>
+&lt;/script>
 ··
 
 &2019/8/8

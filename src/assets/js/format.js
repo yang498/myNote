@@ -33,7 +33,7 @@ const addList = text => {
                     .replace(/(?<!\\)\{.+?(?<!\\)\}/, '<i class="type">$&</i>').replace(/\\(?=\{|\})/g, '')
                     .replace(/(?<!\\)\[.+?(?<!\\)\]/, '<i class="default">$&</i>').replace(/\\(?=\[|\])/g, '')
                     .replace(/!/, '<b>$&</b>') +
-        '</span>')
+        '</span>').replace(/(.*):$/, '<span class="head">$1</span>')
     }).join('</li><li>')
     return '<li>' + text + '</li>'
 }

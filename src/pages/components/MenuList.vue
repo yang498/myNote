@@ -17,7 +17,7 @@
                     ]"
                     v-for="(item, index) in parentItem.list"
                     :key="index"
-                    @click="$router.push('/' + item.path)"
+                    @click="$router.push('/' + item.path), menuActive = [parentIndex, index]"
                 >
                     <div>{{item.name}}</div>
                 </li>
@@ -36,9 +36,15 @@ export default {
         li2Class: { type: String, default: '' }
     },
     data () {
+        let menuActive = [-1, -1]
+        list.forEach((parentItem, parentIndex) => {
+            parentItem.list.forEach((item, index) => {
+                if ('/' + item.path === this.$route.path) menuActive = [parentIndex, index]
+            })
+        })
         return {
             list,
-            menuActive: [-1, -1] // 当前目录
+            menuActive // 当前目录
         }
     }
 }

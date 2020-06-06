@@ -440,7 +440,6 @@ for (const match of string.matchAll(regex)) console.log(match)
 
 ··js
 // 任意字符
-var res = new RegExp('') // 等同于 /(?:)/
 var res = /./s
 var res = /[^]/
 var res = /[\\s\\S]/ // 类似的有 /[\\d\\D]/ 等

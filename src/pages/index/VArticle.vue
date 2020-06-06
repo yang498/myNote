@@ -73,6 +73,7 @@ article {
     h1 {
         font-size: 30px;
         padding-top: 15px;
+        margin-bottom: 20px;
     }
     h2 {
         font-size: 24px;
