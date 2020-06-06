@@ -3,7 +3,6 @@
 </template>
 
 <script>
-/* eslint-disable no-useless-escape */
 export default {
     data () {
         return {
@@ -1398,7 +1397,7 @@ div {
             ? $(this).text('收起')
             : $(this).text('全文')
     })
-<\/script>
+<\\/script>
 ··
 
 &2019/8/8

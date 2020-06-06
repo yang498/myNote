@@ -61,7 +61,7 @@ const formatString = str => {
         // 链接，<a>
         .replace(/\[([^[]+?)\]\((.+?)\)/g, (res, text, href) => addA(text, href))
         // 粗体，<b>
-        .replace(/\*\*(.+?)\*\*/g, (res, text) => addTag(text, 'b'))
+        .replace(/(?<!\\)\*\*(.+?)\*\*/g, (res, text) => addTag(text, 'b')).replace(/\\(?=\*\*)/g, '')
         // 多行代码块
         .replace(/··(.+?)\n··/gs, (res, text) => '‥' + text.replace(/\n/g, 'ˊ') + '‥')
         // 行内代码块 <code>

@@ -3,7 +3,6 @@
 </template>
 
 <script>
-/* eslint-disable no-useless-escape */
 export default {
     data () {
         return {
@@ -43,7 +42,7 @@ var longString = \`Long
 特殊字符需要使用反斜杠·\\·转义，如果在非特殊字符前面使用反斜杠会被省略
 
 !!
-\\\\0：null（·\\u0000·）
+\\0：null（·\\u0000·）
 \\b：后退键（·\\u0008·）
 \\f：换页符（·\\u000C·）
 \\n：换行符（·\\u000A·）
@@ -246,7 +245,7 @@ normalize()：一些带有语调和重音符号的语言的字符串，和对应
 于是共有 6 种方法可以表示一个字符：
 
 ··js
-'\z' === 'z'  // true
+'\\z' === 'z'  // true
 '\\172' === 'z' // true
 '\\x7A' === 'z' // true
 '\\u007A' === 'z' // true

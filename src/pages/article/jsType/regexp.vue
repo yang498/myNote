@@ -3,7 +3,6 @@
 </template>
 
 <script>
-/* eslint-disable no-useless-escape */
 export default {
     data () {
         return {
@@ -172,10 +171,10 @@ var res = /y((..)\\2)\\1/.test('yabababab') // true
 为每一个组匹配指定一个名字，在·()·内部的开头加上·?<name>·即可
 
 ··js
-let reg = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/u
+let reg = /(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})/u
 '2015-01-02'.replace(reg, '$<day>/$<month>/$<year>') // '02/01/2015'
 
-const RE_DATE = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/
+const RE_DATE = /(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})/
 const matchObj = RE_DATE.exec('1999-12-31')
 const year = matchObj.groups.year // 1999
 const month = matchObj.groups.month // 12
@@ -184,10 +183,10 @@ const day = matchObj.groups.day // 31
 
 #### 引用
 
-使用·\k<组名>·引用具名组匹配
+使用·\\k<组名>·引用具名组匹配
 
 ··js
-const reg = /^(?<word>[a-z]+)_\k<word>$/
+const reg = /^(?<word>[a-z]+)_\\k<word>$/
 reg.test('abc_abc') // true
 reg.test('abc_ab') // false
 ··
@@ -195,8 +194,8 @@ reg.test('abc_ab') // false
 ### 断言
 
 !!
-先行断言：·x(?=y)·，·x·只有在·y·前面才匹配，例如匹配后面跟着百分号的数字·/\d+(?=%)/·
-先行否定断言：·x(?!y)·，·x·只有不在·y·前面才匹配，例如要匹配后面跟的不是百分号的数字·/\d+(?!%)/·
+先行断言：·x(?=y)·，·x·只有在·y·前面才匹配，例如匹配后面跟着百分号的数字·/\\d+(?=%)/·
+先行否定断言：·x(?!y)·，·x·只有不在·y·前面才匹配，例如要匹配后面跟的不是百分号的数字·/\\d+(?!%)/·
 后行断言：·(?<=y)x·，·x·只有在·y·后面才匹配，例如只匹配钱符号之后的数字·/(?<=￥)\\d+/·
 后行否定断言：·(?<!y)x·，·x·只有不在·y·后面才匹配，例如只匹配不在钱符号后面的数字·/(?<!￥)\\d+/·
 !!
