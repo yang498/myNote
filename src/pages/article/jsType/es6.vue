@@ -45,6 +45,7 @@ ES6 的第一个版本在 2015 年发布，正式名称就是《ECMAScript 2015 
 有三种状态：·pending·（进行中）、·fulfilled·（已成功）和·rejected·（已失败）
 ·Promise·的构造函数接受一个函数，且有两个参数方法 ·resolve· 和 ·reject·
 ·resolve·是成功时执行的函数，·reject·是失败时执行的函数
+若调用·resolve·和·reject·时带有参数将会传递给回调函数，·reject·通常传递·Error·对象的实例
 
 ··js
 const promise = new Promise((resolve, reject) => {
@@ -52,7 +53,7 @@ const promise = new Promise((resolve, reject) => {
         if (/* 异步操作成功 */){
             resolve()
         } else {
-            reject()
+            reject(new Error())
         }
     }, 1000)
 })
@@ -70,7 +71,7 @@ promise.then(value => {
 })
 ··
 
-Promise 新建后回调函数立即执行，·resolve· 和 ·reject· 异步执行：
+Promise 新建后回调函数会立即执行，·resolve· 和 ·reject· 异步执行：
 
 ··js
 const promise = new Promise((resolve, reject) => {
@@ -94,13 +95,36 @@ promise.then(() => {
 })
 ··
 
-如果前一个·then·返回的还是一个 Promise 对象，这时后一个·then·就会等待该 Promise 对象的状态发生变化时才会调用：
+如果前一个·then·返回的还是一个 Promise 对象，这时后一个·then·就会监听该 Promise 的状态变化：
 
 ··js
-promise.then(() => {
-    return new Promise(resolve => resolve(123))
+const p = new Promise(resolve => {
+    setTimeout(() => resolve('p'), 2000)
+})
+const p1 = new Promise(resolve => {
+    setTimeout(() => resolve('p1'), 1000)
+})
+p.then(res => {
+    console.log(res) // p （2 秒后触发）
+    return p1 // （p1 的状态 1 秒已改变）
 }).then(res => {
-    console.log(res) // 123
+    console.log(res) // p1 （上一个 then 触发完毕立即触发）
+})
+··
+
+如果·resolve·的参数是 Promise 对象，则·then·会变成监听那个 Promise 对象
+
+··js
+const p1 = new Promise(function (resolve, reject) {
+  setTimeout(() => reject(new Error('fail')), 3000)
+})
+const p2 = new Promise(function (resolve, reject) {
+  setTimeout(() => resolve(p1), 1000) // 1 秒后发现是传递 Promise 对象，所以 p2 的状态无效，改成由 p1 决定
+})
+p2.then(result => {
+    console.log(result)
+}).catch(error => {
+    console.log(error) // Error: fail（3 秒后触发）
 })
 ··
 
@@ -110,12 +134,18 @@ promise.then(() => {
 Promise 对象的错误具有“冒泡”性质，会一直向后传递，直到被捕获：
 
 ··js
-promise.then(function(post) {
-    return new Promise(resolve => resolve())
-}).then(function(comments) {
-    // some code
-}).catch(function(error) {
-    // 处理前面所有 Promise 产生的错误
+const p = new Promise((resolve, reject) => resolve('p'))
+const p1 = new Promise((resolve, reject) => reject(new Error('p1')))
+const p2 = new Promise((resolve, reject) => resolve('p1'))
+p.then(res => {
+    return p1
+}).then(res => {
+    return p2
+}).then(res => {
+    console.log(res)
+}).catch(error => {
+    // 处理前面所有 Promise 中第一个产生的错误
+    console.log(error) // Error: p1
 })
 ··
 
