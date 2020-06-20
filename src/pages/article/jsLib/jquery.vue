@@ -28,10 +28,9 @@ npm 安装：
 npm i jquery
 ··
 
-## 选择器
+## css 选择器
 
 使用·$()·可以用来选择 DOM 元素，用法和 CSS 类似，并做了些扩展
-·$()·选择的元素是 jQuery 封装过的对象，想要获取原生元素只需选择对应的下标即可，例如·$('.demo')[0]·
 
 ### 基本
 
@@ -184,326 +183,202 @@ prev ~ siblings：后面所有指定的元素，后面所有的元素为·prev ~
 
 ### 筛选
 
-在匹配的集合中进行筛选
-
 !!
 .eq(index)：第 index 个，index 可以为负数表示倒数
 .first()：第一个
 .last()：最后一个
 .not(selector/function(index))：除了给定选择器或函数返回值的元素
-.has(selector)：选择含有指定 selector 的元素
-$.contains(parent, child)：返回 Boolean 值，判断一个 DOM 元素是否包含另一个 DOM 元素，必须都是原生元素，不支持文本和注释节点
-.filter(selector/function(index))：筛选元素
-$.grep(array, function(item, index) [, invert])：筛选元素或数组，·invert·默认为·false·，若为·true·将返回和筛选条件相反的元素
-.slice(start [, end])：截取元素，包括 start 不包括 end
+.has(selector)：后代元素中包含指定·selector·的元素，根据匹配结果的length可判断是否包含某元素
+$.contains(parent, child)：判断一个元素是否包含另一个元素，必须都是原生元素，不支持文本和注释节点
+.filter(selector/function(index))：筛选出指定元素，可以是选择器或函数，函数的用法同数组的·filter·
+$.grep(array, function(item, index) [, invert])：筛选元素或数组
+    ·invert·默认为·false·，若为·true·将返回和筛选条件相反的元素
+.slice(start [, end])：截取指定下标内的元素，用法同数组的·slice·
 !!
 
-###.has(selector)
 
-选择匹配的元素中的任何后代元素中包含指定 selector 的元素，selector 可以是任意的选择器，根据 length 的长度可判断是否包含某元素
-比如·$('.demo').has('.text')·表示在所有·class="demo"·的元素中选择后代元素包含了·class="text"·的
+### 子元素
 
-###.filter(selector/function(index))
-
-筛选出指定的元素
-
-··
-<ul>
-    <li>A</li>
-    <li>B</li>
-    <li class="mark">C</li>
-    <li class="mark">D</li>
-</ul>
-
-$('li').filter('.mark') // C, D
-$('li').filter(':odd')  // B, D
-$('li').filter(function (index) {   // A, D
-    return index % 3 === 0
-})
-··
-###.slice(start [, end])
-根据指定的下标范围，生成新的 jQuery 对象，start 和 end 都是整数，包括 start 不包括 end，可以是负数表示倒数，不填 end 表示直到最后
-比如·$('li').slice(2, 4)·表示选择下标为第 2 和 第 3 的 li 元素
-
-##子元素
 !!
 .children()：子元素，不包括文字和注释节点
-.contents()：子元素，包扩文本和注释节点，iframe 也可获取（跨域无法访问），比如·$('iframe').contents().find('.demo')·
+.contents()：子元素，包扩文本和注释节点，·<iframe>·内的元素也可获取（跨域无法访问）
 !!
 
-##父元素
-!!
-.parent()：父元素
-.parents()：祖先元素
-.parentsUntil()：祖先元素直到哪里
-!!
-###.parent([selector])
-获取元素的父元素，可以传入一个参数 selector 以筛选获得的父元素
-比如·('p').parent()·表示获取所有 p 元素的父元素，·('p').parent('.active')·表示获取带有 active 类的父元素
-###.parents([selector])
-获取元素的所有祖先元素，可以传入一个参数 selector 以筛选获得的祖先元素
-###.parentsUntil([selector/element] [, selector])
-获取元素的所有祖先元素，直到遇到选择器或某元素停止，结果不包含终点元素
-比如·('p').parentsUntil('body')·表示获取 body 内所有 p 元素的祖先元素
-可以传入第二个参数 selector 以筛选获得的祖先元素
-比如·('p').parentsUntil('body', div)·表示获取 body 内所有 p 元素的 div 标签祖先元素
+### 父元素
 
-##兄弟元素
+!!
+.parent([selector])：父级元素，可以传入一个参数 selector 以筛选获得的父元素
+.parents([selector])：所有祖先元素，可以传入一个参数 selector 以筛选获得的父元素
+.parentsUntil([selector/element] [, selector])：所有祖先元素直到第一个参数为止，第二个参数可以进行筛选
+!!
+
+### 兄弟元素
+
 !!
 .prev([selector])：前一个，可以传入一个参数 selector 以筛选获得的兄弟元素
 .next([selector])：后一个，和·.prev()·相反
 .prevAll([selector])：前面所有，用法同·.prev()·
 .nextAll([selector])：后面所有，和·.prevAll()·相反
 .siblings([selector])：前后所有，即·.prevAll()·和·.nextAll()·加起来
-.prevUntil([selector/element] [, selector])：前面直到哪里，可以传入第二个参数 selector 以筛选获得的兄弟元素
+.prevUntil([selector/element] [, selector])：前面直到哪里，可以传入第二个参数进行筛选
 .nextUntil([selector/element] [, selector])：后面直到哪里，和·.prevUntil()·相反
 !!
 
-##查找
+### 查找
+
 !!
 .find(selector/element)：往下找，在所有子孙元素中找到匹配的元素
-.closest(selector/element [, element])：和·find()·相反，往上找，可以传入第二个参数以限定范围（原生元素）
+.closest(selector/element [, element])：往上找，可以传入第二个参数限定范围（原生元素）
 !!
-###.closest(selector/element [, element])
-从内向外从自己开始在所有祖先元素中找到最先匹配的那个元素，可以传入第二个参数以限定范围（原生元素）
-比如·$('ul').closest('div', $('.active')[0])·表示找到 ul 的最近祖先元素中的 div 元素，并且属于 .active 类的子孙元素
 
-##判断
-###.is(selector/function(index))
-判断当前元素合中如果至少一个匹配给定的参数，即若能根据后面的选择器在当前元素中至少找到 1 个，则返回 true，否则返回 false
-可以传入一个函数，返回 Boolean 值作为结果
-比如：
-··
-<ul>
-    <li>AAA</li>
-    <li>BBB <span>bbb</span></li>
-    <li class="mark">CCC</li>
-    <li class="mark">DDD <span>ddd</span></li>
-</ul>
+### 判断
 
-$('li').is('.mark') // true
-$('ul').on('click', function (event) {
-    $(event.target).is('li') && $(event.target).css('color', 'red') // 点击 span 不会触发
-})
-··
-
-#DOM 属性
-##css
 !!
-.addClass()：添加 class
-.removeClass()：删除 class
-.toggleClass()：切换 class
-.hasClass()：是否有 class
+.is(selector/function(index))：判断若能根据选择器至少找到 1 个则返回·true·，否则·false·
+    可以传入一个函数，返回的 Boolean 值直接作为结果
+!!
+
+## DOM 属性
+
+### css
+
+!!
+.addClass(class/fn(index, class))：添加 class，多个样式名以空格隔开
+.removeClass(class/fn(index, class))：删除 class，多个样式名以空格隔开，没有参数将全部移除
+.toggleClass(class/fn(index, class) [, state])：切换 class，多个样式名以空格隔开，没有参数将全部切换
+    state [Boolean]：指定是添加还是删除样式
+.hasClass(class)：是否含有 class，可以传入·''·判断有没有类名
 .css()：获取或设置样式
-$.cssHooks：扩展 .css()
-$.cssNumber：在用 .css() 设置数值时哪些属性不用加 px
+$.cssHooks：扩展·.css()·
+$.cssNumber：在用·.css()·设置数值时哪些属性不用加 px，例如·$.cssNumber.left = true·
 !!
-###.addClass(className/function)
-为每个匹配的元素添加指定的样式类名，多个样式名以空格隔开
-比如·$('.demo').addClass('active')·，·$('.demo').addClass('active tab')·
-还可以是个函数，接受 2 个参数
-··
-// index 为当前元素在所有匹配的元素即 $('.demo') 的索引值，currentClass 为当前元素的类名
-$('.demo').addClass(function (index, currentClass) {
-    return 'active' // 返回结果表示要添加的类名，可以是字符串或方法函数
+
+#### .css(className/classNameArr [, value/function])
+
+获取或设置样式，2 个单词以上的属性名可以使用连字符或驼峰法，如·background-color·和·backgroundColor·
+
+··js
+// 获取属性值
+$('.demo').css('color')
+// 获取多个属性值，返回属性名和属性值组成的对象
+$('.demo').css(['color', 'background-color', 'font-size'])
+
+// 设置属性值
+$('.demo').css('color', '#f00')
+// 设置多个属性值
+$('.demo').css({
+    'color': '#f00',
+    'font-size': '20px'
 })
-··
-###.removeClass([className]/function)
-为每个匹配的元素移除指定的样式类名，多个样式名以空格隔开，没有参数将全部移除，函数用法同·.addClass()·
-###.toggleClass(className/function [, state])
-为每个匹配的元素切换指定的样式类名，多个样式名以空格隔开，没有参数将切换元素已有的全部类名，函数用法同·.addClass()·
-可以指定第二个参数类型为 Boolean 值，通过控制第二个参数的值判断是该添加还是删除样式，比如：
-··
-$('.demo').toggleClass(className/function, state)
-// 等同于
-state ? $('.demo').addClass(className/function) : $('.demo').removeClass(className/function)
-··
-###.hasClass(className)
-判断元素是否有指定的类名，返回一个 Boolean 值，多个样式名以空格隔开，可以设为·''·判断有没有类名
-###.css(className/classNameArr [, value/function])
-获取或设置样式属性的计算值，2 个单词以上的属性名可以使用连字符或驼峰法，即·background-color·和·backgroundColor·是一样的
-比如·$('.demo').css('color')·表示返回该元素的颜色值
-获取多个属性用数组表示，返回一个 object 对象，键名即属性名，键值即对应的属性值
-比如·$('.demo').css(['color', 'background-color', 'font-size'])·
-可以传入第二个参数表示给指定的属性设置新属性，即设置行内 style，多个值用空格隔开
-注意设置样式会忽略·!important·声明，需换成类名代替或使用其他插件
-比如·$('.demo').css('color', '#f00')·，·$('.demo').css('border', '1px solid #ccc')·
-若设置的值为数字，默认将其转换为一个字符串，并添在结尾处添加 px
-比如·.css('width', 50)·，·.css('width', '50')·，·.css('width', '50px')·这 3 条语句是等价的
-可以在控制台打印·$.cssHooks·看，默认会将 number 类型会自动加 px，而其中包含 set 方法的表示可以补全字符串类型的，即·.css('width', '50')·会加上 px，而·.css('left', '50')·则不会，因为 left 没有 set 方法，当然也可以自定义·$.cssHooks·补全
-若设置的值为空字符串，如果行内 style 中有这个属性将会移除
-比如·$('.demo').css('color', '')·
-可以设置一个相对值，以 += 或者 -= 开头的字符串，在原有的基础上加上或减去相应的值
-比如·$('.demo').css('padding-left', '+=20')·表示原来是 10 的话改变之后将是 30
-可以设置一个函数，返回的值即为要设置的值，如果未返回或返回 undefined 将不会做什么改变，该函数接受 2 个参数
-比如：
-··
-// index 为当前元素在所有匹配的元素即 $('.demo') 的索引值，style 为当前元素所设置属性的原有的样式值
+
+// 若设置的值为数字，将会转换为字符串并添加 px
+$('.demo').css('width', 50)
+// 只有部分值支持设置字符串数字补全 px，具体可打印 $.cssHooks 查看，一般带 set 的有字符串补全
+$('.demo').css('left', '50') // left: ''
+$.cssHooks.left = {
+    get: $.cssHooks.left.get,
+    set: function (el, value) {
+        el.style.left = /^\\d+$/.test(value) ? value + 'px' : value
+    }
+}
+$('div').css('left', '50') // left: '50px'
+
+// 若设置的值为空字符串，如果行内 style 中有这个属性将会移除
+$('.demo').css('color', '')
+// 设置相对值可使用以 += 或者 -= 开头的字符串，即在原来的基础上进行增减
+$('.demo').css('padding-left', '+=20')
+// 设置一个函数，返回值即为要设置的值
 $('.demo').css('width', function (index, style) {
     return '100px'
 })
 ··
-同时设置多个属性用键值对表示，键名可以不用引号，但包含连字符时必须得用引号
-比如：
-··
-$('.demo').css({
-    'color': '#f00',
-    'background-color': '#f80',
-    'font-size': '18px'
-})
-··
-###$.cssHooks
-自定义拓展·.css()·属性，比如用·rotate·代替·transform: rotate()·或·-webkit-transform: rotate()·等，即·.css('rotate', 10})·，然而·$.cssHook·并不完善，所以会出现 rotateX/perspective 等无效的情况，平时也不常用，有兴趣再了解
-###$.cssNumber
-定义·.css()·属性中哪些属性值不需要使用单位，以确定在设置数值时哪些需要加上单位 px
-默认包含的属性有：·zIndex fontWeight opacity zoom lineHeight widows orphans fillOpacity columnCount order flexGrow flexShrink·，这些属性的值都为·$.cssNumber.someCSSProp = true·
-比如·$.cssNumber.left = true·表示之后的·.css('left', 100)·是不会自动加单位 px 的，即这是个无效的设置
 
-##属性
-!!
-.val()：获取或设置 value 值
-.attr()：获取或设置属性值
-.removeAttr()：删除属性值
-.prop()：获取或设置包含 Boolean 值的属性值
-.removeProp()：删除由·.prop()·方法自定义的属性，或永久删除原生属性
-!!
-###.val([value/function])
-获取或设置元素的 value 值，通常用于表单元素中
-比如·$('input.name').val()·表示获取输入框的值
-可以传入第二个参数表示设置匹配元素的属性
-比如·$('input.name').val('bilibili')·
-可以设置一个函数，返回的值即为要设置的值，如果未返回或返回 undefined 将不会做什么改变
-该函数接受 2 个参数，index 为当前匹配元素的索引值，value 为当前元素所设置属性的原有的值
-###.attr(attributeName [, value/function])
-获取匹配的元素集合中的第一个元素的属性的值，若要获取所有元素的属性需要循环中一一获取
-比如·$('.demo').attr('title')·表示获取该元素上 title 的值
-可以传入第二个参数表示设置匹配元素的属性，如果是多个目标元素可以全部同时设置
-比如·$('.demo').attr('title', 'hello world')·
-可以设置一个函数，返回的值即为要设置的值，如果未返回或返回 undefined 将不会做什么改变
-该函数接受 2 个参数，index 为当前匹配元素的索引值，value 为当前元素所设置属性的原有的值
-同时设置多个属性用键值对表示，键名可以不用引号，但包含连字符时必须得用引号
-注意设置 class 时必须用引号，因为是构造函数“类”的关键字
-比如：
-··
-$('.demo').attr({
-    'title': 'hello world',
-    'alt': '好啊好啊'
-})
-··
-###.removeAttr(attributeName)
-移除匹配的元素集合中的指定属性，多个属性使用空格隔开
-比如·$('.demo').removeAttr('id')·，·$('.demo').removeAttr('title alt')·
-###.prop(propertyName [, value/function])
-获取或设置匹配的元素集合中的第一个元素的属性的值，若要获取所有元素的属性需要循环中一一获取
-因为·.attr()·虽能获取设置属性值，但在特定的属性中，比如·checked selected disabled·，得到的是·'checked' 'selected' 'disabled'·没错，但更希望是个 Boolean 值，而·.prop()·就能做到这一点，用法还是和·.attr()·一样的
-比如·$('.demo').prop('checked')·返回 true/false，·$('.demo').prop('checked', true)·设置为 true
-###.removeProp(propertyName)
-用来删除由·.prop()·方法设置的自定义属性集，多个属性使用空格隔开
-注意不要用来删除原生的属性，比如 checked disabled，这将完全移除该属性，不能再次被添加到元素上。使用·.prop()·来设置这些属性设置为 false 代替比较好
+### 属性
 
-##数据
 !!
-.data()：在元素上存储或读取任意相关数据，包括元素上的 data- 开头的属性
-.removeData()：删除·.data()·绑定的数据，不影响元素上的 data- 属性
+.val([value/function])：获取或设置 value 值
+.attr(name [, value/function])：获取或设置属性值，若设置多个值可传入对象，用法同·.css()·
+.removeAttr(name)：删除属性值，多个属性可使用空格隔开
+.prop()：获取或设置 Boolean 值的属性，如·disabled, checked·，用法同·.attr()·
+.removeProp()：删除属性值，多个属性可使用空格隔开
+    注意删除原生的属性如·disabled·将完全移除该属性，不能再次被添加到元素上
+!!
+
+### 数据
+
+!!
+.data([key] [, value])：在元素上读取或存储以·data-·开头的属性数据
+.removeData([name])：删除数据，不传入参数表示全部删除，删除多个可传入以空格隔开的字符串或字符串数组
 $.data()：.data() 的另一种写法，原生元素作为第一个参数
 $.removeData()：.removeData() 的另一种写法，原生元素作为第一个参数
 $.hasData()：判断元素是否有 .data() 绑定的数据，原生元素作为参数
 !!
-###.data([key] [, value])
-在指定的元素上存储或读取任意相关数据，key 为字符串类型，value 为任意非 undefined 类型
-如果匹配的是多个元素，只读取第一个，需要全部读取要用循环，当然存储是全部存储
-不传入参数表示读取全部，传入 1 个参数表示读取，传入 2 个参数表示存储，已存在会覆盖，也可以传入一个 object 对象以存储多个数据
-如果传入的 key 包含连字符，将会自动转换成驼峰写法
-此为临时存储的数据，页面刷新就会没有
-比如：
-··
+
+#### .data([key] [, value])
+
+··js
 $('.demo').data('test-a', 'hhhh')   // 存储
 $('.demo').data()   // {testA: "hhhh"}
-··
-如果元素上有以·data-·开头的属性，那也会被·.data()·方法使用，·data-·之后的字符串就是 key，值就是 value
-比如：
-··
-<div class="demo" data-demo="demo" data-test-a="hh"></div>
 
+// <div class="demo" data-demo="demo" data-test-a="hh"></div>
 $('.demo').data()   // {demo: "demo", testA: "hh"}
 $('.demo').data('testA')    // "hh"
-$('.demo').data({'test-a': 'aaa', 'test-b': 'bbbb'})    // 覆盖存储
+$('.demo').data({'test-a': 'aaa', 'test-b': 'bbbb'})
 $('.demo').data()   // {demo: "demo", testA: "aaa", testB: "bbbb"}
 ··
-###.removeData([name/list])
-在指定的元素上移除用·.data()·绑定的数据，不影响元素上的·data-·属性，需使用·.removeAttr()·来移除·data-·属性
-不传入参数表示全部删除，传入 1 个参数表示删除指定的数据，删除多个可传入以空格隔开的字符串或字符串数组
-如果传入的字符串包含连字符，将会自动转换成驼峰写法
-比如·$('.demo').removeData('demo')·
-###$.data(element [, key] [, value])
-·.data()·的另一种写法，把目标元素放在第一个参数，注意 element 是原生的
-比如·$.data($('.demo')[0], 'test', 'hhhh')·
-###$.removeData(element, [name/list])
-·.removeData()·的另一种写法，把目标元素放在第一个参数，注意 element 是原生的
-比如·$.removeData($('.demo')[0], 'test')·
-###$.hasData(element)
-判断元素是否有·.data()·绑定的数据，如果有返回 true，否则返回 false，注意 element 是原生的
-比如·$.hasData($('.demo')[0])·
 
-##尺寸
+### 尺寸
+
 !!
-.width()：获取宽度，不包括 padding 和 border
-.height()：获取高度，用法同 .width()
-.innerWidth()：获取宽度，包括 padding，不包括 border，用法同上
-.innerHeight()：获取高度，用法同上
-.outerWidth()：获取宽度，包括 padding 和 border，可传入一个 true 表示包括 margin，用法同上
-.outerHeight()：获取高度，用法同上
+.width([value/fn])：获取或设置宽度，不包括·padding border·
+.height([value/fn])：获取或设置高度，用法同·.width()·
+.innerWidth([value/fn])：获取或设置宽度，包括·padding·，不包括·border·，用法同上
+.innerHeight([value/fn])：获取或设置高度，用法同上
+.outerWidth([value/fn])：获取或设置宽度，包括·padding border·，可传入·true·表示包括·margin·，用法同上
+.outerHeight([value/fn])：获取或设置高度，用法同上
 !!
-###.width([value/function])
-为匹配的元素集合中获取第一个元素的当前计算宽度值，返回数字，不包括 padding 和 border，设置了·box-sizing: border-box;·也会减去 padding 和 border
-·.css(width)·返回的是带单位的字符串，为样式设置的计算宽度
-可以传入第二个参数以设置宽度，传入数字时单位默认为 px，也可以传入自定义单位的字符串
-或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 width，返回值作为要设置的宽度
 
-##位置
+### 位置
+
 !!
-.offset()：获取或设置相对于文档的 left 和 top 值
-.offsetParent()：获取离指定元素最近的非 static 定位的祖先元素
-.position()：返回一个对象，包含 left 和 top 值，坐标相对于离指定元素最近的非 static 定位的祖先元素
-.scrollTop([value])：获取或设置相对于顶部滚动的距离，即网页卷去的高度，可以传入 1 个数值以设置这个距离，比如设为 0 表示回到顶部
-.scrollLeft([value])：获取或设置相对于左边滚动的距离，用法同·.scrollTop()·
+.offset([obj/fn])：获取或设置相对于文档的·left top·
+.offsetParent()：获取离指定元素最近的非·static·定位的祖先元素
+.position()：返回一个对象，包含·left top·，坐标相对于离指定元素最近的非 static 定位的祖先元素
+.scrollTop([value])：获取或设置·scrollTop·，可传入数值以设置这个距离，例如设为 0 表示回到顶部
+.scrollLeft([value])：获取或设置·scrollLeft·，用法同·.scrollTop()·
 !!
-###.offset([coordinates/function])
-返回一个对象，包含 left 和 top，坐标相对于文档，即网页左上角
-可以传入 1 个参数以设置 left 和 top，形式如·{left: 100, top: 100}·，使用后该元素将会添加·relative·定位
-或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和 coordinates，返回值作为要设置的宽度
 
-##.get()
-###.get(index)
-获取指定下标的元素：·.get(index)·
+### 索引
+
 !!
-index{Number}：指定获取的元素下标
+.index([el])：不传入参数表示获取元素在所有同级元素中的位置，若元素有多个则取第一个，若没有匹配元素返回·-1·
+    传入一个元素表示在匹配的元素中查找参数位置，如·$('div').index($('.demo'))·，相当于数组的·indexOf()·
 !!
-例如·$('li').get(0)·获取第一个原生元素，其实等同于·$('li')[0]·，好处在于 index 可以设置为负数表示倒数
-###.get()
-返回一个包含所有匹配元素的原生元素的数组，即把 jQuery 元素转成原生元素
 
-###.toArray()
-将 jQuery 元素转成原生元素，以数组的形式返回，等同于·.get()·
+### 获取原生元素
 
-###$.makeArray()
-·$.makeArray(obj)·：将 jQuery 元素转成原生元素，以数组的形式返回，等同于·.get()·
+·$()·选择的是 jQuery 封装过的对象，像数组一样选择对应的下标即可获取原生元素，例如·$('.demo')[0]·
 
-##.index()
-###.index()
-查找匹配元素的相对于同级元素的索引值，若匹配元素有多个则取第一个，若没有匹配元素则返回·-1·
-###.index(element)
-在匹配的元素中查找参数 element，element 可以是 jQuery 元素或原生元素
-例如·$('div').index($('.demo'))·表示在所有·div·中查找·div.demo·的索引值，所以索引值以·$('div')·为查找基础，不再是所有同级元素
+!!
+.get([index])：获取指定下标的原生元素，·index·可以设置为负数表示倒数
+    若不传入参数·.get()·则获取所有原生元素组成的数组，即把 jQuery 元素转成原生元素
+.toArray()：等同于·.get()·
+$.makeArray($el)：等同于·.get()·
+!!
 
-#DOM 操作
-##复制
-###.clone([withDataAndEvents] [, deepWithDataAndEvents])
+## DOM 操作
+
+### 复制
+
+#### .clone([withDataAndEvents] [, deepWithDataAndEvents])
+
 深拷贝指定元素，包括子元素，参数的属性：
+
 !!
-withDataAndEvents{Boolean}[false]：该元素是否复制绑定的事件和·.data()·设置的值
-deepWithDataAndEvents{Boolean}[withDataAndEvents]：该元素的所有后代元素是否复制绑定的事件和·.data()·设置的值，默认和第一个参数保持一致，即·.clone()·等同于·.clone(false, false)·，·.clone(true)·等同于·.clone(true, true)·
+withDataAndEvents {Boolean} [false]：该元素是否复制绑定的事件和·.data()·设置的值
+deepWithDataAndEvents {Boolean} [withDataAndEvents]：该元素的所有后代元素是否复制绑定的事件和·.data()·设置的值，默认和第一个参数保持一致，即·.clone()·等同于·.clone(false, false)·，·.clone(true)·等同于·.clone(true, true)·
 !!
+
 比如·$('.demo').clone().appendTo('.test')·
 若元素未经复制就进行添加等操作表示移动该元素
 比如·$('.demo').appendTo('.test')·表示·$('.demo')·被移动到·$('.test')·里面的末尾处
@@ -1524,11 +1399,11 @@ callbacks.fire('foo') // foo
 ··
 
 @@
-jQuery 官方文档|https://jquery.com/
-jQuery 中文文档|https://www.jquery123.com/
-HTML 中文网 jQuery 文档|https://www.css88.com/jqapi-1.9/
-插件 - jQuery插件库|http://www.jq22.com/
-插件 - jQuery之家|http://www.htmleaf.com/
+[jQuery 官网](https://jquery.com/)
+[jQuery 中文](https://www.jquery123.com/)
+[HTML 中文网 jQuery 文档](https://www.css88.com/jqapi-1.9/)
+[插件 - jQuery插件库](http://www.jq22.com/)
+[插件 - jQuery之家](http://www.htmleaf.com/)
 @@
 
 &2019/3/28

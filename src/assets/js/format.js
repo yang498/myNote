@@ -30,8 +30,8 @@ const addList = text => {
         return item.replace(/ {4}/g, '<i class="attr"></i>')
             .replace(/.+?(?=：)/, head =>
                 '<span class="head">' + head
-                    .replace(/(?<!\\)\{.+?(?<!\\)\}/, '<i class="type">$&</i>').replace(/\\(?=\{|\})/g, '')
-                    .replace(/(?<!\\)\[.+?(?<!\\)\]/, '<i class="default">$&</i>').replace(/\\(?=\[|\])/g, '')
+                    .replace(/(?<!\\|\([^)]*)\{.+?(?<!\\)\}/, '<i class="type">$&</i>').replace(/\\(?=\{|\})/g, '')
+                    .replace(/(?<!\\|\([^)]*)\[.+?(?<!\\)\]/, '<i class="default">$&</i>').replace(/\\(?=\[|\])/g, '')
                     .replace(/!/, '<b>$&</b>') +
         '</span>').replace(/(.*):$/, '<span class="head">$1</span>')
     }).join('</li><li>')

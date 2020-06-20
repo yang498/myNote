@@ -382,7 +382,7 @@ Object.getPrototypeOf(obj)：获取对象的·Prototype·对象
 Object.create(obj)：指定原型对象和属性，返回一个新的对象，即复制对象
 
 Object.defineProperty(obj, key, attrObj)：定义或修改属性描述对象，返回修改后的对象
-Object.defineProperties(obj, \\{keys: attrObjs})：：定义或修改多个属性描述对象，返回修改后的对象
+Object.defineProperties(obj, {keys: attrObjs})：：定义或修改多个属性描述对象，返回修改后的对象
     若·defineProperty/ies()·未定义·writable configurable enumerable·则默认都为·false·
 
 Object.preventExtensions(obj)：禁止对象添加新的属性
