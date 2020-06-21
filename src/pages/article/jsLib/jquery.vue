@@ -370,297 +370,105 @@ $.makeArray($el)：等同于·.get()·
 
 ### 复制
 
-#### .clone([withDataAndEvents] [, deepWithDataAndEvents])
-
-深拷贝指定元素，包括子元素，参数的属性：
-
 !!
-withDataAndEvents {Boolean} [false]：该元素是否复制绑定的事件和·.data()·设置的值
-deepWithDataAndEvents {Boolean} [withDataAndEvents]：该元素的所有后代元素是否复制绑定的事件和·.data()·设置的值，默认和第一个参数保持一致，即·.clone()·等同于·.clone(false, false)·，·.clone(true)·等同于·.clone(true, true)·
+.clone([dataEvent] [, deep])：拷贝指定元素，包括子元素
+dataEvent {Boolean} [false]：是否将事件和·data-·属性也拷贝
+deep {Boolean} [dataEvent]：是否所有后代元素也将事件和·data-·属性拷贝，默认和第一个参数保持一致
 !!
 
-比如·$('.demo').clone().appendTo('.test')·
-若元素未经复制就进行添加等操作表示移动该元素
-比如·$('.demo').appendTo('.test')·表示·$('.demo')·被移动到·$('.test')·里面的末尾处
-注意元素的动态状态也会复制，比如·<input type="text">·输入的值，选中的复选框，出于性能方面的考虑，·<textarea>·输入的值和·<select>·选中的值不会被复制，复制的元素在插入到文档之前可修改该元素
+··js
+$('.demo').clone().appendTo('.test')
 
-##内部添加
-!!
-.text([text/function])：获取或设置文本
-.html([html/function])：获取或设置 html，用法同·.text()·
-.append(content [, ...content] / function(index, html))：在元素里面的最后添加，比如·$('.demo').append($('i'), '<p></p>')·
-.appendTo(target)：写法和 .append() 相反，比如·$('<p></p>').appendTo('.demo')·
-.prepend(content [, ...content] / function(index, html))：在元素里面的开头添加，用法同·.append()·
-.prependTo(target)：写法和 .prepend() 相反
-!!
-###.text([text/function])
-获取或设置匹配元素集合中每个元素的合并文本，包括所有的后代元素
-不传入参数表示获取，传入 1 个参数表示设置内容为传入的参数
-或者传入一个函数，接受 2 个参数，分别是当前元素的 index 和文本内容，返回值作为要设置的文本内容
-比如·$('.demo').text()·
+// 若元素未经复制就进行添加等操作表示移动该元素
+$('.demo').appendTo('.test') // $('.demo')被移动到$('.test')内部的末尾处
+··
 
-##外部添加
+### 内部添加
+
 !!
-.after(content [, ...content] / function(index, html))：在匹配元素的后面添加参数（作为兄弟节点），参数用法同·.append()·
-.before(content [, ...content] / function(index, html))：在元素前面添加，用法同·.after()·
+.text([text/fn])：获取或设置文本
+.html([html/fn])：获取或设置 html
+.append(...content/fn)：在元素里面的最后添加，例如·$('.demo').append($('i'), '<p></p>')·
+.appendTo(target)：写法和·.append()·相反，例如·$('<p></p>').appendTo('.demo')·
+.prepend(...content/fn)：在元素里面的开头添加，用法同·.append()·
+.prependTo(target)：写法和·.prepend()·相反
+!!
+
+### 外部添加
+
+!!
+.after(...content/fn)：在匹配元素的后面添加参数（作为兄弟节点），参数用法同·.append()·
+.before(...content/fn)：在元素前面添加，用法同·.after()·
 .insertAfter(target)：和·.after()·的写法相反，要添加的内容被添加到元素的后面
 .insertBefore(target)：和·.before()·的写法相反，要添加的内容被添加到元素的前面
 !!
 
-##外部包裹
+### 外部包裹
+
 !!
-.wrap()：为每个元素添加父元素
-.wrapAll()：为所有的元素添加一个父元素
-.wrapInner()：为每个元素的内部添加父元素
-.unwrap()：为每个元素删除父元素，和 .wrap() 相反
+.wrap(el/fn)：为每个元素添加父元素，传入多个元素只使用第一个，传入多层元素保留只使用最里面的第一个子元素
+.wrapAll(el/fn)：为所有的元素添加一个父元素，若中间有其他元素会被排除，多个元素或多层元素效果同·.wrap()·
+.wrapInner(el/fn)：为每个元素的内部添加父元素，多个元素或多层元素效果同·.wrap()·
+.unwrap([selector])：为每个元素删除父元素，和 .wrap() 相反，可传入选择器在筛选哪些元素的父元素应该被删除
 !!
-###.wrap(element/function(index))
-为匹配的每个元素的外部包裹一个指定的标签，若传入多个元素只使用第一个，若传入多层元素则保留所有元素只使用最里面的第一子元素
-比如现有元素：
-··
-<div class="demo"></div>
-<div class="demo"></div>
-··
-添加外层标签
-··
-$('.demo').wrap('<div class="test"></div>')
 
-// 变成
-<div class="test">
-    <div class="demo"></div>
-</div>
-<div class="test">
-    <div class="demo"></div>
-</div>
-··
-添加多个外层标签
-··
-<div class="test">
-    <div class="first"></div>
-    <div class="second">
-        <div class="child"></div>
-    </div>
-    <div class="third"></div>
-</div>
+### 删除
 
-$('.demo').wrap('.test')
-
-// 变成
-<div class="test">
-    <div class="first">
-        <div class="demo"></div>
-    </div>
-    <div class="second">
-        <div class="child"></div>
-    </div>
-    <div class="third"></div>
-</div>
-<div class="test">
-    <div class="first">
-        <div class="demo"></div>
-    </div>
-    <div class="second">
-        <div class="child"></div>
-    </div>
-    <div class="third"></div>
-</div>
-··
-###wrapAll(element/function(index))
-为匹配的所有元素的外部包裹一个指定的标签，若中间有其他元素会被忽略，多个元素或多层元素效果同·.wrap()·
-比如现有元素：
-··
-<div class="demo"></div>
-<div class="middle"></div>
-<div class="demo"></div>
-··
-添加外层标签
-··
-$('.demo').wrap('<div class="test"></div>')
-
-// 变成
-<div class="test">
-    <div class="demo"></div>
-    <div class="demo"></div>
-</div>
-<div class="middle"></div>
-··
-###.wrapInner(element/function(index))
-在匹配元素的内容外部包裹一个指定的标签，多个元素或多层元素效果同·.wrap()·
-··
-<div class="demo">123 <i></i></div>
-<div class="demo">123 <i></i></div>
-··
-添加外层标签
-··
-$('.demo').wrapInner('<div class="test"></div>')
-
-// 变成
-<div class="demo">
-    <div class="test">123 <i></i></div>
-</div>
-<div class="demo">
-    <div class="test">123 <i></i></div>
-</div>
-··
-###.unwrap([selector])
-将匹配元素集合的父级元素删除，保留自身，包括兄弟元素，和·.wrap()·相反
-可选择传入一个选择器在匹配的元素中筛选哪些元素的父元素应该被删除
-
-##删除
 !!
-.remove()：删除元素和其后代，包括删除绑定的事件和·.data()·绑定的数据
-.detach()：删除元素和其后代，保留绑定的事件和·.data()·绑定的数据
+.remove([selector])：删除元素和其后代，包括绑定的事件和·.data()·绑定的数据，可传入选择器筛选哪些被删除
+.detach()：删除元素和其后代，保留绑定的事件和·.data()·绑定的数据，适用于把元素删除之后再添加到页面中
 .empty()：删除元素的后代，即把元素变成空标签
 !!
-###.remove([selector])
-删除匹配的元素和其所有的后代元素，包括删除绑定的事件和·.data()·绑定的数据
-可选择传入一个选择器在匹配的元素中筛选哪些应该被删除
-比如·$('.demo').remove()·，·$('.demo').remove(':first')·
-###.detach([selector])
-和·.remove()·的用法一样，不同的是会保留绑定的事件和·.data()·绑定的数据，适用于当把元素删除之后再把该元素添加到页面中
-比如：
-··
-<input type="button" value="添加" />
-<div class="demo remove">remove</div>
-<div class="demo detach">detach</div>
 
-$('.demo').on('click', function () {
-    console.log(123)
-})
-var remove = $('.remove').remove()  // 再次被添加无点击效果
-var detach = $('.detach').detach()  // 再次被添加有点击效果
-$('input').on('click', function () {
-    $(this).after(remove, detach)
-})
-··
-###.empty()
-删除匹配元素的所有后代元素，即把元素变成空标签
+### 替换
 
-##替换
 !!
-.replaceWith()：元素被替换成指定元素
-.replaceAll()：和·.replaceWith()·相反，指定元素把目标元素替换
+.replaceWith(newContent/function)：将元素替换成指定元素
+.replaceAll(target)：和·.replaceWith()·写法相反，指定元素把目标元素替换
 !!
-###.replaceWith(newContent/function)
-将匹配的元素替换成指定元素，直接使用页面的元素替换表示移动该元素覆盖目标元素
-比如：
-··
-<div class="demo">123</div>
-<div class="demo">456</div>
 
-// 替换
-$('.demo').replaceWith('<h2>demo<h2>')
+## DOM 状态
 
-// 变成
-<h2>demo</h2>
-<h2>demo</h2>
-··
-###.replaceAll(target)
-和·.replaceWith()·的写法相反，将匹配的元素替换掉每个目标元素
-比如：·$('<h2>demo<h2>').replaceAll('.demo')·
+### 追加
 
-#DOM 状态
-##追加
 !!
-.add()：在已选择的元素中追加指定元素
-.addBack()：在已选择的元素中追加前一个选择的元素
-.pushStack()：生成新的 jQuery 对象
+.add(selector/html [, context])：在已选择的元素中追加指定元素，可选择第二个参数筛选要追加的元素
+.addBack()：在已选择的元素中追加前一个选择的元素，如·$('.demo').nextAll().addBack()·
+.pushStack(el, name, args)：生成新的 jQuery 对象，常用于链式调用中
 !!
-###.add(selector/html [, context])
-在已选择的元素中追加选择指定元素，即·$('.demo').add('p')·等同于·$('.demo, p')·
-比如·$('.demo').removeClass('red').add('p').addClass('active')·表示 .demo 删除 red 类再和 p 元素一起添加 active 类
-也可以追加 html，即·.add('<p></p>')·，但要先添加页面中才会生效
-比如·$('.demo').removeClass('red').add('<p></p>').insertAfter('.demo:last').addClass('active')·
-注意：
-··
-var $demo = $('.demo')
 
-$demo.add('p')  // 临时保存，不会保存到 $demo 变量中
-console.log($demo)  // .demo
+### 回退
 
-$demo = $demo.add('p')  // 再次保存才行
-console.log($demo)  // .demo, p
-··
-可选择第二个参数筛选要追加的元素
-比如·$('.demo').add('p', '.box')·表示 p 属于 .box 的后代元素才会被追加，等同于·$('.demo').add('.box p')·
+!!
+.end()：返回元素的上一次状态，通常用于链式调用中
+!!
 
-###.addBack()
-在已选择的元素中追加前一个选择的元素
-比如·$('.demo').nextAll().addBack()·表示选择 .demo 和之后所有的兄弟元素
+### DOM 遍历
 
-###.pushStack(elements, name, arguments)
-生成新的 jQuery 对象，通常用于链式调用中
-··
-// .demo 删除 class 之后把 p 元素删除，.demo 再添加 class
-$('.demo').removeClass('active').pushStack($('p')).remove().end().addClass('active')
-··
+!!
+.each(function(index, item))：循环元素并执行函数，·this·即当前原生元素，使用·return false·可结束循环
+$.each(jQueryDOM/array/object, function(index, item))：和·.each()·类似，还可以遍历数组和对象
+.map(function(index, item))：在函数内部返回新的值以生成新的 jQuery 对象
+$.map(jQueryDOM/array/object, function(item, index))：和·.map()·类似，，还可以遍历数组和对象
+!!
 
-##回退
-###.end()
-返回元素的上一次状态，通常用于链式调用中
-比如：
-··
-<div class="demo">
-    <div class="first">
-        <div class="child"></div>
-    </div>
-    <div class="second"></div>
-</div>
+## 事件
 
-$('.demo').find('.first').end() // .demo
-$('.demo').find('.child').end() // .demo
-$('.demo').find('.first').find('.child').end()  // .first
-$('.demo').find('.first').find('.child').end().end()    // .demo
-$('.demo').find('.first').removeClass('active').end().find('.second').addClass('active')
-··
+### .on()
 
-#DOM 遍历
-##.each()
-###.each(function(index, item))
-循环元素并执行函数
-接受 2 个参数，index 为当前元素的索引，item 代表当前元素，注意是原生的，也可以用·this·表示当前元素
-使用·return false·可结束循环
-比如：
-··
-$('.demo').each(function (index, item) {
-    console.log($(this).css('color'))
-})
-··
-
-##$.each()
-###$.each(jQueryDOM/array/object, callback(index, item))
-和·.each()·类似，不同的是还可以遍历数组和对象
-
-##.map()
-###.map(callback(index, domElement))
-通过一个函数匹配当前集合中的每个元素，通过返回值生成新的 jQuery 对象
-比如：
-··
-const res = $('input')
-    .map((index, item) => $(item).val())
-    .get() // 此时返回的仍是一个 jQuery 包装的数组，用 .get() 可转为原生数组
-    .join(', ')
-$('p').text(res)
-··
-
-##$.map()
-###$.map(jQueryDOM/array/object, callback(item, index))
-和·.map()·类似，不同的是还可以遍历数组和对象，注意回调函数的参数位置相反
-
-#事件
-##.on()
 绑定事件：·.on(events [, selector] [, data], handler(eventObject))·
+
 !!
-events{String}：事件类型，可添加一个或多个命名空间例如·click.demo·、·click.demo.active·，相当于元素的 class
-selector{String}：触发事件的元素为指定后代元素，即事件代理，常用于变动的后代元素，可选择不填或填写·null·
-data{Anything}：事件触发时传递给回调函数的·event.data·，若是字符串类型则需要填写·selector·参数，否则会被当做·selector·
-handler{Function}：事件触发时执行的函数
+events {String}：事件类型，可添加一个或多个命名空间例如·click.demo·，相当于元素的 class
+selector {String}：触发事件的元素为指定后代元素，即事件代理，常用于变动的后代元素，可选择不填或填写·null·
+data：事件触发时传递给回调函数的·event.data·，若是字符串类型则必须传入·selector·，不然会被当做·selector·
+handler {Function}：事件触发时执行的函数
 !!
 所有以事件名为方法名的方法都是该事件的快捷写法，注意简写的方式没有事件代理
-比如·.click([data,] handler(eventObject))·等同于·.on('click', [data,] handler(eventObject))·
+例如·.click([data,] handler(eventObject))·等同于·.on('click', [data,] handler(eventObject))·
 快捷写法支持的事件包括：
 !!
-鼠标：
+**鼠标**
     click：左键点击
     contextmenu：右键点击
     dblclick：左键双击
@@ -670,65 +478,58 @@ handler{Function}：事件触发时执行的函数
     mouseout：当指针离开元素时（冒泡）
     mouseenter：当指针覆盖元素时（不冒泡）
     mouseleave：当指针离开元素时（不冒泡）
-    hover(fn(e), fn(e))：当指针覆盖和离开时，等同于.mouseenter(fn(e)).mouseleave(fn(e))
-键盘：
-    keydown：按下按键时，如果不抬起来会一直触发（input 和 textarea 元素中）
-    keyup：松开按键时（input 和 textarea 元素中）
-    keypress：按下按键时，不抬起来也只触发一次，且只有字母、数字、符号键和 enter 键按下能触发（input 和 textarea 元素中）
-表单：
+    hover(fn(e), fn(e))：当指针覆盖和离开时，等同于·.mouseenter(fn(e)).mouseleave(fn(e))·
+
+**键盘**
+    keydown：按下按键时，如果不抬起来会一直触发（·<input>·和·<textarea>·元素中）
+    keyup：松开按键时（·<input>·和·<textarea>·元素中）
+    keypress：按下按键时，不抬起来也只触发一次（·<input>·和·<textarea>·元素中）
+
+**表单**
     focus：获得焦点（不冒泡），设置 tabindex 属性也可获得焦点
     blur：失去焦点（不冒泡）
     focusin：获得焦点（冒泡）
     focusout：失去焦点（冒泡）
-    select：选中完文本时（input 和 textarea 元素中）
-    change：元素的值改变的时（input、 textarea 和 select 元素中）
-浏览器：
-    resize：当浏览器的尺寸改变（在·$(window)·上绑定 ），不同浏览器略有不同，例如 Chrome 是改变时持续调用，Opera 在改变后调用
-    scroll：页面滚动时触发（在·$(window)·或滚动容器上绑定），鼠标点击或拖动滚动条、按箭头键、或使用鼠标的滚轮都可能触发
-文档加载：
-    ready：写法·$(fn)·，当文档准备就绪时（其他写法都已弃用，例如·$(document).on('ready', fn)·，实际上·$(document)·什么也没选择）
-    $.holdReady(Boolean)：延迟 ready 事件的触发，在 ready 事件触发前调用，例如先执行·$.holdReady(true)·，即使文档准备就绪也不会触发·$(fn)·，需再执行·$.holdReady(false)·才触发·$(fn)·
-!!
-·$.holdReady(Boolean)·例如：
-··
-// 延迟就绪事件，直到已加载插件
-$.holdReady(true)
-$.getScript('myplugin.js', function () {
-    $.holdReady(false)
-})
-··
+    select：选中完文本时（·<input>·和·<textarea>·元素中）
+    change：元素的值改变的时
 
-##.off()
-移除事件：·.off([events] [, selector ] [, handler ])·
+**浏览器**
+    scroll：页面滚动时触发（在·$(window)·或滚动容器上绑定）
+    resize：当浏览器的尺寸改变（在·$(window)·上绑定 ）
+        不同浏览器略有不同，例如 Chrome 是改变时持续调用，Opera 在改变后调用
+
+**文档加载**
+    ready：写法·$(fn)·，当文档准备就绪时
+        其他写法都已弃用，例如·$(document).on('ready', fn)·，实际上·$(document)·什么也没选择
+    $.holdReady(Boolean)：是否不触发·ready·事件，即用来延迟·ready·事件
+        例如先执行·$.holdReady(true)·，后续不会触发·$(fn)·，需再执行·$.holdReady(false)·才触发·$(fn)·
 !!
-events：一个或多个空格分隔的事件类型和可选的命名空间，或只有命名空间，比如·click.demo·、·click.demo.active·，相当于元素的 class
+
+### .off()
+
+移除事件：·.off([events] [, selector ] [, handler ])·
+
+!!
+events：一个或多个空格分隔的事件类型和可选的命名空间，或只有命名空间
 selector：事件代理的元素
 handler：要移除的事件方法（一个事件可绑定多个方法）
 !!
-··
-$('#demo').off() // 移除所有事件
 
-$('#demo').off('click') // 移除点击事件
+### .one()
 
-$('#demo').off('.test') // 移除指定命名空间的所有事件
-
-$('#demo').off('click', '*') // 移除所有代理事件
-
-$('#demo').click(f1).click(f2)
-$('#demo').off('click', f1) // 仅移除 f1，f2 事件仍触发
-··
-
-##.one()
 用法同·.on()·，事件只会触发一次
 
-##.trigger()
+### .trigger()
+
 手动触发事件：·.trigger(event [, extraParameters])·
-!!
-event{String/$.Event}：事件类型的字符串或 jQuery 的事件对象
-extraParameters{Array/Object}：传递给事件函数的参数
-!!
 通过·.on()·或快捷方式绑定的事件可以用·.trigger()·手动触发
-所有以事件名为调用的方法都是该事件的快捷写法，比如·.click()·等同于·.trigger('click')·，trigger 的快捷写法支持的事件同·on()·的支持
+以事件名为调用的方法都是该事件的快捷写法，例如·.click()·等同于·.trigger('click')·
+
+!!
+event {String/$.Event}：事件类型的字符串或 jQuery 的事件对象
+extraParameters {Array/Object}：传递给事件函数的参数
+!!
+
 ··
 $('#btn1').click(function (e, a, b) {
     console.log(e, a, b)
@@ -741,64 +542,75 @@ $('#btn2').click(function () {
 })
 ··
 
-##.triggerHandler()
+### .triggerHandler()
+
 用法同·.trigger()·，不同之处有：
+
 !!
-triggerHandler 不触发默认事件，例如表单提交 submit
-triggerHandler 只触发第一个匹配到的元素，trigger 会触发所有匹配的元素
-triggerHandler 触发的函数不冒泡
+·triggerHandler·不触发默认事件，例如表单提交·submit·
+·triggerHandler·只触发第一个匹配到的元素，·trigger·会触发所有匹配的元素
+·triggerHandler·触发的函数不冒泡
 !!
 
-##事件对象
-注意，jQuery 的事件对象经过重新定义，所以一些特殊属性例如拖拽事件产生的·e.dataTransfer·属性是没有的，需改回原生的·addEventListener·来监听
+### 事件对象
+
+注意，jQuery 的事件对象重定义过，所以一些特殊属性例如拖拽事件产生的·e.dataTransfer·属性是没有的，需改回原生事件监听
+
 !!
-currentTarget：调用事件的对象，一般情况下等同于 this（前提没有使用箭头函数或改变了 this 的指向）
-target：触发事件的元素，可以是元素本身或子元素冒泡触发的子元素，通常同于和 this 比较是否冒泡了
+currentTarget：调用事件的对象，一般情况下等同于·this·（前提没有使用箭头函数或改变了·this·的指向）
+target：触发事件的元素，可以是元素本身或子元素冒泡触发的子元素，通常同于和·this·比较是否冒泡了
 data：传递的参数
 type：事件的类型
 namespace：当前事件的命名空间
-which：键盘和鼠标事件中的键盘码（@[参考对照表|http://www.t086.com/article/4315]）或鼠标码（左键 1，中建 2，右键 3）
-result：事件处理程序的最后返回值，例如点击事件绑定了 2 个函数，第一个函数中 return 了一个字符串，第二个函数将可以接收到
-relatedTarget：返回事件涉及的元素，例如 mouseover 事件指向是从哪个元素进来的，mouseout 事件指向是离开到最近的那个元素
+which：键盘和鼠标事件中的键盘码（[参考对照表](http://www.t086.com/article/4315)）或鼠标码（左键 1，中建 2，右键 3）
+result：事件的返回值，例如事件绑定了 2 个函数，第一个函数中返回了一个字符串，第二个函数将可以接收到
+relatedTarget：事件涉及的元素，例如·mouseover·是从哪个元素进来的，·mouseout·是离开到最近的那个元素
 pageX：鼠标相对于当前文档左侧的距离，包括滚动的距离
 pageY：鼠标相对于当前文档顶部的距离，包括滚动的距离
-timeStamp：事件触发时距离 1970/1/1 的毫秒数
-preventDefault()：阻止默认行为，例如点击 a 标签会跳转到对应的链接，调用此方法后不会跳转
+timeStamp：事件触发时的时间戳
+
+preventDefault()：阻止默认行为，例如点击·<a>·会跳转到对应的链接，调用此方法后不会跳转
 stopPropagation()：阻止事件的冒泡行为
-stopImmediatePropagation()：阻止其它的事件执行和冒泡行为，例如点击事件绑定了 2 个函数，第一个函数中使用此方法后将不触发第二个函数
+stopImmediatePropagation()：阻止其它的事件执行和冒泡行为，例如事件绑定了 2 个函数将只触发第一个
 isDefaultPrevented()：返回 Boolean 值，检测·event.preventDefault()·是否被调用过
 isPropagationStopped()：返回 Boolean 值，检测·event.stopPropagation()·是否被调用过
 isImmediatePropagationStopped()：返回 Boolean 值，检测·event.stopImmediatePropagation()·是否被调用过
 !!
 
-#过渡动画
-##显示隐藏
+## 过渡动画
+
+### 显示隐藏
+
 !!
 .hide()：隐藏元素
 .show()：显示元素
 .toggle()：如果元素显示就隐藏，隐藏就显示
 !!
-###.hide()
-隐藏元素
-直接使用·.hide()·没有动画，相当于·.css('display', 'none')·
-注意如果 css 设置了·!important·例如·display: block !important;·将隐藏不了，权重不够
 
-^^传入多个参数：^^·.hide([duration] [, easing] [, complete])·
-!!
-duration{Number/String}[400/normal]：动画持续时间，单位 ms，默认·normal·(400)，可选 ·fast·(200)、·slow·(600)
-easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear，其他曲线需要使用插件，比如 @[jQuery Easing Plugin|http://gsgd.co.uk/sandbox/jquery/easing/]
-complete{Function}：动画完成时执行的函数
-!!
-3 个参数都是单独可选的，也表示启用其他默认参数，比如传入一个函数将默认启用了·duration 的 400·和·easing 的 swing·
-动画改变的是：width、height、opacity，直到变成 0，然后设置行内样式·display:none;·
-在开始动画前会将·display·属性值保存在 jQuery 的数据缓存中，如果再次恢复比如使用·.show()·其·display·可以恢复到其初始值
-注意如果原来是·display:inline;·将会在动画的过程中暂时变成·display:inline-block;·，因为这样才能对 width 和 height 做出改变
+#### .hide()
 
-^^传入一个 Object：^^·.hide(options)·
+隐藏元素，直接使用·.hide()·没有动画，相当于·.css('display', 'none')·
+
+**传入多个参数：**·.hide([duration] [, easing] [, complete])·
+
 !!
-duration{Number/String}[400/normal]：动画持续时间，单位 ms，默认·normal·(400)，可选·fast·(200)、·slow(600)·
-easing{String}[swing]：运动曲线，可选 swing（类似 ease）或 linear，其他曲线需要使用插件，比如 @[jQuery Easing Plugin|http://gsgd.co.uk/sandbox/jquery/easing/]
-queue{Boolean/String}[true]：是否将动画放置在效果队列中，若设为 false 将立即开始动画，若设为一个字符串则表示为该动画队列加上名称，执行时只是加入队列中，动画不会立即启动，执行该队列需调用·$(selector).dequeue('queuename')·才会启动，例如·$('.demo').animate({width: 200}).hide({queue: true})·表示先改变宽度再隐藏，设为 false 将立即隐藏
+duration {Number/String} [400]：动画持续时间，单位 ms，可填字符串·normal(400) fast(200) slow(600)·
+easing {String} [swing]：运动曲线，可选·swing·(类似·ease·) 或·linear·，其他需使用插件如 [jQuery Easing](http://gsgd.co.uk/sandbox/jquery/easing/)
+complete {Function}：动画完成时执行的函数
+!!
+
+3 个参数都是单独可选的，但传入一个参数也表示启用其他默认参数，例如传入函数将默认启用了·duration·和·easing·
+动画改变的是：·width height opacity· 直到 0，然后设置·display:none;·
+如果是·display:inline;·的元素将会在动画中暂时变成·display:inline-block;·，因为这样才能改变·width height·
+
+**传入一个 Object：**·.hide(options)·
+
+!!
+duration {Number/String} [400]：动画持续时间，同上
+easing {String} [swing]：运动曲线，同上
+queue {Boolean/String} [true]：是否将动画放置在效果队列中，true？
+    设为·false·将立即开始动画
+    设为字符串表示为该动画队列加上名称，动画不会启动，需调用·.dequeue('queuename')·才会启动
 specialEasing{Object}：分别为属性定义运动曲线，例如·{ width: 'linear', height: 'swing' }·
 step{Function(now, tween)}：每个动画元素的每个动画属性在每帧调用的函数
     now{Number}：当前帧的属性值
