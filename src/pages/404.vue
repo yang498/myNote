@@ -8,7 +8,7 @@
 <script>
 export default {
     components: {
-        VHeader: () => import('P/index/VHeader')
+        VHeader: () => import('@/pages/index/VHeader')
     }
 }
 </script>

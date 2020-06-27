@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import list from 'A/js/menuList'
+import list from '@/assets/js/menuList'
 
 Vue.use(VueRouter)
 
@@ -10,17 +10,17 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            component: () => import('P/index/VIndex.vue'),
+            component: () => import('@/pages/index/VIndex.vue'),
             children: list.flatMap(item => item.list).map(item => {
                 return {
                     path: item.path,
-                    component: () => import('@/' + item.path)
+                    component: () => import('@/pages/article' + item.path)
                 }
             })
         },
         {
             path: '*',
-            component: () => import('P/404')
+            component: () => import('@/pages/404')
         }
     ]
 })

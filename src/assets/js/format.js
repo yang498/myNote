@@ -1,6 +1,6 @@
 /* eslint-disable brace-style */
 /* global $ */
-import store from 'S/store'
+import store from '@/store'
 import { Message } from 'element-ui'
 
 let h2List = []
@@ -32,7 +32,7 @@ const addList = text => {
                 '<span class="head">' + head
                     .replace(/(?<!\\|\([^)]*)\{.+?(?<!\\)\}/, '<i class="type">$&</i>').replace(/\\(?=\{|\})/g, '')
                     .replace(/(?<!\\|\([^)]*)\[.+?(?<!\\)\]/, '<i class="default">$&</i>').replace(/\\(?=\[|\])/g, '')
-                    .replace(/!/, '<b>$&</b>') +
+                    .replace(/(?<!\\)!/, '<b>$&</b>').replace(/\\(?=!)/, '') +
         '</span>').replace(/(.*):$/, '<span class="head">$1</span>')
     }).join('</li><li>')
     return '<li>' + text + '</li>'
@@ -48,7 +48,7 @@ const addTable = text => {
     }).join('') + '</tbody>'
     return `%%<table>${$thead + $tbody}</table>%%`
 }
-const addLink = (text, multi) => '@@学习参考链接：' + text.replace(/\n/g, multi ? '<br>' : '，') + '@@'
+const addLink = (text, multi) => '@@学习参考链接：' + (multi ? '<br>' : '') + text.replace(/\n/g, multi ? '<br>' : '，') + '@@'
 
 // 整理行内标识符，多行合并成单行（列表、表格、代码块、底部链接）
 const formatString = str => {

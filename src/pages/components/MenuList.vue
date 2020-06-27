@@ -17,7 +17,7 @@
                     ]"
                     v-for="(item, index) in parentItem.list"
                     :key="index"
-                    @click="$router.push('/' + item.path), menuActive = [parentIndex, index]"
+                    @click="$router.push(item.path)"
                 >
                     <div>{{item.name}}</div>
                 </li>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import list from 'A/js/menuList'
+import list from '@/assets/js/menuList'
 export default {
     props: {
         li1Class: { type: String, default: '' },
@@ -36,15 +36,20 @@ export default {
         li2Class: { type: String, default: '' }
     },
     data () {
-        let menuActive = [-1, -1]
-        list.forEach((parentItem, parentIndex) => {
-            parentItem.list.forEach((item, index) => {
-                if ('/' + item.path === this.$route.path) menuActive = [parentIndex, index]
-            })
-        })
         return {
-            list,
-            menuActive // 当前目录
+            list
+        }
+    },
+    computed: {
+        // 当前目录
+        menuActive () {
+            let menuActive = [-1, -1]
+            list.forEach((parentItem, parentIndex) => {
+                parentItem.list.forEach((item, index) => {
+                    if (item.path === this.$route.path) menuActive = [parentIndex, index]
+                })
+            })
+            return menuActive
         }
     }
 }

@@ -4,11 +4,11 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import 'A/css/reset.css'
-import 'A/css/common.scss'
-import 'A/css/media.scss'
-import 'A/css/skin.scss'
-import format from 'A/js/format.js'
+import '@/assets/css/reset.css'
+import '@/assets/css/common.scss'
+import '@/assets/css/media.scss'
+import '@/assets/css/skin.scss'
+import format from '@/assets/js/format.js'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false

@@ -1,6 +1,6 @@
 <template>
     <!-- 头部 -->
-    <header class="h40 lh40 tc c-white flex flex-xsb pr z1">
+    <header class="h40 lh40 tc c-white flex flex-xsb pr z2">
         <!-- 移动端 aside 切换按钮 -->
         <icon-menu class="aside-toggle" :active.sync="asideToggle" v-if="$route.path !== '/'"></icon-menu>
 
