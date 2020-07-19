@@ -3,7 +3,6 @@
 </template>
 
 <script>
-/* eslint-disable no-irregular-whitespace */
 import img1 from '@/assets/img/applet01.jpg'
 export default {
     data () {
@@ -75,7 +74,7 @@ iOS 上页面最后的元素·margin-bottom·无效，所以在页面底部留�
 一个小程序主体部分由三个文件组成，必须放在项目的根目录，如下：
 
 !!
-app.js!：小程序逻辑，公共js，比如声明全局变量
+app.js!：小程序逻辑，公共js，例如声明全局变量
 app.json!：小程序公共设置
 app.wxss：小程序公共样式表
 !!
@@ -575,7 +574,7 @@ wxs 模块均为单例，在第一次被引用时会初始化，其他地方多�
 #### tips
 
 假设·form·是传递给组件的数据，若在计时过程中使用·this.setData({ 'form.code.text': time + '秒' })·会触发视图渲染刷新，导致·picker·这类弹出式组件在渲染时被收起或报错
-解决：把计时的变量抽离出来，比如改成使用组件属性传值或改成 slot 插槽，这样就不影响 form 本身
+解决：把计时的变量抽离出来，例如改成使用组件属性传值或改成 slot 插槽，这样就不影响 form 本身
 
 ## 组件
 
@@ -587,431 +586,319 @@ wxs 模块均为单例，在第一次被引用时会初始化，其他地方多�
 视图容器
     view：视图容器，可以当成·div·标签
     scroll-view：可滚动视图容器
-    swiper：轮播图
-    swiper-item：仅可放置在·<swiper>·组件中，宽高自动设置为 100%
-    以及 movable-view、cover-image、cover-view、movable-area
+    swiper，swiper-item：轮播图和子项（子项宽高自动设置为 100%）
+    cover-image，cover-view：覆盖在原生组件上的图片和文本
+    movable-area，movable-view：可拖拽区域和拖拽子项
+    match-media：指定页面尺寸才显示的容器
+    block：常用于·wx:for wx:if·作为包含多个节点的容器，自身不在页面中渲染
 基础内容
-    icon：图标，目前有![auto,24](${img1})，注意wxss无法改变color、size、line-height
-    text：文字容器，内联元素
-    rich-text：富文字容器
+    icon：图标，目前有![auto,24](${img1})，注意·wxss·无法改变·color、size、line-height·
+    text：文本容器，内联元素
+    rich-text：富文本容器
     progress：进度条
 表单
+    input，textarea：输入框，文本域
+    radio，radio-group：单选框，单选框组
+    checkbox，checkbox-group：多选框，多选框组
+    picker，picker-view，picker-view-column：选择器，行内选择器，选择器子项
     button：按钮
-    input：输入框
-    picker：列表选择器
+    slider：滑杆
     switch：开关
-    textarea：文本域
-    以及 checkbox、checkbox-group、editor、form、label、picker-view、picker-view-column、radio、radio-group、slider
+    form：表单容器
+    label：点击触发对应的控件
+    editor：富文本编辑器
 导航
     functional-page-navigator：仅在插件中有效，用于跳转到插件功能页
     navigator：页面链接，相当于·<a>·
 媒体
     image：图片，默认宽 300px、高 225px（4 : 3）
-    以及 audio、video、camera、live-player、live-pusher
+    audio，video，camera：音频，视频，相机
+    live-player，live-pusher：实时音视频播放和录制
+    voip-room：多人音视频对话
 地图
     map：地图
 画布
     canvas：画布
 开放能力
-    open-data：展示微信开放的数据，比如群名称
+    open-data：展示微信开放的数据，如用户信息和群名称
     web-view：承载网页的容器，会自动铺满整个小程序页面。个人类型与海外类型的小程序暂不支持使用
-    以及 ad、official-account
-原生组件说明：层级是最高的，还无法在·<picker-view>·中使用，部分 CSS 样式无法应用于原生组件
-无障碍访问：为了更好地满足视障人士对于小程序的访问需求，基础库自 2.5.0 起，支持部分 ARIA 标签
-block：常用于·wx:for·，以包含多个节点，自身不在页面中显示
+    ad：广告
+    official-account：公众号关注组件
+原生组件：
+    组件：·camera canvas input(focus 时) live-player live-pusher map textarea video·
+    说明：层级最高且部分 CSS 样式不支持等
+无障碍访问：
+    为了更好地满足视障人士对于小程序的访问需求，支持部分 ARIA 标签
+导航栏
+    navigation-bar：页面导航条配置节点
+页面属性配置节点
+    page-meta：用于指定页面的一些属性、监听页面事件
 !!
 
-##text
+### text
+
 !!
-selectable{Boolean}[false]：文本是否可选中
-space{String}[false]：是否显示连续空格，可选 :
+selectable {Boolean} [false]：文本是否可选中
+space {String} [false]：是否显示连续空格
     ensp：中文字符空格一半大小
     emsp：中文字符空格大小
     nbsp：根据字体设置的空格大小
-decode{Boolean}[false]：是否解码，可解析的有 : ·&amp;nbsp;· ·&amp;lt;· ·&amp;gt;· ·&amp;amp;· ·&amp;apos;· ·&amp;ensp;· ·&amp;emsp;·
+decode {Boolean} [false]：是否解码
+    可解析：·&amp;nbsp;· ·&amp;lt;· ·&amp;gt;· ·&amp;amp;· ·&amp;apos;· ·&amp;ensp;· ·&amp;emsp;·
 !!
+
 注意：各个操作系统的空格标准并不一致，<text/> 组件内只支持 <text/> 嵌套，除了文本节点以外的其他节点都无法长按选中
 
-##image
+### image
+
 !!
-src{String}：图片资源地址
-mode{String}[scaleToFill]：图片裁剪缩放模式
-    scaleToFill：100%
-    aspectFit：contain
-    aspectFill：cover
-    top | right | bottom | left | center | top left | top right | bottom left | bottom right：显示原图大小对应的位置
-lazy-load{Boolean}[false]：图片懒加载，只在page与scroll-view下的image有效
-binderror{HandleEvent}：当错误发生时，发布到 AppService 的事件名，事件对象event.detail = {errMsg: 'something wrong'}
-bindload{HandleEvent}：当图片载入完毕时，发布到 AppService 的事件名，事件对象event.detail = {height:'图片高度px', width:'图片宽度px'}
+src {String}：图片资源地址
+mode {String} [scaleToFill]：图片裁剪缩放模式
+    scaleToFill：宽高 100%
+    aspectFit：同·contain·
+    aspectFill：同·cover·
+    top | right | bottom | left | center：原图对应的位置，可单独使用或两两搭配
+lazy-load {Boolean} [false]：懒加载，只在·page·和·scroll-view·中有效
+bindload {HandleEvent}：加载完毕时触发，·event.detail = { height, width }·
+binderror {HandleEvent}：加载错误时触发，·event.detail = { errMsg }·
 !!
 
-##open-data
-用于展示微信开放的数据，比如获取用户头像、昵称无需授权
-!!
-type{String}：开放数据类型，可选 :
-    groupName：拉取群名称
-    userNickName：用户昵称
-    userAvatarUrl：用户头像
-    userGender：用户性别
-    userCity：用户所在城市
-    userProvince：用户所在省份
-    userCountry：用户所在国家
-    userLanguage：用户的语言
-open-gid{String}：群id，当·type="groupName"·时生效，只有当前用户在此群内才能拉取到群名称，获取·open-gid·的方法可查看转发
-lang{String}[en]：以哪种语言展示 userInfo，当·type="user*"·时生效，有效值有 en（英文）、zh_CN（简体中文）、zh_TW（繁体中文）
-!!
-··
-// 得到什么类型的结果就是什么类型的元素
-<open-data type="userAvatarUrl"/>   // 相当于image标签
-<open-data type="userNickName"/>    // 相当于text标签
-··
+## API
 
-##picker
-从底部弹起的滚动选择器，现支持五种选择器，通过 mode 来区分，分别是普通、多列、时间、日期、省市区，默认是普通选择器。选择器的选项>=5个在手机上就会循环展示。
+### 基础
 
-###普通选择器：mode="selector"（默认可以不填）
 !!
-range{Array/Object Array}[[]]：mode为 selector 或 multiSelector 时，range 有效
-range-key{String}：当 range 是一个 Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容
-value{Number}[0]：value 的值表示选择了 range 中的第几个（下标从 0 开始）
-bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = { value: value }
-bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
-disabled{Boolean}[false]：是否禁用
+wx.canIUse：判断小程序的 API、回调、参数、组件等是否在当前版本可用
+wx.base64ToArrayBuffer，wx.arrayBufferToBase64：·Base64·和·ArrayBuffer·互转
+wx.getSystemInfo/Sync：异/同步获取系统信息
+wx.getUpdateManager：获取更新管理器
+wx.updateWeChatApp：跳转到更新微信页面
 !!
 
-###多列选择器：mode="multiSelector"
+### 路由
+
 !!
-range{二维Array/二维Object Array}[[]]：mode为 selector 或 multiSelector 时，range 有效
-range-key{String}：当 range 是一个 二维Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容
-value{Array}[[]]：value 的值表示选择了 range 中的第几个
-bindchange{EventHandle}：value 改变时触发 change 事件，event.detail = {value: value}
-bindcolumnchange{EventHandle}：某一列的值改变时触发 columnchange 事件，event.detail = {column: column, value: value}，column 的值表示改变了第几列（下标从0开始），value 的值表示变更值的下标
-bindcancel{EventHandle}：取消选择或点遮罩层收起 picker 时触发
-disabled{Boolean}[false]：是否禁用
+wx.navigateTo：保留当前页面，跳转到应用内非 tabBar 的页面
+wx.redirectTo：关闭当前页面，跳转到应用内非 tabBar 的页面，所以不能退回
+wx.reLaunch：关闭所有页面，打开到任意页面，如果是 tabBar 则不能带参数
+wx.switchTab：跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面（不会刷新 tabBar 页面），不能带参数
+wx.navigateBack：关闭当前页面，返回上一页面或多级页面（不会刷新返回的页面）
 !!
-示例：
-··
-// 将<picker>标签包围要点击触发的区域即可触发选择器
-<picker bind:change="pickerChange" value="{{index}}" range="{{array}}">
-    <text>选择：{{array[index]}}</text>
-</picker>
-Page({
-    data: {
-        array: ['九江', '吉安', '莆田', '广州', '深圳'],
-        index: 0
-    },
-    pickerChange(e) {
-        this.setData({ index: e.detail.value })
-    }
+
+··js
+wx.navigateTo({
+    url {String} // 路径，可带查询字符串
+    success {Function} // 成功的回调函数
+    fail {Function} // 失败的回调函数
+    complete {Function} // 完成的回调函数
 })
 
-// 对象数组
-<picker bind:change="pickerChange" value="{{index}}" range="{{array}}" range-key="name">
-    <text>选择：{{array[index].name}}</text>
-</picker>
-Page({
-    data: {
-        array: [
-                { id:0, name:'九江' },
-                { id:1, name:'吉安' },
-                { id:2, name:'莆田' },
-                { id:3, name:'广州' },
-                { id:4, name:'深圳' }
-            ],
-        index: 0
-    },
-    pickerChange(e) {
-        this.setData({ index: e.detail.value })
-    }
-})
-
-// 二维数组
-<picker mode="multiSelector" bind:change="pickerChange" value="{{index}}" range="{{array}}">
-    <text>选择：{{array[0][index[0]]}}-{{array[1][index[1]]}}-{{array[2][index[2]]}}</text>
-</picker>
-Page({
-    data: {
-        array: [
-                ['123', '456'],
-                ['吉安', '九江', '莆田'],
-                ['吉安', '广州', '深圳']
-            ],
-        index: [0, 0, 0]
-    },
-    pickerChange(e) {
-        this.setData({ index: e.detail.value })
-    }
+wx.navigateBack({
+    delta {Number} [1] // 返回的页面数，可通过 getCurrentPages() 获取当前的页面栈情况
 })
 ··
 
-#API
+### 界面
 
-##目录
 !!
-**基础**
-    wx.canIUse：判断小程序的API，回调，参数，组件等是否在当前版本可用
-    wx.base64ToArrayBuffer：将 Base64 字符串转成 ArrayBuffer 对象
-    wx.arrayBufferToBase64：将 ArrayBuffer 对象转成 Base64 字符串
-    wx.getSystemInfo/Sync：异/同步获取系统信息
-**更新**
-    wx.getUpdateManager：获取全局唯一的版本更新管理器，用于管理小程序更新，返回·UpdateManager·对象用来管理更新
-**小程序**
-    wx.getLaunchOptionsSync：获取小程序启动时的参数。与·App.onLaunch·的回调参数一致
-    以及·wx.on/offPageNotFound··wx.on/offError··wx.on/offAudioInterruptionBegin/End··wx.on/offAppShow··wx.on/offAppHide·
-**调试**
-    wx.setEnableDebug：设置是否打开调试开关。此开关对正式版也能生效
-    wx.getLogManager：获取日志管理器对象
-**路由**
-    wx.navigateTo：保留当前页面，跳转到应用内非 tabBar 的页面
-    wx.redirectTo：关闭当前页面，跳转到应用内非 tabBar 的页面，所以不能退回
-    wx.reLaunch：关闭所有页面，打开到任意页面，如果是 tabBar 则不能带参数
-    wx.switchTab：跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面（不会刷新 tabBar 页面），不能带参数
-    wx.navigateBack：关闭当前页面，返回上一页面或多级页面
-**交互反馈**
-    wx.showToast：显示消息提示框，可选 success、loading、none
-    wx.showLoading：显示 loading 提示框, 需主动调用 wx.hideLoading 才能关闭提示框
-    wx.hideToast：隐藏消息提示框
-    wx.hideLoading：隐藏 loading 提示框，调用 wx.showToast() 也可覆盖loading 提示框
-    wx.showModal：​显示模态弹窗
-    wx.showActionSheet：显示操作菜单
-    导航栏：设置当前页面的标题、导航条的颜色、显示隐藏导航条加载动画
-    wx.setBackgroundTextStyle：动态设置下拉背景字体、loading 图的样式
-    wx.setBackgroundColor：动态设置窗口的背景色
-    Tab Bar：显示隐藏 TabBar 某一项右上角的红点、显示隐藏 tabBar、设置样式内容
-    wx.loadFontFace：动态加载网络字体。文件地址需为下载类型。iOS 仅支持 https 格式文件地址
-    wx.startPullDownRefresh：开始下拉刷新，效果与用户手动下拉刷新一致
-    wx.stopPullDownRefresh：停止当前页面下拉刷新
-    wx.pageScrollTo：将页面滚动到目标位置，单位 px
-    wx.createAnimation：创建一个动画实例 animation。调用实例的方法来描述动画，其实可以尽量使用 wxss 代替
-    wx.setTopBarText：动态设置置顶栏文字内容，只有当前小程序被置顶时能生效（貌似微信7.0版本开始不生效了）
-    wx.nextTick：延迟一部分操作到下一个时间片再执行（类似于 setTimeout）
-    wx.getMenuButtonBoundingClientRect：获取菜单按钮（右上角胶囊按钮）的布局位置信息。坐标信息以屏幕左上角为原点
-    wx.onWindowResize：监听窗口尺寸变化事件
-    wx.offWindowResize：取消监听窗口尺寸变化事件
-    wx.onKeyboardHeightChange：监听键盘高度变化
-**网络**
-    wx.request：发起网络请求
-    wx.downloadFile：下载文件
-    wx.uploadFile：上传文件
-    WebSocket：创建 WebSocket 连接
-    mDNS：发起局域网网络请求
-    UDP 通信：创建局域网内的 WebSocket 连接
-**数据缓存**
-    wx.setStorage/Sync：异/同步存储本地存储在指定的 key 中，若原来 key 有内容会覆盖，本地缓存大小限制为 10MB
-    wx.getStorage/Sync：异/同步获取本地存储在指定的 key 中的内容
-    wx.getStorageInfo/Sync：异/同步获取本地存储的信息，包含所有key、占用的空间、可用的空间
-    wx.removeStorage/Sync：异/同步从本地缓存中异步移除指定 key
-    wx.clearStorage/Sync：异/同步清空所有本地缓存
-**媒体**
-    wx.saveImageToPhotosAlbum：保存图片到系统相册
-    wx.previewImage：预览图片
-    wx.getImageInfo：获取图片信息
-    wx.compressImage：压缩图片
-    wx.chooseMessageFile：从客户端会话选择文件
-    wx.chooseImage：从本地相册选择图片或使用相机拍照
-    以及操作地图组件、视频、音频、背景音频、实时音视频、录音、相机、富文本
-**位置**
-    wx.openLocation：​使用微信内置地图查看位置
-    wx.getLocation：获取当前的地理位置、速度
-    wx.chooseLocation：打开地图选择位置
-**转发**
-    wx.updateShareMenu：更新转发属性
-    wx.showShareMenu：显示当前页面的转发按钮
-    wx.hideShareMenu：隐藏转发按钮
-    wx.getShareInfo：获取转发详细信息
-**画布**
-    wx.createCanvasContext：创建 canvas 的绘图上下文对象
-    wx.canvasToTempFilePath：把当前画布导出生成指定大小的图片。注意在·draw()·回调里调用该方法才能保证图片导出成功
-**文件**
-    wx.saveFile：保存文件到本地
-    wx.removeSavedFile：删除本地缓存文件
-    wx.openDocument：新开页面打开文档，支持格式有·doc, xls, ppt, pdf, docx, xlsx, pptx·
-    wx.getSavedFileList：获取该小程序下已保存的本地缓存文件列表
-    wx.getSavedFileInfo：获取本地文件的文件信息
-    wx.getFileSystemManager：获取全局唯一的文件管理器
-    wx.getFileInfo：获取临时文件信息
-**开放接口**
-    wx.login：获取临时登录凭证（code）
-    wx.checkSession：校验用户当前 session_key 是否有效，用户越使用小程序越保持有效，越久未使用越有可能失效
-    wx.navigateToMiniProgram：打开另一个小程序
-    wx.navigateBackMiniProgram：返回到上一个小程序。只有在当前小程序是被其他小程序打开时可以调用成功
-    wx.getAccountInfoSync：获取当前帐号信息，返回小程序 appId 和使用的插件信息
-    wx.getUserInfo：获取用户信息，接口后续将不再出现授权弹窗，不建议使用，改为使用·<button>·获取
-    wx.reportMonitor：自定义业务数据监控上报接口
-    wx.reportAnalytics：自定义分析数据上报接口
-    wx.requestPayment：发起微信支付
-    wx.authorize：提前向用户发起授权请求，不会实际调用对应接口，若之前已授权则不会出现授权弹窗直接调用成功
-    wx.openSetting：调起客户端小程序向用户请求过的权限设置界面
-    wx.getSetting：获取某项功能或数据有没有被授权
-    以及获取收货地址、卡券、发票、生物认证、微信运动
-**设备**
-    wx.setClipboardData：设置系统剪贴板的内容
-    wx.getClipboardData：获取系统剪贴板的内容
-    wx.makePhoneCall：打电话
-    以及 iBeacon、WiFi、低功耗蓝牙、手机通讯录联系人、蓝牙、电量、NFC、网络状况、屏幕亮度、截屏事件
-    以及 加速计、罗盘、设备方向、陀螺仪、性能、扫码、振动
-**Worker**
-    wx.createWorker：创建一个 Worker 线程，目前限制最多只能创建一个 Worker
-**第三方平台**
-    wx.getExtConfig/Sync：获取授权的第三方平台给的自定义数据字段
-**WXML**
+交互：Toast 提示，Loading 加载，Modal 模态框，ActionSheet 操作菜单，Alert 页面返回确认框
+导航栏：导航条加载动画，设置页面标题，设置导航条的颜色，隐藏返回首页按钮
+背景：设置下拉背景字体、loading 图的样式，设置窗口的背景色
+Tab Bar：显示隐藏，整体样式，某一项的内容，右上角红点，右上角文本
+字体：·wx.loadFontFace·加载网络字体
+下拉刷新：·wx.startPullDownRefresh·，·wx.stopPullDownRefresh·
+滚动：·wx.pageScrollTo·
+动画：Animation 可创建动画实例，然后调用相关方法进行动画，其实简单的动画用 wxss 即可
+置顶：·wx.setTopBarText· 设置置顶栏文字内容，小程序被置顶时生效
+自定义组件：·wx.nextTick· 延迟一部分操作到下一个时间片再执行（类似于 setTimeout）
+菜单：·wx.getMenuButtonBoundingClientRect· 获取菜单按钮（右上角胶囊按钮）的布局位置信息
+窗口：监听或取消窗口尺寸变化，PC 端可设置窗口大小
+键盘：监听或取消键盘高度变化，主动收起键盘，获取输入框的光标位置（focus 时）
+!!
+
+··js
+wx.showToast({
+    title {String} // 提示的内容
+    icon {String} // 图标，可选success、loading、none
+    image {String} // 自定义图标的本地路径，会覆盖icon
+    duration {Number} [1500] // 持续时间，单位ms
+    mask {Boolean} [false] // 是否显示透明蒙层，防止触摸穿透
+    success {Function} // 成功的回调函数
+    fail {Function} // 失败的回调函数
+    complete {Function} // 完成的回调函数
+})
+wx.hideToast() // 主动隐藏消息提示框
+
+wx.showLoading({
+    title {String} // 提示的内容
+    mask {Boolean} [false] // 是否显示透明蒙层，防止触摸穿透
+    success {Function} // 成功的回调函数
+    fail {Function} // 失败的回调函数
+    complete {Function} // 完成的回调函数
+})
+wx.hideLoading() // 隐藏loading提示框
+··
+
+### 网络
+
+!!
+wx.request：发起网络请求
+wx.downloadFile：下载文件
+wx.uploadFile：上传文件
+WebSocket：创建 WebSocket 连接
+mDNS：发起局域网网络请求
+UDP 通信：创建局域网内的 WebSocket 连接
+!!
+
+#### 说明
+需在小程序后台配置域名白名单，只支持·https·和·wss·协议。且不能使用·IP·或·localhost·或端口号
+在微信开发者工具中可开启不校验请求域名跳过服务器域名的校验，当然在线上环境还是会开启校验
+出于安全考虑·api.weixin.qq.com·不能被配置为服务器域名，只能在后台调用
+
+··js
+wx.request({
+    url {String} // 接口地址
+    data {Object/String/ArrayBuffer} // 请求的参数
+    header {Object} [{'content-type':'application/json'}] // 请求头，不能设置 Referer
+    method {String} [GET] // 请求方式（大写），OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    dataType {String} [json] // 设置返回的数据格式，设为 json 会尝试对返回的数据做一次 JSON.parse
+    responseType {String} [text] // 设置响应的数据类型，可选 text、arraybuffer
+    success {Function(res)} // 成功的回调函数
+        res: {
+            data {Object/String/ArrayBuffer} // 返回的数据
+            statusCode {Number} // 返回的 HTTP 状态码
+            header {Object} // 返回的 HTTP Response Header
+        }
+    fail {Function} // 失败的回调函数
+    complete {Function} // 完成的回调函数
+})
+// 返回一个 requestTask 对象，可调用 abort() 中断请求
+··
+
+### 数据缓存
+
+!!
+wx.setStorage/Sync：异/同步本地缓存，单个 key 大小限制 1MB，总共大小限制为 10MB
+wx.getStorage/Sync：异/同步获取本地缓存
+wx.removeStorage/Sync：异/同步删除本地缓存
+wx.getStorageInfo/Sync：异/同步获取全部的本地缓存
+wx.clearStorage/Sync：异/同步清空全部的本地缓存
+周期性更新：设置自定义登录态
+!!
+
+### 媒体
+
+!!
+地图：创建地图实例，调用相关方法可操作地图
+图片：保存、预览图片和视频、获取信息、压缩、从客户端会话选择文件、选择图片或拍照
+视频：保存、视频编辑器、获取信息、压缩、选择视频或图片或拍摄，创建视频实例调用相关方法可操作
+音频：播放、多音频、创建音频实例调用相关方法可操作
+背景音频：播放、监听播放事件、获取背景音频管理器调用相关方法可操作
+实时音视频：创建实时音视频实例调用相关方法可操作
+录音：开始或结束录音（最多 1 分钟）、获取录音管理器调用相关方法可操作
+相机：创建相机实例调用相关方法可操作
+富文本：创建富文本编辑器实例调用相关方法可操作
+音视频合成：创建音视频处理容器将所有轨道合成一个视频
+实时语音：创建/退出实时语音通话、静音、监听成员说话/在线/视频变化、监听被动断开
+画面录制器：创建 WebGL 画面录制器
+视频解码器：创建视频解码器
+!!
+
+### 其他
+
+!!
+位置：获取当前位置或打开地图
+转发：获取转发信息或显示隐藏转发按钮
+画布：创建画布对象进行操作
+文件：保存、删除、获取本地缓存文件，或在新开页面打开文档（支持 office 和 pdf）
+开放接口：
+    登录：·wx.login·获取临时登录凭证，·wx.checkSession·校验 session_key 是否有效，用户越使用小程序越有效
+    用户信息：·wx.getUserInfo·获取用户信息，不建议使用，改为使用·<button>·获取
+    支付：·wx.requestPayment·发起微信支付
+    授权：·wx.authorize·提前向用户发起授权请求，不会实际调用对应接口，若已授权则直接调用成功
+    设置：·wx.openSetting·调起权限设置界面，·wx.getSetting·获取某项功能有没有被授权
+    其他：小程序跳转，账号信息，数据上报，数据分析，收货地址，卡券，发票，生物认证，微信运动，性能，微信红包
+设备：
+    常用：NFC，WiFi，蓝牙，联系人，剪贴板，屏幕，电话，扫码，
+    其他：外围设备，iBeacon，低功耗蓝牙，电量，网络，加速计，罗盘，设备方向，陀螺仪，性能，振动
+Worker：创建 Worker 线程
+第三方平台：获取第三方平台自定义的数据字段
+WXML：
     wx.createSelectorQuery：返回一个 SelectorQuery 对象实例以获取节点信息
     wx.createIntersectionObserver：用于推断某些节点是否可以被用户看见、有多大比例可以被用户看见
-**广告**
-    wx.createRewardedVideoAd：创建激励视频广告组件
-    wx.createInterstitialAd：创建插屏广告组件
+广告：创建激励视频或插屏广告组件
 !!
 
-##页面导航
-!!
-wx.navigateTo({ 保留当前页面跳转到非 tabBar 的页面，可返回原页面，目前页面路径最多只能十层
-    url{String}!：路径，可带参数，参数与路径之间使用?分隔，参数键与参数值用=相连，不同参数用&分隔
-    success{Function}：接口调用成功的回调函数
-    fail{Function}：接口调用失败的回调函数
-    complete{Function}：接口调用结束的回调函数
-})
-wx.redirectTo(Object)：关闭当前页面，跳转到应用内非 tabBar 的页面，所以不能退回，属性同navigateTo
-wx.reLaunch(Object)：关闭所有页面，打开到任意页面，如果是tabBar则不能带参数，属性同navigateTo
-wx.switchTab(Object)：跳转到 tabBar 页面并关闭所有非 tabBar 页面（不刷新 tabBar 页面），不能带参数，属性同navigateTo
-wx.navigateBack({   关闭当前页面返回上一页面或多级页面（不刷新返回的页面）
-    delta{Number}[1]：返回的页面数，如果·delta·大于现有页面数则返回到首页，可通过·getCurrentPages()·获取当前的页面栈情况
-})
-!!
+### 转发说明
 
-##提示框
+在 Page 中定义·onShareAppMessage()·，右上角菜单才会显示转发按钮，返回一个对象用于自定义转发内容
 
-###消息提示框
-!!
-wx.showToast({
-    title{String}!：提示的内容
-    icon{String}：图标，可选success、loading、none
-    image{String}：自定义图标的本地路径，会覆盖icon
-    duration{Number}[1500]：持续时间，单位ms
-    mask{Boolean}[false]：是否显示透明蒙层，防止触摸穿透
-    success{Function}：成功的回调函数
-    fail{Function}：失败的回调函数
-    complete{Function}：完成的回调函数
-})
-wx.hideToast()：主动隐藏消息提示框
-!!
-
-###loading提示框
-需调用 wx.hideLoading() 后才会消失
-!!
-wx.showLoading({
-    title{String}!：提示的内容
-    mask{Boolean}[false]：是否显示透明蒙层，防止触摸穿透
-    success{Function}：成功的回调函数
-    fail{Function}：失败的回调函数
-    complete{Function}：完成的回调函数
-})
-wx.hideLoading()：隐藏loading提示框
-!!
-
-##网络请求
-
-###说明
-注意在小程序后台配置域名白名单，只支持·https·和·wss·协议。且不能使用·IP地址·或·localhost·，不能带端口号，必须经过·ICP备案·。
-出于安全考虑·api.weixin.qq.com·不能被配置为服务器域名，相关API也不能在小程序内调用，只能在后台调用。
-在微信开发者工具中可开启不校验请求域名跳过服务器域名的校验，手机也开启调试模式不会进行服务器域名的校验。当然上线还是会开启校验。
-默认请求超时时间和最大超时时间都是 60s，request、uploadFile、downloadFile 的最大并发限制是 10 个。
-只要服务器有返回东西都会进入 success 回调，最好根据 statusCode 再判断。
-
-###发起网络请求
-!!
-wx.request({
-    url{String}!：接口地址
-    data{Object/String/ArrayBuffer}：请求的参数，如果是非 String 类型会转换成 String 类型，转换规则如下 :
-        GET请求： query string（encodeURIComponent(k)=encodeURIComponent(v)&...）
-        POST请求且且 header['content-type'] 为 application/json 的数据：对数据进行 JSON 序列化
-        POST请求且且 header['content-type'] 为 application/x-www-form-urlencoded 的数据：同 GET 的 query string
-    header{Object}[{'content-type':'application/json'}]：请求头，不能设置 Referer
-    method{String}[GET]：请求方式（需大写），有效值 OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-    dataType{String}[json]：设置返回的数据格式，设为 json 会尝试对返回的数据做一次 JSON.parse
-    responseType{String}[text]：设置响应的数据类型，可选 text、arraybuffer
-    success{Function(res)}：成功的回调函数
-        res：{
-            data{Object/String/ArrayBuffer}：返回的数据
-            statusCode{Number}：返回的 HTTP 状态码
-            header{Object}：返回的 HTTP Response Header
-        }
-    fail{Function}：失败的回调函数
-    complete{Function}：完成的回调函数
-})
-!!
-返回一个 requestTask 对象，可调用·abort()·用于中断请求任务，比如：
-··
-const requestTask = wx.request({
-    url: 'test.php',
-    success: function(res) {
-        console.log(res.data)
-    }
-})
-
-requestTask.abort() // 取消请求任务
-··
-
-##转发
-在 Page 中定义 onShareAppMessage 函数，右上角菜单才会显示转发按钮， return 一个 Object 用于自定义转发内容
-!!
-onShareAppMessage(res) {
+··js
+onShareAppMessage (res) {
     res：{
-        from{String}：转发事件来源。button：页面内转发按钮；menu：右上角转发菜单
-        target{Object}：如果 from 值是 button，则 target 是触发这次转发事件的 button，否则为 undefined
+        from {String} // 转发事件来源。button：页面内转发按钮；menu：右上角转发菜单
+        target {Object} // 如果 from 值是 button，则 target 是触发这次转发事件的 button，否则为 undefined
     }
     return {
-        title：转发的标题，默认为当前小程序名称
-        path：转发的路径，默认为当前页面路径 ，必须是以 / 开头的完整路径
-        imageUrl：图片路径，支持PNG及JPG，默认为当前页面的截图，长宽比是 5:4
+        title // 转发的标题，默认为当前小程序名称
+        path // 转发的路径，默认为当前页面路径 ，必须是以 / 开头的完整路径
+        imageUrl // 图片路径，支持PNG及JPG，默认为当前页面的截图，长宽比是 5:4
     }
 }
-!!
-通常开发者希望转发出去的小程序被二次打开的时候能够获取到一些信息，例如群的标识。
-调用·wx.showShareMenu·并且设置 withShareTicket 为·true·，当用户将小程序转发到任一群聊之后，此转发卡片在群聊中被其他用户打开时，可以在·App.onLaunch()·或·App.onShow()·获取到一个 shareTicket。通过调用·wx.getShareInfo()·接口传入此 shareTicket 可以获取到转发信息。
-注意只有转发到群聊中打开才可以获取到 shareTickets 返回值，单聊没有 shareTickets，shareTicket 仅在当前小程序生命周期内有效。
+··
 
-##WXML节点信息
+通常开发者希望转发出去的小程序被二次打开的时候能够获取到一些信息，例如群的标识
+调用·wx.showShareMenu·并且设置·withShareTicket·为·true·
+当转发到群聊后并被其他用户打开时，可以在·App.onLaunch()·或·App.onShow()·获取到·shareTicket·
+然后调用·wx.getShareInfo()·接口传入此·shareTicket·可以获取到转发信息
+注意单聊没有·shareTickets·，·shareTicket·仅在当前小程序生命周期内有效
+
+### WXML 节点信息说明
+
 ·wx.createSelectorQuery()·：返回一个·SelectorQuery·对象实例，调用相关方法以获取相关节点：
+
 !!
 in(component)：选择自定义组件 component 内的节点
-select(selector)：在当前页面下选择第一个匹配的节点，返回一个NodesRef对象实例，用于获取节点信息，selector支持 :
-    #id、.class、#id, .class、.parent>.child、.parent .children、.parent >>> .children（跨自定义组件的后代选择器）
-selectAll(selector)：在当前页面下选择所有匹配的节点，返回一个数组形式的NodesRef对象实例
-selectViewport()：选择显示区域（当前页面），可用于获取显示区域的尺寸、滚动位置等信息，返回一个NodesRef对象实例
-exec([callback])：执行所有的请求，请求结果按请求次序构成数组，在callback的第一个参数中返回
-!!
-返回的 NodesRef 对象实例可调用的方法有：
-!!
-boundingClientRect([callback])：返回节点信息，包括 id、dataset、left、right、top、bottom、width、height，单位为px
-scrollOffset([callback])：返回节点滚动位置信息，节点必须是 scroll-view 或 viewport，包括 id、dataset、scrollTop、scrollLeft，单位为 px
-context：添加节点的 Context 对象查询请求，目前支持 VideoContext、CanvasContext、LivePlayerContext 和 MapContext 
-fields(fields,[callback])：自定义指定获取节点的相关信息，返回值是nodesRef对应的selectorQuery。可指定获取的字段包括
-    id{Boolean}[false]：是否返回节点id
-    dataset{Boolean}[false]：是否返回节点dataset
-    rect{Boolean}[false]：是否返回节点布局位置（left、right、top、bottom）
-    size{Boolean}[false]：是否返回节点尺寸（width、height）
-    scrollOffset{Boolean}[false]：是否返回节点的 scrollLeft scrollTop ，节点必须是scroll-view或viewport
-    properties{StringArray}[[]]：指定节点属性名列表，以返回对应属性值（ id、class、style 和事件绑定的属性值不可获取）
+select(selector)：在当前页面下选择第一个匹配的节点，返回 NodesRef 对象实例，用于获取节点信息，支持：
+    ·#id、.class、#id, .class、.parent > .child、.parent .children·
+    ·.parent >>> .children·（选择组件内的元素）
+selectAll(selector)：在当前页面下选择所有匹配的节点，返回一个数组形式的 NodesRef 对象实例
+selectViewport()：选择显示区域，可用于获取显示区域的尺寸、滚动位置等信息，返回 NodesRef 对象实例
+exec([call])：执行所有的请求，请求结果按请求次序构成数组，在 call 的第一个参数中返回
 !!
 
-示例代码：
-··
+返回的 NodesRef 对象实例可调用的方法：
+
+!!
+boundingClientRect([call])：返回节点信息·id dataset left right top bottom width height·，单位 px
+scrollOffset([call])：返回·scroll-view viewport·滚动位置·id dataset scrollTop scrollLeft·，单位 px
+context：添加 Context 对象查询请求，支持 VideoContext、CanvasContext、LivePlayerContext 和 MapContext 
+fields(fields, [call])：自定义获取节点的相关信息，返回值是 nodesRef 对应的 selectorQuery：
+    id {Boolean} [false]：是否返回节点 id
+    dataset {Boolean} [false]：是否返回节点 dataset
+    rect {Boolean} [false]：是否返回节点布局位置·left right top bottom·
+    size {Boolean} [false]：是否返回节点尺寸·width height·
+    scrollOffset {Boolean} [false]：是否返回节点的·scrollLeft scrollTop·（·scroll-view viewport·）
+    properties {StringArray} [[]]：指定属性名列表（id、class、style 和事件绑定的属性值不可获取）
+!!
+
+··js
+const Query = wx.createSelectorQuery()
+
 // 获取某个节点的相关信息
-const query = wx.createSelectorQuery()
-const ref = query.select('.class')
-ref.boundingClientRect(res => {
+Query.select('.demo').boundingClientRect(res => {
     console.log(res)
 }).exec()
 
 // 获取多个节点的相关信息
-    wx.createSelectorQuery().selectAll('.a-class').boundingClientRect().exec(function(res){
+Query.selectAll('.demo').boundingClientRect().exec(res => {
     res.forEach(item => {
         console.log(item)
     })
 })
 
 // 获取 fields
-    wx.createSelectorQuery().select('#id').fields({
+Query.select('#demo').fields({
     dataset: true,
     size: true,
     scrollOffset: true,
@@ -1027,105 +914,84 @@ ref.boundingClientRect(res => {
 }).exec()
 ··
 
-##登录
+### 微信支付说明
 
-###wx.login
-调用接口·wx.login()·获取临时登录凭证，以换取用户的 openid、session_key、unionid
-用户向公众号发送消息时，公众号方收到的消息发送者是一个OpenID，是使用用户微信号加密后的结果，每个用户(微信号)对每个公众号有一个唯一的 OpenID
-!!
-wx.login({
-    timeout{Number}：超时时间，单位 ms
-    success{Function(res)}!：成功的回调
-        res：{
-            errMsg{String}：调用结果
-            code{String}：用户登录凭证（有效期五分钟）
-        }
-    fail{Function}：失败的回调
-    complete{Function}：完成的回调
-})
-!!
-然后在服务器后台调用指定接口，使用 code 换取 openid、session_key、unionid，地址
-··
+首先开通[微信支付平台](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F)，然后关联小程序
+在微信支付服务后台生成预支付交易单，参考[微信支付接口文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
+URL 地址：·https://api.mch.weixin.qq.com/pay/unifiedorder·，参考[小程序支付统一下单接口](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1)
+返回的结果都是小程序支付 API 的参数，所以请求成功后就可以调起支付·wx.requestPayment()·
+
+## 登录
+
+### wx.login
+
+
+调用·wx.login()·可获取临时登录凭证
+然后在服务器后台调用指定接口传入临时登录凭证可换取用户的 openid、session_key、unionid
+
+### 后台调用的接口
+
+··html
 https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
 ··
-参数说明：
+
 !!
 appid!：小程序唯一标识，在小程序后台或微信开发者工具可查看
 secret!：小程序的 app secret，在小程序后台查看
-js_code!：wx.login 得到的 code
-grant_type!：填写为 authorization_code 即可
+js_code!：·wx.login()·得到的 code
+grant_type!：填写为·authorization_code·
 !!
-返回的结果：
+
+### 返回的结果
+
 !!
-openid：用户唯一标识
+openid：用户唯一标识，每个用户的微信号对每个公众号有一个唯一的 OpenID
 session_key：会话密钥，生成对比 signature 以校验数据的完整性和解密 encryptedData
 unionid：用户在开放平台的唯一标识符（满足UnionID下发条件才会出现）
 !!
-属性说明：
-!!
-session_key：用于在服务器解密·wx.getUserInfo()·返回的敏感数据，为了数据安全不建议服务器把·session_key·下发到小程序
-unionid：如果开发者拥有多个移动应用（比如在 APP 内开发了微信分享、微信支付）、网站应用（比如在某网站开放了微信快捷登录）、和公众帐号，微信针对用户在不同的应用下都有唯一的一个·openId·，所以在不同的公众账号下·openid·是不一样的，但·unionid·却是一样的
-    对于拥有多个账号的企业来说，·unionid·可以帮助识别不同公众账号下的用户是否是同一个人。这样在不同账号下对该用户提供的服务可以连续起来了，可以实现多个小程序、公众号、APP之间数据互通。还可以去除重复关注的用户数，便于统计真实的关注用户总数
-    unionid 作为互通的用户标识，不建议作为用户ID，应该用·openid·。否则一旦发生小程序、公众号或者APP迁移到其他的开放平台下，就无法识别出来原来的用户了（迁移指微信开放平台的a帐号迁移到了b帐号）。而迁移小程序只要·appid·不变，·openid·就是不会变的。当然如果能保证账号之间不会迁移用·unionid·作为用户标识也是可以的。
-unionid 获得途径：
-    调用接口 wx.getUserInfo，从解密数据中获取 UnionID。注意本接口需要用户授权，需妥善处理拒绝授权后的情况
-    如果开发者帐号下存在同主体的公众号，并且该用户已经关注了该公众号。可以通过wx.login获取到该用户UnionID
-    如果开发者帐号下存在同主体的公众号或移动应用，并且该用户已经授权登录过该公众号或移动应用。也可以通过wx.login获取到
-!!
 
-###设计规范
+### session_key
+
+用于在服务器解密·wx.getUserInfo()·返回的敏感数据，为了数据安全不建议把·session_key·下发到小程序
+
+### unionid
+
+如果开发者拥有多个移动应用（例如在 APP 内使用了微信分享、微信支付）、网站应用（例如微信快捷登录）、和公众帐号
+微信针对用户在不同的应用下有唯一的·openId·，但·unionid·却是一样的
+所以·unionid·可以帮助识别不同公众账号下的用户是否是同一个人
+这样可以实现多个小程序、公众号、APP 之间数据互通。还可以去除重复关注的用户数统计真实的关注用户总数
+注意·unionid·不建议作为用户 ID，应该用 ·openid·。因为如果公众号的账号迁移了就无法识别出来原来的用户了
+而迁移小程序只要·appid·不变·openid·就不变
+
+#### 获得途径
+
+调用接口·wx.getUserInfo()·，从解密数据中获取 UnionID。注意本接口需要用户授权，需妥善处理拒绝授权后的情况
+如果开发者帐号下存在同主体的公众号，并且该用户已经关注了该公众号。可以通过·wx.login()·获取
+如果开发者帐号下存在同主体的公众号或移动应用，并且该用户已经授权登录过也可以通过·wx.login()·获取
+
+### 设计规范
+
 当开发者在小程序首页就调用·wx.getUserInfo()·或·wx.authorize()·时，会造成一进入小程序就出现授权弹窗
-这就导致了部分用户在不了解这个小程序前可能会点击拒绝，如果开发者没有对拒绝的情况做处理，可能会因为不良体验而流失用户
-所以微信端做出了调整，·wx.getUserInfo()·不依赖·wx.login()·就能得到数据，并不会调用授权窗口，改用·button·组件来获取用户信息
-如果只需要展示而不获取用户的开放信息（头像、昵称等）用·<open-data>·组件就行了，还不用弹窗授权
-一个好的互联网产品，首页应该传递给用户产品理念，在需要展示用户信息的地方才去提示授权，比如未登录的淘宝在浏览完商品后点击购买才要求登录
-如果在小程序使用前一定要用户登录或进行到需要用户登录的操作时，可以将获取用户信息的·button·组件放置到页面中，并说明：
+这就导致了部分用户在不了解这个小程序前会点击拒绝，如果没有对拒绝的情况做处理又会因为不良体验而流失用户
+好的产品首页应该传递给用户产品理念，在需要展示用户信息的地方才去提示授权
+如果一定要用户登录或进行到需要登录时，可以将获取用户信息的·button·组件放置到页面中，并说明：
 为什么需要授权？ 需要用户的什么信息？ 授权有什么好处？
 接下来在页面上放置一个明显的登录按钮，建议不要有其他的点击区域，让用户专注登录
-用户可能会更改昵称和头像，建议定期使用·wx.getUserInfo·更新信息，如果用户关掉了授权或本地删除了小程序则用·button·组件重新授权
+用户可能会更改昵称和头像，建议定期更新信息
 
-###登录流程时序建议
-!./img/html/wechat-applet06.jpg,600
+## 工具
 
-##微信支付
-首先开通@[微信支付平台|https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F]，然后关联小程序，交互过程示意图：
-!./img/html/wechat-applet02.jpg,700
-在微信支付服务后台生成预支付交易单，参考@[微信支付接口文档|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1]
-URL 地址：·https://api.mch.weixin.qq.com/pay/unifiedorder·，参考@[小程序支付统一下单接口|https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1&index=1]
-返回的结果都是小程序支付 API 的参数，所以请求成功后就可以调起支付窗口：
-!!
-wx.requestPayment({
-    timeStamp{String}!：时间戳从1970年1月1日00:00:00至今的秒数，即当前的时间
-    nonceStr{String}!：随机字符串，长度为32个字符以下
-    package{String}!：统一下单接口返回的 prepay_id 参数值，提交格式如·prepay_id=*·
-    signType{String}!：签名算法，暂支持 MD5
-    paySign{String}!：MD5 签名
-    success{Function}：成功的回调函数
-    fail{Function}：失败的回调函数
-    complete{Function}：结束的回调函数
-})
-!!
+### 介绍
 
-#工具
+开发小程序需使用[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
+新建项目时需要在小程序后台注册后的 AppID，没有的话也可选择体验模式
+体验模式无法进行代码真机预览和上传等操作，部分 API 无法正常调用
+注意登录的微信号需要是该 AppID 的小程序后台绑定过的开发者
+各机型部分兼容性可能不一致，建议开发者需要在真机上检查真实表现
 
-##介绍
-开发小程序需使用@[微信开发者工具|https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html]
-新建项目时需要在小程序后台注册后的 AppID，没有的话也可选择体验模式，但体验模式无法进行代码真机预览和上传等操作，部分 API 无法正常调用，注意登录的微信号需要是该 AppID 的小程序后台绑定过的开发者
-微信小程序运行在三端：iOS、Android 和 用于调试的开发者工具。
-三端的脚本执行环境以及用于渲染非原生组件的环境是各不相同的：
-!!
-iOS：小程序的 javascript 代码是运行在 JavaScriptCore 中，是由 WKWebView 来渲染的，环境有 iOS8、iOS9、iOS10
-Android：小程序的 javascript 代码是通过 X5 JSCore来解析，是由 X5 基于 Mobile Chrome 53/57 内核来渲染的
-开发工具：小程序的 javascript 代码是运行在 nwjs 中，是由 Chrome Webview 来渲染的
-!!
-尽管三端的环境是十分相似的，但是还是有些许区别：
-wxss 渲染表现不一致。尽管可以通过开启样式补全来规避大部分的问题 ，还是建议开发者需要在 iOS 和 Android 上分别检查小程序的真实表现。
-在 0.10.101000 以及之后版本的开发工具中，会默认使用 babel 将开发者 ES6 语法代码转换为三端都能很好支持的 ES5 的代码，帮助开发者解决环境不同所带来的开发问题。注意在开启 ES6 转换功能的情况下会启用 javasctipt 严格模式
+### 快捷键
 
-##快捷键
 !!
-ctrl + X：剪切，如果没有选中文字则剪切当前行
-ctrl + C：复制，如果没有选中文字则复制当前行
 shift + alt + F：格式化代码
 alt + ⬆：代码上移一行
 alt + ⬇：代码下移一行
@@ -1136,70 +1002,46 @@ shift + ctrl + F：整个项目内搜索
 shift + ctrl + R：替换
 ctrl + D：选择下一个匹配
 ctrl + shift + L：选择所有匹配
-ctrl + U：光标回退到上一个位置
-ctrl + I：选中当前行
 !!
 
-##Git 状态展示
-如果所在的小程序工程目录（project.config.json 所在目录）存在 Git 仓库，编辑器可以展示目前的 Git 状态
-文件图标状态的含义如下：
-!!
-U：文件未追踪（Untracked）
-A：新文件（Added, Staged）
-M：文件有修改（Modified）
-+M：文件有修改（Modified, Staged）
-C：文件有冲突（Conflict）
-D：文件被删除（Deleted）
-!!
-文件夹目录图标状态的含义如下：
-!!
-小红点：目录下至少存在一个删除状态的文件
-小橙点：目录下至少存在一个冲突状态的文件
-小蓝点：目录下至少存在一个未追踪状态的文件
-小绿点：目录下至少存在一个修改状态的文件
-!!
-如果某一文件存在修改（Modified），可以右键点击此文件，并选择 “与上一版本比较”，则可以查看当前工作区文件与 HEAD 版本的比较
-比较时文件夹目录图标状态的含义如下：
-!!
-蓝色线条：此处的代码有变动
-绿色线条：此处的代码是新增的
-红色三角箭头：此处有代码被删除
-!!
+### 项目配置文件
 
-##项目配置文件
 可以在项目根目录使用·project.config.json·文件对项目进行配置
+
 !!
-miniprogramRoot{Path String}：指定小程序源码的目录(需为相对路径)
-qcloudRoot{Path String}：指定腾讯云项目的目录(需为相对路径)
-pluginRoot{Path String}：指定插件项目的目录(需为相对路径)
-compileType{String}：编译类型，可选 miniprogram（小程序）、plugin（小程序插件）
-setting{Object}：项目设置
-    es6{Boolean}：是否启用 es5 转 es6
-    postcss{Boolean}：上传代码时样式是否自动补全
-    minified{Boolean}：上传代码时是否自动压缩
-    urlCheck{Boolean}：是否检查安全域名和 TLS 版本
-libVersion{String}：基础库版本
-appid{String}：项目的 appid，只在新建项目时读取
-projectname{String}：项目名字，只在新建项目时读取
-packOptions{Object}：打包配置选项，打包是预览 、上传时对项目进行的必须步骤
-    ignore{Object Array}：用以配置打包时对符合指定规则的文件或文件夹进行忽略，以跳过打包的过程，这些文件或文件夹将不会出现在预览或上传的结果内。每项如下 :
-        type{String}：类型，可选folder（文件夹）、file（文件）、suffix（后缀）、prefix（前缀）
-        value{String}：路径或取值，不支持通配符、正则表达式。若是路径则以小程序目录 (miniprogramRoot) 为根目录
-scripts{Object}：自定义预处理
+miniprogramRoot {Path String}：指定小程序源码的目录(需为相对路径)
+qcloudRoot {Path String}：指定腾讯云项目的目录(需为相对路径)
+pluginRoot {Path String}：指定插件项目的目录(需为相对路径)
+compileType {String}：编译类型，可选 miniprogram（小程序）、plugin（小程序插件）
+setting {Object}：项目设置
+    es6 {Boolean}：是否启用 es5 转 es6
+    postcss {Boolean}：上传代码时样式是否自动补全
+    minified {Boolean}：上传代码时是否自动压缩
+    urlCheck {Boolean}：是否检查安全域名和 TLS 版本
+libVersion {String}：基础库版本
+appid {String}：项目的 appid，只在新建项目时读取
+projectname {String}：项目名字，只在新建项目时读取
+packOptions {Object}：打包配置选项，打包是预览 、上传时对项目进行的必须步骤
+    ignore  {Object Array}：忽略指定规则的文件或文件夹
+        type {String}：类型，可选folder（文件夹）、file（文件）、suffix（后缀）、prefix（前缀）
+        value {String}：路径或取值，不支持通配符、正则表达式。若是路径则以小程序目录为根目录
+scripts {Object}：自定义预处理
     beforeCompile：编译前预处理命令
     beforePreview：预览前预处理命令
     beforeUpload：上传前预处理命令
 !!
 
-#云开发
-开发者可以使用云开发开发微信小程序、小游戏，无需搭建服务器，即可使用云端能力。同开发者已经使用的云服务相互兼容，并不互斥。
+## 云开发
+
+无需搭建服务器即可使用云端能力。和开发者已经使用的云服务相互兼容，并不互斥
+
 %%
-能力,作用,说明
-,,1
-云函数,无需自建服务器,在云端运行的代码，微信私有协议天然鉴权，开发者只需编写自身业务逻辑代码
-数据库,无需自建数据库,一个既可在小程序前端操作，也能在云函数中读写的 JSON 数据库
-存储,无需自建存储和 CDN,在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理
-云调用,原生微信服务集成,基于云函数免鉴权使用小程序开放接口的能力，包括服务端调用、获取开放数据等能力
+| 能力 | 作用 | 说明 |
+| :-: | :-: | :- |
+| 云函数 | 无需自建服务器 | 在云端运行的代码，微信私有协议天然鉴权，开发者只需编写自身业务逻辑代码 |
+| 数据库 | 无需自建数据库 | 一个既可在小程序前端操作，也能在云函数中读写的 JSON 数据库 |
+| 存储 | 无需自建存储和 CDN | 在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理 |
+| 云调用 | 原生微信服务集成 | 基于云函数免鉴权使用小程序开放接口的能力，包括服务端调用、获取开放数据等能力 |
 %%
 
 @@@

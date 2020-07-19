@@ -66,7 +66,7 @@ article {
     .content {
         max-width: 1000px;
         margin: 0 auto;
-        &  > :not(h1):not(h2):not(h3):not(h4):not(p) {
+        & > :not(h1):not(h2):not(h3):not(h4):not(p) {
             margin: 10px 2em;
         }
     }
@@ -221,7 +221,7 @@ article {
     .link {
         font-size: 18px;
         line-height: 30px;
-        margin-top: 50px;
+        margin-top: 50px !important;
         padding-top: 20px;
         border-top: 1px dashed #999;
         .pd {
