@@ -1,5 +1,4 @@
 <template>
-    <!-- 头部 -->
     <header class="h40 lh40 tc c-white flex flex-xsb pr z2">
         <!-- 移动端 aside 切换按钮 -->
         <icon-menu class="aside-toggle" :active.sync="asideToggle" v-if="$route.path !== '/'"></icon-menu>
@@ -53,9 +52,9 @@
 <script>
 export default {
     components: {
-        MenuList: () => import('../components/MenuList'),
-        IconGit: () => import('../components/IconGit'),
-        IconMenu: () => import('../components/IconMenu')
+        MenuList: () => import('./components/MenuList'),
+        IconGit: () => import('./components/IconGit'),
+        IconMenu: () => import('./components/IconMenu')
     },
     props: {
         aside: { type: Boolean, default: false },
@@ -115,12 +114,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.left { margin-left: -100px; }
-.menu ::v-deep {
-    ul { height: 0; opacity: 0; border-radius: 0 0 4px 4px; }
-    li:hover ul { height: auto; opacity: 1; }
+.left {
+    margin-left: -100px;
 }
-.handle a { padding-top: 8px; }
+.menu ::v-deep {
+    ul {
+        height: 0;
+        opacity: 0;
+        border-radius: 0 0 4px 4px;
+        box-shadow: 0 0 4px rgba(#000, 0.5);
+    }
+    li:hover ul {
+        height: auto;
+        opacity: 1;
+    }
+}
+.handle a {
+    padding-top: 8px;
+}
 .el-dialog ul {
     padding: 0 50px;
     li {

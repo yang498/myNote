@@ -9,7 +9,7 @@ export default {
             text: `
 # vue
 
-## 介绍
+## 概述
 
 本文档基于 Vue 2.x
 轻量级的 MVVM 框架，吸收了 angular 和 react 的优点，因为是国人开发，所以中文支持友好，方便学习

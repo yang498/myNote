@@ -1,5 +1,4 @@
 <template>
-    <!-- 首页 -->
     <menu-list
         class="section ofy flex flex-wrap flex-xc tc"
         li1-class="li1 br4 of"
@@ -12,7 +11,7 @@
 <script>
 export default {
     components: {
-        MenuList: () => import('../components/MenuList')
+        MenuList: () => import('./components/MenuList')
     }
 }
 </script>
@@ -23,9 +22,23 @@ export default {
     padding: 50px 0;
 }
 .section ::v-deep {
-    .li1 { width: 300px; margin: 20px; border: 1px solid #ccc; }
-    ul { height: calc(100% - 40px); padding: 10px 0 20px; }
-    .li2 { margin: 10px 10px 0; padding: 3px 6px; border: 1px solid; }
-    .underway, .complete { border: 2px solid; }
+    .li1 {
+        width: 300px;
+        margin: 20px;
+        border: 1px solid #ccc;
+    }
+    ul {
+        height: calc(100% - 40px);
+        padding: 10px 0 20px;
+    }
+    .li2 {
+        margin: 10px 10px 0;
+        padding: 3px 6px;
+        border: 1px solid;
+    }
+    .underway,
+    .complete {
+        border: 2px solid;
+    }
 }
 </style>

@@ -27,10 +27,10 @@
 let timer = null
 export default {
     components: {
-        VHeader: () => import('./VHeader'),
-        VMenu: () => import('./VMenu'),
-        VAside: () => import('./VAside'),
-        VArticle: () => import('./VArticle')
+        VHeader: () => import('./index/VHeader'),
+        VMenu: () => import('./index/VMenu'),
+        VAside: () => import('./index/VAside'),
+        VArticle: () => import('./index/VArticle')
     },
     data () {
         return {

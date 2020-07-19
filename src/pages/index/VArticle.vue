@@ -5,13 +5,9 @@
 </template>
 
 <script>
-// 补齐所有文章和修复语法
-// 对比之前的项目查缺补漏
-// demo 合并过来
 /* global $$ */
 import hljs from 'highlight.js'
-import 'highlight.js/styles/monokai-sublime.css'
-// 代码块 css 主题：https://highlightjs.org/static/demo/
+import 'highlight.js/styles/monokai-sublime.css' // 代码块主题：https://highlightjs.org/static/demo
 export default {
     data () {
         return {

@@ -10,6 +10,8 @@ export default {
             text: `
 # 微信小程序
 
+本文档记录版本·v2.12.0·
+
 ## 概述
 
 微信小程序和网页：
@@ -1053,7 +1055,7 @@ scripts {Object}：自定义预处理
 [公众号：一起脱去小程序的外套和内衣 - 微信小程序架构解析](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485680&amp;idx=1&amp;sn=119e4d94a4d5e995700c0e9358a61dbb&source=41#wechat_redirect)
 @@@
 
-&2019/05/23
+&2020/07/19
             `
         }
     }

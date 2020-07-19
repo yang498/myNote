@@ -9,215 +9,238 @@ export default {
             text: `
 # weex
 
-## 起步
+本文档记录版本·v0.28.0·
+
+## 概述
 
 ### 介绍
 
-使用 Weex 可以构建一个真正的原生应用，它不是一个 HTML5 库或开发框架，不是一套全新的技术，不是为了解决纯 native 开发的体验问题，不是一个以自身为中心的移动应用开发框架，而是一套简单易用的跨平台开发方案，能以 web 的开发体验构建高性能、可扩展的 native 应用，并遵循 W3C 标准实现了统一的 JSEngine 和 DOM API，打造三端一致的 native 应用。其工作架构如下所示：
-!./img/html/weex02.jpg,600
-在本地用一个叫做 transformer 的工具把所有代码转成 JavaScript 代码
-在客户端运行一个 JavaScript 引擎，随时接收 JavaScript 代码
-在客户端设计一套 JS Bridge，让 native 代码可以和 JavaScript 引擎相互通信
-Weex 在 iOS 中使用 JSCore ，在 Android 中使用 v8，因此都支持es5
-![./img/html/weex03.jpg,450]![./img/html/weex04.png,450]
-Weex 的结构是解耦的，渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架
+使用 Weex 可以构建一个真正的原生应用，一套简单易用的跨平台开发方案
+在开发阶段，一个 Weex 页面就像开发普通网页一样；在运行时，Weex 页面又充分利用了各种操作系统的原生组件和能力
+Weex 的渲染引擎与语法层是分开的，也不依赖任何特定的前端框架，目前主要支持 Vue.js 和 Rax 这两个前端框架
 在开发 Weex 页面就像开发普通网页一样；在渲染 Weex 页面时和渲染原生页面一样
-推荐使用 @[Weex Studio 编辑器开发|https://weex.apache.org/zh/tools/ide.html]，沉浸式的开发体验，提供项目新建、编码、预览、调试等完整的开发链路，无需依赖 WEEX CLI
 
-##抢鲜版
-@[Weex 在线编写代码的平台|http://dotwe.org/vue/]，在线体验单个页面的例子，不需要任何配置。在平台上源代码应该用 Vue.js 的单文件组件 语法来编写，在 Web 平台的渲染结果将显示在一个模拟的手机壳中。手机上体验可下载@[weex playground|http://weex-project.io/cn/tools/playground.html]，扫码预览即可。
-@[看个简单的例子 Yo|http://dotwe.org/vue/563f025083b735aa75d5fb7e38a0b36e]
+### 平台差异
 
-##weex-toolkit
-Weex 提供了一个命令行工具·weex-toolkit·来帮助开发者使用 Weex。它可以用来快速创建一个空项目、初始化 iOS 和 Android 开发环境、调试、安装插件等操作。目前只支持创建 Vue.js 的项目。创建 Rax 的项目可以使用 rax-cli，参考@[Rax 的官方网站|https://alibaba.github.io/rax/]了解其用法。
-安装前需要本地有 Node.js，且版本 >=6，安装：
-··
-npm install weex-toolkit -g
-··
-这条命令会向命令行环境中注册一个 weex 命令，查看版本号：
-··
-weex -v
-··
-如果使用·cnpm·安装，可能会出现权限错误（permission error）：
-!./img/html/weex01.jpg
-Linux 系统使用·sudo·更改权限即可：
-··
-sudo chmod -R 777 <dirname>
-··
-windows 是不支持·sudo·，先卸载之前的，卸载完直接用·npm·安装即可：
-··
-npm uninstall weex-toolkit -g
-··
-如果还不行，直接删除 npm 和 npm-cache 目录下与 weex 相关的文件和目录
-
-##创建项目
-··
-weex create project-name
-··
-安装后的目录结构：
-··
-| —— configs
-    | —— config.js                  webpack 全局配置文件
-    | —— helper.js                  辅助方法
-    | —— logo.png
-    | —— plugin.js                  编译插件
-    | —— utils.js                   工具方法
-    | —— vue-loader.conf.js         weex 的 loader 配置
-    | —— webpack.common.conf.js     用于公共环境的 webpack 配置
-    | —— webpack.dev.conf.js        用于开发环境的 webpack 配置
-    | —— webpack.prod.conf.js       用于生产环境的 webpack 配置
-    | —— webpack.test.conf.js       用于测试环境的 webpack 配置
-| —— platforms
-    | —— platforms.json             平台标签数据
-| —— plugins
-    | —— plugins.json               插件数据
-| —— src
-    | —— entry.js                   全局入口文件
-    | —— index.vue                  默认打开页面
-| —— test
-    | —— unit
-    | —— specs                    测试 js
-    | —— index.js                 源代码和配置测试环境
-    | —— karma.conf.js            配置项
-| —— web                          静态资源
-| —— .babelrc                     babel-loader 配置
-| —— android.config.json          打包 android 项目的配置
-| —— ios.config.json              打包 ios 项目的配置
-| —— npm-shrinkwrap.json          npm 依赖文件
-| —— package.json                 项目依赖
-| —— README.md
-| —— webpack.config.js            webpack 命令的入口文件
-··
-旧版目录：
 !!
-src/*：编写页面代码
-dist/*：生成的js文件
-app.js：weex页面的入口
-webpack.config.js：webpack 配置文件，用于生成 .we 文件的 JSBunlde
-config.json：项目配置文件，本地IP
-build/*：构建脚本
-weex.html：web端展示页面
-index.html：用iframe内嵌weex.html展示效果，或手机下载playground扫一扫
-assets：资源文件，用于网页浏览
-    style.css：css文件，
-    qrcode.js：生成二维码
-    url.js：生成链接
-    phantom-limb.js：鼠标模拟touch
-.babelrc：转es5配置
-.eslintrc：.babelrc转换标准
+没有 DOM：没有·document Element Event File·等对象
+没有 BOM：没有·window·对象，不支持使用全局变量，如果是想要获取设备或环境信息可使用·WXEnvironment·变量
+调用原生 API：通过注册、调用模块来实现。其中一些是 Weex 内置的，如·clipboard navigator storage·等
 !!
 
-##命令
-参考 @[weex-toolkit|http://weex-project.io/cn/tools/toolkit.html]
-###预览项目
-如果在创建时选择了非自动安装的选项，先运行·cnpm install·安装依赖
+### Playground
+
+[PlaygroundWeex](https://weex.apache.org/zh/guide/playground.html) 是 Weex 示例 App，可扫码预览 Weex 代码构建后的页面
+
+### 开发环境
+
+使用 [Online Editor](http://dotwe.org/vue?spm=a2c7j.-zh-guide-develop-setup-develop-environment.0.0.1704c8ee7eIejd) 可在线编辑尝鲜
+
+#### 安装依赖
+
+首先需要 node.js 环境，然后安装 [Weex CLI](https://github.com/apache/weex-cli?spm=a2c7j.-zh-guide-develop-setup-develop-environment.0.0.1704c8ee7eIejd)：
+
+··bash
+npm i -g weex-toolkit 
 ··
+
+安装后可使用·weex·指令
+
+··js
+weex -v // 版本
+weex help // 所有指令
+weex doctor // 检查本地开发环境
+··
+
+目前·weex-cli·只支持创建 Vue.js 的项目。创建 Rax 的项目可以使用·rax-cli·，参考 [Rax 官方网站](https://alibaba.github.io/rax/?spm=a2c7j.-zh-guide-develop-create-a-new-app.0.0.167c2a18pQcXuW)
+
+### 初始化项目
+
+··bash
+weex create <project>
+··
+
+然后进入项目，安装依赖（在初始化时可选择自动安装）后启动项目
+
+··bash
 npm start
 ··
-###查看 weex 可用命令
+
+打开控制台提示的本地环境网页，使用 Playground APP 即可扫码进行真机体验
+
+### 编译页面
+
+··bash
+weex compile [资源文件] [目标目录] <options>
 ··
-weex
+
+例如编辑 src 目录中的文件打包到 dist 目录：
+
+··bash
+weex compile src dist
 ··
-###预览指定页面
+
+例如编辑 src 目录中的 index.vue 文件打包到 dist 目录：
+
+··bash
+weex compile src/index.vue build
 ··
+
+options 选项：
+
+%%
+| 选项 | 默认值 | 描述 |
+| :-: | :-: | :-: |
+| ·-w, --watch· | ·true· | 监听文件改动并实时编译 |
+| ·-d, --devtool [devtool]· | - | 设置 webpack 编译的 devtool 选项 |
+| ·-e, --ext [ext]· | ·.vue· | 设置默认编译文件 |
+| ·-m, --min· | ·false· | 对产物进行代码混淆及压缩 |
+| ·-c, --config· | ·false· | 传入 webpack 配置文件 |
+| ·-b, --base· | ·process.cwd()· | 设置基础路径 |
+%%
+
+### 预览页面
+
+直接对单个 .vue 文件进行零配置的沙箱预览
+
+··bash
+weex preview [file | folder] <options>
+··
+
+例如预览指定页面：
+
+··bash
 weex preview src/foo.vue
 ··
-###预览整个文件
-通过·--entry·指定要预览的文件夹路径以及入口文件
-··
-$ weex src --entry src/foo.vue
-··
-###编译打包
-··
-weex compile [source] [dist]  [options]
-··
-比如：·weex compile src dist·，单文件打包：·weex compile src/foo.vue dist·
-参数：
-!!
--w, --watch：开启 watch 模式，同步文件改动并进行编译
--d,--devtool [devtool]：设置 devtool 选项
--e,--ext [ext]：设置文件拓展名，默认为 vue
--m, --min：压缩 jsbundle 选项
-!!
-###调试
-··
-weex debug
-··
-###升级 weexpack
-··
-weex update weexpack
-或
-weex update weexpack@latest
-··
-###旧版命令
-!!
-npm run dev：监听文件改动编译生成js文件，比如改动src/foo.vue后，自动编译到dist/app.web.js，让webpack.config.js 去控制文件的输入和输出，以及如何处理等
-npm run serve：开启服务查看页面，在http://localhost:8080/index.html可查看
-npm run build：打包
-npm run debug：调试模式
-!!
 
-##编译运行
-默认情况下·weex create·命令并不初始化 iOS 和 Android 项目，通过执行·weex platform add·来添加特定平台的项目：
+还可通过·--entry·预览指定页面：
+
+··bash
+weex src --entry src/foo.vue
 ··
+
+options 选项：
+
+%%
+| 选项 | 默认值 | 描述 |
+| :-: | :-: | :-: |
+| ·-d, --devtool [devtool]· | - | 设置 webpack 编译的 devtool 选项 |
+| ·-m, --min· | ·false· | 对产物进行代码混淆及压缩 |
+| ·-c, --config· | ·false· | 传入 webpack 配置文件 |
+| ·-b, --base· | ·process.cwd()· | 设置基础路径 |
+%%
+
+### 添加真机工程
+
+添加 Weex 官方 iOS/Android 工程功能
+
+··bash
+weex platform [add|remove] [ios|android]
+··
+
+例如：
+
+··bash
 weex platform add ios
-weex platform add android
-··
-移除：
-··
 weex platform remove ios
-weex platform remove android
-··
-查看已添加的平台：
-··
-weex platform list
-··
-为了能在本地机器上打开 Android 和 iOS 项目，应该配置好客户端的开发环境。对于 iOS 应安装并且配置好 @[Xcode|https://developer.apple.com/xcode/]。对于 Android，你应该安装并且配置好 @[Android Studio|https://developer.android.com/studio/index.html]。当开发环境准备就绪后，运行下面的命令，可以在模拟器或真实设备上启动应用：
-··
-weex run ios
-weex run android
-weex run web
 ··
 
-##错误
-###使用·npm start·出现·'webpack-dev-server' 不是内部或外部命令，也不是可运行的程序·
-原因：使用·weex create project-name·初始化默认安装的 npm 依赖未完全安装，使用·cnpm install·，或者初始化时选择自己安装，然后使用·cnpm install·可避免这个错误
-###使用·weex preview src/foo.vue·出现·Cannot find module 'babel-core'·
-原因：babel-core 版本搭配问题，需安装对应搭配的版本，在根目录的 package.json 发现 babel-core 的版本是^^^6.26.0^^，使用
-··
-npm install babel-core --save-dev
-··
-重新安装，安装后是^^^6.26.3^^（随时间变化有不同版本，仅供参考）（或者是 babel-loader 的问题，@[参考|https://www.cnblogs.com/soyxiaobi/p/9554565.html]）
+可以使用·weex platform list·查看项目中支持的平台
 
-#组件
+### 运行真机工程
 
-##目录
+··js
+weex run ios // 运行 iOS 模拟器预览
+weex run android // 运行 Android 模拟器/真机预览
+weex run web // 运行 Web 端预览
+··
+
+### 其他
+
+··js
+weex debug [we_file|bundles_dir] [options] // 调试
+weex lint [file | folder] <options> // 代码质量检查
+··
+
+[集成到 Android 应用](https://weex.apache.org/zh/guide/develop/integrate-to-android-app.html)
+[集成到 iOS 应用](https://weex.apache.org/zh/guide/develop/integrate-to-android-app.html)
+[Weex 常见错误码](https://weex.apache.org/zh/guide/develop/weex_error_code.html)
+
+## API
+
+每个 Weex 页面的 JS 上下文中都有一个相互独立的·weex·变量
+它可以像全局变量一样使用，不过它在不同页面中是隔离而且只读的
+
+### 属性
+
+!!
+config：当前 Weex 页面的所有环境信息
+    bundleUrl：当前页面 js bundle 的 URL 地址
+    bundleType：当前页面是用那种框架开发的，可以是·"Vue"·或者·"Rax"·
+    env：环境变量，等同于全局变量·WXEnvironment·
+document：当前页面的文档模型对象，主要是内部使用，直接操作 DOM 并不是最佳实践，不建议在开发页面时使用
+!!
+
+#### WXEnvironment
+
+!!
+appGroup：·WXApp·，当前APP应用类型
+appName：·WXSample·，当前APP应用名字
+appVersion：·0.5.2.5·，当前APP应用版本
+deviceWidth：·1080·，设备宽度
+deviceHeight：·1920·，设备高度
+deviceModel：·vivoX6D·，设备型号
+platform：·Android·，当前运行平台
+osName：·Android·，操作系统名称
+osVersion：·5.1·，系统版本
+weexVersion：·0.9.4·，weex sdk版本
+scale：·3.0·，页面缩放比例
+!!
+
+### 方法
+
+!!
+requireModule：引用自定义的或者内置的模块，参数为大小写敏感的模块名
+    如果模块已经注册则返回一个对象，否则返回·undefined·
+supports：检测某个功能在当前环境中是否可用，
+    正常情况下返回 Boolean 值，参数格式错误或无法确定是否支持则返回 null
+    参数为特定格式的字符串·@{type}/{name}·
+        type：·component·或·module·
+        name：模块名，例如·weex.supports('@component/slider')·
+isRegisteredModule：检测某个特定的模块或者接口是否可用，可传入第二个参数为子属性或方法
+isRegisteredComponent：检测某个特定的组件是否可用
+!!
+
+## 组件
+
 !!
 text：文本容器
-a：链接，注意不能在里面直接添加文本，需用text标签包裹
-div：容器，不能直接添加文本，里面用text标签包裹，超出会隐藏
+a：链接，注意不能在里面直接添加文本，需用·<text>·
+div：容器，不能直接添加文本，需用·<text>·，超出会隐藏
 scroller：可滚动的容器
 image：图片，必须要有宽高，不支持子组件
 input：输入框，不支持子组件
 textarea：文本域
-list：列表滚动容器，适合长列表的展示，相当于·<ul>·
-    cell：子组件，相当于·<li>·
-recycle-list：list的升级版，具有回收和复用的能力，可以大幅优化内存占用和渲染性能
+list：列表滚动容器，适合长列表的展示
+    cell：·<list>·的子组件
+recycle-list：·<list>·的升级版，具有回收和复用的能力，可以大幅优化内存占用和渲染性能
     cell-slot：子节点
-refresh：下拉刷新，只能在scroller、list、waterfall中使用
-    loading-indicator：转圈动画的子组件，注意Android和iOS的样式是不一样的
-loading：上拉加载，属性同refresh
-    loading-indicator：转圈动画的子组件，注意Android和iOS的样式是不一样的
+refresh：下拉刷新，只能在·scroller list waterfall·中使用
+    loading-indicator：转圈动画的子组件，注意 Android 和 iOS 的样式有差异
+loading：上拉加载，只能在·scroller list waterfall·中使用
+    loading-indicator：转圈动画的子组件，注意 Android 和 iOS 的样式有差异
 slider：轮播图
     indicator：轮播图的指示器小点组件
-switch：开关
 video：视频
 waterfall：瀑布流布局的组件容器
 web：网页容器
+richtext：富文本
 !!
 
-##image
+### image
+
 ·<image>·不支持background，只有background-color，src也不支持相对和本地路径，需用网络路径代替，resize属性在iOS上无效，需要设置好宽高，placeholder属性为，注意当源图片的src是个空字符串或不存在时不显示占位图
+
 属性：
 !!
 placeholder{String}：URL、Base64，在图片下载中时显示一张占位图，当加载后会被删除
@@ -593,81 +616,6 @@ verticalpan：垂直拖动
 !!
 注意：在scroller, list，webview滚动容器上有些可能无效
 
-
-#实例变量
-每个 Weex 页面的 JS 上下文中都有一个相互独立的 weex 变量，它可以像全局变量一样使用，不过它在不同页面中是隔离而且只读的。
-注意：weex 实例变量只在 Vue 框架中暴露了，目前还不支持在 Rax 框架中使用。
-Weex 实例变量的类型定义如下：
-··
-declare type Weex = {
-    config: WeexConfigAPI;  // 当前环境信息
-    document: WeexDocument; // 当前页面的文档模型对象
-    requireModule: (name: string) => Object | void; // 引用自定义或内置的模块
-    supports: (condition: string) => boolean | void;    // 检测某个功能在当前环境中是否可用
-    isRegisteredModule: (moduleName: string, methodName: string) => boolean // 检测某个特定的模块或者接口是否可用
-    isRegisteredComponent: (moduleName: string, methodName: string) => boolean  // 检测某个特定的组件是否可用
-}
-··
-
-##weex.config
-包含了当前 Weex 页面的所有环境信息
-··
-declare type WeexConfigAPI = {
-    bundleUrl: string;
-    bundleType?: string;
-    env: WeexEnvironment;
-}
-··
-通过调用·this.$getConfig()·也能获取同样的信息：·weex.config === this.$getConfig()·
-还提供了全局环境变量WXEnvironment：·weex.config.env === WXEnvironment·
-比如返回：
-!!
-bundleUrl：xxx.js，当前页面js的url
-bundleType：当前页面的开发框架，可以是 "Vue" 或者 "Rax"
-env：环境对象
-    appGroup：WXApp，当前APP应用类型
-    appName：WXSample，当前APP应用名字
-    appVersion：0.5.2.5，当前APP应用版本
-    deviceWidth：1080，设备宽度
-    deviceHeight：1920，设备高度
-    deviceModel：vivoX6D，设备型号
-    platform：Android，当前运行平台
-    osName：Android，操作系统名称
-    osVersion：5.1，系统版本
-    weexVersion：0.9.4，weex sdk版本
-    scale：3.0，页面缩放比例
-!!
-
-##weex.supports
-Weex 的组件和模块都是可以注册和配置的，这样导致了在不同环境中组件和模块的支持情况不一样。就使用 weex.supports 接口在运行期检测某个功能在当前环境中是否可用。
-使用格式为·weex.supports('@{type}/{name}')·
-type 必须是 "component" 和 "module" 之一
-name 可以是标签名、模块名，也可以指定模块中的某个方法名（和模块名用·.·隔开）
-^^返回值：^^
-支持该特性返回·true·。
-不支持该特性返回·false·。
-参数格式错误或无法确定是否支持返回·null·。
-^^示例：^^
-··
-// 检测某个组件是否可用：
-weex.supports('@component/slider') // true
-weex.supports('@component/my-tab') // false
-
-// 检测某个模块是否可用：
-weex.supports('@module/stream')  // true
-weex.supports('@module/abcdef')  // false
-
-// 检测某个模块是否包含某个方法：
-weex.supports('@module/dom.getComponentRect') // true
-weex.supports('@module/navigator.jumpToPage') // false
-
-// 无效的输入：
-weex.supports('div') // null
-weex.supports('module/*') // null
-weex.supports('@stream/fetch') // null
-weex.supports('getComponentRect') // null
-··
-
 #常见问题
 
 ##css
@@ -754,29 +702,15 @@ Weex的三种工作模式。
 把Weex当作一个iOS/Android组件来使用，类比ImageView。这类需求遍布手淘主链路，如首页、主搜结果、交易组件化等，这类Native页面主体已经很稳定，但是局部动态化需求旺盛导致频繁发版，解决这类问题也是Weex的重点。
 ###H5 Component模式
 在H5种使用Weex，类比WVC。一些较复杂或特殊的H5页面短期内无法完全转为Weex全页模式（或RN），比如互动类页面、一些复杂频道页等。这个痛点的解决办法是：在现有的H5页面上做微调，引入Native解决长列表内存暴增、滚动不流畅、动画/手势体验差等问题。
-&nbsp;
 另外，WVC将会融入到Weex中，成为Weex的H5 Components模式。
 
-@@!
-weex官方文档|http://weex-project.io/cn/guide/index.html
-weex playground：Weex Native 运行时实例 & Weex 文件预览工具|http://weex-project.io/cn/tools/playground.html
-淘宝 NPM 镜像的 weex 扩展组件|https://npm.taobao.org/package/weex-components
-weex功能扩展 - 马伟奇的简书|https://www.jianshu.com/p/88ebcdc21d66
-weex学院：疑难解答、demo|https://www.weexdaxue.com
-github - weex相关插件|https://github.com/weex-plugins
-github - joggerplus/awesome-weex：教程、文章、工具、demo|https://github.com/joggerplus/awesome-weex
-github - vczero/weex-learning：Weex 学习/实践指南|https://github.com/vczero/weex-learning
-demo：Weex 300行代码开发一款简易的跑步App|https://segmentfault.com/a/1190000008901154
-demo：Weex开发之路（二） - 完成一个ToDoList项目|http://ios.jobbole.com/91773/
-UI库 - Weex UI|https://alibaba.github.io/weex-ui/#/
-UI库 - BUI-Weex|http://dev.bingocc.com/buiweex/
-weex封装扩展 - weexplus|https://weexplus.github.io/doc/
-weex封装扩展 - BindingX|https://alibaba.github.io/bindingx/
-weex封装扩展 - eros|https://bmfe.github.io/eros-docs/#/
-weex封装扩展 - Nat|http://natjs.com/#/zh-cn/
+@@
+[weex 官方文档](https://weex.apache.org/zh/guide/introduction.html)
+[weex playground](https://weex.apache.org/zh/guide/playground.html)
+[github - awesome-weex](https://github.com/joggerplus/awesome-weex)
 @@
 
-&2018/7/5
+&2020/07/19
             `
         }
     }
