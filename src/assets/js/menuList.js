@@ -6,7 +6,7 @@ export default [
             { name: 'mobile', path: '/html/mobile' },
             { name: '优化', path: '/html/optimize' },
             { name: '微信小程序', path: '/html/applet', progress: 100 },
-            { name: 'weex', path: '/html/weex', progress: 50 },
+            { name: 'weex', path: '/html/weex', progress: 100 },
             { name: 'electron', path: '/html/electron' }
         ]
     },
@@ -20,7 +20,6 @@ export default [
         name: 'javascript',
         list: [
             { name: '语法', path: '/js/grammar', progress: 50 },
-            { name: 'function', path: '/js/function' },
             { name: '浏览器', path: '/js/browser', progress: 50 },
             { name: '网络请求', path: '/js/connect', progress: 50 },
             { name: 'node', path: '/js/node', progress: 50 },
@@ -33,9 +32,11 @@ export default [
             { name: 'object', path: '/jsType/object', progress: 100 },
             { name: 'array', path: '/jsType/array', progress: 100 },
             { name: 'string', path: '/jsType/string', progress: 100 },
+            { name: 'number', path: '/jsType/number' },
             { name: 'regexp', path: '/jsType/regexp', progress: 100 },
             { name: 'math', path: '/jsType/math', progress: 100 },
             { name: 'date', path: '/jsType/date', progress: 100 },
+            { name: 'function', path: '/jsType/function' },
             { name: 'es6', path: '/jsType/es6' }
         ]
     },
