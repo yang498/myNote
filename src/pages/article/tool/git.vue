@@ -334,6 +334,8 @@ git branch -d temp
 git push <remote> --delete temp
 ··
 
+如果删除默认分支可能失败，先改为其他分支即可
+
 ## .gitignore
 
 .gitignore 文件可以让 Git 不上传哪些文件，比如 node_modules 文件是没必要上传的
