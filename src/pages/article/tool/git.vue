@@ -160,6 +160,9 @@ git push <remote> <branch>
 
 # 强制推送当前分支到远程仓库，即使有冲突
 git push <remote> --force
+
+# 设置 pull / push 的默认分支，之后不用输入 <remote> <branch> 即可提交
+git branch --set-upstream <remote> <branch>
 ··
 
 ### checkout / reset
