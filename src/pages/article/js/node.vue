@@ -12,6 +12,7 @@ export default {
 ## 起步
 
 ### 介绍
+
 Node 是 JavaScript 语言的服务器运行环境，以前 js 只能在浏览器中运行
 Node 提供大量工具库，使得 JavaScript 语言与操作系统互动（比如读写文件、新建子进程）
 Node 内部采用 Google 公司的 V8 引擎，作为 JavaScript 语言解释器；通过自行开发的 libuv 库，调用操作系统资源

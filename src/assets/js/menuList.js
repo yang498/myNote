@@ -6,8 +6,8 @@ export default [
             { name: 'mobile', path: '/html/mobile' },
             { name: '优化', path: '/html/optimize' },
             { name: '微信小程序', path: '/html/applet', progress: 100 },
-            { name: 'weex', path: '/html/weex', progress: 100 },
-            { name: 'electron', path: '/html/electron' }
+            { name: 'weex', path: '/html/weex', progress: 100 }
+            // { name: 'electron', path: '/html/electron' }
         ]
     },
     {
@@ -54,10 +54,10 @@ export default [
         list: [
             { name: 'sass', path: '/tool/sass' },
             { name: 'git', path: '/tool/git', progress: 100 },
-            { name: 'gulp', path: '/tool/gulp', progress: 100 },
-            { name: 'webpack', path: '/tool/webpack' },
-            { name: 'taro', path: '/tool/taro' },
-            { name: '其他', path: '/tool/other' }
+            { name: 'gulp', path: '/tool/gulp', progress: 100 }
+            // { name: 'webpack', path: '/tool/webpack' },
+            // { name: 'taro', path: '/tool/taro' },
+            // { name: '其他', path: '/tool/other' }
         ]
     },
     {
