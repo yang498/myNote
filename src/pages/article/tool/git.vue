@@ -162,7 +162,7 @@ git push <remote> <branch>
 git push <remote> --force
 
 # 设置 pull / push 的默认分支，之后不用输入 <remote> <branch> 即可提交
-git branch --set-upstream <remote> <branch>
+git branch --set-upstream-to <remote> <branch>
 ··
 
 ### checkout / reset
