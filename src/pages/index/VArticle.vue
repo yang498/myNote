@@ -110,7 +110,7 @@ article {
         }
     }
     ul {
-        padding: 10px 20px;
+        padding: 5px 10px;
         border-left: 10px solid var(--c);
         border-radius: 8px;
         background-color: #f9f9f9;
@@ -186,7 +186,7 @@ article {
             font-family: consolas;
             line-height: 24px;
             border-radius: 8px;
-            padding: 15px 20px !important;
+            padding: 10px 15px !important;
         }
         .copy {
             font-size: 14px;

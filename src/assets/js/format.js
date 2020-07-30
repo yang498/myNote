@@ -96,7 +96,7 @@ const formatTag = function (str) {
         // h4 标题
         if (reg.h4.test(item)) return `<h4>${item.replace(reg.h4, '')}</h4>`
         // h3 标题
-        if (reg.h3.test(item)) {
+        else if (reg.h3.test(item)) {
             const index = h2List.length - 1 + '-' + h3List[h2List.length - 1].length
             h3List[h2List.length - 1].push(item.replace(reg.h3, ''))
             return `<h3 class="h3-${index}" onclick="this.scrollIntoView()">${item.replace(reg.h3, '')}</h3>`
